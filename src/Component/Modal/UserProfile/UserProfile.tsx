@@ -28,9 +28,6 @@ export const UserProfile: React.FC<UserProfileProps> = props => {
 
   const {
     opener,
-    appInfo: {
-      user
-    },
     ...restProps
   } = props;
 
@@ -61,9 +58,7 @@ export const UserProfile: React.FC<UserProfileProps> = props => {
         footer={null}
         {...restProps}
       >
-        <UserProfileForm
-          user={user}
-        />
+        <UserProfileForm />
       </Modal>
     </>
   );
