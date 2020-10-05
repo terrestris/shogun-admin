@@ -1,0 +1,35 @@
+.user-chip-menu {
+  margin-top: -2px;
+  background-color: #fafafb;
+  border-radius: 0 0 4px 4px;
+  border: 2px solid blue;
+  border-top: 2px solid #fafafb;
+  box-shadow: unset;
+}
+
+.portal {
+  background: #ffffff;
+  flex: 1;
+  display: flex;
+
+  .home {
+    padding: 20px;
+  }
+
+  .menu {
+    .menu-toggle-button {
+      width: 100%;
+      border-radius: 0;
+    }
+    .ant-menu-inline {
+      min-width: 256px;
+    }
+    .ant-menu-inline-collapsed {
+      min-width: 0px;
+    }
+  }
+
+  .content {
+    flex: 1;
+  }
+}

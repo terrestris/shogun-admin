@@ -1,0 +1,125 @@
+header {
+  height: 50px;
+  background-color: #fafafb;
+  border-bottom: 2px solid @primary-color;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.24);
+  display: flex !important;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 1.2em;
+
+  .container {
+    flex: 1;
+    height: 100%;
+    display: flex;
+    align-items: center;
+
+    &.left {
+      justify-content: flex-start;
+      max-width: 600px;
+    }
+
+    &.center {
+      justify-content: center;
+    }
+
+    &.right {
+      justify-content: flex-end;
+    }
+  }
+
+  .project-select-container {
+    display: flex;
+    align-items: center;
+    flex: 1;
+
+    .label {
+      padding: 0 5px 0 20px;
+    }
+
+    .project-select {
+      flex: 1;
+      &:not(.ant-select-customize-input) {
+        .ant-select-selector {
+          border-radius: 2px 0 0 2px;
+        }
+      }
+    }
+
+    button.ant-btn {
+      border-radius: 0 2px 2px 0;
+      border-width: 1px 1px 1px 0;
+    }
+  }
+
+  .header-logo-a {
+    height: 100%;
+
+    .header-logo-img {
+      padding: 4px;
+      margin-left: 20px;
+      height: 100%;
+    }
+  }
+
+  .react-geo-userchip {
+    margin-right: 15px;
+  }
+
+  .menu-fill {
+    flex: 1;
+  }
+
+  .menu-item {
+    padding: 0 20px;
+    color: @primary-color;
+    text-decoration: none;
+    cursor: pointer;
+
+    &:hover {
+      color: #8DC63F;
+    }
+  }
+
+  .submenu {
+    position: relative;
+    cursor: pointer;
+
+    ul.submenu-list {
+      visibility: hidden;
+
+      display: block;
+      background-color: @primary-color;
+      position: absolute;
+      cursor: pointer;
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+
+      li.submenu-item {
+        color: @border-color-base;
+        text-shadow: none;
+        position: relative;
+        white-space:nowrap;
+        padding: 5px 10px 5px 10px;
+
+        &:hover {
+          color: white;
+        }
+      }
+    }
+
+    &:hover {
+      ul.submenu-list {
+        visibility: visible;
+      }
+    }
+  }
+
+  @media only screen and (max-width: 768px) and (orientation: portrait), only screen and (max-height: 768px) and (orientation: landscape) {
+    .menu-item {
+      padding: 0 0.6em;
+    }
+  }
+
+}
