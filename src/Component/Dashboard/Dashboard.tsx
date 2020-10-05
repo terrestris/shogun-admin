@@ -22,7 +22,7 @@ export const Dashboard: React.FC<DashoardProps> = (props) => {
     columns = 2,
     rows,
     title,
-    ...passThrpughProps
+    ...passThroughProps
   } = props;
 
   const gridTemplateColumns = `repeat(${columns}, 1fr)`;
@@ -30,7 +30,7 @@ export const Dashboard: React.FC<DashoardProps> = (props) => {
   return (
     <div
       className={`dashboard ${className ? className : ''}`}
-      {...passThrpughProps}
+      {...passThroughProps}
     >
       <div className="header">
         {

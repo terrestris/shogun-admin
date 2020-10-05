@@ -4,15 +4,15 @@ import { keycloak } from '../../Util/KeyCloakUtil';
 
 // TODO: Make this generic and more specific
 export type GraphQLQueryObject = {
-  query: string,
+  query: string;
   variables?: {
-    [key: string]: any
-  },
-  operation?: null
+    [key: string]: any;
+  };
+  operation?: null;
 };
 
 export type GraphQLRepsonse = {
-  data: any
+  data: any;
 };
 
 class GraphQLService {

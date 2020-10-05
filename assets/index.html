@@ -30,5 +30,11 @@
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
     <script src="/client-config.js"></script>
+    <script>
+      if (!window.shogunApplicationConfig) {
+        console.warn('No SHOGun application config found. Loading fallback.');
+        document.write('<script src="./assets/fallbackConfig.js">\x3C/script>')
+      }
+    </script>
   </body>
 </html>
