@@ -13,7 +13,7 @@ import logo from '../../../../assets/img/shogun_logo.png';
 
 import './ApplicationInfo.less';
 
-interface ApplicationInfoProps extends ModalProps {
+export interface ApplicationInfoProps extends ModalProps {
   opener?: ReactElement;
   appInfo: any;
 }
@@ -50,6 +50,7 @@ export const ApplicationInfo: React.FC<ApplicationInfoProps> = props => {
         Opener
       }
       <Modal
+        className="application-info-modal"
         title="Application Info"
         centered={true}
         visible={isVisible}
