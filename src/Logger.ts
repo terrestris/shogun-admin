@@ -11,6 +11,9 @@ switch (process.env.NODE_ENV) {
   case 'production':
     loglevel = 'INFO';
     break;
+  case 'CI':
+    loglevel = 'INFO';
+    break;
   default:
     loglevel = 'INFO';
     break;
