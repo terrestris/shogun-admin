@@ -1,0 +1,44 @@
+.dashboard {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 1em;
+
+  .header {
+    display: flex;
+    background-color: #f0f8ff;
+    padding: 0.5em;
+    font-size: 2em;
+    border: 1px solid lightgray;
+    border-radius: 4px 4px 0 0;
+    border-bottom: 0;
+
+    img.icon {
+      height: 44px;
+      max-width: 200px;
+      width: auto;
+      padding-right: 20px;
+    }
+
+    .title {
+      flex: 1;
+      color: black;
+    }
+
+    .actions {
+      padding: 0 10px;
+    }
+  }
+
+  .grid {
+    flex: 1;
+    padding: 0.5em;
+    border: 1px solid lightgray;
+    border-radius: 0 0 4px 4px ;
+    display: grid;
+    column-gap: 0.5em;
+    row-gap: 0.5em;
+    justify-items: stretch;
+    grid-auto-rows: 1fr;
+  }
+}

@@ -1,0 +1,51 @@
+.react-geo-userchip {
+  padding: 6px;
+
+  .ant-avatar {
+    border: 1px solid @primary-color;
+    height: 30px;
+    width: 30px;
+    transition: border 0.3s;
+  }
+
+  .username {
+    color: @primary-color;
+    transition: color 0.3s;
+
+    i {
+      font-size: 0.6em;
+    }
+  }
+
+  &:hover .username {
+    color: #8DC63F;
+  }
+
+  &:hover .ant-avatar {
+    border: 1px solid #8DC63F;
+  }
+}
+
+.user-chip-menu {
+  i {
+    padding-right: 10px;
+  }
+
+  div.user-name {
+    margin: 13px;
+    cursor: default;
+
+    span {
+      font-weight: bold;
+    }
+  }
+
+  .ant-dropdown-menu-item {
+    display: flex;
+    align-items: center;
+
+    span {
+      flex: 1;
+    }
+  }
+}
