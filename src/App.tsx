@@ -60,7 +60,7 @@ const App: React.FC = props => {
     getInitialData();
   }, []);
 
-  if(loadingState === 'loading') {
+  if (loadingState === 'loading') {
     return (
       <Result
         icon={<LoadingOutlined spin/>}
