@@ -4,12 +4,11 @@ import {
 } from 'recoil';
 
 import {
-  Router,
+  BrowserRouter as Router,
   Switch,
   Redirect,
   Route
 } from 'react-router-dom';
-import { createBrowserHistory } from 'history';
 import Header from './Component/Header/Header';
 
 import {
@@ -52,10 +51,8 @@ const App: React.FC = props => {
     getInitialData();
   }, []);
 
-  const history = createBrowserHistory();
-
   return (
-    <Router history={history}>
+    <Router>
       <Header />
       <React.Suspense
         fallback={
