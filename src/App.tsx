@@ -69,7 +69,7 @@ const App: React.FC = props => {
     );
   }
 
-  if(loadingState === 'failed') {
+  if (loadingState === 'failed') {
     return (
       <Result
         status="warning"
