@@ -14,5 +14,10 @@ var shogunApplicationConfig = {
       realm: 'SpringBootKeycloak',
       clientId: 'shogun-app'
     }
-  }
+  },
+  models: [
+    'Layer',
+    'Application',
+    'User'
+  ]
 };

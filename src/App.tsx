@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   useRecoilState
 } from 'recoil';
@@ -12,6 +12,7 @@ import {
 import Header from './Component/Header/Header';
 
 import {
+  Result,
   Spin
 } from 'antd';
 
@@ -25,6 +26,7 @@ import AppInfoService from './Service/AppInfoService/AppInfoService';
 import UserService from './Service/UserService/UserService';
 import Logger from 'js-logger';
 import { appInfoAtom, userInfoAtom } from './State/atoms';
+import { setSwaggerDocs } from './State/static';
 
 const userService = new UserService();
 
@@ -32,17 +34,24 @@ const App: React.FC = props => {
 
   const [, setUserInfo] = useRecoilState(userInfoAtom);
   const [, setAppInfo] = useRecoilState(appInfoAtom);
+  const [loadingState, setLoadingState] = useState<'failed' | 'loading' | 'done'>();
 
   // Fetch initial data:
+  // - swagger docs
   // - applicationInfo
   // - logged in User
   const getInitialData = async () => {
     try {
+      setLoadingState('loading');
+      const swaggerDoc = await AppInfoService.getSwaggerDocs();
+      setSwaggerDocs(swaggerDoc);
       const appInfo = await AppInfoService.getAppInfo();
       setAppInfo(appInfo);
       const userInfo = await userService.findOne(appInfo.userId);
       setUserInfo(userInfo);
+      setLoadingState('done');
     } catch (error) {
+      setLoadingState('failed');
       Logger.error(error);
     }
   };
@@ -50,6 +59,24 @@ const App: React.FC = props => {
   useEffect(() => {
     getInitialData();
   }, []);
+
+  if(loadingState === 'loading') {
+    return (
+      <Result
+        icon={<LoadingOutlined spin/>}
+        title="Loading."
+      />
+    );
+  }
+
+  if(loadingState === 'failed') {
+    return (
+      <Result
+        status="warning"
+        title="Failed to load the initial data. Check your console."
+      />
+    );
+  }
 
   return (
     <Router>
