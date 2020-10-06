@@ -1,6 +1,11 @@
 import React, {
+  useEffect,
   useState
 } from 'react';
+
+import {
+  useRecoilState
+} from 'recoil';
 
 import {
   Form,
@@ -13,7 +18,6 @@ import {
 
 import {
   ContactsOutlined,
-  LockOutlined,
   MailOutlined,
   PhoneOutlined,
   QuestionCircleOutlined,
@@ -29,47 +33,55 @@ import User, { UserArgs } from '../../../../Model/User';
 // import { AppInfoTypes } from '../../../../store/appInfo/types';
 
 import './UserProfileForm.less';
-
-// const { Option } = Select;
+import { userInfoAtom } from '../../../../State/atoms';
 
 interface AlertProps {
   type?: 'success' | 'info' | 'warning' | 'error';
   message?: string;
 }
 
-interface OwnProps {
-  user: UserArgs;
-}
+interface OwnProps {}
 
 type UserProfileFormProps = OwnProps;
 
 export const UserProfileForm: React.FC<UserProfileFormProps> = props => {
 
-  const userRoles = ['Farmer', 'Investor'];
-
-  const [alert, setAlert] = useState<AlertProps | null>();
-  const [loading, setLoading] = useState<boolean>(false);
-
   const {
-    user,
     ...restProps
   } = props;
+
+  const userRoles = ['User', 'Admin'];
+
+  const [form] = Form.useForm();
+  const [alert, setAlert] = useState<AlertProps | null>();
+  const [loading, setLoading] = useState<boolean>(false);
+  const [userInfo] = useRecoilState(userInfoAtom);
+
+
+  useEffect(() => {
+    form.setFieldsValue({
+      email: userInfo.email,
+      username: userInfo.username,
+      affiliation: userInfo?.details?.affiliation,
+      phone: userInfo?.details?.phone,
+      about: userInfo?.details?.about
+    });
+  }, [userInfo]);
 
   const handleSubmit = (values) => {
     setAlert({});
     setLoading(true);
 
     const updateUser = new User({
-      id: user.id,
+      id: userInfo.id,
       username: values.username,
-      email: user.email,
-      // password: values.password,
+      email: userInfo.email,
       enabled: true,
       details: {
-        phone: values.phone,
-        about: values.about,
-        affiliation: values.affiliation,
-        roles: values.roles?.map((role: string) => {
+        phone: values?.phone,
+        about: values?.about,
+        affiliation: values?.affiliation,
+        roles: values?.roles?.map((role: string) => {
           if (userRoles.includes(role)) {
             return role;
           } else {
@@ -102,6 +114,7 @@ export const UserProfileForm: React.FC<UserProfileFormProps> = props => {
   return (
     <Form
       className="user-profile-form"
+      form={form}
       onFinish={handleSubmit}
       labelCol={{
         sm: { span: 4 }
@@ -137,9 +150,6 @@ export const UserProfileForm: React.FC<UserProfileFormProps> = props => {
           required: true,
           message: 'Please input a username!'
         }]}
-      // fieldDecoratorOpts={{
-      //   initialValue: user.username
-      // }}
       >
         <Input
           prefix={
@@ -155,9 +165,6 @@ export const UserProfileForm: React.FC<UserProfileFormProps> = props => {
       <Form.Item
         name="affiliation"
         label="Affiliation"
-      // fieldDecoratorOpts={{
-      //   initialValue: user.details?.affiliation
-      // }}
       >
         <Input
           prefix={
@@ -173,9 +180,6 @@ export const UserProfileForm: React.FC<UserProfileFormProps> = props => {
       <Form.Item
         name="phone"
         label="Phone"
-      // fieldDecoratorOpts={{
-      //   initialValue: user.details?.phone
-      // }}
       >
         <Input
           prefix={
@@ -196,7 +200,6 @@ export const UserProfileForm: React.FC<UserProfileFormProps> = props => {
             <QuestionCircleOutlined />
           </Tooltip>
         </span>}
-      // initialValue: user.details?.about
       >
         <Input.TextArea
           placeholder="About"
@@ -210,14 +213,14 @@ export const UserProfileForm: React.FC<UserProfileFormProps> = props => {
             <QuestionCircleOutlined />
           </Tooltip>
         </span>}
-      // initialValue: user.details?.roles
       >
         <Select
           mode="multiple"
           placeholder="Roles"
+          disabled={true}
         >
           {
-            userRoles.map((keyword: string, i: number) => {
+            userRoles?.map((keyword: string, i: number) => {
               return <Select.Option
                 value={i.toString()}
                 key={i.toString()}
@@ -231,7 +234,6 @@ export const UserProfileForm: React.FC<UserProfileFormProps> = props => {
       <Form.Item
         name="email"
         label="E-Mail"
-      // initialValue: user.email
       >
         <Input
           prefix={
@@ -245,22 +247,6 @@ export const UserProfileForm: React.FC<UserProfileFormProps> = props => {
           placeholder="Email"
         />
       </Form.Item>
-      <Form.Item
-        name="password"
-        label="Passwort"
-        >
-          <Input.Password
-            prefix={
-              <LockOutlined
-                style={{
-                  color: 'rgba(0,0,0,.25)'
-                }}
-              />
-            }
-            disabled={true}
-            placeholder="Password"
-          />
-        </Form.Item>
       <Button
         type="primary"
         htmlType="submit"

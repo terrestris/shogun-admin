@@ -1,4 +1,7 @@
 import React from 'react';
+import {
+  RecoilRoot
+} from 'recoil';
 
 import {
   Router,
@@ -25,34 +28,36 @@ const App: React.FC = props => {
   const history = createBrowserHistory();
 
   return (
-    <Router history={history}>
-      <Header />
-      <React.Suspense
-        fallback={
-          <Spin
-            className="suspense-spin"
-            indicator={
-              <LoadingOutlined
-                className="suspense-spin-icon"
-                spin
-              />
-            }
-          />
-        }
-      >
-        <Switch>
-          <Route
-            path="/portal"
-            component={Portal}
-          />
-          <Redirect
-            exact
-            from="/"
-            to="/portal"
-          />
-        </Switch>
-      </React.Suspense>
-    </Router>
+    <RecoilRoot>
+      <Router history={history}>
+        <Header />
+        <React.Suspense
+          fallback={
+            <Spin
+              className="suspense-spin"
+              indicator={
+                <LoadingOutlined
+                  className="suspense-spin-icon"
+                  spin
+                />
+              }
+            />
+          }
+        >
+          <Switch>
+            <Route
+              path="/portal"
+              component={Portal}
+            />
+            <Redirect
+              exact
+              from="/"
+              to="/portal"
+            />
+          </Switch>
+        </React.Suspense>
+      </Router>
+    </RecoilRoot>
   );
 };
 

@@ -1,7 +1,5 @@
 import React from 'react';
 
-// import { AppState } from '../../store/reducer';
-
 import logo from '../../../assets/img/shogun_logo.png';
 import User from '../Menu/User/User';
 
@@ -14,9 +12,6 @@ interface OwnProps {
 type HeaderProps = OwnProps;
 
 export const Header: React.FC<HeaderProps> = props => {
-  // const {
-  //   appInfo
-  // } = props;
 
   return (
     <header>
@@ -34,7 +29,6 @@ export const Header: React.FC<HeaderProps> = props => {
       <div
         className="container center"
       >
-
       </div>
       <div className="container right">
         <User />

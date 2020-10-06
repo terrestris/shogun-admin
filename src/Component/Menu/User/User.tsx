@@ -1,4 +1,7 @@
 import React from 'react';
+import {
+  useRecoilState
+} from 'recoil';
 
 import {
   useHistory
@@ -15,6 +18,8 @@ import {
   LogoutOutlined,
   SettingOutlined
 } from '@ant-design/icons';
+
+import { userInfoAtom } from '../../../State/atoms';
 
 // import UserChip from '@terrestris/react-geo/dist/UserChip/UserChip';
 
@@ -39,8 +44,9 @@ export const User: React.FC<UserProps> = (props) => {
 
   let history = useHistory();
 
+  const [userInfo] = useRecoilState(userInfoAtom);
+
   const avatarSource = '';
-  const userName = '';
 
   const doLogout = () => {
     UserService.logout()
@@ -81,7 +87,7 @@ export const User: React.FC<UserProps> = (props) => {
             className="user-name"
           >
             <span>
-              {/* { user?.email } */}
+              {userInfo?.email}
             </span>
           </div>
           <Menu.Divider/>
@@ -94,7 +100,7 @@ export const User: React.FC<UserProps> = (props) => {
                 <span
                   className="settings-opener"
                 >
-              Profile settings
+                  Profile settings
                 </span>
               }
               appInfo={{}}
@@ -109,7 +115,7 @@ export const User: React.FC<UserProps> = (props) => {
                 <span
                   className="info-opener"
                 >
-              Info
+                  Info
                 </span>
               }
               appInfo={{}}
@@ -120,7 +126,7 @@ export const User: React.FC<UserProps> = (props) => {
             key="logout"
           >
             <LogoutOutlined />
-        Sign out
+            Sign out
           </Menu.Item>
         </Menu>
       }
@@ -133,13 +139,13 @@ export const User: React.FC<UserProps> = (props) => {
           className="userimage"
         >
           {
-            avatarSource ? '' : UserUtil.getInitials(userName)
+            avatarSource ? '' : UserUtil.getInitials(userInfo?.username)
           }
         </Avatar>
         <span
           className="username"
         >
-          {userName}
+          {userInfo?.username}
         </span>
       </div>
     </Dropdown>
