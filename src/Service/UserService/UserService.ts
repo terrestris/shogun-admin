@@ -8,7 +8,7 @@ import { KeycloakPromise } from 'keycloak-js';
 class UserService extends GenericService<User> {
 
   constructor() {
-    super(User, config.paths.user.base);
+    super(User, config.path.user);
   }
 
   static logout(): KeycloakPromise<void, void> {

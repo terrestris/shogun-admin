@@ -1,3 +1,5 @@
+import User from '../Model/User';
+
 export default class UserUtil {
 
   /**
@@ -10,8 +12,18 @@ export default class UserUtil {
    *
    * @method getInitials
    */
-  public static getInitials(userName: string): string {
-    const splittedName = (userName as string).split(' ');
+  public static getInitials(user: User): string {
+    const {
+      username,
+      firstName,
+      lastName
+    } = user.keycloakRepresentation;
+
+    let name = username;
+    if (firstName && lastName) {
+      name = `${firstName} ${lastName}`;
+    }
+    const splittedName = name.split(' ');
     const initals = [];
     splittedName.forEach((part) => {
       if (part[0]) {

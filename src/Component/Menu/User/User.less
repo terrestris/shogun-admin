@@ -1,10 +1,8 @@
-.react-geo-userchip {
+.user-menu {
   padding: 6px;
 
   .ant-avatar {
     border: 1px solid @primary-color;
-    height: 30px;
-    width: 30px;
     transition: border 0.3s;
   }
 
@@ -18,21 +16,26 @@
   }
 
   &:hover .username {
-    color: #8DC63F;
+    color: darken(@primary-color, 20%);
   }
 
   &:hover .ant-avatar {
-    border: 1px solid #8DC63F;
+    border: 1px solid darken(@primary-color, 20%);
   }
 }
 
 .user-chip-menu {
+  border: 2px solid @primary-color;
+  background-color: #fafafb;
+  border-radius: 0 0 4px 4px;
+  border-top: 2px solid #fafafb;
+
   i {
     padding-right: 10px;
   }
 
   div.user-name {
-    margin: 13px;
+    padding: 13px;
     cursor: default;
 
     span {
@@ -40,12 +43,4 @@
     }
   }
 
-  .ant-dropdown-menu-item {
-    display: flex;
-    align-items: center;
-
-    span {
-      flex: 1;
-    }
-  }
 }

@@ -15,7 +15,6 @@ import './UserProfile.less';
 
 interface UserProfileProps extends ModalProps {
   opener?: ReactElement;
-  appInfo: any;
 }
 
 export const UserProfile: React.FC<UserProfileProps> = props => {

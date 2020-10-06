@@ -12,15 +12,17 @@ import { ModalProps } from 'antd/lib/modal';
 import logo from '../../../../assets/img/shogun_logo.png';
 
 import './ApplicationInfo.less';
+import { appInfoAtom } from '../../../State/atoms';
+import { useRecoilState } from 'recoil';
 
 export interface ApplicationInfoProps extends ModalProps {
   opener?: ReactElement;
-  appInfo: any;
 }
 
 export const ApplicationInfo: React.FC<ApplicationInfoProps> = props => {
 
   const [isVisible, setVisible] = useState<boolean>(false);
+  const [appInfo] = useRecoilState(appInfoAtom);
 
   const toggleVisibility = () => {
     setVisible(!isVisible);
@@ -28,7 +30,6 @@ export const ApplicationInfo: React.FC<ApplicationInfoProps> = props => {
 
   const {
     opener,
-    appInfo,
     ...restProps
   } = props;
 

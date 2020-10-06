@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
-  RecoilRoot
+  useRecoilState
 } from 'recoil';
 
 import {
@@ -22,42 +22,67 @@ import {
 
 import './App.less';
 import Portal from './Page/Portal/Portal';
+import AppInfoService from './Service/AppInfoService/AppInfoService';
+import UserService from './Service/UserService/UserService';
+import Logger from 'js-logger';
+import { appInfoAtom, userInfoAtom } from './State/atoms';
+
+const userService = new UserService();
 
 const App: React.FC = props => {
+
+  const [, setUserInfo] = useRecoilState(userInfoAtom);
+  const [, setAppInfo] = useRecoilState(appInfoAtom);
+
+  // Fetch initial data:
+  // - applicationInfo
+  // - logged in User
+  const getInitialData = async () => {
+    try {
+      const appInfo = await AppInfoService.getAppInfo();
+      setAppInfo(appInfo);
+      const userInfo = await userService.findOne(appInfo.userId);
+      setUserInfo(userInfo);
+    } catch (error) {
+      Logger.error(error);
+    }
+  };
+
+  useEffect(() => {
+    getInitialData();
+  }, []);
 
   const history = createBrowserHistory();
 
   return (
-    <RecoilRoot>
-      <Router history={history}>
-        <Header />
-        <React.Suspense
-          fallback={
-            <Spin
-              className="suspense-spin"
-              indicator={
-                <LoadingOutlined
-                  className="suspense-spin-icon"
-                  spin
-                />
-              }
-            />
-          }
-        >
-          <Switch>
-            <Route
-              path="/portal"
-              component={Portal}
-            />
-            <Redirect
-              exact
-              from="/"
-              to="/portal"
-            />
-          </Switch>
-        </React.Suspense>
-      </Router>
-    </RecoilRoot>
+    <Router history={history}>
+      <Header />
+      <React.Suspense
+        fallback={
+          <Spin
+            className="suspense-spin"
+            indicator={
+              <LoadingOutlined
+                className="suspense-spin-icon"
+                spin
+              />
+            }
+          />
+        }
+      >
+        <Switch>
+          <Route
+            path="/portal"
+            component={Portal}
+          />
+          <Redirect
+            exact
+            from="/"
+            to="/portal"
+          />
+        </Switch>
+      </React.Suspense>
+    </Router>
   );
 };
 

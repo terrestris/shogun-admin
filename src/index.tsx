@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { RecoilRoot } from 'recoil';
 
 import App from './App';
 
@@ -11,14 +12,18 @@ KeyCloakUtil
   .init()
   .then(() => {
     ReactDOM.render(
-      <App />,
+      <RecoilRoot>
+        <App />
+      </RecoilRoot>,
       document.getElementById('app')
     );
   })
   .catch(() => {
     Logger.warn('SHOGun: Could not load keycloak data.');
     ReactDOM.render(
-      <App />,
+      <RecoilRoot>
+        <App />
+      </RecoilRoot>,
       document.getElementById('app')
     );
   });

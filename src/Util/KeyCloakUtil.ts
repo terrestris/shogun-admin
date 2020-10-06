@@ -2,7 +2,7 @@ import Keycloack from 'keycloak-js';
 import shogunApplicationConfig from 'shogunApplicationConfig';
 
 export const keycloak = Keycloack({
-  url: shogunApplicationConfig.path.keycloak.url,
+  url: shogunApplicationConfig.path.keycloak.base,
   realm: shogunApplicationConfig.path.keycloak.realm,
   clientId: shogunApplicationConfig.path.keycloak.clientId
 });
