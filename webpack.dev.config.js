@@ -44,11 +44,12 @@ const delayedConf = new Promise(function(resolve) {
     proxy: [{
       ...proxyCommonConf,
       context: [
+        '/shogun-boot/**',
         '/auth/**',
         '/users/**',
         '/sso/**'
       ],
-      target: 'http://localhost:8082/'
+      target: 'http://localhost:8080/'
     }, {
       ...proxyCommonConf,
       context: [
@@ -57,7 +58,7 @@ const delayedConf = new Promise(function(resolve) {
         '/graphql',
         '/sso'
       ],
-      target: 'http://localhost:8082/'
+      target: 'http://localhost:8080/'
     }]
   };
 

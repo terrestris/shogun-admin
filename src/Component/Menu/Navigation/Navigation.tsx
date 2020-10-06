@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { matchPath, useHistory, useLocation } from 'react-router-dom';
 
 import {
   BankOutlined,
@@ -17,15 +17,21 @@ interface OwnProps {
 type NavigationProps = OwnProps;
 
 export const Navigation: React.FC<NavigationProps> = (props) => {
-  let history = useHistory();
+  const history = useHistory();
+  const location = useLocation();
 
   const {
     collapsed = false
   } = props;
 
-  const onSelect = ({ item, key }) => {
+  const onSelect = ({ key }) => {
     history.push(`/portal/${key}`);
   };
+
+  const match = matchPath<{activeKey: string}>(location.pathname, {
+    path: '/portal/:activeKey'
+  });
+  const activeKey = match?.params?.activeKey;
 
   return (
     <Menu
@@ -35,19 +41,19 @@ export const Navigation: React.FC<NavigationProps> = (props) => {
       theme="dark"
       inlineCollapsed={collapsed}
       onSelect={onSelect}
-      selectedKeys={[history.location.pathname.replace('/portal/', '')]}
-      defaultOpenKeys={['general', 'project']}
+      selectedKeys={[activeKey]}
+      defaultOpenKeys={['general']}
     >
       <Menu.SubMenu key="general" title="Allgemein">
-        <Menu.Item key={'application'}>
+        <Menu.Item key="application">
           <BankOutlined />
           <span>Applikationen</span>
         </Menu.Item>
-        <Menu.Item key={'layer'}>
+        <Menu.Item key="layer">
           <CarOutlined />
           <span>Layer</span>
         </Menu.Item>
-        <Menu.Item key={'user'}>
+        <Menu.Item key="user">
           <CarOutlined />
           <span>Nutzer</span>
         </Menu.Item>

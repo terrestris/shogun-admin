@@ -28,10 +28,6 @@ import UserService from '../../../../Service/UserService/UserService';
 
 import User, { UserArgs } from '../../../../Model/User';
 
-// import { setAppInfo } from '../../../../store/appInfo/actions';
-// import { AppState } from '../../../../store/reducer';
-// import { AppInfoTypes } from '../../../../store/appInfo/types';
-
 import './UserProfileForm.less';
 import { userInfoAtom } from '../../../../State/atoms';
 
@@ -57,11 +53,10 @@ export const UserProfileForm: React.FC<UserProfileFormProps> = props => {
   const [loading, setLoading] = useState<boolean>(false);
   const [userInfo] = useRecoilState(userInfoAtom);
 
-
   useEffect(() => {
     form.setFieldsValue({
-      email: userInfo.email,
-      username: userInfo.username,
+      email: userInfo?.keycloakRepresentation?.email,
+      username: userInfo?.keycloakRepresentation?.username,
       affiliation: userInfo?.details?.affiliation,
       phone: userInfo?.details?.phone,
       about: userInfo?.details?.about
@@ -74,9 +69,11 @@ export const UserProfileForm: React.FC<UserProfileFormProps> = props => {
 
     const updateUser = new User({
       id: userInfo.id,
-      username: values.username,
-      email: userInfo.email,
-      enabled: true,
+      keycloakRepresentation: {
+        username: values.username,
+        email: userInfo?.keycloakRepresentation?.email,
+        enabled: true
+      },
       details: {
         phone: values?.phone,
         about: values?.about,

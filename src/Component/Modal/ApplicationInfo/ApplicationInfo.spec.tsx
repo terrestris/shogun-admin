@@ -1,19 +1,18 @@
 import * as React from 'react';
-import { render } from '../../../test-util';
-import { fireEvent, screen } from '@testing-library/react';
+import { render, fireEvent, screen } from '../../../test-util';
 
 import ApplicationInfo from './ApplicationInfo';
 
 describe('<ApplicationInfo />', () => {
   test('has an opener', async () => {
-    render(<ApplicationInfo appInfo={{}} />);
+    render(<ApplicationInfo />);
 
     const button = screen.getByText('Open');
     expect(button).toBeTruthy();
   });
 
   test('Opener shows modal if clicked', async () => {
-    render(<ApplicationInfo appInfo={{}} />);
+    render(<ApplicationInfo />);
     const button = screen.getByText('Open');
     await fireEvent.click(button);
     const modalTitle = await screen.getByText('Application Info');
@@ -21,7 +20,7 @@ describe('<ApplicationInfo />', () => {
   });
 
   test('Modal contains Build-Info', async () => {
-    render(<ApplicationInfo appInfo={{}} />);
+    render(<ApplicationInfo />);
     const button = screen.getByText('Open');
     await fireEvent.click(button);
     const buildInfo = await screen.getByText('Build');
@@ -30,7 +29,7 @@ describe('<ApplicationInfo />', () => {
   });
 
   test('Modal contains Version-Info', async () => {
-    render(<ApplicationInfo appInfo={{}} />);
+    render(<ApplicationInfo />);
     const button = screen.getByText('Open');
     await fireEvent.click(button);
     const versionInfo = await screen.getByText('Version');

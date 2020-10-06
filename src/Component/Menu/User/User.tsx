@@ -77,6 +77,7 @@ export const User: React.FC<UserProps> = (props) => {
 
   return (
     <Dropdown
+      className="user-menu"
       overlay={
         <Menu
           style={{ width: 256 }}
@@ -87,7 +88,7 @@ export const User: React.FC<UserProps> = (props) => {
             className="user-name"
           >
             <span>
-              {userInfo?.email}
+              {userInfo?.keycloakRepresentation?.email}
             </span>
           </div>
           <Menu.Divider/>
@@ -103,7 +104,6 @@ export const User: React.FC<UserProps> = (props) => {
                   Profile settings
                 </span>
               }
-              appInfo={{}}
             />
           </Menu.Item>
           <Menu.Item
@@ -118,7 +118,6 @@ export const User: React.FC<UserProps> = (props) => {
                   Info
                 </span>
               }
-              appInfo={{}}
             />
           </Menu.Item>
           <Menu.Divider/>
@@ -139,13 +138,13 @@ export const User: React.FC<UserProps> = (props) => {
           className="userimage"
         >
           {
-            avatarSource ? '' : UserUtil.getInitials(userInfo?.username)
+            avatarSource ? '' : UserUtil.getInitials(userInfo)
           }
         </Avatar>
         <span
           className="username"
         >
-          {userInfo?.username}
+          {userInfo?.keycloakRepresentation?.username}
         </span>
       </div>
     </Dropdown>
