@@ -3,6 +3,7 @@ var shogunApplicationConfig = {
     base: 'https://localhost:8080',
     swagger: '/shogun-boot/v2/api-docs',
     user: '/shogun-boot/users',
+    application: '/shogun-boot/applications',
     appInfo: '/shogun-boot/info/app',
     auth: {
       login: '/auth/login',

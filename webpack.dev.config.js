@@ -16,7 +16,7 @@ const delayedConf = new Promise(function(resolve) {
     changeOrigin: false,
     cookieDomainRewrite: 'localhost',
     cookiePathRewrite: '/',
-    secure: false,
+    secure: true,
     onProxyRes: (proxyRes) => {
       if ([301, 302, 307, 308].indexOf(proxyRes.statusCode) > -1 && proxyRes.headers.location) {
         let redirect = proxyRes.headers.location;
