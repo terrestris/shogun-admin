@@ -18,10 +18,7 @@ import {
   SettingOutlined
 } from '@ant-design/icons';
 
-import { userInfoAtom } from '../../../State/atoms';
-
-import ApplicationInfo from '../../Modal/ApplicationInfo/ApplicationInfo';
-import UserProfile from '../../Modal/UserProfile/UserProfile';
+import { shogunInfoModalVisibleAtom, userInfoAtom, userProfileModalVisibleAtom } from '../../../State/atoms';
 
 import UserService from '../../../Service/UserService/UserService';
 
@@ -38,6 +35,8 @@ export const User: React.FC<UserProps> = (props) => {
   let history = useHistory();
 
   const [userInfo] = useRecoilState(userInfoAtom);
+  const [,setProfileVisible] = useRecoilState(userProfileModalVisibleAtom);
+  const [,setInfoVisible] = useRecoilState(shogunInfoModalVisibleAtom);
 
   const avatarSource = '';
 
@@ -52,6 +51,12 @@ export const User: React.FC<UserProps> = (props) => {
 
   const onMenuClick = (evt: any) => {
     switch (evt.key) {
+      case 'info':
+        setInfoVisible(true);
+        break;
+      case 'settings':
+        setProfileVisible(true);
+        break;
       case 'logout':
         doLogout();
         break;
@@ -79,37 +84,21 @@ export const User: React.FC<UserProps> = (props) => {
           <Menu.Divider/>
           <Menu.Item
             key="settings"
+            icon={<SettingOutlined />}
           >
-            <UserProfile
-              opener={
-                <span
-                  className="settings-opener"
-                >
-                  <SettingOutlined />
-                  Profil Einstellungen
-                </span>
-              }
-            />
+            Profil Einstellungen
           </Menu.Item>
           <Menu.Item
             key="info"
+            icon={<InfoCircleOutlined />}
           >
-            <ApplicationInfo
-              opener={
-                <span
-                  className="info-opener"
-                >
-                  <InfoCircleOutlined />
-                  Info
-                </span>
-              }
-            />
+            Info
           </Menu.Item>
           <Menu.Divider/>
           <Menu.Item
             key="logout"
+            icon={<LogoutOutlined />}
           >
-            <LogoutOutlined />
             Ausloggen
           </Menu.Item>
         </Menu>
