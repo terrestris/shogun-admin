@@ -203,7 +203,7 @@ export const ApplicationTable: React.FC<ApplicationTableProps> = ({
           type: 'radio',
           columnWidth: 0,
           renderCell: () => '',
-          selectedRowKeys: [applicationId.toString()]
+          selectedRowKeys: applicationId ? [applicationId.toString()] : []
         }}
         rowKey={(record)=> record.id.toString()}
         rowClassName={() => 'editable-row'}
