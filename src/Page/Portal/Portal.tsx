@@ -11,6 +11,7 @@ import {
 import Navigation from '../../Component/Menu/Navigation/Navigation';
 
 import './Portal.less';
+import ApplicationRoot from '../../Component/Application/ApplicationRoot';
 
 interface OwnProps { }
 
@@ -37,10 +38,10 @@ export const Portal: React.FC<PortalProps> = props => {
       </div>
       <div className="content">
         <Switch>
-          {/* <Route
+          <Route
             path="/portal/application"
-            component={Project}
-          /> */}
+            component={ApplicationRoot}
+          />
           <Route
             render={
               () => <div className="home">

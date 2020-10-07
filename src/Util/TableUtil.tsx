@@ -30,10 +30,10 @@ export default class TableUtil {
             style={{ width: 90, marginRight: 8 }}
           >
             Filter
-        </Button>
+          </Button>
           <Button onClick={() => handleReset(clearFilters)} size="small" style={{ width: 90 }}>
             Reset
-        </Button>
+          </Button>
         </div>
       ),
       filterIcon: filtered => <SearchOutlined style={{ color: filtered ? '#1890ff' : undefined }} />,
@@ -57,5 +57,5 @@ export default class TableUtil {
         }
       }
     };
-  }
+  };
 }
