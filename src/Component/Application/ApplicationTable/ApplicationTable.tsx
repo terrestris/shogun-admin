@@ -16,7 +16,7 @@ import {
 
 import './ApplicationTable.less';
 import ApplicationService from '../../../Service/ApplicationService/ApplicationService';
-import { useHistory } from 'react-router-dom';
+import { matchPath, useHistory, useLocation } from 'react-router-dom';
 
 type OwnProps = {
   disableActions?: boolean;
@@ -32,6 +32,12 @@ export const ApplicationTable: React.FC<ApplicationTableProps> = ({
 }) => {
 
   const history = useHistory();
+  const location = useLocation();
+  const match = matchPath<{applicationId: string}>(location.pathname, {
+    path: '/portal/application/:applicationId'
+  });
+  const applicationId = match?.params?.applicationId;
+
   const [applications, setApplications] = useState<Application[]>();
   const [editingName, setEditingName] = useState('');
   const [loadingState, setLoadingState] = useState<'failed' | 'loading' | 'done'>();
@@ -193,7 +199,13 @@ export const ApplicationTable: React.FC<ApplicationTableProps> = ({
     <Form form={form} component={false}>
       <Table
         className="application-table"
-        rowKey="name"
+        rowSelection={{
+          type: 'radio',
+          columnWidth: 0,
+          renderCell: () => '',
+          selectedRowKeys: [applicationId.toString()]
+        }}
+        rowKey={(record)=> record.id.toString()}
         rowClassName={() => 'editable-row'}
         dataSource={applications}
         pagination={false}
