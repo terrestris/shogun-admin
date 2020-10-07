@@ -11,7 +11,7 @@ import {
 import Navigation from '../../Component/Menu/Navigation/Navigation';
 
 import './Portal.less';
-import ApplicationRoot from '../../Component/Application/ApplicationRoot';
+import ApplicationRoot from '../../Component/Application/ApplicationRoot/ApplicationRoot';
 import WelcomeDashboard from '../../Component/WelcomeDashboard/WelcomeDashboard';
 
 interface OwnProps { }

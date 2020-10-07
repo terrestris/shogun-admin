@@ -1,18 +1,37 @@
 .application-table {
-  .operation-column {
-    font-size: 1.5em;
 
-    .actions {
-      display: flex;
-      justify-content: space-around;
+  .ant-table {
+    .ant-table-row {
+      cursor: pointer;
 
-      .anticon {
-        cursor: pointer;
+      td.ant-table-column-sort {
+        background-color: inherit;
+        &:hover {
+          background-color: #fafafa;
+        }
+      }
 
-        &.anticon-delete {
-          color: #ea2f5a;
+      &:hover {
+        color: @primary-color;
+      }
+    }
+
+    .operation-column {
+      font-size: 1.5em;
+
+      .actions {
+        display: flex;
+        justify-content: space-around;
+
+        .anticon {
+          cursor: pointer;
+
+          &.anticon-delete {
+            color: #ea2f5a;
+          }
         }
       }
     }
   }
+
 }
