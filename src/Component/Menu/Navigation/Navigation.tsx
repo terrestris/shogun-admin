@@ -3,7 +3,8 @@ import { matchPath, useHistory, useLocation } from 'react-router-dom';
 
 import {
   BankOutlined,
-  CarOutlined
+  AppstoreOutlined,
+  UserOutlined
 } from '@ant-design/icons';
 
 import {
@@ -50,11 +51,11 @@ export const Navigation: React.FC<NavigationProps> = (props) => {
           <span>Applikationen</span>
         </Menu.Item>
         <Menu.Item key="layer">
-          <CarOutlined />
-          <span>Layer</span>
+          <AppstoreOutlined />
+          <span>Themen</span>
         </Menu.Item>
         <Menu.Item key="user">
-          <CarOutlined />
+          <UserOutlined />
           <span>Nutzer</span>
         </Menu.Item>
       </Menu.SubMenu>

@@ -65,11 +65,11 @@ export const ApplicationInfo: React.FC<ApplicationInfoProps> = props => {
           src={logo}
         />
         <Statistic
-          title="Version"
+          title="SHOGun Version"
           value={appInfo.version}
         />
         <Statistic
-          title="Build"
+          title="Build Zeit"
           value={appInfo.buildTime}
         />
       </Modal>

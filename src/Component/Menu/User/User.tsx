@@ -13,7 +13,6 @@ import {
 } from 'antd';
 
 import {
-  // DownOutlined,
   InfoCircleOutlined,
   LogoutOutlined,
   SettingOutlined
@@ -21,16 +20,10 @@ import {
 
 import { userInfoAtom } from '../../../State/atoms';
 
-// import UserChip from '@terrestris/react-geo/dist/UserChip/UserChip';
-
 import ApplicationInfo from '../../Modal/ApplicationInfo/ApplicationInfo';
 import UserProfile from '../../Modal/UserProfile/UserProfile';
 
 import UserService from '../../../Service/UserService/UserService';
-
-// import { AppInfoTypes } from '../../../store/appInfo/types';
-// import { AppState } from '../../../store/reducer';
-// import { clearAppInfo } from '../../../store/appInfo/actions';
 
 import './User.less';
 import Avatar from 'antd/lib/avatar/avatar';
@@ -54,19 +47,11 @@ export const User: React.FC<UserProps> = (props) => {
         // Force reloading of the login page which may be the current page.
         history.push('/notavailable');
         history.replace('/login');
-
-        // onLogoutClick();
       });
   };
 
   const onMenuClick = (evt: any) => {
     switch (evt.key) {
-      case 'settings':
-        // Don't do anything, visible state will be handled by the modal itself.
-        break;
-      case 'info':
-        // Don't do anything, visible state will be handled by the modal itself.
-        break;
       case 'logout':
         doLogout();
         break;
@@ -95,12 +80,12 @@ export const User: React.FC<UserProps> = (props) => {
           <Menu.Item
             key="settings"
           >
-            <SettingOutlined />
             <UserProfile
               opener={
                 <span
                   className="settings-opener"
                 >
+                  <SettingOutlined />
                   Profile settings
                 </span>
               }
@@ -109,12 +94,12 @@ export const User: React.FC<UserProps> = (props) => {
           <Menu.Item
             key="info"
           >
-            <InfoCircleOutlined />
             <ApplicationInfo
               opener={
                 <span
                   className="info-opener"
                 >
+                  <InfoCircleOutlined />
                   Info
                 </span>
               }
