@@ -86,7 +86,7 @@ export const User: React.FC<UserProps> = (props) => {
                   className="settings-opener"
                 >
                   <SettingOutlined />
-                  Profile settings
+                  Profil Einstellungen
                 </span>
               }
             />
@@ -110,7 +110,7 @@ export const User: React.FC<UserProps> = (props) => {
             key="logout"
           >
             <LogoutOutlined />
-            Sign out
+            Ausloggen
           </Menu.Item>
         </Menu>
       }

@@ -50,7 +50,7 @@ export const UserProfile: React.FC<UserProfileProps> = props => {
       <Modal
         className="profile-settings"
         centered={true}
-        title="Profile settings"
+        title="Profil Einstellungen"
         visible={isVisible}
         onOk={toggleVisibility}
         onCancel={toggleVisibility}

@@ -52,7 +52,7 @@ export const ApplicationInfo: React.FC<ApplicationInfoProps> = props => {
       }
       <Modal
         className="application-info-modal"
-        title="Application Info"
+        title="SHOGun Admin info"
         centered={true}
         visible={isVisible}
         onOk={toggleVisibility}

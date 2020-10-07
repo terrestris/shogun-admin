@@ -15,7 +15,7 @@ describe('<ApplicationInfo />', () => {
     render(<ApplicationInfo />);
     const button = screen.getByText('Open');
     await fireEvent.click(button);
-    const modalTitle = await screen.getByText('Application Info');
+    const modalTitle = await screen.getByText('SHOGun Admin info');
     expect(modalTitle).toBeDefined();
   });
 
@@ -23,7 +23,7 @@ describe('<ApplicationInfo />', () => {
     render(<ApplicationInfo />);
     const button = screen.getByText('Open');
     await fireEvent.click(button);
-    const buildInfo = await screen.getByText('Build');
+    const buildInfo = await screen.getByText('Build Zeit');
 
     expect(buildInfo).toBeDefined();
   });
@@ -32,7 +32,7 @@ describe('<ApplicationInfo />', () => {
     render(<ApplicationInfo />);
     const button = screen.getByText('Open');
     await fireEvent.click(button);
-    const versionInfo = await screen.getByText('Version');
+    const versionInfo = await screen.getByText('SHOGun Version');
 
     expect(versionInfo).toBeDefined();
   });
