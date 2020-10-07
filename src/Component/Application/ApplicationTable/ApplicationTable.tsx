@@ -153,7 +153,7 @@ export const ApplicationTable: React.FC<ApplicationTableProps> = ({
     }
   ];
 
-  if(!disableActions) {
+  if (!disableActions) {
     columns.push({
       title: '',
       className: 'operation-column',
@@ -214,9 +214,9 @@ export const ApplicationTable: React.FC<ApplicationTableProps> = ({
             cell: EditableCell
           }
         }}
-        onRow={(record, rowIndex) => {
+        onRow={(record: Application, rowIndex: number) => {
           return {
-            onClick: (event) => onRowClick(record, event)
+            onClick: (event: React.MouseEvent<HTMLElement, MouseEvent>) => onRowClick(record, event)
           };
         }}
         columns={
@@ -228,9 +228,7 @@ export const ApplicationTable: React.FC<ApplicationTableProps> = ({
               ...col,
               onCell: record => ({
                 record,
-                dataType: col.dataIndex === 'isIndividual' ? 'boolean' :
-                  col.dataIndex === 'transportationTraits' ? 'transportationTraits'
-                    : 'text',
+                dataType: 'text',
                 editing: isEditing(record),
                 dataIndex: col.dataIndex,
                 title: col.title

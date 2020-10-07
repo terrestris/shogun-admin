@@ -7,6 +7,7 @@ import {
   Link
 } from 'react-router-dom';
 
+import ApplicationEditForm from '../ApplicationEditForm/ApplicationEditForm';
 import ApplicationTable from '../ApplicationTable/ApplicationTable';
 
 import './ApplicationRoot.less';
@@ -57,9 +58,7 @@ export const ApplicationRoot: React.FC<ApplicationProps> = props => {
         <ApplicationTable />
       </div>
       <div className="right-container">
-        {id}
-        {/* TODO: */}
-        {/* <ApplicationEditForm id={id} /> */}
+        <ApplicationEditForm id={id} />
       </div>
     </div>
   );
