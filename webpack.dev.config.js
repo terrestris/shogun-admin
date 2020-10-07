@@ -16,16 +16,7 @@ const delayedConf = new Promise(function(resolve) {
     changeOrigin: false,
     cookieDomainRewrite: 'localhost',
     cookiePathRewrite: '/',
-    secure: true,
-    onProxyRes: (proxyRes) => {
-      if ([301, 302, 307, 308].indexOf(proxyRes.statusCode) > -1 && proxyRes.headers.location) {
-        let redirect = proxyRes.headers.location;
-        console.log('Received code ' + proxyRes.statusCode + ' from API Server for URL - ' + redirect);
-        redirect = redirect.replace('http://', 'https://');
-        console.log('Manipulating header location and redirecting to - ' + redirect);
-        proxyRes.headers.location = redirect;
-      }
-    }
+    secure: true
   };
 
   commonWebpackConfig.devServer = {
