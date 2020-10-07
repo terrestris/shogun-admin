@@ -12,6 +12,7 @@ import Navigation from '../../Component/Menu/Navigation/Navigation';
 
 import './Portal.less';
 import ApplicationRoot from '../../Component/Application/ApplicationRoot';
+import WelcomeDashboard from '../../Component/WelcomeDashboard/WelcomeDashboard';
 
 interface OwnProps { }
 
@@ -43,11 +44,7 @@ export const Portal: React.FC<PortalProps> = props => {
             component={ApplicationRoot}
           />
           <Route
-            render={
-              () => <div className="home">
-                <h1>SHOGun admin</h1>
-              </div>
-            }
+            component={WelcomeDashboard}
           />
         </Switch>
       </div>

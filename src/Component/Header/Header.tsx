@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import logo from '../../../assets/img/shogun_logo.png';
 import User from '../Menu/User/User';
@@ -16,15 +17,15 @@ export const Header: React.FC<HeaderProps> = props => {
   return (
     <header>
       <div className="container left">
-        <a
-          href="/"
+        <Link
+          to={'/portal'}
           className="header-logo-a"
         >
           <img
             className="header-logo-img"
             src={logo}
           />
-        </a>
+        </Link>
       </div>
       <div
         className="container center"
