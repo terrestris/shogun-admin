@@ -1,6 +1,6 @@
 var shogunApplicationConfig = {
   path: {
-    base: 'https://localhost:8080',
+    base: 'http://localhost:8080',
     swagger: '/shogun-boot/v2/api-docs',
     user: '/shogun-boot/users',
     application: '/shogun-boot/applications',
