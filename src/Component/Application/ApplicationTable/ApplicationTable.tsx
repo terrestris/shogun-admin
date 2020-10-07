@@ -16,6 +16,7 @@ import {
 
 import './ApplicationTable.less';
 import ApplicationService from '../../../Service/ApplicationService/ApplicationService';
+import { useHistory } from 'react-router-dom';
 
 type OwnProps = {
   disableActions?: boolean;
@@ -30,6 +31,7 @@ export const ApplicationTable: React.FC<ApplicationTableProps> = ({
   ...passThroughProps
 }) => {
 
+  const history = useHistory();
   const [applications, setApplications] = useState<Application[]>();
   const [editingName, setEditingName] = useState('');
   const [loadingState, setLoadingState] = useState<'failed' | 'loading' | 'done'>();
@@ -149,36 +151,43 @@ export const ApplicationTable: React.FC<ApplicationTableProps> = ({
     columns.push({
       title: '',
       className: 'operation-column',
-      width: 200,
+      width: 100,
       dataIndex: 'operation',
       render: (_: any, record: Application) => {
-        const editable = isEditing(record);
-        return editable ? (
-          <div className="actions">
-            <Tooltip title="Speichern">
-              <CheckCircleTwoTone
-                twoToneColor="#52c41a"
-                onClick={() => save(record.name)}
-                style={{ marginRight: 8 }}
-              />
-            </Tooltip>
-            <Tooltip title="Abbrechen">
-              <CloseCircleOutlined onClick={stopEditing} />
-            </Tooltip>
-          </div>
-        ) : (
-          <div className="actions">
-            <Tooltip title="Bearbeiten">
-              <EditOutlined onClick={() => edit(record)} />
-            </Tooltip>
-            <Tooltip title="Löschen">
-              <DeleteOutlined onClick={() => onDeleteClick(record)} />
-            </Tooltip>
-          </div>
-        );
+        if (isEditing(record)) {
+          return (
+            <div className="actions">
+              <Tooltip title="Speichern">
+                <CheckCircleTwoTone
+                  twoToneColor="#52c41a"
+                  onClick={() => save(record.name)}
+                  style={{ marginRight: 8 }}
+                />
+              </Tooltip>
+              <Tooltip title="Abbrechen">
+                <CloseCircleOutlined onClick={stopEditing} />
+              </Tooltip>
+            </div>
+          );
+        } else {
+          return (
+            <div className="actions">
+              <Tooltip title="Bearbeiten">
+                <EditOutlined onClick={() => edit(record)} />
+              </Tooltip>
+              <Tooltip title="Löschen">
+                <DeleteOutlined onClick={() => onDeleteClick(record)} />
+              </Tooltip>
+            </div>
+          );
+        }
       }
     });
   }
+
+  const onRowClick = (record: Application, event: React.MouseEvent<HTMLElement, MouseEvent>) => {
+    history.push(`/portal/application/${record.id}`);
+  };
 
   return (
     <Form form={form} component={false}>
@@ -192,6 +201,11 @@ export const ApplicationTable: React.FC<ApplicationTableProps> = ({
           body: {
             cell: EditableCell
           }
+        }}
+        onRow={(record, rowIndex) => {
+          return {
+            onClick: (event) => onRowClick(record, event)
+          };
         }}
         columns={
           columns.map(col => {
