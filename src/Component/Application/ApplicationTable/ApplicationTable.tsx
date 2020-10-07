@@ -5,11 +5,10 @@ import { EditableCell } from '../../Table/EditableCell';
 
 import Table, { TableProps } from 'antd/lib/table';
 import TableUtil from '../../../Util/TableUtil';
-import { Form, Modal, Input, notification, Button, Tooltip } from 'antd';
+import { Form, Modal, Input, notification, Tooltip } from 'antd';
 
 import {
   CheckCircleTwoTone,
-  PlusOutlined,
   CloseCircleOutlined,
   EditOutlined,
   DeleteOutlined
@@ -18,15 +17,18 @@ import {
 import './ApplicationTable.less';
 import ApplicationService from '../../../Service/ApplicationService/ApplicationService';
 
-type OwnProps = {};
+type OwnProps = {
+  disableActions?: boolean;
+};
 
 type ApplicationTableProps = OwnProps & TableProps<Application>;
 
 const applicationService = new ApplicationService();
 
-export const ApplicationTable: React.FC<ApplicationTableProps> = props => {
-
-  const {...passThroughProps} = props;
+export const ApplicationTable: React.FC<ApplicationTableProps> = ({
+  disableActions = false,
+  ...passThroughProps
+}) => {
 
   const [applications, setApplications] = useState<Application[]>();
   const [editingName, setEditingName] = useState('');
@@ -99,10 +101,6 @@ export const ApplicationTable: React.FC<ApplicationTableProps> = props => {
     });
   };
 
-  const handleAdd = () => {
-    // TODO
-  };
-
   const save = async (name: string) => {
     const row = (await form.validateFields()) as Application;
     const affectedApplication = applications.find(t => t.name === editingName);
@@ -144,8 +142,11 @@ export const ApplicationTable: React.FC<ApplicationTableProps> = props => {
       defaultSortOrder: 'ascend',
       editable: true,
       ...TableUtil.getColumnSearchProps('name', handleSearch, handleReset)
-    },
-    {
+    }
+  ];
+
+  if(!disableActions) {
+    columns.push({
       title: '',
       className: 'operation-column',
       width: 200,
@@ -176,18 +177,11 @@ export const ApplicationTable: React.FC<ApplicationTableProps> = props => {
           </div>
         );
       }
-    }
-  ];
+    });
+  }
 
   return (
     <Form form={form} component={false}>
-      <Button
-        type="primary"
-        icon={<PlusOutlined />}
-        onClick={handleAdd}
-      >
-        Neue Applikation
-      </Button>
       <Table
         className="application-table"
         rowKey="name"
