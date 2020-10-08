@@ -139,16 +139,25 @@ export const ApplicationEditForm: React.FC<ApplicationEditFormProps> = ({
         label="Erstellt am"
       >
         <Input
+          readOnly={true}
           bordered={false}
         />
       </Form.Item>
       <Form.Item
         name="modified"
-        label="Modified at"
+        label="Editiert am"
       >
         <Input
+          readOnly={true}
           bordered={false}
         />
+      </Form.Item>
+      <Form.Item
+        name="stateOnly"
+        label="Arbeitstand"
+        valuePropName="checked"
+      >
+        <Checkbox />
       </Form.Item>
       <Form.Item>
         <Button type="primary" onClick={saveApp}>
