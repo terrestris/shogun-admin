@@ -89,20 +89,22 @@ export const ApplicationEditForm: React.FC<ApplicationEditFormProps> = ({
       ...updates
     };
 
-    if (application.id && application.id.toString() !== 'create') {
-      applicationService
-        .update(updatedApplication)
-        .then(() => {
-          history.push(`/portal/application`);
-        });
-        // .then(fetchApplications)
-    } else {
-      applicationService
-        .add(updatedApplication)
-        // .then(fetchApplications)
+    try {
+      if (id?.toString() !== 'create') {
+        applicationService
+          .update(updatedApplication)
+          .then(() => {
+            history.push('/portal/application');
+          });
+      } else {
+        applicationService
+          .add(updatedApplication);
+      }
+      history.push('/portal/application');
+    } catch (error) {
+      Logger.error(error);
     }
   };
-
 
   return (
     <Form
