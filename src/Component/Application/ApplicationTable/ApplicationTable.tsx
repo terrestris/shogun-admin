@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import Application from '../../../Model/Application';
 
@@ -53,14 +53,14 @@ export const ApplicationTable: React.FC<ApplicationTableProps> = ({
     fetchApplications();
   }
 
-  const isEditing = (record: Application) => record.name === editingName;
-
-  const edit = (record: Application) => {
-    form.setFieldsValue({
-      ...record
-    });
-    setEditingName(record.name);
-  };
+  /**
+   * Update application list after a certain application settings were changed
+   */
+  useEffect(() => {
+    if (!applicationId && loadingState) {
+      fetchApplications();
+    }
+  }, [applicationId]);
 
   const handleSearch = (selectedKeys, confirm) => {
     confirm();
@@ -141,6 +141,9 @@ export const ApplicationTable: React.FC<ApplicationTableProps> = ({
   }
 
   const onRowClick = (record: Application, event: React.MouseEvent<HTMLElement, MouseEvent>) => {
+    if (event.target instanceof SVGElement) {
+      return;
+    }
     history.push(`/portal/application/${record.id}`);
   };
 
