@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { JsonEditor as Editor } from 'jsoneditor-react';
+import 'jsoneditor-react/es/editor.min.css';
 
 import Application from '../../../Model/Application';
 
@@ -102,13 +104,14 @@ export const ApplicationEditForm: React.FC<ApplicationEditFormProps> = ({
             history.push('/portal/application');
           });
       } else {
-        applicationService
-          .add(updatedApplication);
+        applicationService.add(updatedApplication)
+          .then(() => {
+            history.push('/portal/application');
+          });;
       }
       notification.success({
         message: `Applikation "${name}" wurde erfolgreich ${updateMode ? 'aktualisiert' : 'erstellt'}`
       });
-      history.push('/portal/application');
     } catch (error) {
       notification.error({
         message: `Applikation "${name}" konnte nicht ${updateMode ? 'aktualisiert' : 'erstellt'} werden`
@@ -158,6 +161,13 @@ export const ApplicationEditForm: React.FC<ApplicationEditFormProps> = ({
         valuePropName="checked"
       >
         <Checkbox />
+      </Form.Item>
+      <Form.Item
+        name="clientConfig"
+        label="Konfiguration"
+      >
+        // TODO get me work
+        <Editor />
       </Form.Item>
       <Form.Item>
         <Button type="primary" onClick={saveApp}>
