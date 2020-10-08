@@ -1,6 +1,4 @@
-import React, {
-  useState, ReactElement
-} from 'react';
+import React from 'react';
 
 import {
   Modal,
@@ -15,9 +13,7 @@ import './ApplicationInfo.less';
 import { appInfoAtom, shogunInfoModalVisibleAtom } from '../../../State/atoms';
 import { useRecoilState } from 'recoil';
 
-export interface ApplicationInfoProps extends ModalProps {
-  opener?: ReactElement;
-}
+export interface ApplicationInfoProps extends ModalProps {}
 
 export const ApplicationInfo: React.FC<ApplicationInfoProps> = ({
   ...passThroughProps
