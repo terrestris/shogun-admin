@@ -33,6 +33,8 @@
     "@terrestris/ol-util": "^4.0.1",
     "antd": "^4.6.6",
     "js-logger": "^1.6.0",
+    "jsoneditor": "^9.1.1",
+    "jsoneditor-react": "^3.0.1",
     "keycloak-js": "^11.0.2",
     "lodash": "^4.17.15",
     "moment": "^2.24.0",

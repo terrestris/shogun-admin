@@ -1,16 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import Application from '../../../Model/Application';
-import { EditableCell } from '../../Table/EditableCell';
 
 import Table, { TableProps } from 'antd/lib/table';
 import TableUtil from '../../../Util/TableUtil';
 import { Form, Modal, Input, notification, Tooltip } from 'antd';
 
 import {
-  CheckCircleTwoTone,
-  CloseCircleOutlined,
-  EditOutlined,
   DeleteOutlined
 } from '@ant-design/icons';
 
@@ -33,13 +29,12 @@ export const ApplicationTable: React.FC<ApplicationTableProps> = ({
 
   const history = useHistory();
   const location = useLocation();
-  const match = matchPath<{applicationId: string}>(location.pathname, {
+  const match = matchPath<{ applicationId: string }>(location.pathname, {
     path: '/portal/application/:applicationId'
   });
   const applicationId = match?.params?.applicationId;
 
   const [applications, setApplications] = useState<Application[]>();
-  const [editingName, setEditingName] = useState('');
   const [loadingState, setLoadingState] = useState<'failed' | 'loading' | 'done'>();
   const [form] = Form.useForm();
 
@@ -58,14 +53,14 @@ export const ApplicationTable: React.FC<ApplicationTableProps> = ({
     fetchApplications();
   }
 
-  const isEditing = (record: Application) => record.name === editingName;
-
-  const edit = (record: Application) => {
-    form.setFieldsValue({
-      ...record
-    });
-    setEditingName(record.name);
-  };
+  /**
+   * Update application list after a certain application settings were changed
+   */
+  useEffect(() => {
+    if (!applicationId && loadingState) {
+      fetchApplications();
+    }
+  }, [applicationId]);
 
   const handleSearch = (selectedKeys, confirm) => {
     confirm();
@@ -109,31 +104,6 @@ export const ApplicationTable: React.FC<ApplicationTableProps> = ({
     });
   };
 
-  const save = async (name: string) => {
-    const row = (await form.validateFields()) as Application;
-    const affectedApplication = applications.find(t => t.name === editingName);
-    const updatedApplication = {
-      ...affectedApplication,
-      ...row
-    };
-
-    if (affectedApplication.id) {
-      applicationService
-        .update(updatedApplication)
-        .then(fetchApplications)
-        .then(stopEditing);
-    } else {
-      applicationService
-        .add(updatedApplication)
-        .then(fetchApplications)
-        .then(stopEditing);
-    }
-  };
-
-  const stopEditing = () => {
-    setEditingName('');
-  };
-
   const getSorter = (index: string) => {
     return (a, b) => {
       a = typeof a[index] === 'string' ? a[index]?.toLowerCase() : a[index]?.toString();
@@ -148,50 +118,32 @@ export const ApplicationTable: React.FC<ApplicationTableProps> = ({
       dataIndex: 'name',
       sorter: getSorter('name'),
       defaultSortOrder: 'ascend',
-      editable: true,
       ...TableUtil.getColumnSearchProps('name', handleSearch, handleReset)
     }
   ];
 
-  if(!disableActions) {
+  if (!disableActions) {
     columns.push({
       title: '',
       className: 'operation-column',
       width: 100,
       dataIndex: 'operation',
       render: (_: any, record: Application) => {
-        if (isEditing(record)) {
-          return (
-            <div className="actions">
-              <Tooltip title="Speichern">
-                <CheckCircleTwoTone
-                  twoToneColor="#52c41a"
-                  onClick={() => save(record.name)}
-                  style={{ marginRight: 8 }}
-                />
-              </Tooltip>
-              <Tooltip title="Abbrechen">
-                <CloseCircleOutlined onClick={stopEditing} />
-              </Tooltip>
-            </div>
-          );
-        } else {
-          return (
-            <div className="actions">
-              <Tooltip title="Bearbeiten">
-                <EditOutlined onClick={() => edit(record)} />
-              </Tooltip>
-              <Tooltip title="Löschen">
-                <DeleteOutlined onClick={() => onDeleteClick(record)} />
-              </Tooltip>
-            </div>
-          );
-        }
+        return (
+          <div className="actions">
+            <Tooltip title="Löschen">
+              <DeleteOutlined onClick={() => onDeleteClick(record)} />
+            </Tooltip>
+          </div>
+        );
       }
     });
   }
 
   const onRowClick = (record: Application, event: React.MouseEvent<HTMLElement, MouseEvent>) => {
+    if (event.target instanceof SVGElement) {
+      return;
+    }
     history.push(`/portal/application/${record.id}`);
   };
 
@@ -205,39 +157,15 @@ export const ApplicationTable: React.FC<ApplicationTableProps> = ({
           renderCell: () => '',
           selectedRowKeys: applicationId ? [applicationId.toString()] : []
         }}
-        rowKey={(record)=> record.id.toString()}
-        rowClassName={() => 'editable-row'}
+        rowKey={(record) => record.id.toString()}
         dataSource={applications}
         pagination={false}
-        components={{
-          body: {
-            cell: EditableCell
-          }
-        }}
-        onRow={(record, rowIndex) => {
+        onRow={(record: Application, rowIndex: number) => {
           return {
-            onClick: (event) => onRowClick(record, event)
+            onClick: (event: React.MouseEvent<HTMLElement, MouseEvent>) => onRowClick(record, event)
           };
         }}
-        columns={
-          columns.map(col => {
-            if (!col.editable) {
-              return col;
-            }
-            return {
-              ...col,
-              onCell: record => ({
-                record,
-                dataType: col.dataIndex === 'isIndividual' ? 'boolean' :
-                  col.dataIndex === 'transportationTraits' ? 'transportationTraits'
-                    : 'text',
-                editing: isEditing(record),
-                dataIndex: col.dataIndex,
-                title: col.title
-              })
-            };
-          })
-        }
+        columns={columns}
         {...passThroughProps}
       />
     </Form>
