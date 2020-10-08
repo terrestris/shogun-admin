@@ -33,7 +33,7 @@ export const Header: React.FC<HeaderProps> = props => {
         }
         subTitle="… der Alleskönner"
         extra={[
-          <User />
+          <User key="user"/>
         ]}
       >
       </PageHeader>
