@@ -18,6 +18,8 @@ import { Dashboard } from '../Dashboard/Dashboard';
 import { DashboardCard } from '../Dashboard/DashboardCard/DashboardCard';
 import ApplicationTable from '../Application/ApplicationTable/ApplicationTable';
 import Avatar from 'antd/lib/avatar/avatar';
+import LayerTable from '../Layer/LayerTable/LayerTable';
+import UserTable from '../User/UserTable/UserTable';
 
 type WelcomeDashboardProps = {};
 
@@ -90,7 +92,9 @@ export const WelcomeDashboard: React.FC<WelcomeDashboardProps> = (props) => {
         description="… die die Welt bewegen"
         avatar={<Link to={'/portal/layer'}><AppstoreOutlined /></Link>}
       >
-        {/* <UserProfileForm /> */}
+        <LayerTable
+          disableActions={true}
+        />
       </DashboardCard>
       <DashboardCard
         className="layer-dashboard-card"
@@ -98,7 +102,9 @@ export const WelcomeDashboard: React.FC<WelcomeDashboardProps> = (props) => {
         description="… die die Welt verbessern"
         avatar={<Link to={'/portal/user'}><UserOutlined /></Link>}
       >
-        {/* <UserProfileForm /> */}
+        <UserTable
+          disableActions={true}
+        />
       </DashboardCard>
     </Dashboard>
   );
