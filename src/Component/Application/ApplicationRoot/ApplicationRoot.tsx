@@ -22,13 +22,14 @@ export const ApplicationRoot: React.FC<ApplicationProps> = props => {
 
   const history = useHistory();
   const location = useLocation();
-  const match = matchPath<{applicationId: string}>(location.pathname, {
+  const match = matchPath<{ applicationId: string }>(location.pathname, {
     path: '/portal/application/:applicationId'
   });
   const applicationId = match?.params?.applicationId;
 
   useEffect(() => {
     if (!applicationId) {
+      setId(undefined);
       return;
     }
     if (applicationId === 'create') {
@@ -57,9 +58,12 @@ export const ApplicationRoot: React.FC<ApplicationProps> = props => {
       <div className="left-container">
         <ApplicationTable />
       </div>
-      <div className="right-container">
-        <ApplicationEditForm id={id} />
-      </div>
+      {
+        id &&
+        <div className="right-container">
+          <ApplicationEditForm id={id} />
+        </div>
+      }
     </div>
   );
 };
