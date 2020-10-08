@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import Application from '../../../Model/Application';
 
-import { Button, Form, Input, Modal, notification } from 'antd';
+import { Button, Checkbox, Form, Input, Modal, notification } from 'antd';
 
 
 import './ApplicationEditForm.less';
@@ -68,7 +68,7 @@ export const ApplicationEditForm: React.FC<ApplicationEditFormProps> = ({
             applicationService
               .delete(application.id)
               .then(() => {
-                notification.info({
+                notification.success({
                   message: 'Applikation gelöscht',
                   description: `Applikation "${appName}" wurde gelöscht`
                 });
@@ -76,6 +76,9 @@ export const ApplicationEditForm: React.FC<ApplicationEditFormProps> = ({
               });
           }
         } catch (error) {
+          notification.error({
+            message: `Applikation "${appName}" konnte nicht gelöscht werden`
+          });
           Logger.error(error);
         }
       }
@@ -89,8 +92,10 @@ export const ApplicationEditForm: React.FC<ApplicationEditFormProps> = ({
       ...updates
     };
 
+    const updateMode = id.toString() !== 'create';
+    const name = updatedApplication.name;
     try {
-      if (id?.toString() !== 'create') {
+      if (updateMode) {
         applicationService
           .update(updatedApplication)
           .then(() => {
@@ -100,8 +105,14 @@ export const ApplicationEditForm: React.FC<ApplicationEditFormProps> = ({
         applicationService
           .add(updatedApplication);
       }
+      notification.success({
+        message: `Applikation "${name}" wurde erfolgreich ${updateMode ? 'aktualisiert' : 'erstellt'}`
+      });
       history.push('/portal/application');
     } catch (error) {
+      notification.error({
+        message: `Applikation "${name}" konnte nicht ${updateMode ? 'aktualisiert' : 'erstellt'} werden`
+      });
       Logger.error(error);
     }
   };
@@ -116,7 +127,7 @@ export const ApplicationEditForm: React.FC<ApplicationEditFormProps> = ({
         label="Name"
         rules={[{
           required: true,
-          message: 'Please set an application name!'
+          message: 'Bitte geben Sie einen Namen ein!'
         }]}
       >
         <Input
@@ -125,7 +136,7 @@ export const ApplicationEditForm: React.FC<ApplicationEditFormProps> = ({
       </Form.Item>
       <Form.Item
         name="created"
-        label="Created at"
+        label="Erstellt am"
       >
         <Input
           bordered={false}
