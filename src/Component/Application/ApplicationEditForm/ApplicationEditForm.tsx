@@ -9,6 +9,8 @@ import './ApplicationEditForm.less';
 import ApplicationService from '../../../Service/ApplicationService/ApplicationService';
 import Logger from 'js-logger';
 
+import { useHistory } from 'react-router-dom';
+
 type OwnProps = {
   id?: number | string;
 };
@@ -20,6 +22,8 @@ const applicationService = new ApplicationService();
 export const ApplicationEditForm: React.FC<ApplicationEditFormProps> = ({
   id
 }) => {
+
+  const history = useHistory();
 
   const [application, setApplication] = useState<Application>();
   const [form] = Form.useForm();
@@ -86,6 +90,9 @@ export const ApplicationEditForm: React.FC<ApplicationEditFormProps> = ({
     if (application.id && application.id.toString() !== 'create') {
       applicationService
         .update(updatedApplication)
+        .then(() => {
+          history.push(`/portal/application`);
+        });
         // .then(fetchApplications)
     } else {
       applicationService
