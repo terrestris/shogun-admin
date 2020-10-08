@@ -1,65 +1,42 @@
-import React, {
-  useState,
-  ReactElement
-} from 'react';
+import React from 'react';
+import { useRecoilState } from 'recoil';
 
 import {
   Modal
 } from 'antd';
 
 import { ModalProps } from 'antd/lib/modal';
+import { userProfileModalVisibleAtom } from '../../../State/atoms';
 
 import UserProfileForm from './UserProfileForm/UserProfileForm';
 
 import './UserProfile.less';
 
-interface UserProfileProps extends ModalProps {
-  opener?: ReactElement;
-}
+interface UserProfileProps extends ModalProps {}
 
-export const UserProfile: React.FC<UserProfileProps> = props => {
+export const UserProfile: React.FC<UserProfileProps> = ({
+  ...passThroughProps
+}) => {
 
-  const [isVisible, setVisible] = useState<boolean>(false);
+  const [isVisible, setVisible] = useRecoilState(userProfileModalVisibleAtom);
 
   const toggleVisibility = () => {
     setVisible(!isVisible);
   };
 
-  const {
-    opener,
-    ...restProps
-  } = props;
-
-  let Opener;
-  if (opener) {
-    Opener = React.cloneElement(
-      opener,
-      {
-        onClick: toggleVisibility
-      }
-    );
-  } else {
-    Opener = <button onClick={toggleVisibility}>Open</button>;
-  }
-
   return (
-    <>
-      {
-        Opener
-      }
-      <Modal
-        className="profile-settings"
-        centered={true}
-        title="Profile settings"
-        visible={isVisible}
-        onOk={toggleVisibility}
-        onCancel={toggleVisibility}
-        footer={null}
-        {...restProps}
-      >
-        <UserProfileForm />
-      </Modal>
-    </>
+    <Modal
+      className="profile-settings"
+      centered={true}
+      title="Profil Einstellungen"
+      visible={isVisible}
+      onOk={toggleVisibility}
+      onCancel={toggleVisibility}
+      footer={null}
+      {...passThroughProps}
+    >
+      <UserProfileForm />
+    </Modal>
   );
 };
 

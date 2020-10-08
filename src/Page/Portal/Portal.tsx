@@ -13,6 +13,8 @@ import Navigation from '../../Component/Menu/Navigation/Navigation';
 import './Portal.less';
 import ApplicationRoot from '../../Component/Application/ApplicationRoot/ApplicationRoot';
 import WelcomeDashboard from '../../Component/WelcomeDashboard/WelcomeDashboard';
+import UserProfile from '../../Component/Modal/UserProfile/UserProfile';
+import ApplicationInfo from '../../Component/Modal/ApplicationInfo/ApplicationInfo';
 
 interface OwnProps { }
 
@@ -48,6 +50,10 @@ export const Portal: React.FC<PortalProps> = props => {
           />
         </Switch>
       </div>
+      <>
+        <UserProfile />
+        <ApplicationInfo />
+      </>
     </div>
   );
 };

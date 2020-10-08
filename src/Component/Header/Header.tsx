@@ -1,3 +1,4 @@
+import { PageHeader } from 'antd';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
@@ -16,24 +17,26 @@ export const Header: React.FC<HeaderProps> = props => {
 
   return (
     <header>
-      <div className="container left">
-        <Link
-          to={'/portal'}
-          className="header-logo-a"
-        >
-          <img
-            className="header-logo-img"
-            src={logo}
-          />
-        </Link>
-      </div>
-      <div
-        className="container center"
+      <PageHeader
+        className="page-header"
+        title={
+          <Link
+            to={'/portal'}
+            className="header-logo-a"
+          >
+            <img
+              className="header-logo-img"
+              src={logo}
+            />
+            SHOGun Admin
+          </Link>
+        }
+        subTitle="… der Alleskönner"
+        extra={[
+          <User />
+        ]}
       >
-      </div>
-      <div className="container right">
-        <User />
-      </div>
+      </PageHeader>
     </header>
   );
 };

@@ -13,24 +13,14 @@ import {
 } from 'antd';
 
 import {
-  // DownOutlined,
   InfoCircleOutlined,
   LogoutOutlined,
   SettingOutlined
 } from '@ant-design/icons';
 
-import { userInfoAtom } from '../../../State/atoms';
-
-// import UserChip from '@terrestris/react-geo/dist/UserChip/UserChip';
-
-import ApplicationInfo from '../../Modal/ApplicationInfo/ApplicationInfo';
-import UserProfile from '../../Modal/UserProfile/UserProfile';
+import { shogunInfoModalVisibleAtom, userInfoAtom, userProfileModalVisibleAtom } from '../../../State/atoms';
 
 import UserService from '../../../Service/UserService/UserService';
-
-// import { AppInfoTypes } from '../../../store/appInfo/types';
-// import { AppState } from '../../../store/reducer';
-// import { clearAppInfo } from '../../../store/appInfo/actions';
 
 import './User.less';
 import Avatar from 'antd/lib/avatar/avatar';
@@ -45,6 +35,8 @@ export const User: React.FC<UserProps> = (props) => {
   let history = useHistory();
 
   const [userInfo] = useRecoilState(userInfoAtom);
+  const [,setProfileVisible] = useRecoilState(userProfileModalVisibleAtom);
+  const [,setInfoVisible] = useRecoilState(shogunInfoModalVisibleAtom);
 
   const avatarSource = '';
 
@@ -54,18 +46,16 @@ export const User: React.FC<UserProps> = (props) => {
         // Force reloading of the login page which may be the current page.
         history.push('/notavailable');
         history.replace('/login');
-
-        // onLogoutClick();
       });
   };
 
   const onMenuClick = (evt: any) => {
     switch (evt.key) {
-      case 'settings':
-        // Don't do anything, visible state will be handled by the modal itself.
-        break;
       case 'info':
-        // Don't do anything, visible state will be handled by the modal itself.
+        setInfoVisible(true);
+        break;
+      case 'settings':
+        setProfileVisible(true);
         break;
       case 'logout':
         doLogout();
@@ -94,38 +84,22 @@ export const User: React.FC<UserProps> = (props) => {
           <Menu.Divider/>
           <Menu.Item
             key="settings"
+            icon={<SettingOutlined />}
           >
-            <SettingOutlined />
-            <UserProfile
-              opener={
-                <span
-                  className="settings-opener"
-                >
-                  Profile settings
-                </span>
-              }
-            />
+            Profil Einstellungen
           </Menu.Item>
           <Menu.Item
             key="info"
+            icon={<InfoCircleOutlined />}
           >
-            <InfoCircleOutlined />
-            <ApplicationInfo
-              opener={
-                <span
-                  className="info-opener"
-                >
-                  Info
-                </span>
-              }
-            />
+            Info
           </Menu.Item>
           <Menu.Divider/>
           <Menu.Item
             key="logout"
+            icon={<LogoutOutlined />}
           >
-            <LogoutOutlined />
-            Sign out
+            Ausloggen
           </Menu.Item>
         </Menu>
       }
