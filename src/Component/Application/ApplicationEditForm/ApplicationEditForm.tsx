@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import Application from '../../../Model/Application';
 
-import { Button, Form, Input } from 'antd';
+import { Button, Form, Input, Modal, notification } from 'antd';
 
 
 import './ApplicationEditForm.less';
@@ -46,39 +46,41 @@ export const ApplicationEditForm: React.FC<ApplicationEditFormProps> = ({
     }
   };
 
-  // const onDeleteClick = (record) => {
-  //   if (!record.id) {
-  //     setApplications(applications.filter(r => r !== record));
-  //     return;
-  //   }
+  const deleteApp = () => {
 
-  //   let confirmName;
-  //   Modal.confirm({
-  //     cancelText: 'Abbrechen',
-  //     title: 'Applikation löschen',
-  //     content: (
-  //       <div>
-  //         <div>Die Applikation wird gelöscht!</div>
-  //         <br />
-  //         <div>Bitte geben sie zum Bestätigen den Namen ein:</div>
-  //         <Input onChange={(e) => { confirmName = e.target.value; }} />
-  //       </div>
-  //     ),
-  //     onOk: () => {
-  //       if (confirmName === record.name) {
-  //         applicationService
-  //           .delete(record.id)
-  //           .then(() => {
-  //             notification.info({
-  //               message: 'Applikation gelöscht',
-  //               description: `Applikation "${record.name}" wurde gelöscht`
-  //             });
-  //             fetchApplications();
-  //           });
-  //       }
-  //     }
-  //   });
-  // };
+    let confirmName;
+    const appName = form.getFieldValue('name');
+    // TODO move to own component
+    Modal.confirm({
+      cancelText: 'Abbrechen',
+      title: 'Applikation löschen',
+      content: (
+        <div>
+          <div>Die Applikation wird gelöscht!</div>
+          <br />
+          <div>Bitte geben sie zum Bestätigen den Namen ein:</div>
+          <Input onChange={(e) => { confirmName = e.target.value; }} />
+        </div>
+      ),
+      onOk: () => {
+        try {
+          if (confirmName === appName) {
+            applicationService
+              .delete(application.id)
+              .then(() => {
+                notification.info({
+                  message: 'Applikation gelöscht',
+                  description: `Applikation "${appName}" wurde gelöscht`
+                });
+                history.push('/portal/application');
+              });
+          }
+        } catch (error) {
+          Logger.error(error);
+        }
+      }
+    });
+  };
 
   const saveApp = async () => {
     const updates = (await form.validateFields()) as Application;
@@ -137,7 +139,10 @@ export const ApplicationEditForm: React.FC<ApplicationEditFormProps> = ({
       </Form.Item>
       <Form.Item>
         <Button type="primary" onClick={saveApp}>
-          Save
+          Speichern
+        </Button>
+        <Button type="primary" danger onClick={deleteApp}>
+          Löschen
         </Button>
         <Button onClick={() => form.resetFields()}>
           Clear form
