@@ -12,7 +12,7 @@ import Logger from 'js-logger';
 import { useHistory } from 'react-router-dom';
 
 type OwnProps = {
-  id?: number | string;
+  id?: number | 'create';
 };
 
 type ApplicationEditFormProps = OwnProps;
@@ -30,7 +30,7 @@ export const ApplicationEditForm: React.FC<ApplicationEditFormProps> = ({
 
   useEffect(() => {
     if (id && id.toString() !== 'create') {
-      fetchApplication(id);
+      fetchApplication(parseInt(id.toString(), 10));
     }
   }, [id]);
 
