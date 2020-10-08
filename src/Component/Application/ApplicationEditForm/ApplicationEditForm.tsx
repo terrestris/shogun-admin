@@ -147,13 +147,12 @@ export const ApplicationEditForm: React.FC<ApplicationEditFormProps> = ({
           Löschen
         </Button>
         <Button onClick={() => form.resetFields()}>
-          Clear form
+          Formularfelder leeren
         </Button>
-        <Button onClick={() => form.setFieldsValue({...application})}>
-          Reset changes
+        <Button onClick={() => form.setFieldsValue({ ...application })}>
+          Änderungen zurücksetzen
         </Button>
       </Form.Item>
-      {/* {`hallo ${application ? application.name : 'welt'}`} */}
     </Form>
   );
 };
