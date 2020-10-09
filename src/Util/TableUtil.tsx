@@ -8,7 +8,11 @@ import { Input, Button } from 'antd';
 
 export default class TableUtil {
 
-  public static getColumnSearchProps = (dataIndex: string | string[], handleSearch, handleReset) => {
+  public static getColumnSearchProps = (
+    dataIndex: string | string[],
+    handleSearch = TableUtil.handleSearch,
+    handleReset =  TableUtil.handleReset
+) => {
     let searchInput;
 
     return {
@@ -57,5 +61,21 @@ export default class TableUtil {
         }
       }
     };
+  };
+
+  public static getSorter = (dataIndex: string) => {
+    return (a, b) => {
+      a = typeof a[dataIndex] === 'string' ? a[dataIndex]?.toLowerCase() : a[dataIndex]?.toString();
+      b = typeof b[dataIndex] === 'string' ? b[dataIndex]?.toLowerCase() : b[dataIndex]?.toString();
+      return a?.localeCompare(b) || 0;
+    };
+  };
+
+  public static handleSearch = (selectedKeys, confirm, dataIndex?) => {
+    confirm();
+  };
+
+  public static  handleReset = clearFilters => {
+    clearFilters();
   };
 }

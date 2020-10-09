@@ -9,12 +9,14 @@ import {
 } from '@ant-design/icons';
 
 import Navigation from '../../Component/Menu/Navigation/Navigation';
-
-import './Portal.less';
 import ApplicationRoot from '../../Component/Application/ApplicationRoot/ApplicationRoot';
+import LayerRoot from '../../Component/Layer/LayerRoot/LayerRoot';
 import WelcomeDashboard from '../../Component/WelcomeDashboard/WelcomeDashboard';
 import UserProfile from '../../Component/Modal/UserProfile/UserProfile';
 import ApplicationInfo from '../../Component/Modal/ApplicationInfo/ApplicationInfo';
+
+import './Portal.less';
+import UserRoot from '../../Component/User/UserRoot/UserRoot';
 
 interface OwnProps { }
 
@@ -44,6 +46,14 @@ export const Portal: React.FC<PortalProps> = props => {
           <Route
             path="/portal/application"
             component={ApplicationRoot}
+          />
+          <Route
+            path="/portal/layer"
+            component={LayerRoot}
+          />
+          <Route
+            path="/portal/user"
+            component={UserRoot}
           />
           <Route
             component={WelcomeDashboard}
