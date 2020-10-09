@@ -41,6 +41,7 @@ export const LayerTable: React.FC<LayerTableProps> = props => {
         plural: 'Themen'
       }}
       columns={columns}
+      actions={['delete']}
       {...props}
     />
   );

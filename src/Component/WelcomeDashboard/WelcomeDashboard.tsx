@@ -82,9 +82,7 @@ export const WelcomeDashboard: React.FC<WelcomeDashboardProps> = (props) => {
         description="… die die Welt verändern"
         avatar={<Link to={'/portal/application'}><BankOutlined /></Link>}
       >
-        <ApplicationTable
-          disableActions={true}
-        />
+        <ApplicationTable />
       </DashboardCard>
       <DashboardCard
         className="layer-dashboard-card"
@@ -92,9 +90,7 @@ export const WelcomeDashboard: React.FC<WelcomeDashboardProps> = (props) => {
         description="… die die Welt bewegen"
         avatar={<Link to={'/portal/layer'}><AppstoreOutlined /></Link>}
       >
-        <LayerTable
-          disableActions={true}
-        />
+        <LayerTable />
       </DashboardCard>
       <DashboardCard
         className="layer-dashboard-card"
@@ -102,9 +98,7 @@ export const WelcomeDashboard: React.FC<WelcomeDashboardProps> = (props) => {
         description="… die die Welt verbessern"
         avatar={<Link to={'/portal/user'}><UserOutlined /></Link>}
       >
-        <UserTable
-          disableActions={true}
-        />
+        <UserTable />
       </DashboardCard>
     </Dashboard>
   );
