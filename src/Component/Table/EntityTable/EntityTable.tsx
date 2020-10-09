@@ -4,7 +4,7 @@ import { EditableCell } from '../../Table/EditableCell';
 
 import Table, { ColumnsType, TableProps } from 'antd/lib/table';
 import TableUtil from '../../../Util/TableUtil';
-import { Form, Modal, Input, notification, Tooltip, Button } from 'antd';
+import { Form, Modal, Input, notification, Tooltip } from 'antd';
 
 import {
   CheckCircleTwoTone,
