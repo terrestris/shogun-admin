@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { JsonEditor as Editor } from 'jsoneditor-react';
-import 'jsoneditor-react/es/editor.min.css';
 
 import Application from '../../../Model/Application';
 
@@ -12,6 +10,8 @@ import ApplicationService from '../../../Service/ApplicationService/ApplicationS
 import Logger from 'js-logger';
 
 import { useHistory } from 'react-router-dom';
+import JSONEditor from '../../FormField/JSONEditor/JSONEditor';
+import DisplayField from '../../FormField/DisplayField/DisplayField';
 
 type OwnProps = {
   id?: number | 'create';
@@ -98,16 +98,9 @@ export const ApplicationEditForm: React.FC<ApplicationEditFormProps> = ({
     const name = updatedApplication.name;
     try {
       if (updateMode) {
-        applicationService
-          .update(updatedApplication)
-          .then(() => {
-            history.push('/portal/application');
-          });
+        applicationService.update(updatedApplication);
       } else {
-        applicationService.add(updatedApplication)
-          .then(() => {
-            history.push('/portal/application');
-          });;
+        applicationService.add(updatedApplication);
       }
       notification.success({
         message: `Applikation "${name}" wurde erfolgreich ${updateMode ? 'aktualisiert' : 'erstellt'}`
@@ -121,69 +114,95 @@ export const ApplicationEditForm: React.FC<ApplicationEditFormProps> = ({
   };
 
   return (
-    <Form
-      form={form}
-      component={false}
+    <div
+      className="application-form"
     >
-      <Form.Item
-        name="name"
-        label="Name"
-        rules={[{
-          required: true,
-          message: 'Bitte geben Sie einen Namen ein!'
-        }]}
+      <Form
+        form={form}
+        component={false}
+        layout="vertical"
+        labelCol={{ span: 4 }}
+        wrapperCol={{ span: 20 }}
       >
-        <Input
-          placeholder="Name"
-        />
-      </Form.Item>
-      <Form.Item
-        name="created"
-        label="Erstellt am"
-      >
-        <Input
-          readOnly={true}
-          bordered={false}
-        />
-      </Form.Item>
-      <Form.Item
-        name="modified"
-        label="Editiert am"
-      >
-        <Input
-          readOnly={true}
-          bordered={false}
-        />
-      </Form.Item>
-      <Form.Item
-        name="stateOnly"
-        label="Arbeitstand"
-        valuePropName="checked"
-      >
-        <Checkbox />
-      </Form.Item>
-      <Form.Item
-        name="clientConfig"
-        label="Konfiguration"
-      >
-        // TODO get me work
-        <Editor />
-      </Form.Item>
-      <Form.Item>
-        <Button type="primary" onClick={saveApp}>
-          Speichern
-        </Button>
-        <Button type="primary" danger onClick={deleteApp}>
-          Löschen
-        </Button>
-        <Button onClick={() => form.resetFields()}>
-          Formularfelder leeren
-        </Button>
-        <Button onClick={() => form.setFieldsValue({ ...application })}>
-          Änderungen zurücksetzen
-        </Button>
-      </Form.Item>
-    </Form>
+        <Form.Item
+          name="name"
+          label="Name"
+          rules={[{
+            required: true,
+            message: 'Bitte geben Sie einen Namen ein!'
+          }]}
+        >
+          <Input
+            placeholder="Name"
+          />
+        </Form.Item>
+        <Form.Item
+          name="created"
+          label="Erstellt am"
+        >
+          <DisplayField
+            formatter={(date) => {
+              return date && new Intl.DateTimeFormat('de-DE').format(new Date(date));
+            }}
+          />
+        </Form.Item>
+        <Form.Item
+          name="modified"
+          label="Editiert am"
+        >
+          <DisplayField
+            formatter={(date) => {
+              return date && new Intl.DateTimeFormat('de-DE').format(new Date(date));
+            }}
+          />
+        </Form.Item>
+        <Form.Item
+          name="stateOnly"
+          label="Arbeitstand"
+          valuePropName="checked"
+        >
+          <Checkbox />
+        </Form.Item>
+        <Form.Item
+          name="clientConfig"
+          label="Konfiguration"
+        >
+          <JSONEditor />
+        </Form.Item>
+        <Form.Item
+          name="layerTree"
+          label="Themen-Baum"
+        >
+          <JSONEditor />
+        </Form.Item>
+        <Form.Item
+          name="layerConfig"
+          label="Themen-Konfiguration"
+        >
+          <JSONEditor />
+        </Form.Item>
+        <Form.Item
+          className="form-buttons"
+          wrapperCol={{
+            offset: 4,
+            span: 20
+          }}
+        >
+          <Button type="primary" onClick={saveApp}>
+            Speichern
+          </Button>
+          <Button type="primary" danger onClick={deleteApp}>
+            Löschen
+          </Button>
+          <Button onClick={() => form.resetFields()}>
+            Formularfelder leeren
+          </Button>
+          <Button onClick={() => form.setFieldsValue({ ...application })}>
+            Änderungen zurücksetzen
+          </Button>
+        </Form.Item>
+      </Form>
+    </div>
   );
 };
 
