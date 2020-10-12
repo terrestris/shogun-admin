@@ -7,7 +7,7 @@ import TableUtil from '../../../Util/TableUtil';
 interface OwnProps { }
 
 type ApplicationTableProps = OwnProps & Omit<EntityTableProps, 'service' | 'routePath' | 'name' | 'columns' >;
-const apploicationService = new ApplicationService();
+const applicationService = new ApplicationService();
 
 const columns: any = [
   {
@@ -25,7 +25,7 @@ export const ApplicationTable: React.FC<ApplicationTableProps> = props => {
 
   return (
     <EntityTable
-      service={apploicationService}
+      service={applicationService}
       routePath={'/portal/application'}
       name={{
         singular: 'Applikation',
