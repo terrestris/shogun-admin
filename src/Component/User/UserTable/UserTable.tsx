@@ -49,6 +49,7 @@ export const UserTable: React.FC<UserTableProps> = props => {
         plural: 'Nutzer'
       }}
       columns={columns}
+      actions={['delete']}
       {...props}
     />
   );

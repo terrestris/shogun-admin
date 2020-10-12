@@ -10,13 +10,16 @@ import {
   CheckCircleTwoTone,
   CloseCircleOutlined,
   EditOutlined,
-  DeleteOutlined
+  DeleteOutlined,
+  SyncOutlined
 } from '@ant-design/icons';
 
 import './EntityTable.less';
 import { matchPath, useHistory, useLocation } from 'react-router-dom';
 import BaseEntity from '../../../Model/BaseEntity';
 import GenericService from '../../../Service/GenericService/GenericService';
+
+export type EntityTableAction = 'edit' | 'delete';
 
 export type EntityTableColumn = ColumnsType<BaseEntity> & {
   editable: boolean;
@@ -25,10 +28,10 @@ export type EntityTableColumn = ColumnsType<BaseEntity> & {
 };
 
 type OwnProps= {
-  disableActions?: boolean;
   service: any;
   routePath: string;
   columns?: EntityTableColumn | EntityTableColumn[];
+  actions?: EntityTableAction[]
   name: {
     singular: string;
     plural: string;
@@ -49,11 +52,11 @@ const defaultColumns = [
 ];
 
 export const EntityTable: React.FC<EntityTableProps> = ({
-  disableActions = false,
   service,
   routePath,
   name,
   columns = defaultColumns,
+  actions = [],
   ...passThroughProps
 }) => {
 
@@ -155,17 +158,20 @@ export const EntityTable: React.FC<EntityTableProps> = ({
   };
 
   const tableColumns = [
-    ...columns
-  ];
-
-  if(!disableActions) {
-    tableColumns.push({
-      title: '',
+    ...columns,
+    {
+      title: (
+        <Tooltip title="Neu laden">
+          <SyncOutlined
+            onClick={fetchEntities}
+          />
+        </Tooltip>
+      ),
       className: 'operation-column',
       width: 100,
       dataIndex: 'operation',
       render: (_: any, record: BaseEntity) => {
-        if (isEditing(record)) {
+        if (actions.includes('edit') && isEditing(record)) {
           return (
             <div className="actions">
               <Tooltip title="Speichern">
@@ -183,18 +189,24 @@ export const EntityTable: React.FC<EntityTableProps> = ({
         } else {
           return (
             <div className="actions">
-              <Tooltip title="Bearbeiten">
-                <EditOutlined onClick={() => edit(record)} />
-              </Tooltip>
-              <Tooltip title="Löschen">
-                <DeleteOutlined onClick={() => onDeleteClick(record)} />
-              </Tooltip>
+              {
+                actions.includes('edit') &&
+                <Tooltip title="Bearbeiten">
+                  <EditOutlined onClick={() => edit(record)} />
+                </Tooltip>
+              }
+              {
+                actions.includes('delete') &&
+                <Tooltip title="Löschen">
+                  <DeleteOutlined onClick={() => onDeleteClick(record)} />
+                </Tooltip>
+              }
             </div>
           );
         }
       }
-    });
-  }
+    }
+  ];
 
   const onRowClick = (record: BaseEntity, event: React.MouseEvent<HTMLElement, MouseEvent>) => {
     history.push(`${routePath}/${record.id}`);
