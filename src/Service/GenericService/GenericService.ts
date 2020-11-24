@@ -21,7 +21,7 @@ abstract class GenericService<T extends BaseEntity> {
 
   findAll(): Promise<T[]> {
     if (!keycloak.token) {
-      return Promise.reject('No keycloak token available');
+      return Promise.reject('No keycloak token available.');
     }
     const reqOpts = {
       method: 'GET',
@@ -34,7 +34,7 @@ abstract class GenericService<T extends BaseEntity> {
 
   findOne(id: string | number): Promise<T> {
     if (!keycloak.token) {
-      return Promise.reject('No keycloak token available');
+      return Promise.reject('No keycloak token available.');
     }
     const reqOpts = {
       method: 'GET',
@@ -47,7 +47,7 @@ abstract class GenericService<T extends BaseEntity> {
 
   add(t: T): Promise<T> {
     if (!keycloak.token) {
-      return Promise.reject('No keycloak token available');
+      return Promise.reject('No keycloak token available.');
     }
     const reqOpts = {
       method: 'POST',
@@ -61,7 +61,7 @@ abstract class GenericService<T extends BaseEntity> {
 
   update(t: T): Promise<T> {
     if (!keycloak.token) {
-      return Promise.reject('No keycloak token available');
+      return Promise.reject('No keycloak token available.');
     }
     const reqOpts = {
       method: 'PUT',
@@ -73,9 +73,26 @@ abstract class GenericService<T extends BaseEntity> {
       .then(this.isSuccessOne.bind(this));
   }
 
-  delete(id: string | number): Promise<T> {
+  updatePartial(t: Partial<T>): Promise<T> {
     if (!keycloak.token) {
       return Promise.reject('No keycloak token available');
+    }
+    if (!t.id) {
+      return Promise.reject('"id" is missing in the update values.');
+    }
+    const reqOpts = {
+      method: 'PATCH',
+      headers: this.getDefaultHeaders(),
+      body: JSON.stringify(t, this.replacer)
+    };
+
+    return fetch(`${this.basePath}/${t.id}`, reqOpts)
+      .then(this.isSuccessOne.bind(this));
+  }
+
+  delete(id: string | number): Promise<T> {
+    if (!keycloak.token) {
+      return Promise.reject('No keycloak token available.');
     }
     const reqOpts = {
       method: 'DELETE',
