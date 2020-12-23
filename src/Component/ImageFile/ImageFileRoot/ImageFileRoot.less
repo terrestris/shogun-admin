@@ -1,0 +1,33 @@
+.imagefile-root{
+  height: 100%;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  grid-template-columns: 40% 60%;
+  grid-template-areas:
+    "header header"
+    "left right";
+
+  >div {
+    flex: 1;
+
+    &.header {
+      grid-area: header;
+    }
+
+    &.left-container {
+      grid-area: left;
+      padding: 0 10px 0 24px;
+
+      background:
+        linear-gradient(@primary-color, @primary-color) right / 2px 90%,
+      rgba(255, 255, 255, 0);
+      background-repeat:no-repeat;
+    }
+
+    &.right-container {
+      grid-area: right;
+      padding: 0 24px 0 10px;
+    }
+  }
+
+}

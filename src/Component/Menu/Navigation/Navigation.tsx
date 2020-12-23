@@ -4,7 +4,8 @@ import { matchPath, useHistory, useLocation } from 'react-router-dom';
 import {
   BankOutlined,
   AppstoreOutlined,
-  UserOutlined
+  UserOutlined,
+  FileImageOutlined
 } from '@ant-design/icons';
 
 import {
@@ -57,6 +58,10 @@ export const Navigation: React.FC<NavigationProps> = (props) => {
         <Menu.Item key="user">
           <UserOutlined />
           <span>Nutzer</span>
+        </Menu.Item>
+        <Menu.Item key="imagefile">
+          <FileImageOutlined />
+          <span>Bilddateien</span>
         </Menu.Item>
       </Menu.SubMenu>
     </Menu>

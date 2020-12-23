@@ -31,7 +31,8 @@ type OwnProps= {
   service: any;
   routePath: string;
   columns?: EntityTableColumn | EntityTableColumn[];
-  actions?: EntityTableAction[]
+  actions?: EntityTableAction[];
+  onRowClick?: (record: BaseEntity, event: React.MouseEvent<HTMLElement, MouseEvent>) => void;
   name: {
     singular: string;
     plural: string;
@@ -57,6 +58,7 @@ export const EntityTable: React.FC<EntityTableProps> = ({
   name,
   columns = defaultColumns,
   actions = [],
+  onRowClick = (record) => history.push(`${routePath}/${record.id}`),
   ...passThroughProps
 }) => {
 
@@ -207,10 +209,6 @@ export const EntityTable: React.FC<EntityTableProps> = ({
       }
     }
   ];
-
-  const onRowClick = (record: BaseEntity, event: React.MouseEvent<HTMLElement, MouseEvent>) => {
-    history.push(`${routePath}/${record.id}`);
-  };
 
   return (
     <Form form={form} component={false}>
