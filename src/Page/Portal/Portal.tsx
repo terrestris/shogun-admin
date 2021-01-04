@@ -17,6 +17,7 @@ import ApplicationInfo from '../../Component/Modal/ApplicationInfo/ApplicationIn
 
 import './Portal.less';
 import UserRoot from '../../Component/User/UserRoot/UserRoot';
+import ImageFileRoot from '../../Component/ImageFile/ImageFileRoot/ImageFileRoot';
 
 interface OwnProps { }
 
@@ -54,6 +55,10 @@ export const Portal: React.FC<PortalProps> = props => {
           <Route
             path="/portal/user"
             component={UserRoot}
+          />
+          <Route
+            path="/portal/imagefile"
+            component={ImageFileRoot}
           />
           <Route
             component={WelcomeDashboard}

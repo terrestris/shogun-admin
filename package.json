@@ -29,6 +29,7 @@
   },
   "homepage": "https://github.com/terrestris/shogun-admin#readme",
   "dependencies": {
+    "@ant-design/icons": "^4.3.0",
     "@terrestris/base-util": "^0.2.4",
     "@terrestris/ol-util": "^4.0.1",
     "@types/codemirror": "0.0.98",
