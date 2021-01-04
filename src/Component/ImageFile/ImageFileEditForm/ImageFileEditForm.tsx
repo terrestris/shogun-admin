@@ -126,7 +126,7 @@ export const ImageFileEditForm: React.FC<ImageFileEditFormProps> = ({
           label="Dateiname"
           rules={[{
             required: true,
-            message: 'Bitte geben Sie einen Dateiname ein!'
+            message: 'Bitte geben Sie einen Dateinamen ein!'
           }]}
         >
           <Input
