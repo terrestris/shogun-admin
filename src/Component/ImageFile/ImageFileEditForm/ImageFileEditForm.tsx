@@ -141,7 +141,7 @@ export const ImageFileEditForm: React.FC<ImageFileEditFormProps> = ({
           }}
         >
           <Button type="primary" onClick={saveImageFile}>
-          Speichern
+            Speichern
           </Button>
           <Button type="primary" danger onClick={deleteImageFile}>
             Löschen
