@@ -11,7 +11,7 @@
     "eslint": "eslint -c .eslintrc.js --ext .js,.ts,.tsx && tsc --noEmit --project tsconfig.json",
     "lint": "npm run typecheck && npm run eslint ",
     "prebuild": "npm run lint && rimraf ./dist/*",
-    "build": "tsc -p tsconfig.json",
+    "build": "webpack --config webpack.production.config.js",
     "start": "webpack-dev-server --config webpack.dev.config.js --hot --progress"
   },
   "repository": {
