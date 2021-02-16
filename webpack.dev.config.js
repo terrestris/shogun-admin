@@ -62,6 +62,13 @@ const delayedConf = new Promise(function(resolve) {
         '/v2'
       ],
       target: 'https://localhost/'
+    }, {
+      ...proxyCommonConf,
+      pathRewrite: { '^/shogun-boot/client-config.js': '' },
+      context: [
+        '/shogun-boot/client-config.js',
+      ],
+      target: 'https://localhost/admin/client-config.js'
     }]
   };
   const loginUrl = `https://${keycloakHost}/auth/realms/SpringBootKeycloak/protocol/openid-connect/token`;
