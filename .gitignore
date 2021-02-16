@@ -9,6 +9,7 @@ coverage/
 
 # production
 build/
+dist/
 target/
 
 # misc
