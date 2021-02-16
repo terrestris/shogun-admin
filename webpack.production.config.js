@@ -10,8 +10,7 @@ commonWebpackConfig.plugins = [
       NODE_ENV: JSON.stringify('production')
     },
     APP_MODE: JSON.stringify(commonConfig.TARGET)
-  }),
-  new webpack.ProgressPlugin({ profile: false })
+  })
 ];
 
 commonWebpackConfig.mode = 'production';

@@ -1,5 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const SimpleProgressWebpackPlugin = require('simple-progress-webpack-plugin');
 const CustomAntThemeModifyVars = require('./theme.js');
 
 module.exports = {
@@ -84,6 +85,9 @@ module.exports = {
       },
       template: './assets/index.html',
       title: 'SHOGun admin'
+    }),
+    new SimpleProgressWebpackPlugin({
+      format: 'compact'
     })
   ]
 };

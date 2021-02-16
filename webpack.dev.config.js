@@ -7,6 +7,7 @@ const commonConfig = require('./webpack.common.config.js');
 const webpack = require('webpack');
 const fetch = require('node-fetch');
 const https = require('https');
+
 let commonWebpackConfig = commonConfig;
 
 const headers = {};
@@ -15,7 +16,6 @@ const delayedConf = new Promise(function(resolve) {
   commonWebpackConfig.plugins = [
     ...commonWebpackConfig.plugins || [],
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.ProgressPlugin({ profile: false }),
     new webpack.DefinePlugin({
       APP_MODE: JSON.stringify(commonConfig.TARGET)
     })
