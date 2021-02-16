@@ -1,4 +1,4 @@
-const keycloakHost = '192.168.178.29';
+const keycloakHost = '<INSERT_YOUR_IP>';
 const keycloakUser = 'astark';
 const keycloakPassword = 'astark';
 const keycloakClientId = 'shogun-app';
