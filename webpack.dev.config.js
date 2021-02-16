@@ -1,3 +1,8 @@
+const keycloakHost = '192.168.178.29';
+const keycloakUser = 'astark';
+const keycloakPassword = 'astark';
+const keycloakClientId = 'shogun-app';
+
 const commonConfig = require('./webpack.common.config.js');
 const webpack = require('webpack');
 const fetch = require('node-fetch');
@@ -59,8 +64,9 @@ const delayedConf = new Promise(function(resolve) {
       target: 'https://localhost/'
     }]
   };
-  const loginUrl = 'https://192.168.178.29/auth/realms/SpringBootKeycloak/protocol/openid-connect/token';
-  const body = 'username=astark&password=astark&grant_type=password&client_id=shogun-app';
+  const loginUrl = `https://${keycloakHost}/auth/realms/SpringBootKeycloak/protocol/openid-connect/token`;
+  const body = `username=${keycloakUser}&password=${keycloakPassword}&grant_type=password&` +
+    `client_id=${keycloakClientId}`;
   const agent = new https.Agent({
     rejectUnauthorized: false
   });
