@@ -21,6 +21,8 @@ import Avatar from 'antd/lib/avatar/avatar';
 import LayerTable from '../Layer/LayerTable/LayerTable';
 import UserTable from '../User/UserTable/UserTable';
 
+import config from 'shogunApplicationConfig';
+
 type WelcomeDashboardProps = {};
 
 export const WelcomeDashboard: React.FC<WelcomeDashboardProps> = (props) => {
@@ -70,33 +72,33 @@ export const WelcomeDashboard: React.FC<WelcomeDashboardProps> = (props) => {
       </DashboardCard>
       <DashboardCard
         className="application-dashboard-card"
-        title={<Link to={'/portal/logs'}>Logs</Link>}
+        title={<Link to={`${config.appPrefix}/portal/logs`}>Logs</Link>}
         description="… die die Welt erklären"
-        avatar={<Link to={'/portal/logs'}><UnorderedListOutlined /></Link>}
+        avatar={<Link to={`${config.appPrefix}/portal/logs`}><UnorderedListOutlined /></Link>}
       >
         {/* <UserProfileForm /> */}
       </DashboardCard>
       <DashboardCard
         className="application-dashboard-card"
-        title={<Link to={'/portal/application'}>Applikationen</Link>}
+        title={<Link to={`${config.appPrefix}/portal/application`}>Applikationen</Link>}
         description="… die die Welt verändern"
-        avatar={<Link to={'/portal/application'}><BankOutlined /></Link>}
+        avatar={<Link to={`${config.appPrefix}/portal/application`}><BankOutlined /></Link>}
       >
         <ApplicationTable />
       </DashboardCard>
       <DashboardCard
         className="layer-dashboard-card"
-        title={<Link to={'/portal/layer'}>Themen</Link>}
+        title={<Link to={`${config.appPrefix}/portal/layer`}>Themen</Link>}
         description="… die die Welt bewegen"
-        avatar={<Link to={'/portal/layer'}><AppstoreOutlined /></Link>}
+        avatar={<Link to={`${config.appPrefix}/portal/layer`}><AppstoreOutlined /></Link>}
       >
         <LayerTable />
       </DashboardCard>
       <DashboardCard
         className="layer-dashboard-card"
-        title={<Link to={'/portal/user'}>User</Link>}
+        title={<Link to={`${config.appPrefix}/portal/user`}>User</Link>}
         description="… die die Welt verbessern"
-        avatar={<Link to={'/portal/user'}><UserOutlined /></Link>}
+        avatar={<Link to={`${config.appPrefix}/portal/user`}><UserOutlined /></Link>}
       >
         <UserTable />
       </DashboardCard>

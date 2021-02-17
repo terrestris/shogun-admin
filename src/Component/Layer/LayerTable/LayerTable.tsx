@@ -4,6 +4,8 @@ import { EntityTable, EntityTableProps } from '../../../Component/Table/EntityTa
 import LayerService from '../../../Service/LayerSerivce/LayerService';
 import TableUtil from '../../../Util/TableUtil';
 
+import config from 'shogunApplicationConfig';
+
 interface OwnProps { }
 
 type LayerTableProps = OwnProps & Omit<EntityTableProps, 'service' | 'routePath' | 'name' | 'columns' >;
@@ -35,7 +37,7 @@ export const LayerTable: React.FC<LayerTableProps> = props => {
   return (
     <EntityTable
       service={layerService}
-      routePath={'/portal/layer'}
+      routePath={`${config.appPrefix}/portal/layer`}
       name={{
         singular: 'Thema',
         plural: 'Themen'

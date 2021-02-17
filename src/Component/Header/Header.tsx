@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom';
 import logo from '../../../assets/img/shogun_logo.png';
 import User from '../Menu/User/User';
 
+import config from 'shogunApplicationConfig';
+
 import './Header.less';
 
 interface OwnProps {
@@ -21,7 +23,7 @@ export const Header: React.FC<HeaderProps> = props => {
         className="page-header"
         title={
           <Link
-            to={'/portal'}
+            to={`${config.appPrefix}/portal`}
             className="header-logo-a"
           >
             <img

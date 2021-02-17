@@ -4,6 +4,8 @@ import { EntityTable, EntityTableProps } from '../../../Component/Table/EntityTa
 import ApplicationService from '../../../Service/ApplicationService/ApplicationService';
 import TableUtil from '../../../Util/TableUtil';
 
+import config from 'shogunApplicationConfig';
+
 interface OwnProps { }
 
 type ApplicationTableProps = OwnProps & Omit<EntityTableProps, 'service' | 'routePath' | 'name' | 'columns' >;
@@ -26,7 +28,7 @@ export const ApplicationTable: React.FC<ApplicationTableProps> = props => {
   return (
     <EntityTable
       service={applicationService}
-      routePath={'/portal/application'}
+      routePath={`${config.appPrefix}/portal/application`}
       name={{
         singular: 'Applikation',
         plural: 'Applilkationen'

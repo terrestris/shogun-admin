@@ -6,6 +6,8 @@ import ImageFile from '../../../Model/ImageFile';
 import ImageFileService from '../../../Service/ImageFileService/ImageFileService';
 import TableUtil from '../../../Util/TableUtil';
 
+import config from 'shogunApplicationConfig';
+
 interface OwnProps { }
 
 type ImageFileTableProps = OwnProps & Omit<EntityTableProps, 'service' | 'routePath' | 'name' | 'columns' >;
@@ -35,13 +37,13 @@ export const ImageFileTable: React.FC<ImageFileTableProps> = props => {
 
   const history = useHistory();
   const onRowClick = (imageFile: ImageFile) => {
-    history.push(`/portal/imagefile/${imageFile.fileUuid}`);
+    history.push(`${config.appPrefix}/portal/imagefile/${imageFile.fileUuid}`);
   };
 
   return (
     <EntityTable
       service={imageFileService}
-      routePath={'/portal/imagefile'}
+      routePath={`${config.appPrefix}/portal/imagefile`}
       onRowClick={onRowClick}
       name={{
         singular: 'Bilddatei',

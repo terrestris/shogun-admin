@@ -10,6 +10,8 @@ import {
 import ApplicationEditForm from '../ApplicationEditForm/ApplicationEditForm';
 import ApplicationTable from '../ApplicationTable/ApplicationTable';
 
+import config from 'shogunApplicationConfig';
+
 import './ApplicationRoot.less';
 
 interface OwnProps { }
@@ -23,7 +25,7 @@ export const ApplicationRoot: React.FC<ApplicationProps> = props => {
   const history = useHistory();
   const location = useLocation();
   const match = matchPath<{ applicationId: string }>(location.pathname, {
-    path: '/portal/application/:applicationId'
+    path: `${config.appPrefix}/portal/application/:applicationId`
   });
   const applicationId = match?.params?.applicationId;
 
@@ -47,7 +49,7 @@ export const ApplicationRoot: React.FC<ApplicationProps> = props => {
         title="Applikationen"
         subTitle="… die die Welt verändern"
         extra={[
-          <Link key="create" to="/portal/application/create">
+          <Link key="create" to={`${config.appPrefix}/portal/application/create`}>
             <Button type="primary">
               Applikation anlegen
             </Button>

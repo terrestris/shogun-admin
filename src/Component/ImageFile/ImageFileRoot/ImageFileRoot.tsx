@@ -24,7 +24,7 @@ export const ImageFileRoot: React.FC<ImageFileRootProps> = props => {
   const history = useHistory();
   const location = useLocation();
   const match = matchPath<{ uuid: string }>(location.pathname, {
-    path: '/portal/imagefile/:uuid'
+    path: `${config.appPrefix}/portal/imagefile/:uuid`
   });
   const imageFileUuid = match?.params?.uuid;
 
@@ -44,7 +44,7 @@ export const ImageFileRoot: React.FC<ImageFileRootProps> = props => {
         title="Bilddateien"
         subTitle="… die die Welt zeigen"
         extra={[
-          <Link key="create" to="/portal/imagefile/create">
+          <Link key="create" to={`${config.appPrefix}/portal/imagefile/create`}>
             <Button type="primary">
               Bilddatei hochladen
             </Button>

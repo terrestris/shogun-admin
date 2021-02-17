@@ -4,7 +4,6 @@ import Application from '../../../Model/Application';
 
 import { Button, Checkbox, Form, Input, Modal, notification } from 'antd';
 
-
 import './ApplicationEditForm.less';
 import ApplicationService from '../../../Service/ApplicationService/ApplicationService';
 import Logger from 'js-logger';
@@ -12,6 +11,8 @@ import Logger from 'js-logger';
 import { useHistory } from 'react-router-dom';
 import JSONEditor from '../../FormField/JSONEditor/JSONEditor';
 import DisplayField from '../../FormField/DisplayField/DisplayField';
+
+import config from 'shogunApplicationConfig';
 
 type OwnProps = {
   id?: number | 'create';
@@ -74,7 +75,7 @@ export const ApplicationEditForm: React.FC<ApplicationEditFormProps> = ({
                   message: 'Applikation gelöscht',
                   description: `Applikation "${appName}" wurde gelöscht`
                 });
-                history.push('/portal/application');
+                history.push(`${config.appPrefix}/portal/application`);
               });
           }
         } catch (error) {
