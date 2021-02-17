@@ -4,6 +4,8 @@ import UserService from '../../../Service/UserService/UserService';
 import { EntityTable, EntityTableProps } from '../../../Component/Table/EntityTable/EntityTable';
 import TableUtil from '../../../Util/TableUtil';
 
+import config from 'shogunApplicationConfig';
+
 interface OwnProps { }
 
 type UserTableProps = OwnProps & Omit<EntityTableProps, 'service' | 'routePath' | 'name' | 'columns' >;
@@ -43,7 +45,7 @@ export const UserTable: React.FC<UserTableProps> = props => {
   return (
     <EntityTable
       service={userService}
-      routePath={'/portal/user'}
+      routePath={`${config.appPrefix}/portal/user`}
       name={{
         singular: 'Nutzer',
         plural: 'Nutzer'

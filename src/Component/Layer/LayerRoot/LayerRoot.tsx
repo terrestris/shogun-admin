@@ -9,6 +9,8 @@ import {
 
 import LayerTable from '../LayerTable/LayerTable';
 
+import config from 'shogunApplicationConfig';
+
 import './LayerRoot.less';
 
 interface OwnProps { }
@@ -22,7 +24,7 @@ export const LayerRoot: React.FC<LayerRootProps> = props => {
   const history = useHistory();
   const location = useLocation();
   const match = matchPath<{layerId: string}>(location.pathname, {
-    path: '/portal/layer/:layerId'
+    path: `${config.appPrefix}/portal/layer/:layerId`
   });
   const layerId = match?.params?.layerId;
 
@@ -45,7 +47,7 @@ export const LayerRoot: React.FC<LayerRootProps> = props => {
         title="Themen"
         subTitle="… die die Welt bewegen"
         extra={[
-          <Link key="create" to="/portal/layer/create">
+          <Link key="create" to={`${config.appPrefix}/portal/layer/create`}>
             <Button type="primary">
               Layer anlegen
             </Button>

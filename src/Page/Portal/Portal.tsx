@@ -19,6 +19,8 @@ import './Portal.less';
 import UserRoot from '../../Component/User/UserRoot/UserRoot';
 import ImageFileRoot from '../../Component/ImageFile/ImageFileRoot/ImageFileRoot';
 
+import config from 'shogunApplicationConfig';
+
 interface OwnProps { }
 
 type PortalProps = OwnProps;
@@ -45,19 +47,19 @@ export const Portal: React.FC<PortalProps> = props => {
       <div className="content">
         <Switch>
           <Route
-            path="/portal/application"
+            path={`${config.appPrefix}/portal/application`}
             component={ApplicationRoot}
           />
           <Route
-            path="/portal/layer"
+            path={`${config.appPrefix}/portal/layer`}
             component={LayerRoot}
           />
           <Route
-            path="/portal/user"
+            path={`${config.appPrefix}/portal/user`}
             component={UserRoot}
           />
           <Route
-            path="/portal/imagefile"
+            path={`${config.appPrefix}/portal/imagefile`}
             component={ImageFileRoot}
           />
           <Route

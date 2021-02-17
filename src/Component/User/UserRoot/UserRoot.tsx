@@ -9,6 +9,8 @@ import {
 
 import UserTable from '../UserTable/UserTable';
 
+import config from 'shogunApplicationConfig';
+
 import './UserRoot.less';
 
 interface OwnProps { }
@@ -22,7 +24,7 @@ export const UserRoot: React.FC<UserRootProps> = props => {
   const history = useHistory();
   const location = useLocation();
   const match = matchPath<{userId: string}>(location.pathname, {
-    path: '/portal/layer/:userId'
+    path: `${config.appPrefix}/portal/layer/:userId`
   });
   const userId = match?.params?.userId;
 
@@ -45,7 +47,7 @@ export const UserRoot: React.FC<UserRootProps> = props => {
         title="User"
         subTitle="… die die Welt verbessern"
         extra={[
-          <Link key="create" to="/portal/user/create">
+          <Link key="create" to={`${config.appPrefix}/portal/user/create`}>
             <Button type="primary">
               User anlegen
             </Button>

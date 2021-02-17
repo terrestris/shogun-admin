@@ -12,6 +12,8 @@ import {
   Menu
 } from 'antd';
 
+import config from 'shogunApplicationConfig';
+
 interface OwnProps {
   collapsed?: boolean;
 }
@@ -27,11 +29,11 @@ export const Navigation: React.FC<NavigationProps> = (props) => {
   } = props;
 
   const onSelect = ({ key }) => {
-    history.push(`/portal/${key}`);
+    history.push(`${config.appPrefix}/portal/${key}`);
   };
 
   const match = matchPath<{activeKey: string}>(location.pathname, {
-    path: '/portal/:activeKey'
+    path: `${config.appPrefix}/portal/:activeKey`
   });
   const activeKey = match?.params?.activeKey;
 

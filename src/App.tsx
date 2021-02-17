@@ -28,6 +28,8 @@ import Logger from 'js-logger';
 import { appInfoAtom, userInfoAtom } from './State/atoms';
 import { setSwaggerDocs } from './State/static';
 
+import config from 'shogunApplicationConfig';
+
 const userService = new UserService();
 
 const App: React.FC = props => {
@@ -96,13 +98,13 @@ const App: React.FC = props => {
       >
         <Switch>
           <Route
-            path="/portal"
+            path={`${config.appPrefix}/portal`}
             component={Portal}
           />
           <Redirect
             exact
-            from="/"
-            to="/portal"
+            from={`${config.appPrefix}/`}
+            to={`${config.appPrefix}/portal`}
           />
         </Switch>
       </React.Suspense>

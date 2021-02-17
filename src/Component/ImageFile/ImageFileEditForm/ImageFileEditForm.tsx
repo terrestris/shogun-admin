@@ -2,13 +2,14 @@ import React, { useEffect, useState } from 'react';
 
 import { Button, Form, Input, Modal, notification } from 'antd';
 
-
 import './ImageFileEditForm.less';
 import ImageFileService from '../../../Service/ImageFileService/ImageFileService';
 import Logger from 'js-logger';
 
 import { useHistory } from 'react-router-dom';
 import ImageFile from '../../../Model/ImageFile';
+
+import config from 'shogunApplicationConfig';
 
 type OwnProps = {
   id?: number | 'create';
@@ -71,7 +72,7 @@ export const ImageFileEditForm: React.FC<ImageFileEditFormProps> = ({
                   message: 'Bilddatei gelöscht',
                   description: `Bilddatei "${imageFileName}" wurde gelöscht`
                 });
-                history.push('/portal/imagefile');
+                history.push(`${config.appPrefix}/portal/imagefile`);
               });
           }
         } catch (error) {
