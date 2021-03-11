@@ -5,7 +5,8 @@ import {
   BankOutlined,
   AppstoreOutlined,
   UserOutlined,
-  FileImageOutlined
+  FileImageOutlined,
+  FileTextOutlined
 } from '@ant-design/icons';
 
 import {
@@ -35,7 +36,10 @@ export const Navigation: React.FC<NavigationProps> = (props) => {
   const match = matchPath<{activeKey: string}>(location.pathname, {
     path: `${config.appPrefix}/portal/:activeKey`
   });
+
   const activeKey = match?.params?.activeKey;
+
+  const navigationConf = config.navigation;
 
   return (
     <Menu
@@ -48,23 +52,75 @@ export const Navigation: React.FC<NavigationProps> = (props) => {
       selectedKeys={[activeKey]}
       defaultOpenKeys={['general']}
     >
-      <Menu.SubMenu key="general" title="Allgemein">
-        <Menu.Item key="application">
-          <BankOutlined />
-          <span>Applikationen</span>
-        </Menu.Item>
-        <Menu.Item key="layer">
-          <AppstoreOutlined />
-          <span>Themen</span>
-        </Menu.Item>
-        <Menu.Item key="user">
-          <UserOutlined />
-          <span>Nutzer</span>
-        </Menu.Item>
-        <Menu.Item key="imagefile">
-          <FileImageOutlined />
-          <span>Bilddateien</span>
-        </Menu.Item>
+      <Menu.SubMenu
+        key="general"
+        title="Inhalte"
+      >
+        {
+          navigationConf?.general?.applications?.visible &&
+            <Menu.Item
+              key="application"
+            >
+              <BankOutlined />
+              <span>Applikationen</span>
+            </Menu.Item>
+        }
+        {
+          navigationConf?.general?.layers?.visible &&
+            <Menu.Item
+              key="layer"
+            >
+              <AppstoreOutlined />
+              <span>Themen</span>
+            </Menu.Item>
+        }
+        {
+          navigationConf?.general?.users?.visible &&
+            <Menu.Item
+              key="user"
+            >
+              <UserOutlined />
+              <span>Nutzer</span>
+            </Menu.Item>
+        }
+        {
+          navigationConf?.general?.imagefiles?.visible &&
+            <Menu.Item
+              key="imagefile"
+            >
+              <FileImageOutlined />
+              <span>Bilddateien</span>
+            </Menu.Item>
+        }
+      </Menu.SubMenu>
+      <Menu.SubMenu
+        key="status"
+        title="Status"
+      >
+        {
+          navigationConf?.status?.logs?.visible &&
+            <Menu.Item
+              key="status/logs"
+            >
+              <FileTextOutlined />
+              <span>Logs</span>
+            </Menu.Item>
+        }
+
+      </Menu.SubMenu>
+      <Menu.SubMenu
+        key="settings"
+        title="Einstellungen"
+      >
+        {
+          navigationConf?.settings?.logs?.visible &&
+            <Menu.Item
+              key="settings/logs"
+            >
+              <FileTextOutlined />
+              <span>Logs</span>
+            </Menu.Item>
+        }
       </Menu.SubMenu>
     </Menu>
   );
