@@ -1,9 +1,12 @@
-import { PageHeader } from 'antd';
 import React from 'react';
+
 import { Link } from 'react-router-dom';
 
-import logo from '../../../assets/img/shogun_logo.png';
+import { PageHeader } from 'antd';
+
 import User from '../Menu/User/User';
+
+import defaultLogo from '../../../assets/img/shogun_logo.png';
 
 import config from 'shogunApplicationConfig';
 
@@ -16,6 +19,10 @@ interface OwnProps {
 type HeaderProps = OwnProps;
 
 export const Header: React.FC<HeaderProps> = props => {
+
+  const logo = config.path?.logo ?
+    `${config.path.base}${config.appPrefix}${config.path?.logo}` :
+    defaultLogo;
 
   return (
     <header>
