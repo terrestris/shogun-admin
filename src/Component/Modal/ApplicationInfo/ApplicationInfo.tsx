@@ -7,11 +7,13 @@ import {
 
 import { ModalProps } from 'antd/lib/modal';
 
-import logo from '../../../../assets/img/shogun_logo.png';
+import { useRecoilState } from 'recoil';
+
+import { appInfoAtom, shogunInfoModalVisibleAtom } from '../../../State/atoms';
+
+import defaultLogo from '../../../../assets/img/shogun_logo.png';
 
 import './ApplicationInfo.less';
-import { appInfoAtom, shogunInfoModalVisibleAtom } from '../../../State/atoms';
-import { useRecoilState } from 'recoil';
 
 export interface ApplicationInfoProps extends ModalProps {}
 
@@ -39,7 +41,7 @@ export const ApplicationInfo: React.FC<ApplicationInfoProps> = ({
     >
       <img
         className="shogun-logo"
-        src={logo}
+        src={defaultLogo}
       />
       <Statistic
         title="SHOGun Version"
