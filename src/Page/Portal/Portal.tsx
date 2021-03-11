@@ -18,7 +18,7 @@ import ApplicationInfo from '../../Component/Modal/ApplicationInfo/ApplicationIn
 import UserRoot from '../../Component/User/UserRoot/UserRoot';
 import ImageFileRoot from '../../Component/ImageFile/ImageFileRoot/ImageFileRoot';
 import Logs from '../../Component/Logs/Logs';
-import Settings from '../../Component/Settings/Settings';
+import LogSettingsRoot from '../../Component/LogSettings/LogSettingsRoot/LogSettingsRoot';
 
 import config from 'shogunApplicationConfig';
 
@@ -71,7 +71,7 @@ export const Portal: React.FC<PortalProps> = props => {
           />
           <Route
             path={`${config.appPrefix}/portal/settings/logs`}
-            component={Settings}
+            component={LogSettingsRoot}
           />
           <Route
             component={WelcomeDashboard}
