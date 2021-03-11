@@ -38,9 +38,7 @@ export const LogLevelTable: React.FC<LogLevelTableProps> = props => {
     const loggers = await logService.getLoggers();
 
     const tableDatea = Object.keys(loggers)
-      .filter((l) => {
-        return l.split('.').length === 2
-      })
+      .filter(l => l.split('.').length === 2)
       .map((loggerName, i) => ({
         key: i,
         name: loggerName,
