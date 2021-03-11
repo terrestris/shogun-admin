@@ -47,6 +47,9 @@ const delayedConf = new Promise(function(resolve) {
         '/auth/**',
         '/users/**',
         '/applications/**',
+        '/layers/**',
+        '/imagefiles/**',
+        '/actuator/**',
         '/sso/**',
         '/v2/**'
       ],
@@ -58,6 +61,9 @@ const delayedConf = new Promise(function(resolve) {
         '/users',
         '/graphql',
         '/applications',
+        '/layers',
+        '/imagefiles',
+        '/actuator',
         '/sso',
         '/v2'
       ],
