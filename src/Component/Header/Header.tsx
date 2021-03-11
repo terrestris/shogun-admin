@@ -40,7 +40,6 @@ export const Header: React.FC<HeaderProps> = props => {
             SHOGun Admin
           </Link>
         }
-        subTitle="… der Alleskönner"
         extra={[
           <User key="user"/>
         ]}
