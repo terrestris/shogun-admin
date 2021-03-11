@@ -15,11 +15,14 @@ import WelcomeDashboard from '../../Component/WelcomeDashboard/WelcomeDashboard'
 import UserProfile from '../../Component/Modal/UserProfile/UserProfile';
 import ApplicationInfo from '../../Component/Modal/ApplicationInfo/ApplicationInfo';
 
-import './Portal.less';
 import UserRoot from '../../Component/User/UserRoot/UserRoot';
 import ImageFileRoot from '../../Component/ImageFile/ImageFileRoot/ImageFileRoot';
+import Logs from '../../Component/Logs/Logs';
+import Settings from '../../Component/Settings/Settings';
 
 import config from 'shogunApplicationConfig';
+
+import './Portal.less';
 
 interface OwnProps { }
 
@@ -61,6 +64,14 @@ export const Portal: React.FC<PortalProps> = props => {
           <Route
             path={`${config.appPrefix}/portal/imagefile`}
             component={ImageFileRoot}
+          />
+          <Route
+            path={`${config.appPrefix}/portal/status/logs`}
+            component={Logs}
+          />
+          <Route
+            path={`${config.appPrefix}/portal/settings/logs`}
+            component={Settings}
           />
           <Route
             component={WelcomeDashboard}
