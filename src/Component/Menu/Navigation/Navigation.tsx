@@ -6,7 +6,8 @@ import {
   AppstoreOutlined,
   UserOutlined,
   FileImageOutlined,
-  FileTextOutlined
+  FileTextOutlined,
+  ControlOutlined
 } from '@ant-design/icons';
 
 import {
@@ -112,6 +113,15 @@ export const Navigation: React.FC<NavigationProps> = (props) => {
         key="settings"
         title="Einstellungen"
       >
+        {
+          navigationConf?.settings?.global?.visible &&
+            <Menu.Item
+              key="settings/global"
+            >
+              <ControlOutlined />
+              <span>Global</span>
+            </Menu.Item>
+        }
         {
           navigationConf?.settings?.logs?.visible &&
             <Menu.Item
