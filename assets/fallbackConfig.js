@@ -20,7 +20,8 @@ var shogunApplicationConfig = {
     },
     loggers: '/actuator/loggers',
     logfile: '/actuator/logfile',
-    logo: null
+    logo: null,
+    metrics: '/actuator/metrics'
   },
   models: [
     'Layer',
@@ -60,6 +61,9 @@ var shogunApplicationConfig = {
       }
     },
     status: {
+      metrics: {
+        visible: true
+      },
       logs: {
         visible: true
       }
