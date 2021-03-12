@@ -50,6 +50,7 @@ const delayedConf = new Promise(function(resolve) {
         '/layers/**',
         '/imagefiles/**',
         '/actuator/**',
+        '/cache/**',
         '/sso/**',
         '/v2/**'
       ],
@@ -64,6 +65,7 @@ const delayedConf = new Promise(function(resolve) {
         '/layers',
         '/imagefiles',
         '/actuator',
+        '/cache',
         '/sso',
         '/v2'
       ],
