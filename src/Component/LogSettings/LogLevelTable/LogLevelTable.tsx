@@ -37,7 +37,7 @@ export const LogLevelTable: React.FC<LogLevelTableProps> = props => {
 
     const loggers = await logService.getLoggers();
 
-    const tableDatea = Object.keys(loggers)
+    const tableData = Object.keys(loggers)
       .filter(l => l.split('.').length === 2)
       .map((loggerName, i) => ({
         key: i,
@@ -45,7 +45,7 @@ export const LogLevelTable: React.FC<LogLevelTableProps> = props => {
         level: loggers[loggerName].effectiveLevel
       }));
 
-    setData(tableDatea);
+    setData(tableData);
 
     setIsLoading(false);
   };

@@ -31,7 +31,9 @@ export const GlobalSettings: React.FC<LogsProps> = (props) => {
         title="Einstellungen"
         subTitle="… die die Welt lenken"
       />
-      <EvictCache />
+      <div className="global-settings-container">
+        <EvictCache />
+      </div>
     </div>
   );
 };
