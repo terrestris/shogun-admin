@@ -84,5 +84,4 @@ export const Logs: React.FC<LogsProps> = (props) => {
   );
 };
 
-
 export default Logs;
