@@ -6,7 +6,8 @@ import {
   AppstoreOutlined,
   UserOutlined,
   FileImageOutlined,
-  FileTextOutlined
+  FileTextOutlined,
+  BarChartOutlined
 } from '@ant-design/icons';
 
 import {
@@ -98,6 +99,15 @@ export const Navigation: React.FC<NavigationProps> = (props) => {
         title="Status"
       >
         {
+          navigationConf?.status?.metrics?.visible &&
+            <Menu.Item
+              key="status/metrics"
+            >
+              <BarChartOutlined />
+              <span>Metriken</span>
+            </Menu.Item>
+        }
+        {
           navigationConf?.status?.logs?.visible &&
             <Menu.Item
               key="status/logs"
@@ -106,7 +116,6 @@ export const Navigation: React.FC<NavigationProps> = (props) => {
               <span>Logs</span>
             </Menu.Item>
         }
-
       </Menu.SubMenu>
       <Menu.SubMenu
         key="settings"
