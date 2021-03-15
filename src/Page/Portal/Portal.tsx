@@ -20,6 +20,7 @@ import ImageFileRoot from '../../Component/ImageFile/ImageFileRoot/ImageFileRoot
 import Logs from '../../Component/Logs/Logs';
 import GlobalSettingsRoot from '../../Component/GlobalSettings/GlobalSettingsRoot/GlobalSettingsRoot';
 import LogSettingsRoot from '../../Component/LogSettings/LogSettingsRoot/LogSettingsRoot';
+import MetricsRoot from '../../Component/Metrics/MetricsRoot/MetricsRoot';
 
 import config from 'shogunApplicationConfig';
 
@@ -65,6 +66,10 @@ export const Portal: React.FC<PortalProps> = props => {
           <Route
             path={`${config.appPrefix}/portal/imagefile`}
             component={ImageFileRoot}
+          />
+          <Route
+            path={`${config.appPrefix}/portal/status/metrics`}
+            component={MetricsRoot}
           />
           <Route
             path={`${config.appPrefix}/portal/status/logs`}
