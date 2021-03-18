@@ -1,18 +1,31 @@
-import React, { useEffect, useState } from 'react';
-
-import Application from '../../../Model/Application';
-
-import { Button, Checkbox, Form, Input, Modal, notification } from 'antd';
-
-import './ApplicationEditForm.less';
-import ApplicationService from '../../../Service/ApplicationService/ApplicationService';
-import Logger from 'js-logger';
+import React, {
+  useEffect,
+  useState
+} from 'react';
 
 import { useHistory } from 'react-router-dom';
+
+import {
+  Button,
+  Checkbox,
+  Form,
+  Input,
+  Modal,
+  notification
+} from 'antd';
+
+import Logger from 'js-logger';
+
 import JSONEditor from '../../FormField/JSONEditor/JSONEditor';
 import DisplayField from '../../FormField/DisplayField/DisplayField';
 
+import ApplicationService from '../../../Service/ApplicationService/ApplicationService';
+
+import Application from '../../../Model/Application';
+
 import config from 'shogunApplicationConfig';
+
+import './ApplicationEditForm.less';
 
 type OwnProps = {
   id?: number | 'create';
@@ -34,6 +47,10 @@ export const ApplicationEditForm: React.FC<ApplicationEditFormProps> = ({
   useEffect(() => {
     if (id && id.toString() !== 'create') {
       fetchApplication(parseInt(id.toString(), 10));
+    } else if (id && id.toString() === 'create' && application) {
+      application.id = null;
+      application.created = null;
+      application.modified = null;
     }
   }, [id]);
 
@@ -189,16 +206,27 @@ export const ApplicationEditForm: React.FC<ApplicationEditFormProps> = ({
             span: 20
           }}
         >
-          <Button type="primary" onClick={saveApp}>
+          <Button
+            type="primary"
+            onClick={saveApp}
+          >
             Speichern
           </Button>
-          <Button type="primary" danger onClick={deleteApp}>
+          <Button
+            type="primary"
+            danger
+            onClick={deleteApp}
+          >
             Löschen
           </Button>
-          <Button onClick={() => form.resetFields()}>
+          <Button
+            onClick={() => form.resetFields()}
+          >
             Formularfelder leeren
           </Button>
-          <Button onClick={() => form.setFieldsValue({ ...application })}>
+          <Button
+            onClick={() => form.setFieldsValue({ ...application })}
+          >
             Änderungen zurücksetzen
           </Button>
         </Form.Item>
