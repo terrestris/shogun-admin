@@ -21,7 +21,8 @@ var shogunApplicationConfig = {
     loggers: '/actuator/loggers',
     logfile: '/actuator/logfile',
     logo: null,
-    metrics: '/actuator/metrics'
+    metrics: '/actuator/metrics',
+    evictCache: '/cache/evict'
   },
   models: [
     'Layer',
@@ -69,6 +70,9 @@ var shogunApplicationConfig = {
       }
     },
     settings: {
+      global: {
+        visible: true
+      },
       logs: {
         visible: true
       }
