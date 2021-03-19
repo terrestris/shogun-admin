@@ -115,7 +115,6 @@ export const LayerEditForm: React.FC<LayerEditFormProps> = ({
     const updateMode = id.toString() !== 'create';
     const name = updatedLayer.name;
 
-    console.log(updateMode);
     try {
       if (updateMode) {
         layerService.update(updatedLayer);
