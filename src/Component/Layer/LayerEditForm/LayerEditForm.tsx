@@ -7,7 +7,6 @@ import { useHistory } from 'react-router-dom';
 
 import {
   Button,
-  Checkbox,
   Form,
   Input,
   Modal,
@@ -19,64 +18,65 @@ import Logger from 'js-logger';
 import JSONEditor from '../../FormField/JSONEditor/JSONEditor';
 import DisplayField from '../../FormField/DisplayField/DisplayField';
 
-import ApplicationService from '../../../Service/ApplicationService/ApplicationService';
+import LayerTypeSelect from '../LayerTypeSelect/LayerTypeSelect';
 
-import Application from '../../../Model/Application';
+import LayerService from '../../../Service/LayerService/LayerService';
+
+import Layer from '../../../Model/Layer';
 
 import config from 'shogunApplicationConfig';
 
-import './ApplicationEditForm.less';
+import './LayerEditForm.less';
 
 type OwnProps = {
   id?: number | 'create';
 };
 
-type ApplicationEditFormProps = OwnProps;
+type LayerEditFormProps = OwnProps;
 
-const applicationService = new ApplicationService();
+const layerService = new LayerService();
 
-export const ApplicationEditForm: React.FC<ApplicationEditFormProps> = ({
+export const LayerEditForm: React.FC<LayerEditFormProps> = ({
   id
 }) => {
 
   const history = useHistory();
 
-  const [application, setApplication] = useState<Application>();
+  const [layer, setLayer] = useState<Layer>();
   const [form] = Form.useForm();
 
   useEffect(() => {
     if (id && id.toString() !== 'create') {
-      fetchApplication(parseInt(id.toString(), 10));
-    } else if (id && id.toString() === 'create' && application) {
-      application.id = null;
-      application.created = null;
-      application.modified = null;
+      fetchLayer(parseInt(id.toString(), 10));
+    } else if (id && id.toString() === 'create' && layer) {
+      layer.id = null;
+      layer.created = null;
+      layer.modified = null;
     }
   }, [id]);
 
-  const fetchApplication = async (appId: number) => {
+  const fetchLayer = async (layerId: number) => {
     try {
-      const app = await applicationService.findOne(appId);
-      setApplication(app);
+      const lyr = await layerService.findOne(layerId);
+      setLayer(lyr);
       form.setFieldsValue({
-        ...app
+        ...lyr
       });
     } catch (error) {
       Logger.error(error);
     }
   };
 
-  const deleteApp = () => {
-
+  const deleteLayer = () => {
     let confirmName;
-    const appName = form.getFieldValue('name');
+    const layerName = form.getFieldValue('name');
     // TODO move to own component
     Modal.confirm({
       cancelText: 'Abbrechen',
-      title: 'Applikation löschen',
+      title: 'Layer löschen',
       content: (
         <div>
-          <div>Die Applikation wird gelöscht!</div>
+          <div>Der Layer wird gelöscht!</div>
           <br />
           <div>Bitte geben sie zum Bestätigen den Namen ein:</div>
           <Input onChange={(e) => { confirmName = e.target.value; }} />
@@ -84,20 +84,20 @@ export const ApplicationEditForm: React.FC<ApplicationEditFormProps> = ({
       ),
       onOk: () => {
         try {
-          if (confirmName === appName) {
-            applicationService
-              .delete(application.id)
+          if (confirmName === layerName) {
+            layerService
+              .delete(layer.id)
               .then(() => {
                 notification.success({
-                  message: 'Applikation gelöscht',
-                  description: `Applikation "${appName}" wurde gelöscht`
+                  message: 'Layer gelöscht',
+                  description: `Layer "${layerName}" wurde gelöscht`
                 });
-                history.push(`${config.appPrefix}/portal/application`);
+                history.push(`${config.appPrefix}/portal/layer`);
               });
           }
         } catch (error) {
           notification.error({
-            message: `Applikation "${appName}" konnte nicht gelöscht werden`
+            message: `Layer "${layerName}" konnte nicht gelöscht werden`
           });
           Logger.error(error);
         }
@@ -105,27 +105,28 @@ export const ApplicationEditForm: React.FC<ApplicationEditFormProps> = ({
     });
   };
 
-  const saveApp = async () => {
-    const updates = (await form.validateFields()) as Application;
-    const updatedApplication = {
-      ...application,
+  const saveLayer = async () => {
+    const updates = (await form.validateFields()) as Layer;
+    const updatedLayer = {
+      ...layer,
       ...updates
     };
 
     const updateMode = id.toString() !== 'create';
-    const name = updatedApplication.name;
+    const name = updatedLayer.name;
+
     try {
       if (updateMode) {
-        applicationService.update(updatedApplication);
+        layerService.update(updatedLayer);
       } else {
-        applicationService.add(updatedApplication);
+        layerService.add(updatedLayer);
       }
       notification.success({
-        message: `Applikation "${name}" wurde erfolgreich ${updateMode ? 'aktualisiert' : 'erstellt'}`
+        message: `Layer "${name}" wurde erfolgreich ${updateMode ? 'aktualisiert' : 'erstellt'}`
       });
     } catch (error) {
       notification.error({
-        message: `Applikation "${name}" konnte nicht ${updateMode ? 'aktualisiert' : 'erstellt'} werden`
+        message: `Layer "${name}" konnte nicht ${updateMode ? 'aktualisiert' : 'erstellt'} werden`
       });
       Logger.error(error);
     }
@@ -133,7 +134,7 @@ export const ApplicationEditForm: React.FC<ApplicationEditFormProps> = ({
 
   return (
     <div
-      className="application-form"
+      className="layer-form"
     >
       <Form
         form={form}
@@ -175,11 +176,10 @@ export const ApplicationEditForm: React.FC<ApplicationEditFormProps> = ({
           />
         </Form.Item>
         <Form.Item
-          name="stateOnly"
-          label="Arbeitstand"
-          valuePropName="checked"
+          name="type"
+          label="Typ"
         >
-          <Checkbox />
+          <LayerTypeSelect />
         </Form.Item>
         <Form.Item
           name="clientConfig"
@@ -188,14 +188,14 @@ export const ApplicationEditForm: React.FC<ApplicationEditFormProps> = ({
           <JSONEditor />
         </Form.Item>
         <Form.Item
-          name="layerTree"
-          label="Themen-Baum"
+          name="sourceConfig"
+          label="Datenquelle"
         >
           <JSONEditor />
         </Form.Item>
         <Form.Item
-          name="layerConfig"
-          label="Themen-Konfiguration"
+          name="features"
+          label="Features"
         >
           <JSONEditor />
         </Form.Item>
@@ -208,14 +208,14 @@ export const ApplicationEditForm: React.FC<ApplicationEditFormProps> = ({
         >
           <Button
             type="primary"
-            onClick={saveApp}
+            onClick={saveLayer}
           >
             Speichern
           </Button>
           <Button
             type="primary"
             danger
-            onClick={deleteApp}
+            onClick={deleteLayer}
           >
             Löschen
           </Button>
@@ -225,7 +225,7 @@ export const ApplicationEditForm: React.FC<ApplicationEditFormProps> = ({
             Formularfelder leeren
           </Button>
           <Button
-            onClick={() => form.setFieldsValue({ ...application })}
+            onClick={() => form.setFieldsValue({ ...layer })}
           >
             Änderungen zurücksetzen
           </Button>
@@ -235,4 +235,4 @@ export const ApplicationEditForm: React.FC<ApplicationEditFormProps> = ({
   );
 };
 
-export default ApplicationEditForm;
+export default LayerEditForm;

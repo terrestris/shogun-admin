@@ -8,6 +8,7 @@ import {
 } from 'react-router-dom';
 
 import LayerTable from '../LayerTable/LayerTable';
+import LayerEditForm from '../LayerEditForm/LayerEditForm';
 
 import config from 'shogunApplicationConfig';
 
@@ -47,22 +48,34 @@ export const LayerRoot: React.FC<LayerRootProps> = props => {
         title="Themen"
         subTitle="… die die Welt bewegen"
         extra={[
-          <Link key="create" to={`${config.appPrefix}/portal/layer/create`}>
-            <Button type="primary">
+          <Link
+            key="create"
+            to={`${config.appPrefix}/portal/layer/create`}
+          >
+            <Button
+              type="primary"
+            >
               Layer anlegen
             </Button>
           </Link>
         ]}
       >
       </PageHeader>
-      <div className="left-container">
+      <div
+        className="left-container"
+      >
         <LayerTable />
       </div>
-      <div className="right-container">
-        {id}
-        {/* TODO: */}
-        {/* <LayerEditForm id={id} /> */}
-      </div>
+      {
+        id &&
+        <div
+          className="right-container"
+        >
+          <LayerEditForm
+            id={id}
+          />
+        </div>
+      }
     </div>
   );
 };

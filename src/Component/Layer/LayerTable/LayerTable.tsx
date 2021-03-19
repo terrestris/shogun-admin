@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { EntityTable, EntityTableProps } from '../../../Component/Table/EntityTable/EntityTable';
-import LayerService from '../../../Service/LayerSerivce/LayerService';
+import LayerService from '../../../Service/LayerService/LayerService';
 import TableUtil from '../../../Util/TableUtil';
 
 import config from 'shogunApplicationConfig';
