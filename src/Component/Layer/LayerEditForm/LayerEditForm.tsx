@@ -59,15 +59,7 @@ export const LayerEditForm: React.FC<LayerEditFormProps> = ({
     try {
       const lyr = await layerService.findOne(layerId);
       setLayer(lyr);
-      if (lyr.clientConfig) {
-        lyr.clientConfig = JSON.stringify(lyr.clientConfig);
-      }
-      if (lyr.sourceConfig) {
-        lyr.sourceConfig = JSON.stringify(lyr.sourceConfig);
-      }
-      if (lyr.features) {
-        lyr.features = JSON.stringify(lyr.features);
-      }
+      form.resetFields();
       form.setFieldsValue({
         ...lyr
       });
@@ -123,16 +115,6 @@ export const LayerEditForm: React.FC<LayerEditFormProps> = ({
 
     const updateMode = id.toString() !== 'create';
     const name = updatedLayer.name;
-
-    if (updatedLayer.clientConfig) {
-      updatedLayer.clientConfig = JSON.parse(updatedLayer.clientConfig);
-    }
-    if (updatedLayer.sourceConfig) {
-      updatedLayer.sourceConfig = JSON.parse(updatedLayer.sourceConfig);
-    }
-    if (updatedLayer.features) {
-      updatedLayer.features = JSON.parse(updatedLayer.features);
-    }
 
     try {
       if (updateMode) {

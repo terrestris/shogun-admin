@@ -17,12 +17,21 @@ export const JSONEditor: React.FC<JSONEditorProps> = ({
 }) => {
     const [currentValue, setCurrentValue] = React.useState<string>();
 
+    const changeHandler = (value: string) => {
+      try {
+        const jsonObject = JSON.parse(value);
+        onChange(jsonObject);
+      } catch (error) {
+        Logger.trace('JSON-Editor:', error);
+      }
+    };
+
     useEffect(() => {
       if (!value) {
         setCurrentValue(undefined);
       } else {
         try {
-          const jsonString = JSON.stringify(JSON.parse(value), null, 2);
+          const jsonString = JSON.stringify(value, null, 2);
           if (jsonString) {
             setCurrentValue(jsonString);
           }
@@ -36,7 +45,7 @@ export const JSONEditor: React.FC<JSONEditorProps> = ({
         <Editor
           className="json-editor"
           value={currentValue}
-          onChange={onChange}
+          onChange={changeHandler}
           defaultLanguage="json"
         />
     );

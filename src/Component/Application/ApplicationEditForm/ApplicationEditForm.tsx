@@ -58,15 +58,7 @@ export const ApplicationEditForm: React.FC<ApplicationEditFormProps> = ({
     try {
       const app = await applicationService.findOne(appId);
       setApplication(app);
-      if (app.clientConfig) {
-        app.clientConfig = JSON.stringify(app.clientConfig);
-      }
-      if (app.layerConfig) {
-        app.layerConfig = JSON.stringify(app.layerConfig);
-      }
-      if (app.layerTree) {
-        app.layerTree = JSON.stringify(app.layerTree);
-      }
+      form.resetFields();
       form.setFieldsValue({
         ...app
       });
@@ -123,16 +115,6 @@ export const ApplicationEditForm: React.FC<ApplicationEditFormProps> = ({
 
     const updateMode = id.toString() !== 'create';
     const name = updatedApplication.name;
-
-    if (updatedApplication.clientConfig) {
-      updatedApplication.clientConfig = JSON.parse(updatedApplication.clientConfig);
-    }
-    if (updatedApplication.layerConfig) {
-      updatedApplication.layerConfig = JSON.parse(updatedApplication.layerConfig);
-    }
-    if (updatedApplication.layerTree) {
-      updatedApplication.layerTree = JSON.parse(updatedApplication.layerTree);
-    }
 
     try {
       if (updateMode) {
