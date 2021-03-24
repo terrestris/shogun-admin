@@ -1,29 +1,23 @@
 import React, { useEffect } from 'react';
-import {
-  IControlledCodeMirror as CodeMirrorProps,
-  Controlled as CodeMirror
-} from 'react-codemirror2';
-import 'codemirror/lib/codemirror.css';
-import 'codemirror/mode/javascript/javascript';
+import Editor, { EditorProps } from '@monaco-editor/react';
 import Logger from 'js-logger';
 
 import './JSONEditor.less';
 
-type OwnProps = {
+export type JSONEditorProps = {
   value?: string;
-  onChange?: (value: string) =>  void;
+  onChange?: (value: string) => void;
+  editorProps?: EditorProps;
 };
-
-export type JSONEditorProps = OwnProps & Omit<CodeMirrorProps, 'onBeforeChange' | 'value' | 'onChange'>;
 
 export const JSONEditor: React.FC<JSONEditorProps> = ({
   value,
-  onChange
+  onChange,
+  editorProps
 }) => {
-
     const [currentValue, setCurrentValue] = React.useState<string>();
 
-    const changeHandler = (editor: CodeMirror.Editor, data: CodeMirror.EditorChange, value: string) => {
+    const changeHandler = (value: string) => {
       try {
         const jsonObject = JSON.parse(value);
         onChange(jsonObject);
@@ -48,15 +42,12 @@ export const JSONEditor: React.FC<JSONEditorProps> = ({
     }, [value]);
 
     return (
-        <CodeMirror
+        <Editor
           className="json-editor"
           value={currentValue}
-          onBeforeChange={(editor, data, value) => setCurrentValue(value)}
           onChange={changeHandler}
-          options={{
-            mode: 'javascript',
-            lineWrapping: true
-          }}
+          defaultLanguage="json"
+          {...editorProps}
         />
     );
 }

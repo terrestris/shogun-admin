@@ -58,6 +58,7 @@ export const ApplicationEditForm: React.FC<ApplicationEditFormProps> = ({
     try {
       const app = await applicationService.findOne(appId);
       setApplication(app);
+      form.resetFields();
       form.setFieldsValue({
         ...app
       });
@@ -114,6 +115,7 @@ export const ApplicationEditForm: React.FC<ApplicationEditFormProps> = ({
 
     const updateMode = id.toString() !== 'create';
     const name = updatedApplication.name;
+
     try {
       if (updateMode) {
         applicationService.update(updatedApplication);

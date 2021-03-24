@@ -59,6 +59,7 @@ export const LayerEditForm: React.FC<LayerEditFormProps> = ({
     try {
       const lyr = await layerService.findOne(layerId);
       setLayer(lyr);
+      form.resetFields();
       form.setFieldsValue({
         ...lyr
       });
