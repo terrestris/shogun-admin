@@ -7,7 +7,7 @@ import './JSONEditor.less';
 export type JSONEditorProps = {
   value?: string;
   onChange?: (value: string) => void;
-  editorProps: EditorProps;
+  editorProps?: EditorProps;
 };
 
 export const JSONEditor: React.FC<JSONEditorProps> = ({
