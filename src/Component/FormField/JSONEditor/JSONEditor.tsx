@@ -1,19 +1,19 @@
 import React, { useEffect } from 'react';
-import Editor from '@monaco-editor/react';
+import Editor, { EditorProps } from '@monaco-editor/react';
 import Logger from 'js-logger';
 
 import './JSONEditor.less';
 
-type OwnProps = {
+export type JSONEditorProps = {
   value?: string;
   onChange?: (value: string) => void;
+  editorProps: EditorProps;
 };
-
-export type JSONEditorProps = OwnProps;
 
 export const JSONEditor: React.FC<JSONEditorProps> = ({
   value,
-  onChange
+  onChange,
+  editorProps
 }) => {
     const [currentValue, setCurrentValue] = React.useState<string>();
 
@@ -47,6 +47,7 @@ export const JSONEditor: React.FC<JSONEditorProps> = ({
           value={currentValue}
           onChange={changeHandler}
           defaultLanguage="json"
+          {...editorProps}
         />
     );
 }
