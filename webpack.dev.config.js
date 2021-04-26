@@ -1,7 +1,8 @@
+// please adapt keycloak parameters before start webpack
 const keycloakHost = '<<INSERT_YOUR_KEYCLOAK_IP>>';
-const keycloakUser = 'astark';
-const keycloakPassword = 'astark';
-const keycloakClientId = 'shogun-app';
+const keycloakUser = '<<INSERT_KEYCLOAK_ADMIN_USER>>';
+const keycloakPassword = '<<INSERT_KEYCLOAK_ADMIN_PWD>>';
+const keycloakClientId = '<<INSERT_KEYCLOAK_CLIENT_ID>>';
 
 const commonConfig = require('./webpack.common.config.js');
 const webpack = require('webpack');
