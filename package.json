@@ -36,7 +36,7 @@
     "antd": "^4.6.6",
     "js-logger": "^1.6.0",
     "keycloak-js": "^11.0.2",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "moment": "^2.24.0",
     "monaco-editor": "^0.23.0",
     "ol": "^6.2.1",
