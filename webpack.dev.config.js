@@ -38,7 +38,7 @@ const delayedConf = new Promise(function(resolve) {
     https: true,
     inline: true,
     port: 9090,
-    publicPath: 'http://localhost:9090/',
+    publicPath: 'https://localhost:9090/',
     // https://github.com/chimurai/http-proxy-middleware#context-matching
     // Note: In multiple path matching, you cannot use string paths and
     //       wildcard paths together!
@@ -73,9 +73,9 @@ const delayedConf = new Promise(function(resolve) {
       target: 'https://localhost/'
     }, {
       ...proxyCommonConf,
-      pathRewrite: { '^/shogun-boot/client-config.js': '' },
+      pathRewrite: { '^/client-config.js': '' },
       context: [
-        '/shogun-boot/client-config.js',
+        '/client-config.js',
       ],
       target: 'https://localhost/admin/client-config.js'
     }]
