@@ -186,19 +186,25 @@ export const LayerEditForm: React.FC<LayerEditFormProps> = ({
           name="clientConfig"
           label="Konfiguration"
         >
-          <JSONEditor />
+          <JSONEditor
+            entityName={config.navigation?.general?.layers?.schemas?.clientConfig}
+          />
         </Form.Item>
         <Form.Item
           name="sourceConfig"
           label="Datenquelle"
         >
-          <JSONEditor />
+          <JSONEditor
+            entityName={config.navigation?.general?.layers?.schemas?.sourceConfig}
+          />
         </Form.Item>
         <Form.Item
           name="features"
           label="Features"
         >
-          <JSONEditor />
+          <JSONEditor
+            entityName={config.navigation?.general?.layers?.schemas?.features}
+          />
         </Form.Item>
         <Form.Item
           className="form-buttons"
