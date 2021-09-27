@@ -187,19 +187,25 @@ export const ApplicationEditForm: React.FC<ApplicationEditFormProps> = ({
           name="clientConfig"
           label="Konfiguration"
         >
-          <JSONEditor />
+          <JSONEditor
+            entityName={config.navigation?.general?.applications?.schemas?.clientConfig}
+          />
         </Form.Item>
         <Form.Item
           name="layerTree"
           label="Themen-Baum"
         >
-          <JSONEditor />
+          <JSONEditor
+           entityName={config.navigation?.general?.applications?.schemas?.layerTree}
+          />
         </Form.Item>
         <Form.Item
           name="layerConfig"
           label="Themen-Konfiguration"
         >
-          <JSONEditor />
+          <JSONEditor
+            entityName={config.navigation?.general?.applications?.schemas?.layerConfig}
+          />
         </Form.Item>
         <Form.Item
           className="form-buttons"

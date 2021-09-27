@@ -24,11 +24,6 @@ var shogunApplicationConfig = {
     metrics: '/actuator/metrics',
     evictCache: '/cache/evict'
   },
-  models: [
-    'Layer',
-    'Application',
-    'User'
-  ],
   dashboard: {
     news: {
       visible: true
@@ -49,10 +44,20 @@ var shogunApplicationConfig = {
   navigation: {
     general: {
       applications: {
-        visible: true
+        visible: true,
+        schemas: {
+          clientConfig: 'ApplicationClientConfig',
+          layerTree: 'LayerTree',
+          layerConfig: 'LayerConfig'
+        }
       },
       layers: {
-        visible: true
+        visible: true,
+        schemas: {
+          clientConfig: 'LayerClientConfig',
+          sourceConfig: 'LayerSourceConfig',
+          features: 'GeoJsonObject'
+        }
       },
       users: {
         visible: true
