@@ -37,8 +37,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Build and release
-        uses: qcastel/github-actions-maven-release@v1.12.25
+        uses: qcastel/github-actions-maven-release@v1.12.27
         env:
+          JAVA_HOME: /usr/lib/jvm/java-17-openjdk/
           SKIP_GIT_SANITY_CHECK: true
         with:
           release-branch-name: "main"
