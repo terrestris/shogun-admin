@@ -3,6 +3,7 @@ const keycloakHost = '<<INSERT_YOUR_KEYCLOAK_IP>>';
 const keycloakUser = '<<INSERT_KEYCLOAK_ADMIN_USER>>';
 const keycloakPassword = '<<INSERT_KEYCLOAK_ADMIN_PWD>>';
 const keycloakClientId = '<<INSERT_KEYCLOAK_CLIENT_ID>>';
+const keycloakRealm = '<<INSERT_KEYCLOAK_REALM>>';
 
 const commonConfig = require('./webpack.common.config.js');
 const webpack = require('webpack');
@@ -80,7 +81,7 @@ const delayedConf = new Promise(function(resolve) {
       target: 'https://localhost/admin/client-config.js'
     }]
   };
-  const loginUrl = `https://${keycloakHost}/auth/realms/SpringBootKeycloak/protocol/openid-connect/token`;
+  const loginUrl = `https://${keycloakHost}/auth/realms/${keycloakRealm}/protocol/openid-connect/token`;
   const body = `username=${keycloakUser}&password=${keycloakPassword}&grant_type=password&` +
     `client_id=${keycloakClientId}`;
   const agent = new https.Agent({
