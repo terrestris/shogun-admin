@@ -12,7 +12,7 @@ import './JSONEditor.less';
 
 type JSONSchemaDefinition = {
   [key: string]: JSONSchema7Definition;
-}
+};
 
 export type JSONEditorProps = {
   value?: string;
@@ -44,9 +44,9 @@ export const JSONEditor: React.FC<JSONEditorProps> = ({
     }
   }, [value]);
 
-  const changeHandler = (value: string) => {
+  const changeHandler = (val: string) => {
     try {
-      const jsonObject = JSON.parse(value);
+      const jsonObject = JSON.parse(val);
       onChange(jsonObject);
     } catch (error) {
       Logger.trace('JSON-Editor:', error);
@@ -126,23 +126,23 @@ export const JSONEditor: React.FC<JSONEditorProps> = ({
         schemas: schemas
       });
     }
-  }
+  };
 
   const onEditorMount = (monaco: Monaco) => {
     setSchemaValidation(monaco);
   };
 
   return (
-      <Editor
-        className="json-editor"
-        value={currentValue}
-        onChange={changeHandler}
-        path={entityName ? `${entityName}.json` : undefined}
-        language="json"
-        beforeMount={onEditorMount}
-        {...editorProps}
-      />
+    <Editor
+      className="json-editor"
+      value={currentValue}
+      onChange={changeHandler}
+      path={entityName ? `${entityName}.json` : undefined}
+      language="json"
+      beforeMount={onEditorMount}
+      {...editorProps}
+    />
   );
-}
+};
 
 export default JSONEditor;

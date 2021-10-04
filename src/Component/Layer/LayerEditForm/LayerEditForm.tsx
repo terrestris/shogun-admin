@@ -1,4 +1,5 @@
 import React, {
+  useCallback,
   useEffect,
   useState
 } from 'react';
@@ -45,17 +46,7 @@ export const LayerEditForm: React.FC<LayerEditFormProps> = ({
   const [layer, setLayer] = useState<Layer>();
   const [form] = Form.useForm();
 
-  useEffect(() => {
-    if (id && id.toString() !== 'create') {
-      fetchLayer(parseInt(id.toString(), 10));
-    } else if (id && id.toString() === 'create' && layer) {
-      layer.id = null;
-      layer.created = null;
-      layer.modified = null;
-    }
-  }, [id]);
-
-  const fetchLayer = async (layerId: number) => {
+  const fetchLayer = useCallback(async (layerId: number) => {
     try {
       const lyr = await layerService.findOne(layerId);
       setLayer(lyr);
@@ -66,7 +57,17 @@ export const LayerEditForm: React.FC<LayerEditFormProps> = ({
     } catch (error) {
       Logger.error(error);
     }
-  };
+  }, [form]);
+
+  useEffect(() => {
+    if (id && id.toString() !== 'create') {
+      fetchLayer(parseInt(id.toString(), 10));
+    } else if (id && id.toString() === 'create' && layer) {
+      layer.id = null;
+      layer.created = null;
+      layer.modified = null;
+    }
+  }, [fetchLayer, id, layer]);
 
   const deleteLayer = () => {
     let confirmName;
@@ -161,9 +162,7 @@ export const LayerEditForm: React.FC<LayerEditFormProps> = ({
           label="Erstellt am"
         >
           <DisplayField
-            formatter={(date) => {
-              return date && new Intl.DateTimeFormat('de-DE').format(new Date(date));
-            }}
+            format="date"
           />
         </Form.Item>
         <Form.Item
@@ -171,9 +170,7 @@ export const LayerEditForm: React.FC<LayerEditFormProps> = ({
           label="Editiert am"
         >
           <DisplayField
-            formatter={(date) => {
-              return date && new Intl.DateTimeFormat('de-DE').format(new Date(date));
-            }}
+            format="date"
           />
         </Form.Item>
         <Form.Item

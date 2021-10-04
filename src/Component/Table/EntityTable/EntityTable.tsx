@@ -87,7 +87,7 @@ export const EntityTable: React.FC<EntityTableProps> = ({
     }
   };
 
-  if (!loadingState) {
+  if (!loadingState && !entities) {
     fetchEntities();
   }
 
@@ -209,6 +209,10 @@ export const EntityTable: React.FC<EntityTableProps> = ({
       }
     }
   ];
+
+  if (!entities) {
+    return <></>;
+  }
 
   return (
     <Form form={form} component={false}>
