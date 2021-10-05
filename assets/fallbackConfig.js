@@ -24,6 +24,9 @@ var shogunApplicationConfig = {
     metrics: '/actuator/metrics',
     evictCache: '/cache/evict'
   },
+  models: [
+    'Application'
+  ],
   dashboard: {
     news: {
       visible: true
