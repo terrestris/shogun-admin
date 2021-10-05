@@ -1,10 +1,3 @@
-// please adapt keycloak parameters before start webpack
-const keycloakHost = '<<INSERT_YOUR_KEYCLOAK_IP>>';
-const keycloakUser = '<<INSERT_KEYCLOAK_ADMIN_USER>>';
-const keycloakPassword = '<<INSERT_KEYCLOAK_ADMIN_PWD>>';
-const keycloakClientId = '<<INSERT_KEYCLOAK_CLIENT_ID>>';
-const keycloakRealm = '<<INSERT_KEYCLOAK_REALM>>';
-
 const commonConfig = require('./webpack.common.config.js');
 const webpack = require('webpack');
 const fetch = require('node-fetch');
@@ -13,6 +6,16 @@ const https = require('https');
 let commonWebpackConfig = commonConfig;
 
 const headers = {};
+
+// `process.env` is defined in the webpack's DefinePlugin
+const envVariables = process.env;
+const {
+  KEYCLOAK_IP,
+  KEYCLOAK_ADMIN_USER,
+  KEYCLOAK_ADMIN_PWD,
+  KEYCLOAK_CLIENT_ID,
+  KEYCLOAK_REALM
+} = envVariables;
 
 const delayedConf = new Promise(function(resolve) {
   commonWebpackConfig.plugins = [
@@ -81,9 +84,9 @@ const delayedConf = new Promise(function(resolve) {
       target: 'https://localhost/admin/client-config.js'
     }]
   };
-  const loginUrl = `https://${keycloakHost}/auth/realms/${keycloakRealm}/protocol/openid-connect/token`;
-  const body = `username=${keycloakUser}&password=${keycloakPassword}&grant_type=password&` +
-    `client_id=${keycloakClientId}`;
+  const loginUrl = `https://${KEYCLOAK_IP}/auth/realms/${KEYCLOAK_REALM}/protocol/openid-connect/token`;
+  const body = `username=${KEYCLOAK_ADMIN_USER}&password=${KEYCLOAK_ADMIN_PWD}&grant_type=password&` +
+    `client_id=${KEYCLOAK_CLIENT_ID}`;
   const agent = new https.Agent({
     rejectUnauthorized: false
   });

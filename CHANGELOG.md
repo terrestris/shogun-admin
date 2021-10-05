@@ -1,3 +1,20 @@
+## [1.2.0](https://github.com/terrestris/shogun-admin/compare/v1.1.0...v1.2.0) (2021-10-05)
+
+
+### Features
+
+* use dotenv for environment variables ([0eb7082](https://github.com/terrestris/shogun-admin/commit/0eb70824b7947cc5070957bc832449a0f3244dba))
+
+
+### Changes in configuration
+
+* ignore .env files and code-workspace ([4ac093e](https://github.com/terrestris/shogun-admin/commit/4ac093eba482559d75773fcbe195d8613bcf4857))
+
+
+### Dependencies
+
+* adds missing eslint dependencies ([e7591f4](https://github.com/terrestris/shogun-admin/commit/e7591f4a89d18a95904e3b754a3b5c66eccc6a58))
+
 ## [1.1.0](https://github.com/terrestris/shogun-admin/compare/v1.0.1...v1.1.0) (2021-10-04)
 
 

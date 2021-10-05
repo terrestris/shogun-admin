@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
   useRecoilState
 } from 'recoil';
@@ -43,7 +43,7 @@ const App: React.FC = () => {
   // - swagger docs
   // - applicationInfo
   // - logged in User
-  const getInitialData = async () => {
+  const getInitialData = useCallback(async () => {
     try {
       setLoadingState('loading');
       const swaggerDoc = await AppInfoService.getSwaggerDocs();
@@ -56,7 +56,7 @@ const App: React.FC = () => {
       setLoadingState('failed');
       Logger.error(error);
     }
-  };
+  }, [setAppInfo, setUserInfo]);
 
   useEffect(() => {
     if (_isEmpty(userInfo) || _isEmpty(appInfo)) {
