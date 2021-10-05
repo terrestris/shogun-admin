@@ -7,7 +7,7 @@ export interface FileArgs extends BaseEntityArgs {
   file?: Uint8Array;
 }
 
-export default class Application extends BaseEntity {
+export default class File extends BaseEntity {
   fileName?: string;
   fileUuid?: string;
   fileType?: string;
