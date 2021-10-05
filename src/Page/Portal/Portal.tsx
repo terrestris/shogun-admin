@@ -118,10 +118,6 @@ export const Portal: React.FC<PortalProps> = () => {
               />}
             />)
           }
-          {/* <Route
-            path={`${config.appPrefix}/portal/application`}
-            component={ApplicationRoot}
-          /> */}
           <Route
             path={`${config.appPrefix}/portal/layer`}
             component={LayerRoot}
