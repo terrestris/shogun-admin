@@ -1,7 +1,11 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const webpack = require('webpack');
 const SimpleProgressWebpackPlugin = require('simple-progress-webpack-plugin');
 const CustomAntThemeModifyVars = require('./theme.js');
+const dotenv = require('dotenv').config({
+  path: path.join(__dirname, '.env')
+});
 
 module.exports = {
   entry: [
@@ -88,6 +92,9 @@ module.exports = {
     }),
     new SimpleProgressWebpackPlugin({
       format: 'compact'
+    }),
+    new webpack.DefinePlugin( {
+      'process.env': dotenv.parsed
     })
   ]
 };
