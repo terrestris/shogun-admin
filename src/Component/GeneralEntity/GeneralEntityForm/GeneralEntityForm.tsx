@@ -1,12 +1,6 @@
 import React from 'react';
 
-import {
-  DatePicker,
-  Form, Input, Statistic, Switch
-  // Input,
-  // Modal,
-  // notification
-} from 'antd';
+import { DatePicker, Form, Input, Statistic, Switch } from 'antd';
 const { TextArea } = Input;
 
 import Logger from 'js-logger';
@@ -61,71 +55,6 @@ export const GeneralEntityForm: React.FC<GeneralEntityFormProps> = ({
   form,
   formConfig
 }) => {
-
-  // const deleteEntity = () => {
-  //   let confirmedId;
-  //   const entityId = form.getFieldValue('id');
-  //   // TODO move to own component
-  //   Modal.confirm({
-  //     cancelText: 'Abbrechen',
-  //     title: 'Entität löschen',
-  //     content: (
-  //       <div>
-  //         <div>Die Entität wird gelöscht!</div>
-  //         <br />
-  //         <div>Bitte geben sie zum Bestätigen die ID ein:</div>
-  //         <Input onChange={(e) => { confirmedId = e.target.value; }} />
-  //       </div>
-  //     ),
-  //     onOk: () => {
-  //       try {
-  //         if (confirmedId === entityId) {
-  //           service
-  //             .delete(entity?.id)
-  //             .then(() => {
-  //               notification.success({
-  //                 message: 'Entität gelöscht',
-  //                 description: `Entität mit ID "${confirmedId}" wurde gelöscht`
-  //               });
-  //               history.push(`${config.appPrefix}/portal/${endpointUrl}`);
-  //             });
-  //         }
-  //       } catch (error) {
-  //         notification.error({
-  //           message: `Entität  mit ID" ${confirmedId}" konnte nicht gelöscht werden`
-  //         });
-  //         Logger.error(error);
-  //       }
-  //     }
-  //   });
-  // };
-
-  // const saveEntity = async () => {
-  //   const updates = (await form.validateFields()) as BaseEntity;
-  //   const updatedEntity = {
-  //     ...entity,
-  //     ...updates
-  //   };
-
-  //   const updateMode = id.toString() !== 'create';
-
-  //   try {
-  //     if (updateMode) {
-  //       service.update(updatedEntity);
-  //     } else {
-  //       service.add(updatedEntity);
-  //     }
-  //     notification.success({
-  //       message: `Entität mit ID "${id === 'create' ? '-' : id}" wurde erfolgreich ${updateMode
-  //  'aktualisiert' : 'erstellt'}
-  //     });
-  //   } catch (error) {
-  //     notification.error({
-  //       message: `Entität mit ID "${id}" konnte nicht ${updateMode ? 'aktualisiert' : 'erstellt'} werden`
-  //     });
-  //     Logger.error(error);
-  //   }
-  // };
 
   /**
    *
