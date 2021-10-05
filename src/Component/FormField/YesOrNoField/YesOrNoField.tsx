@@ -16,10 +16,10 @@ const YesOrNoField: React.FC<YesOrNoFieldProps> = ({
 
   return (
     value ? <div className="yes-no-field">
-      <span className="yn-text">Yes</span>
+      <span className="yn-text">Ja</span>
       {showIcons && <CheckOutlined />}
     </div> : <div className="yes-no-field">
-      <span className="yn-text">No</span>
+      <span className="yn-text">Nein</span>
       {showIcons &&<CloseOutlined /> }
     </div>
   );

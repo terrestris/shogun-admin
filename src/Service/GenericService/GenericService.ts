@@ -45,7 +45,7 @@ abstract class GenericService<T extends BaseEntity> {
       .then(this.isSuccessOne.bind(this));
   }
 
-  add(t: T): Promise<T> {
+  add(t: Partial<T>): Promise<T> {
     if (!keycloak.token) {
       return Promise.reject('No keycloak token available.');
     }

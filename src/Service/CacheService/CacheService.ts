@@ -16,9 +16,8 @@ class CacheService {
           'X-XSRF-TOKEN': CsrfUtil.getCsrfValueFromCookie()
         }
       });
-
       return response.status === 200;
-    } catch(error) {
+    } catch (error) {
       Logger.error(`Error while evicting the cache: ${error}`);
 
       return false;

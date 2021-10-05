@@ -6,19 +6,19 @@ import {
   Link
 } from 'react-router-dom';
 import { Button, PageHeader, Form } from 'antd';
+import _isEmpty from  'lodash/isEmpty';
 
+import { ControllerUtil } from '../../../Controller/ControllerUtil';
+import { FormOutlined, SaveOutlined, UndoOutlined } from '@ant-design/icons';
+import { GenericEntityController } from '../../../Controller/GenericEntityController';
+import { Logger } from '@terrestris/base-util';
+import { NamePath } from 'rc-field-form/lib/interface';
+import BaseEntity from '../../../Model/BaseEntity';
+import config from 'shogunApplicationConfig';
 import GeneralEntityForm, { FormConfig } from '../GeneralEntityForm/GeneralEntityForm';
 import GeneralEntityTable from '../GeneralEntityTable/GeneralEntityTable';
 
-import config from 'shogunApplicationConfig';
-import GenericService from '../../../Service/GenericService/GenericService';
-import BaseEntity from '../../../Model/BaseEntity';
-
 import './GeneralEntityRoot.less';
-import { Logger } from '@terrestris/base-util';
-import { GenericEntityController, FormValues } from '../../../Controller/GenericEntityController';
-import { NamePath } from 'rc-field-form/lib/interface';
-import { FormOutlined, SaveOutlined, UndoOutlined } from '@ant-design/icons';
 
 export type GeneralEntityConfigType = {
   endpoint: string;
@@ -31,14 +31,7 @@ export type GeneralEntityConfigType = {
 
 type OwnProps<T extends BaseEntity> = GeneralEntityConfigType;
 
-export type GeneralEntityRootProps<T extends BaseEntity> = OwnProps<T> &
-  React.HTMLAttributes<HTMLDivElement>;
-
-class GenericServiceImpl extends GenericService<BaseEntity> {
-  constructor(endpoint: string) {
-    super(BaseEntity, `${config.appPrefix}/${endpoint}`);
-  }
-};
+export type GeneralEntityRootProps<T extends BaseEntity> = OwnProps<T> & React.HTMLAttributes<HTMLDivElement>;
 
 export function GeneralEntityRoot<T extends BaseEntity> ({
   endpoint,
@@ -49,14 +42,27 @@ export function GeneralEntityRoot<T extends BaseEntity> ({
   formConfig
 }: GeneralEntityRootProps<T>) {
 
+  // application => Model
+  const history = useHistory();
+  const location = useLocation();
+  const match = matchPath<{ entityId: string }>(location.pathname, {
+    path: `${config.appPrefix}/portal/${entityType}/:entityId`
+  });
+  const entityId = match?.params?.entityId;
+
   const [id, setId] = useState<number | 'create'>();
-  const [entity, setEntity] = useState<T>();
+  const [entity, setEntity] = useState<BaseEntity>();
+  const [formIsDirty, setFormIsDirty] = useState<boolean>(false);
+  const [formValid, setFormValid] = useState<boolean>(true);
   const [form] = Form.useForm();
 
+  /**
+   * Validate form fields
+   */
   const validate = useCallback(async (nameList?: NamePath[]) => {
     let valid: boolean;
     try {
-      await form.validateFields(nameList);
+      await form.validateFields(nameList || []);
       valid = true;
     } catch (e) {
       if ('errorFields' in e) {
@@ -65,47 +71,40 @@ export function GeneralEntityRoot<T extends BaseEntity> ({
         throw e;
       }
     }
-    return valid;
+    setFormValid(valid);
   }, [form]);
 
-  const updateForm = useCallback(async (values: FormValues): Promise<void> => {
-    form.setFieldsValue(values);
-    validate();
+  const updateForm = useCallback(async (): Promise<void> => {
+    const nameList = formConfig?.fields.filter(field => field.required).map(field => field.dataField);
+    validate(nameList);
   }, [form, validate]);
 
-  const genericService: GenericServiceImpl = useMemo(() => new GenericServiceImpl(endpoint), [endpoint]);
-  const genericController: GenericEntityController<T> = useMemo(() => new GenericEntityController<T>({
-    service: genericService as GenericService<T>,
-    formUpdater: updateForm,
-    formConfig
-  }), [genericService, updateForm, formConfig]);
+  const entityController: GenericEntityController<BaseEntity> = useMemo(() => ControllerUtil.createController({
+    endpoint,
+    entityType,
+    formConfig,
+    updateForm
+  }), []);
 
   const fetchEntity = useCallback(async (eId: number) => {
     try {
-      const e: T = await genericController?.load(eId);
+      const e: BaseEntity = await entityController?.load(eId);
       setEntity(e);
       form.resetFields();
     } catch (error) {
       Logger.error(error);
     }
-  }, [form, genericController]);
+  }, [form, entityController]);
 
   useEffect(() => {
     if (id && id.toString() !== 'create' && id !== entity?.id) {
       fetchEntity(parseInt(id.toString(), 10));
-    } else if (id && id.toString() === 'create') {
-      entity.id = null;
-      entity.created = null;
-      entity.modified = null;
+    } else if (id && id.toString() === 'create' && _isEmpty(entity)) {
+      const e: BaseEntity = entityController?.create();
+      setEntity(e);
+      form.resetFields();
     }
   }, [id, fetchEntity, entity]);
-
-  const history = useHistory();
-  const location = useLocation();
-  const match = matchPath<{ entityId: string }>(location.pathname, {
-    path: `${config.appPrefix}/portal/${entityType}/:entityId`
-  });
-  const entityId = match?.params?.entityId;
 
   useEffect(() => {
     if (!entityId) {
@@ -117,17 +116,35 @@ export function GeneralEntityRoot<T extends BaseEntity> ({
     } else {
       setId(parseInt(entityId, 10));
     }
+    setEntity(null);
   }, [entityId]);
 
   // Once the controller is known we need to set the formUpdater so we can update
   // a given form when the entity is updated via controller
   useEffect(() => {
-    if (genericController) {
-      genericController.setFormUpdater(updateForm);
+    if (entityController) {
+      entityController.setFormUpdater(updateForm);
     }
-  }, [updateForm, genericController]);
+  }, [updateForm, entityController]);
 
-  const initialValues = genericController?.getInitialFormValues();
+  const onValuesChange = async (changedValues: any) => {
+    setFormIsDirty(true);
+    await entityController.updateEntity(changedValues);
+  };
+
+  const onResetForm = () => {
+    form?.resetFields();
+    setFormIsDirty(false);
+  }
+
+  const onSaveClick = async () => {
+    const updatedEntity: BaseEntity = await entityController?.saveOrUpdate();
+    setEntity(updatedEntity);
+    setFormIsDirty(false);
+  }
+
+  const initialValues = useMemo(() => entityController?.getInitialFormValues(), [entityController?.getEntity()]);
+  const saveReloadDisabled = useMemo(() => _isEmpty(entity) || !formIsDirty, [formIsDirty, entity]);
 
   return (
     <div className="general-entity-root">
@@ -142,10 +159,22 @@ export function GeneralEntityRoot<T extends BaseEntity> ({
               {`${entityName} anlegen`}
             </Button>
           </Link>,
-          <Button type="primary" key="save" icon={<SaveOutlined />}>
+          <Button
+            disabled={saveReloadDisabled || !formValid}
+            icon={<SaveOutlined />}
+            key="save"
+            onClick={onSaveClick}
+            type="primary"
+          >
             {`${entityName} speichern`}
           </Button>,
-          <Button type="primary" key="reset" icon={<UndoOutlined />} disabled={!form.isFieldsTouched()}>
+          <Button
+            disabled={saveReloadDisabled}
+            icon={<UndoOutlined />}
+            key="reset"
+            onClick={onResetForm}
+            type="primary"
+          >
             {`${entityName} zurücksetzen`}
           </Button>
         ]}
@@ -154,7 +183,7 @@ export function GeneralEntityRoot<T extends BaseEntity> ({
       <div className="left-container">
         <GeneralEntityTable
           entityType={entityType}
-          service={genericService}
+          controller={entityController}
         />
       </div>
       {
@@ -164,7 +193,8 @@ export function GeneralEntityRoot<T extends BaseEntity> ({
             formConfig={formConfig}
             form={form}
             formProps={{
-              initialValues
+              initialValues,
+              onValuesChange
             }}
           />
         </div>

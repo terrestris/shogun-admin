@@ -68,26 +68,27 @@ export const Portal: React.FC<PortalProps> = () => {
           dateFormat: 'DD.MM.YYYY HH:mm'
         }
       }, {
+        component: 'Input',
         dataField: 'name',
-        labelI18n: 'The name of the application',
-        component: 'Input'
+        labelI18n: 'Der Name der Applikation',
+        required: true
       }, {
+        component: 'Switch',
         dataField: 'stateOnly',
         labelI18n: 'Arbeitstand',
-        component: 'Switch',
         readOnly: true
       }, {
-        labelI18n: 'Client-Konfiguration',
+        component: 'JSONEditor',
         dataField: 'clientConfig',
-        component: 'JSONEditor'
+        labelI18n: 'Client-Konfiguration'
       }, {
-        labelI18n: 'Themen-Baum',
+        component: 'JSONEditor',
         dataField: 'layerTree',
-        component: 'JSONEditor'
+        labelI18n: 'Themen-Baum'
       }, {
-        labelI18n: 'Themen-Konfiguration',
+        component: 'JSONEditor',
         dataField: 'layerConfig',
-        component: 'JSONEditor'
+        labelI18n: 'Themen-Konfiguration'
       }]
     }
   }];

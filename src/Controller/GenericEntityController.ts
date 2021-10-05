@@ -1,6 +1,9 @@
-import _isNil from 'lodash/isNil';
 import _debounce from 'lodash/debounce';
 import _intersects from 'lodash/intersection';
+import _isEmpty from 'lodash/isEmpty';
+import _isNil from 'lodash/isNil';
+import _isNumber from 'lodash/isNumber';
+import _omit from 'lodash/omit';
 
 import BaseEntity from '../Model/BaseEntity';
 import { ValidateStatus } from 'antd/lib/form/FormItem';
@@ -58,18 +61,22 @@ export class GenericEntityController<T extends BaseEntity> {
 
     // initialize form value
     this.initializeFormValues();
-
     return this.entity;
   };
 
   public create(): T {
-    // this.entity = { };
+    this.entity = {} as T;
     this.initializeFormValues();
     return this.entity;
   }
 
   public delete(entites: T[]): Promise<void> {
     return Promise.resolve();
+  }
+
+  // TODO
+  public getService(): GenericService<T> {
+    return this.service;
   }
 
   /**
@@ -79,8 +86,8 @@ export class GenericEntityController<T extends BaseEntity> {
    */
   public async updateEntity(values: FormValues): Promise<void> {
     for (const fieldConfig of this.formConfig.fields) {
-      if (fieldConfig.hasOwnProperty(fieldConfig.dataField)) {
-        await this.setEntityValue(fieldConfig, fieldConfig.dataField);
+      if (values.hasOwnProperty(fieldConfig.dataField)) {
+        await this.setEntityValue(fieldConfig, values[fieldConfig.dataField]);
       }
     }
     if (this.nextUpdate) {
@@ -91,6 +98,31 @@ export class GenericEntityController<T extends BaseEntity> {
       }
       this.nextUpdate = null;
     }
+  }
+
+  public async saveOrUpdate(): Promise<T> {
+    const isUpdate = _isNumber(this.entity.id);
+
+    // omit constant fields and read only fields
+    let entityUpdateObject: Partial<T> = _omit(this.entity, [
+      'created',
+      'modified',
+      ...this.formConfig?.fields.filter(field => field.readOnly).map(field => field.dataField)
+    ]);
+
+    // re-add id for service methods
+    if (isUpdate) {
+      entityUpdateObject = {
+        ...entityUpdateObject,
+        id: this.entity.id
+      };
+    }
+
+    this.entity = isUpdate ?
+      await this.service?.updatePartial(entityUpdateObject) :
+      await this.service.add(entityUpdateObject);
+
+    return this.entity;
   }
 
   public getFormConfig(): FormConfig {
@@ -137,6 +169,9 @@ export class GenericEntityController<T extends BaseEntity> {
   }
 
   /**
+   *
+   * Currently not needed
+   *
    * Update the form only for specific components
    * @param components that are affected by the change
    * @param values that should be given to the form
@@ -239,6 +274,32 @@ export class GenericEntityController<T extends BaseEntity> {
   }
 
   /**
+   * This function initiates a form change for all field configs that use one of the given dataFields.
+   * It only adds the given dataFields to the value change object.
+   * @param dataFields
+   * @protected
+   */
+  protected addFormChangeForDataFields(dataFields: string[]) {
+    for (const fieldConfig of this.formConfig.fields) {
+      if (!Array.isArray(fieldConfig.dataField)) {
+        if (dataFields.includes(fieldConfig.dataField)) {
+          this.addFormChange(fieldConfig.dataField, this.entity[fieldConfig.dataField]);
+        }
+      } else {
+        if (_intersects(fieldConfig.dataField, dataFields)) {
+          const values = {};
+          for (const dataField of fieldConfig.dataField) {
+            if (dataFields.includes(dataField)) {
+              values[dataField] = this.entity[dataField];
+            }
+          }
+          this.addFormChange(fieldConfig.dataField, values);
+        }
+      }
+    }
+  }
+
+  /**
    *
    * @param panelName
    * @param fieldName
@@ -260,6 +321,7 @@ export class GenericEntityController<T extends BaseEntity> {
 
   private async setEntityValue(fieldConfig: FieldConfig, value: FieldValue): Promise<void>{
     this.setEntityValueByFieldConfig(fieldConfig, value);
+    this.addFormChangeForDataFields([fieldConfig.dataField]);
   }
 
   private getFormValue(fieldConfig: FieldConfig): FieldValue {

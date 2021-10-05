@@ -1,16 +1,16 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import { EntityTable, EntityTableProps } from '../../../Component/Table/EntityTable/EntityTable';
-import GenericService from '../../../Service/GenericService/GenericService';
 import TableUtil from '../../../Util/TableUtil';
 
 import config from 'shogunApplicationConfig';
 import BaseEntity from '../../../Model/BaseEntity';
 
 import './GeneralEntityTable.less';
+import { GenericEntityController } from '../../../Controller/GenericEntityController';
 
 interface OwnProps<EntityType extends BaseEntity> {
-  service: GenericService<EntityType>;
+  controller: GenericEntityController<EntityType>;
   entityType: string;
   // TODO: table config
 }
@@ -40,8 +40,10 @@ const columns: any = [
 
 export function GeneralEntityTable<EntityType extends BaseEntity> ({
   entityType,
-  service
+  controller
 }: GeneralEntityTableProps<EntityType>) {
+
+  const service = useMemo(() => controller.getService(), [controller]);
 
   return (
     <EntityTable
