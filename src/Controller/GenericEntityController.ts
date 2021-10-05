@@ -10,6 +10,7 @@ import { ValidateStatus } from 'antd/lib/form/FormItem';
 import GenericService from '../Service/GenericService/GenericService';
 import { FieldConfig, FormConfig } from '../Component/GeneralEntity/GeneralEntityForm/GeneralEntityForm';
 import { Logger } from '@terrestris/base-util';
+import Application from '../Model/Application';
 
 // TODO: add explicit value objects
 export type FieldValue = any;
@@ -64,17 +65,26 @@ export class GenericEntityController<T extends BaseEntity> {
     return this.entity;
   };
 
-  public create(): T {
-    this.entity = {} as T;
+  public createEntity(): T {
+    let entityCreated = this.create(BaseEntity);
+    if (this.formConfig?.name === 'application') {
+      entityCreated = this.create(Application);
+    }
+    this.entity = entityCreated as T;
     this.initializeFormValues();
     return this.entity;
+  };
+
+  private create<T>(clz: new (args: any) => T): T {
+    return new clz({});
   }
 
   public delete(entites: T[]): Promise<void> {
+    // TODO
     return Promise.resolve();
   }
 
-  // TODO
+  // TODO: This can be removed in the future
   public getService(): GenericService<T> {
     return this.service;
   }

@@ -51,7 +51,7 @@ export function GeneralEntityRoot<T extends BaseEntity> ({
   const entityId = match?.params?.entityId;
 
   const [id, setId] = useState<number | 'create'>();
-  const [entity, setEntity] = useState<BaseEntity>();
+  const [entity, setEntity] = useState<T>();
   const [formIsDirty, setFormIsDirty] = useState<boolean>(false);
   const [formValid, setFormValid] = useState<boolean>(true);
   const [form] = Form.useForm();
@@ -79,16 +79,19 @@ export function GeneralEntityRoot<T extends BaseEntity> ({
     validate(nameList);
   }, [form, validate]);
 
-  const entityController: GenericEntityController<BaseEntity> = useMemo(() => ControllerUtil.createController({
+  const entityController: GenericEntityController<T> = useMemo(() => ControllerUtil.createController({
     endpoint,
     entityType,
     formConfig,
     updateForm
-  }), []);
+  }), []) as GenericEntityController<T>;
 
+  /**
+   * Fetch entity with given id
+   */
   const fetchEntity = useCallback(async (eId: number) => {
     try {
-      const e: BaseEntity = await entityController?.load(eId);
+      const e: T = await entityController?.load(eId) as T;
       setEntity(e);
       form.resetFields();
     } catch (error) {
@@ -96,13 +99,17 @@ export function GeneralEntityRoot<T extends BaseEntity> ({
     }
   }, [form, entityController]);
 
+  /**
+   * Fetch entity or create new one
+   */
   useEffect(() => {
     if (id && id.toString() !== 'create' && id !== entity?.id) {
       fetchEntity(parseInt(id.toString(), 10));
-    } else if (id && id.toString() === 'create' && _isEmpty(entity)) {
-      const e: BaseEntity = entityController?.create();
+    }
+    if (id && id.toString() === 'create' && entity === undefined) {
+      const e: T = entityController?.createEntity();
       setEntity(e);
-      form.resetFields();
+      form.setFieldsValue(entityController?.getEntity());
     }
   }, [id, fetchEntity, entity]);
 
@@ -112,11 +119,11 @@ export function GeneralEntityRoot<T extends BaseEntity> ({
       return;
     }
     if (entityId === 'create') {
+      setEntity(undefined);
       setId(entityId);
     } else {
       setId(parseInt(entityId, 10));
     }
-    setEntity(null);
   }, [entityId]);
 
   // Once the controller is known we need to set the formUpdater so we can update
@@ -138,9 +145,10 @@ export function GeneralEntityRoot<T extends BaseEntity> ({
   }
 
   const onSaveClick = async () => {
-    const updatedEntity: BaseEntity = await entityController?.saveOrUpdate();
+    const updatedEntity: T = await entityController?.saveOrUpdate() as T;
     setEntity(updatedEntity);
     setFormIsDirty(false);
+    // reload grid TODO
   }
 
   const initialValues = useMemo(() => entityController?.getInitialFormValues(), [entityController?.getEntity()]);

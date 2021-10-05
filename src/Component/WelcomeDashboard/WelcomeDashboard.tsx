@@ -30,7 +30,7 @@ import './WelcomeDashboard.less';
 
 type WelcomeDashboardProps = {};
 
-export const WelcomeDashboard: React.FC<WelcomeDashboardProps> = (props) => {
+export const WelcomeDashboard: React.FC<WelcomeDashboardProps> = () => {
 
   const dashboardConf = config.dashboard;
 
