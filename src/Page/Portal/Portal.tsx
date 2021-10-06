@@ -56,7 +56,7 @@ export const Portal: React.FC<PortalProps> = () => {
       }
     };
     const cfg: GeneralEntityConfigType =
-      await fetch(`${config.path.configBase}/${_toLowerCase(modelName)}.json`, reqOpts)
+      await fetch(`${config.appPrefix}${config.path.configBase}/${_toLowerCase(modelName)}.json`, reqOpts)
         .then(response => {
           if (response.ok) {
             if (response.status === 204) {
