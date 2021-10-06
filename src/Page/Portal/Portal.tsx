@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import { Button, message } from 'antd';
 import { Switch, Route } from 'react-router-dom';
 
+import _toLowerCase from 'lodash/lowerCase';
+import _isEqual from 'lodash/isEqual';
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined
@@ -24,11 +26,10 @@ import { keycloak } from '../../Util/KeyCloakUtil';
 
 import config from 'shogunApplicationConfig';
 
-import './Portal.less';
 import GeneralEntityRoot,
 { GeneralEntityConfigType } from '../../Component/GeneralEntity/GeneralEntityRoot/GeneralEntityRoot';
-import { CsrfUtil } from '@terrestris/base-util';
-import _toLowerCase from 'lodash/lowerCase';
+import { CsrfUtil, Logger } from '@terrestris/base-util';
+import './Portal.less';
 
 interface OwnProps { }
 
@@ -41,41 +42,47 @@ export const Portal: React.FC<PortalProps> = () => {
   const [entitiesToLoad, setEntitiesToLoad] = useState<GeneralEntityConfigType[]>([]);
   const [configsAreLoading, setConfigsAreLoading] = useState<boolean>(false);
 
-  const fetchConfigsForModels = async () => {
-    setConfigsAreLoading(true);
-    const promises = config?.models?.map((modelName: string) => {
-      if (!keycloak.token) {
-        return Promise.reject('No keycloak token available.');
+  const fetchConfigForModel = async(modelName: string): Promise<GeneralEntityConfigType> => {
+    if (!keycloak.token) {
+      Logger.warn('No keycloak token available.');
+      return null;
+    }
+    const reqOpts = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-XSRF-TOKEN': CsrfUtil.getCsrfValueFromCookie(),
+        'Authorization': `Bearer ${keycloak.token}`
       }
-      const reqOpts = {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-XSRF-TOKEN': CsrfUtil.getCsrfValueFromCookie(),
-          'Authorization': `Bearer ${keycloak.token}`
-        }
-      };
-      return fetch(`${config.path.configBase}/${_toLowerCase(modelName)}.json`, reqOpts)
+    };
+    const cfg: GeneralEntityConfigType =
+      await fetch(`${config.path.configBase}/${_toLowerCase(modelName)}.json`, reqOpts)
         .then(response => {
           if (response.ok) {
             if (response.status === 204) {
-              // No Data
+            // No Data
               return Promise.resolve();
             }
             return response.json();
           } else {
+            message.error(`Could not load config for model: ${modelName}`);
             throw new Error(response.statusText);
           }
         });
-    });
-
-    await Promise.all(promises)
-      .then((formConfigs: GeneralEntityConfigType[]) => setEntitiesToLoad(formConfigs))
-      .catch(() => message.error('Could not load configuration.'))
-      .finally(() => setConfigsAreLoading(false));
+    return cfg;
   };
 
-  if (config?.models?.length !== entitiesToLoad?.length && !configsAreLoading) {
+  const fetchConfigsForModels = async () => {
+    setConfigsAreLoading(true);
+    const formConfigsPromises: Promise<GeneralEntityConfigType>[] = await config?.models?.map(fetchConfigForModel);
+    const formConfigs: GeneralEntityConfigType[] =await Promise.all(formConfigsPromises);
+    if (!_isEqual(formConfigs, entitiesToLoad)) {
+      setEntitiesToLoad(formConfigs);
+    }
+    setConfigsAreLoading(false);
+  };
+
+  if (config?.models && config?.models?.length !== entitiesToLoad?.length && !configsAreLoading) {
     fetchConfigsForModels();
   }
 
@@ -96,7 +103,7 @@ export const Portal: React.FC<PortalProps> = () => {
       <div className="content">
         <Switch>
           {
-            entitiesToLoad?.map(entityConfig => <Route
+            !configsAreLoading && entitiesToLoad?.length > 0 && entitiesToLoad?.map(entityConfig => <Route
               key={entityConfig.entityType}
               path={`${config.appPrefix}/portal/${entityConfig?.entityType}`}
               render={() => <GeneralEntityRoot
