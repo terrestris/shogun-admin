@@ -1,3 +1,26 @@
+## [2.0.0](https://github.com/terrestris/shogun-admin/compare/v1.2.1...v2.0.0) (2021-10-06)
+
+
+### Features
+
+* adds models section to fallback config ([68c6253](https://github.com/terrestris/shogun-admin/commit/68c62538b6bb336e2541f865caba78bac4841515))
+
+
+### Breaking changes
+
+* create controller depending on entity type ([fb0cd69](https://github.com/terrestris/shogun-admin/commit/fb0cd69f74f9c86457d19d0b952e4e6cd296428a))
+* introduce initial version of form config parser for admin panels / tables ([a408eeb](https://github.com/terrestris/shogun-admin/commit/a408eeb40a1717463ecb78363eac35e97b43e8f6))
+* replace applikation form by corresponding generic one ([668d24b](https://github.com/terrestris/shogun-admin/commit/668d24be64a73501451cbad1166898fe60cec143))
+* set correct class name for File model ([e63e6f9](https://github.com/terrestris/shogun-admin/commit/e63e6f9377c01bcc0adcdc7fd954af305cd37e4b))
+
+
+### Bugfixes
+
+* create of entities ([4ca4809](https://github.com/terrestris/shogun-admin/commit/4ca4809b8385b52143c43435e8b272c035a914b2))
+* delete for single entity only and delete returning void on success not the entity ([7a0b097](https://github.com/terrestris/shogun-admin/commit/7a0b097cdefbb2beadde73d67e589731356e9633))
+* load initial data only of both userInfo and appInfo are empty ([e290a65](https://github.com/terrestris/shogun-admin/commit/e290a651aa2d75ab1c17ef7dc7312c23d1492f33))
+* use service directly from props ([0849566](https://github.com/terrestris/shogun-admin/commit/08495662986c0cd0b13dc1398efe213e2df2cb3b))
+
 ### [1.2.1](https://github.com/terrestris/shogun-admin/compare/v1.2.0...v1.2.1) (2021-10-06)
 
 
