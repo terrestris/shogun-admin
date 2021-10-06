@@ -1,3 +1,10 @@
+### [1.2.1](https://github.com/terrestris/shogun-admin/compare/v1.2.0...v1.2.1) (2021-10-06)
+
+
+### Changes in configuration
+
+* use dotenv only in dev mode ([fafe076](https://github.com/terrestris/shogun-admin/commit/fafe07696e841c01fd80d106add9de0cec2afab8))
+
 ## [1.2.0](https://github.com/terrestris/shogun-admin/compare/v1.1.0...v1.2.0) (2021-10-05)
 
 
