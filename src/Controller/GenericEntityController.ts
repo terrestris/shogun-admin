@@ -57,6 +57,11 @@ export class GenericEntityController<T extends BaseEntity> {
     this.formUpdater = formUpdater;
   }
 
+  /**
+   * Load entity with given id using configured service and initialize the form values
+   * @param id The id of the entitiy
+   * @returns The entity
+   */
   public async load(id: number): Promise<T> {
     this.entity = await this.service?.findOne(id);
 
@@ -65,6 +70,10 @@ export class GenericEntityController<T extends BaseEntity> {
     return this.entity;
   };
 
+  /**
+   * Create an empty instance and initialize form values
+   * @returns The plain instance
+   */
   public createEntity(): T {
     let entityCreated = this.create(BaseEntity);
     if (this.formConfig?.name === 'application') {
@@ -110,6 +119,10 @@ export class GenericEntityController<T extends BaseEntity> {
     }
   }
 
+  /**
+   * Save / Update (partial) the actual entity omitting read only fields (e.g. id)
+   * @returns The updated / saved entitiy
+   */
   public async saveOrUpdate(): Promise<T> {
     const isUpdate = _isNumber(this.entity.id);
 
@@ -310,10 +323,9 @@ export class GenericEntityController<T extends BaseEntity> {
   }
 
   /**
-   *
-   * @param panelName
-   * @param fieldName
-   * @param value
+   * Adds form change entry for given field name
+   * @param fieldName The field name
+   * @param value The value
    */
   private addFormChange(fieldName: string, value: FieldValue) {
     if (!this.nextUpdate) {
@@ -329,11 +341,21 @@ export class GenericEntityController<T extends BaseEntity> {
     }
   }
 
+  /**
+   * Set fields value of entity object given FieldConfig and FieldValue
+   * @param fieldConfig The FieldConfig holding cofiguration
+   * @param value The field value to set
+   */
   private async setEntityValue(fieldConfig: FieldConfig, value: FieldValue): Promise<void>{
     this.setEntityValueByFieldConfig(fieldConfig, value);
     this.addFormChangeForDataFields([fieldConfig.dataField]);
   }
 
+  /**
+   * Return the value of the form field given its field configuration
+   * @param fieldConfig The FieldConfig
+   * @returns The FieldValue
+   */
   private getFormValue(fieldConfig: FieldConfig): FieldValue {
     const value = this.getFormValueByFieldConfig(fieldConfig);
     if (!value) {
@@ -341,4 +363,14 @@ export class GenericEntityController<T extends BaseEntity> {
     }
     return value;
   }
+
+  /**
+   * Create new instance of class passed used in generics
+   * @param clz The Class
+   * @returns A corresponding instance
+   */
+  private create<Clz>(clz: new (args: any) => Clz): Clz {
+    return new clz({});
+  }
+
 }

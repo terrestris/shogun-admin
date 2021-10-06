@@ -57,7 +57,6 @@ export const GeneralEntityForm: React.FC<GeneralEntityFormProps> = ({
 }) => {
 
   /**
-   *
    * Create read-only components for certain form items
    * @param fieldConfig
    * @returns
@@ -83,8 +82,8 @@ export const GeneralEntityForm: React.FC<GeneralEntityFormProps> = ({
   };
 
   /**
-   * TODO: documentation
-   * @param fieldConfig
+   * Return a component given the "component" property in passed field configuration
+   * @param fieldConfig The field configuration
    */
   const createFieldComponent = (fieldCfg: FieldConfig): React.ReactNode => {
     switch (fieldCfg?.component) {
@@ -140,8 +139,8 @@ export const GeneralEntityForm: React.FC<GeneralEntityFormProps> = ({
   };
 
   /**
-   * TODO
-   *  @param fieldConfig
+   * Return a component given the "datatype" property passed field configuration
+   * @param fieldConfig The field configuration
    */
   const getFieldByDataType = (fieldConfig: FieldConfig): React.ReactNode => {
     return (
@@ -153,7 +152,6 @@ export const GeneralEntityForm: React.FC<GeneralEntityFormProps> = ({
 
   /**
    * Generates an antd normalize function with the specified "no"-value.
-   * TODO: Make noValue / normalizeFunction configurable and read from config.
    */
   const getNormalizeFn = (name: string) => {
     let noValue: string = '';
@@ -170,7 +168,11 @@ export const GeneralEntityForm: React.FC<GeneralEntityFormProps> = ({
     };
   };
 
-
+  /**
+   * Generate antd form item for given field config
+   * @param fieldCfg The FieldConfig
+   * @returns An antd FormItem
+   */
   const createFormItem = (fieldCfg: FieldConfig): React.ReactNode => {
     let field: React.ReactNode;
     if (fieldCfg.readOnly) {
