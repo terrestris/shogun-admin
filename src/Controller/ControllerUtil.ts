@@ -39,7 +39,7 @@ export class ControllerUtil {
    * @returns an application controller instance
    */
   static createApplicationController(controllerCfg: ControllerCfg): GenericEntityController<Application> {
-    const appService = new ApplicationService();
+    const appService = new ApplicationService(controllerCfg?.endpoint);
     const appController = new GenericEntityController<Application>({
       service: appService,
       formUpdater: controllerCfg?.updateForm,

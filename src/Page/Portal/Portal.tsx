@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { Button } from 'antd';
+import { Button, message } from 'antd';
 import { Switch, Route } from 'react-router-dom';
 
 import {
@@ -20,12 +20,15 @@ import Logs from '../../Component/Logs/Logs';
 import GlobalSettingsRoot from '../../Component/GlobalSettings/GlobalSettingsRoot/GlobalSettingsRoot';
 import LogSettingsRoot from '../../Component/LogSettings/LogSettingsRoot/LogSettingsRoot';
 import MetricsRoot from '../../Component/Metrics/MetricsRoot/MetricsRoot';
+import { keycloak } from '../../Util/KeyCloakUtil';
 
 import config from 'shogunApplicationConfig';
 
 import './Portal.less';
 import GeneralEntityRoot,
 { GeneralEntityConfigType } from '../../Component/GeneralEntity/GeneralEntityRoot/GeneralEntityRoot';
+import { CsrfUtil } from '@terrestris/base-util';
+import _toLowerCase from 'lodash/lowerCase';
 
 interface OwnProps { }
 
@@ -35,63 +38,46 @@ export const Portal: React.FC<PortalProps> = () => {
 
   const [collapsed, setCollapsed] = useState<boolean>(false);
   const toggleCollapsed = () => setCollapsed(!collapsed);
+  const [entitiesToLoad, setEntitiesToLoad] = useState<GeneralEntityConfigType[]>([]);
+  const [configsAreLoading, setConfigsAreLoading] = useState<boolean>(false);
 
-  const entitiesToLoad: GeneralEntityConfigType[] = [{
-    endpoint: 'applications',
-    entityType: 'application',
-    entityName: 'Applikation',
-    navigationTitle: 'Applikationen',
-    subTitle: 'die meiste Applikation aller Zeiten...',
-    formConfig: {
-      name: 'application',
-      fields: [{
-        dataType: 'number',
-        dataField: 'id',
-        labelI18n: 'Identifier',
-        readOnly: true
-      }, {
-        dataField: 'created',
-        dataType: 'date',
-        readOnly: true,
-        component: 'DateField',
-        labelI18n: 'Erstellt am',
-        fieldProps: {
-          dateFormat: 'DD.MM.YYYY HH:mm'
+  const fetchConfigsForModels = async () => {
+    setConfigsAreLoading(true);
+    const promises = config?.models?.map((modelName: string) => {
+      if (!keycloak.token) {
+        return Promise.reject('No keycloak token available.');
+      }
+      const reqOpts = {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-XSRF-TOKEN': CsrfUtil.getCsrfValueFromCookie(),
+          'Authorization': `Bearer ${keycloak.token}`
         }
-      }, {
-        dataField: 'modified',
-        dataType: 'date',
-        readOnly: true,
-        labelI18n: 'Editiert am',
-        component: 'DateField',
-        fieldProps: {
-          dateFormat: 'DD.MM.YYYY HH:mm'
-        }
-      }, {
-        component: 'Input',
-        dataField: 'name',
-        labelI18n: 'Der Name der Applikation',
-        required: true
-      }, {
-        component: 'Switch',
-        dataField: 'stateOnly',
-        labelI18n: 'Arbeitstand',
-        readOnly: true
-      }, {
-        component: 'JSONEditor',
-        dataField: 'clientConfig',
-        labelI18n: 'Client-Konfiguration'
-      }, {
-        component: 'JSONEditor',
-        dataField: 'layerTree',
-        labelI18n: 'Themen-Baum'
-      }, {
-        component: 'JSONEditor',
-        dataField: 'layerConfig',
-        labelI18n: 'Themen-Konfiguration'
-      }]
-    }
-  }];
+      };
+      return fetch(`${config.path.configBase}/${_toLowerCase(modelName)}.json`, reqOpts)
+        .then(response => {
+          if (response.ok) {
+            if (response.status === 204) {
+              // No Data
+              return Promise.resolve();
+            }
+            return response.json();
+          } else {
+            throw new Error(response.statusText);
+          }
+        });
+    });
+
+    await Promise.all(promises)
+      .then((formConfigs: GeneralEntityConfigType[]) => setEntitiesToLoad(formConfigs))
+      .catch(() => message.error('Could not load configuration.'))
+      .finally(() => setConfigsAreLoading(false));
+  };
+
+  if (config?.models?.length !== entitiesToLoad?.length && !configsAreLoading) {
+    fetchConfigsForModels();
+  }
 
   return (
     <div className="portal">
