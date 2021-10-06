@@ -11,17 +11,6 @@ const dotenv = require('dotenv').config({
 let commonWebpackConfig = commonConfig;
 
 const headers = {};
-
-// `process.env` is defined in the webpack's DefinePlugin
-const envVariables = process.env;
-const {
-  KEYCLOAK_IP,
-  KEYCLOAK_ADMIN_USER,
-  KEYCLOAK_ADMIN_PWD,
-  KEYCLOAK_CLIENT_ID,
-  KEYCLOAK_REALM
-} = envVariables;
-
 const delayedConf = new Promise(function(resolve) {
   commonWebpackConfig.plugins = [
     ...commonWebpackConfig.plugins || [],
