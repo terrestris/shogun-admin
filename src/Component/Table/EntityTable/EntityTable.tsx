@@ -17,7 +17,6 @@ import {
 import './EntityTable.less';
 import { matchPath, useHistory, useLocation } from 'react-router-dom';
 import BaseEntity from '../../../Model/BaseEntity';
-import GenericService from '../../../Service/GenericService/GenericService';
 
 export type EntityTableAction = 'edit' | 'delete';
 
@@ -62,8 +61,6 @@ export const EntityTable: React.FC<EntityTableProps> = ({
   ...passThroughProps
 }) => {
 
-  const entityService: GenericService<BaseEntity> = service;
-
   const history = useHistory();
   const location = useLocation();
   const match = matchPath<{entityId: string}>(location.pathname, {
@@ -79,7 +76,7 @@ export const EntityTable: React.FC<EntityTableProps> = ({
   const fetchEntities = async () => {
     setLoadingState('loading');
     try {
-      const fetchedEntities = await entityService.findAll();
+      const fetchedEntities = await service?.findAll();
       setEntities(fetchedEntities);
       setLoadingState('done');
     } catch (error) {
@@ -87,7 +84,7 @@ export const EntityTable: React.FC<EntityTableProps> = ({
     }
   };
 
-  if (!loadingState) {
+  if (!loadingState && !entities) {
     fetchEntities();
   }
 
@@ -120,8 +117,7 @@ export const EntityTable: React.FC<EntityTableProps> = ({
       ),
       onOk: () => {
         if (confirmName === record.name) {
-          entityService
-            .delete(record.id)
+          service?.delete(record.id)
             .then(() => {
               notification.info({
                 message: `${name.singular} gelöscht`,
@@ -143,13 +139,11 @@ export const EntityTable: React.FC<EntityTableProps> = ({
     };
 
     if (affectedEntity.id) {
-      entityService
-        .update(updatedEntity)
+      service?.update(updatedEntity)
         .then(fetchEntities)
         .then(stopEditing);
     } else {
-      entityService
-        .add(updatedEntity)
+      service?.add(updatedEntity)
         .then(fetchEntities)
         .then(stopEditing);
     }
@@ -209,6 +203,10 @@ export const EntityTable: React.FC<EntityTableProps> = ({
       }
     }
   ];
+
+  if (!entities) {
+    return <></>;
+  }
 
   return (
     <Form form={form} component={false}>

@@ -13,7 +13,6 @@ import Avatar from 'antd/lib/avatar/avatar';
 
 import {
   AppstoreOutlined,
-  BankOutlined,
   DashboardOutlined,
   LikeOutlined,
   MailOutlined,
@@ -22,7 +21,6 @@ import {
 
 import { Dashboard } from '../Dashboard/Dashboard';
 import { DashboardCard } from '../Dashboard/DashboardCard/DashboardCard';
-import ApplicationTable from '../Application/ApplicationTable/ApplicationTable';
 import LayerTable from '../Layer/LayerTable/LayerTable';
 import UserTable from '../User/UserTable/UserTable';
 
@@ -32,7 +30,7 @@ import './WelcomeDashboard.less';
 
 type WelcomeDashboardProps = {};
 
-export const WelcomeDashboard: React.FC<WelcomeDashboardProps> = (props) => {
+export const WelcomeDashboard: React.FC<WelcomeDashboardProps> = () => {
 
   const dashboardConf = config.dashboard;
 
@@ -83,17 +81,6 @@ export const WelcomeDashboard: React.FC<WelcomeDashboardProps> = (props) => {
                 <Statistic title="Unmerged" value={93} suffix="/ 100" />
               </Col>
             </Row>
-          </DashboardCard>
-      }
-      {
-        dashboardConf?.applications?.visible &&
-          <DashboardCard
-            className="application-dashboard-card"
-            title={<Link to={`${config.appPrefix}/portal/application`}>Applikationen</Link>}
-            description="… die die Welt verändern"
-            avatar={<Link to={`${config.appPrefix}/portal/application`}><BankOutlined /></Link>}
-          >
-            <ApplicationTable />
           </DashboardCard>
       }
       {

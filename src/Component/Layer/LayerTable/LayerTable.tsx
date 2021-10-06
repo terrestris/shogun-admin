@@ -32,7 +32,7 @@ const columns: any = [
   }
 ];
 
-export const LayerTable: React.FC<LayerTableProps> = props => {
+export const LayerTable: React.FC<LayerTableProps> = () => {
 
   return (
     <EntityTable
@@ -44,7 +44,6 @@ export const LayerTable: React.FC<LayerTableProps> = props => {
       }}
       columns={columns}
       actions={['delete']}
-      {...props}
     />
   );
 };

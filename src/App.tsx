@@ -20,22 +20,23 @@ import {
   LoadingOutlined
 } from '@ant-design/icons';
 
-import './App.less';
 import Portal from './Page/Portal/Portal';
 import AppInfoService from './Service/AppInfoService/AppInfoService';
 import UserService from './Service/UserService/UserService';
 import Logger from 'js-logger';
 import { appInfoAtom, userInfoAtom } from './State/atoms';
 import { setSwaggerDocs } from './State/static';
+import _isEmpty from 'lodash/isEmpty';
+import './App.less';
 
 import config from 'shogunApplicationConfig';
 
 const userService = new UserService();
 
-const App: React.FC = props => {
+const App: React.FC = () => {
 
-  const [, setUserInfo] = useRecoilState(userInfoAtom);
-  const [, setAppInfo] = useRecoilState(appInfoAtom);
+  const [userInfo, setUserInfo] = useRecoilState(userInfoAtom);
+  const [appInfo, setAppInfo] = useRecoilState(appInfoAtom);
   const [loadingState, setLoadingState] = useState<'failed' | 'loading' | 'done'>();
 
   // Fetch initial data:
@@ -47,11 +48,10 @@ const App: React.FC = props => {
       setLoadingState('loading');
       const swaggerDoc = await AppInfoService.getSwaggerDocs();
       setSwaggerDocs(swaggerDoc);
-      const appInfo = await AppInfoService.getAppInfo();
-      setAppInfo(appInfo);
-      const userInfo = await userService.findOne(appInfo.userId);
-      setUserInfo(userInfo);
-      setLoadingState('done');
+      const a = await AppInfoService.getAppInfo();
+      setAppInfo(a);
+      const u = await userService.findOne(appInfo.userId);
+      setUserInfo(u);
     } catch (error) {
       setLoadingState('failed');
       Logger.error(error);
@@ -59,8 +59,10 @@ const App: React.FC = props => {
   }, [setAppInfo, setUserInfo]);
 
   useEffect(() => {
-    getInitialData();
-  }, [getInitialData]);
+    if (_isEmpty(userInfo) || _isEmpty(appInfo)) {
+      getInitialData();
+    }
+  }, [getInitialData, userInfo, appInfo]);
 
   if (loadingState === 'loading') {
     return (

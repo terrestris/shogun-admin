@@ -45,7 +45,7 @@ abstract class GenericService<T extends BaseEntity> {
       .then(this.isSuccessOne.bind(this));
   }
 
-  add(t: T): Promise<T> {
+  add(t: Partial<T>): Promise<T> {
     if (!keycloak.token) {
       return Promise.reject('No keycloak token available.');
     }
@@ -90,7 +90,7 @@ abstract class GenericService<T extends BaseEntity> {
       .then(this.isSuccessOne.bind(this));
   }
 
-  delete(id: string | number): Promise<T> {
+  delete(id: string | number): Promise<void> {
     if (!keycloak.token) {
       return Promise.reject('No keycloak token available.');
     }
@@ -100,7 +100,7 @@ abstract class GenericService<T extends BaseEntity> {
     };
 
     return fetch(`${this.basePath}/${id}`, reqOpts)
-      .then(this.isSuccessOne.bind(this));
+      .then(this.isSuccessHandler.bind(this));
   }
 
   isSuccessOne(response: Response): Promise<T> {
