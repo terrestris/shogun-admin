@@ -84,13 +84,8 @@ export class GenericEntityController<T extends BaseEntity> {
     return this.entity;
   };
 
-  private create<T>(clz: new (args: any) => T): T {
-    return new clz({});
-  }
-
-  public delete(entites: T[]): Promise<void> {
-    // TODO
-    return Promise.resolve();
+  public async delete(entity: T): Promise<void> {
+    await this.service.delete(entity?.id);
   }
 
   // TODO: This can be removed in the future
