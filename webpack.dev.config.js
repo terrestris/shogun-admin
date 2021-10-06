@@ -2,6 +2,11 @@ const commonConfig = require('./webpack.common.config.js');
 const webpack = require('webpack');
 const fetch = require('node-fetch');
 const https = require('https');
+const path = require('path');
+const dotenv = require('dotenv').config({
+  path: path.join(__dirname, '.env'),
+  debug: true
+});
 
 let commonWebpackConfig = commonConfig;
 
@@ -32,6 +37,15 @@ const delayedConf = new Promise(function(resolve) {
     cookiePathRewrite: '/',
     secure: false
   };
+
+  const envVars = dotenv.parsed;
+  const {
+    KEYCLOAK_IP,
+    KEYCLOAK_ADMIN_USER,
+    KEYCLOAK_ADMIN_PWD,
+    KEYCLOAK_CLIENT_ID,
+    KEYCLOAK_REALM
+  } = envVars;
 
   commonWebpackConfig.devServer = {
     historyApiFallback: true,
