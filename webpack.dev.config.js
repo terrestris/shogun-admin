@@ -60,6 +60,7 @@ const delayedConf = new Promise(function(resolve) {
         '/actuator/**',
         '/cache/**',
         '/sso/**',
+        '/config/**',
         '/v2/**'
       ],
       target: 'https://localhost/'
@@ -75,16 +76,10 @@ const delayedConf = new Promise(function(resolve) {
         '/actuator',
         '/cache',
         '/sso',
-        '/v2'
+        '/v2',
+        '/config'
       ],
       target: 'https://localhost/'
-    }, {
-      ...proxyCommonConf,
-      pathRewrite: { '^/shogun-boot/client-config.js': '' },
-      context: [
-        '/shogun-boot/client-config.js',
-      ],
-      target: 'https://localhost/admin/client-config.js'
     }]
   };
   const loginUrl = `https://${KEYCLOAK_IP}/auth/realms/${KEYCLOAK_REALM}/protocol/openid-connect/token`;
