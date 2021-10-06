@@ -96,8 +96,8 @@ export const Portal: React.FC<PortalProps> = () => {
       <div className="content">
         <Switch>
           {
-            entitiesToLoad.map(entityConfig => <Route
-              key={entityConfig.endpoint}
+            entitiesToLoad?.map(entityConfig => <Route
+              key={entityConfig.entityType}
               path={`${config.appPrefix}/portal/${entityConfig?.entityType}`}
               render={() => <GeneralEntityRoot
                 {...entityConfig}
