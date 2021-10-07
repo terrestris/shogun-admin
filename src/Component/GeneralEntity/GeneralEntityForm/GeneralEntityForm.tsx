@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { DatePicker, Form, Input, Statistic, Switch } from 'antd';
+import { DatePicker, Form, Input, PageHeader, Statistic, Switch } from 'antd';
 const { TextArea } = Input;
 
 import Logger from 'js-logger';
@@ -40,7 +40,7 @@ export type FormConfig = {
 };
 
 interface OwnProps {
-  id?: number | 'create';
+  entityName: string;
   formConfig: FormConfig;
   formProps?: Partial<FormProps>;
   form: FormInstance;
@@ -51,6 +51,7 @@ const DEFAULT_DATE_FORMAT = 'DD.MM.YYYY';
 export type GeneralEntityFormProps = OwnProps & React.HTMLAttributes<HTMLDivElement>;
 
 export const GeneralEntityForm: React.FC<GeneralEntityFormProps> = ({
+  entityName,
   formProps,
   form,
   formConfig
@@ -233,20 +234,24 @@ export const GeneralEntityForm: React.FC<GeneralEntityFormProps> = ({
 
   const initialValues = {};
 
-  return (
-    <Form
-      className="general-entity-form"
-      form={form}
-      initialValues={initialValues}
-      layout="vertical"
-      name={formConfig?.name}
-      {...formProps}
-    >
-      {
-        parseFormConfig()
-      }
-    </Form>
+  const title = `${entityName}`;
 
+  return (
+    <>
+      <PageHeader title={title} />
+      <Form
+        className="general-entity-form"
+        form={form}
+        initialValues={initialValues}
+        layout="vertical"
+        name={formConfig?.name}
+        {...formProps}
+      >
+        {
+          parseFormConfig()
+        }
+      </Form>
+    </>
   );
 };
 
