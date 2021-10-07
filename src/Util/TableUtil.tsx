@@ -12,7 +12,7 @@ export default class TableUtil {
     dataIndex: string | string[],
     handleSearch = TableUtil.handleSearch,
     handleReset =  TableUtil.handleReset
-) => {
+  ) => {
     let searchInput;
 
     return {
