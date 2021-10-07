@@ -23,6 +23,7 @@ import GlobalSettingsRoot from '../../Component/GlobalSettings/GlobalSettingsRoo
 import LogSettingsRoot from '../../Component/LogSettings/LogSettingsRoot/LogSettingsRoot';
 import MetricsRoot from '../../Component/Metrics/MetricsRoot/MetricsRoot';
 import { keycloak } from '../../Util/KeyCloakUtil';
+import BaseEntity from '../../Model/BaseEntity';
 
 import config from 'shogunApplicationConfig';
 
@@ -39,10 +40,10 @@ export const Portal: React.FC<PortalProps> = () => {
 
   const [collapsed, setCollapsed] = useState<boolean>(false);
   const toggleCollapsed = () => setCollapsed(!collapsed);
-  const [entitiesToLoad, setEntitiesToLoad] = useState<GeneralEntityConfigType[]>([]);
+  const [entitiesToLoad, setEntitiesToLoad] = useState<GeneralEntityConfigType<BaseEntity>[]>([]);
   const [configsAreLoading, setConfigsAreLoading] = useState<boolean>(false);
 
-  const fetchConfigForModel = async (modelName: string): Promise<GeneralEntityConfigType> => {
+  const fetchConfigForModel = async (modelName: string): Promise<GeneralEntityConfigType<BaseEntity>> => {
     if (!keycloak.token) {
       Logger.warn('No keycloak token available.');
       return null;
@@ -55,13 +56,16 @@ export const Portal: React.FC<PortalProps> = () => {
         'Authorization': `Bearer ${keycloak.token}`
       }
     };
-    const response = await fetch(`${config.appPrefix}${config.path.configBase}/${_toLowerCase(modelName)}.json`, reqOpts);
+    const response = await fetch(
+      `${config.appPrefix}${config.path.configBase}/${_toLowerCase(modelName)}.json`,
+      reqOpts
+    );
     if (response.ok) {
       if (response.status === 204) {
       // No Data
         return null;
       }
-      return await response.json() as GeneralEntityConfigType;
+      return await response.json() as GeneralEntityConfigType<BaseEntity>;
     } else {
       message.error(`Could not load config for model: ${modelName}`);
       throw new Error(response.statusText);
@@ -70,8 +74,9 @@ export const Portal: React.FC<PortalProps> = () => {
 
   const fetchConfigsForModels = async () => {
     setConfigsAreLoading(true);
-    const formConfigsPromises: Promise<GeneralEntityConfigType>[] = await config?.models?.map(fetchConfigForModel);
-    const formConfigs: GeneralEntityConfigType[] = await Promise.all(formConfigsPromises);
+    const formConfigsPromises: Promise<GeneralEntityConfigType<BaseEntity>>[] =
+      await config?.models?.map(fetchConfigForModel);
+    const formConfigs: GeneralEntityConfigType<BaseEntity>[] =await Promise.all(formConfigsPromises);
     if (!_isEqual(formConfigs, entitiesToLoad)) {
       setEntitiesToLoad(formConfigs);
     }
