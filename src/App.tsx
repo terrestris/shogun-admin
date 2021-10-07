@@ -48,10 +48,10 @@ const App: React.FC = () => {
       setLoadingState('loading');
       const swaggerDoc = await AppInfoService.getSwaggerDocs();
       setSwaggerDocs(swaggerDoc);
-      const a = await AppInfoService.getAppInfo();
-      setAppInfo(a);
-      const u = await userService.findOne(a?.userId);
-      setUserInfo(u);
+      const appInfo = await AppInfoService.getAppInfo();
+      setAppInfo(appInfo);
+      const userInfo = await userService.findOne(appInfo?.userId);
+      setUserInfo(userInfo);
       setLoadingState('done');
     } catch (error) {
       setLoadingState('failed');
