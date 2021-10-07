@@ -42,7 +42,7 @@
     }, {
       "component": "JSONEditor",
       "dataField": "clientConfig",
-      "labelI18n": "Client-Configuration"
+      "labelI18n": "Client configuration"
     }, {
       "component": "Input",
       "dataField": "layerTree",
