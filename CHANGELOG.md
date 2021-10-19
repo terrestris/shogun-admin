@@ -1,3 +1,26 @@
+## [3.0.0](https://github.com/terrestris/shogun-admin/compare/v2.0.0...v3.0.0) (2021-10-19)
+
+
+### Features
+
+* load formconfigs from static assets that can be overwritten by backend ([bb01435](https://github.com/terrestris/shogun-admin/commit/bb0143511f598265a7d2aff8ad300928f8cf413d))
+
+
+### Breaking changes
+
+* load form configuration from backend ([fc9082c](https://github.com/terrestris/shogun-admin/commit/fc9082c51b0ed66190b894102a51f81e09a9f99c))
+* move path of admin configutation to /config ([d5600a1](https://github.com/terrestris/shogun-admin/commit/d5600a1b75dc2d63ccdfc6bd858f18b64abb6abb))
+* set admin client configuration path ([f3f4517](https://github.com/terrestris/shogun-admin/commit/f3f451784577579ce40138445c74440c46a6238c))
+
+
+### Bugfixes
+
+* improve variable naming :lipstick: ([6a0d601](https://github.com/terrestris/shogun-admin/commit/6a0d60176044b7f299f4765bd460faedaf6b07ca))
+* initial load of user id ([d72c69e](https://github.com/terrestris/shogun-admin/commit/d72c69ecc63b4e3587ba63ed94c35ce2b6ca95cc))
+* loading of configurations ([9b0ab2e](https://github.com/terrestris/shogun-admin/commit/9b0ab2ec0fdf01146de4467eb11628002d675219))
+* remove unneeded return ([e2a4f1d](https://github.com/terrestris/shogun-admin/commit/e2a4f1d378a1e9ff3fa7e02906351f17151eedeb))
+* use entity type as key ([dbc6137](https://github.com/terrestris/shogun-admin/commit/dbc613739f3cc96575f031f4bade640c7e20d3e9))
+
 ## [2.0.0](https://github.com/terrestris/shogun-admin/compare/v1.2.1...v2.0.0) (2021-10-06)
 
 
