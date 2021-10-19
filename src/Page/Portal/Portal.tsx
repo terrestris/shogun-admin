@@ -42,7 +42,7 @@ export const Portal: React.FC<PortalProps> = () => {
   const [entitiesToLoad, setEntitiesToLoad] = useState<GeneralEntityConfigType[]>([]);
   const [configsAreLoading, setConfigsAreLoading] = useState<boolean>(false);
 
-  const fetchConfigForModel = async(modelName: string): Promise<GeneralEntityConfigType> => {
+  const fetchConfigForModel = async (modelName: string): Promise<GeneralEntityConfigType> => {
     if (!keycloak.token) {
       Logger.warn('No keycloak token available.');
       return null;
@@ -55,27 +55,24 @@ export const Portal: React.FC<PortalProps> = () => {
         'Authorization': `Bearer ${keycloak.token}`
       }
     };
-    const cfg: GeneralEntityConfigType =
-      await fetch(`${config.appPrefix}${config.path.configBase}/${_toLowerCase(modelName)}.json`, reqOpts)
-        .then(response => {
-          if (response.ok) {
-            if (response.status === 204) {
-            // No Data
-              return Promise.resolve();
-            }
-            return response.json();
-          } else {
-            message.error(`Could not load config for model: ${modelName}`);
-            throw new Error(response.statusText);
-          }
-        });
+    const response = await fetch(`${config.appPrefix}${config.path.configBase}/${_toLowerCase(modelName)}.json`, reqOpts);
+    if (response.ok) {
+      if (response.status === 204) {
+      // No Data
+        return null;
+      }
+      return await response.json() as GeneralEntityConfigType;
+    } else {
+      message.error(`Could not load config for model: ${modelName}`);
+      throw new Error(response.statusText);
+    }
     return cfg;
   };
 
   const fetchConfigsForModels = async () => {
     setConfigsAreLoading(true);
     const formConfigsPromises: Promise<GeneralEntityConfigType>[] = await config?.models?.map(fetchConfigForModel);
-    const formConfigs: GeneralEntityConfigType[] =await Promise.all(formConfigsPromises);
+    const formConfigs: GeneralEntityConfigType[] = await Promise.all(formConfigsPromises);
     if (!_isEqual(formConfigs, entitiesToLoad)) {
       setEntitiesToLoad(formConfigs);
     }
@@ -103,7 +100,7 @@ export const Portal: React.FC<PortalProps> = () => {
       <div className="content">
         <Switch>
           {
-            !configsAreLoading && entitiesToLoad?.length > 0 && entitiesToLoad?.map(entityConfig => <Route
+            !configsAreLoading && entitiesToLoad?.map(entityConfig => <Route
               key={entityConfig.entityType}
               path={`${config.appPrefix}/portal/${entityConfig?.entityType}`}
               render={() => <GeneralEntityRoot
