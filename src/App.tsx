@@ -35,8 +35,8 @@ const userService = new UserService();
 
 const App: React.FC = () => {
 
-  const [userInfo, setUserInfo] = useRecoilState(userInfoAtom);
-  const [appInfo, setAppInfo] = useRecoilState(appInfoAtom);
+  const [, setUserInfo] = useRecoilState(userInfoAtom);
+  const [, setAppInfo] = useRecoilState(appInfoAtom);
   const [loadingState, setLoadingState] = useState<'failed' | 'loading' | 'done'>();
 
   // Fetch initial data:
@@ -48,10 +48,11 @@ const App: React.FC = () => {
       setLoadingState('loading');
       const swaggerDoc = await AppInfoService.getSwaggerDocs();
       setSwaggerDocs(swaggerDoc);
-      const a = await AppInfoService.getAppInfo();
-      setAppInfo(a);
-      const u = await userService.findOne(appInfo.userId);
-      setUserInfo(u);
+      const appInfo = await AppInfoService.getAppInfo();
+      setAppInfo(appInfo);
+      const userInfo = await userService.findOne(appInfo?.userId);
+      setUserInfo(userInfo);
+      setLoadingState('done');
     } catch (error) {
       setLoadingState('failed');
       Logger.error(error);
@@ -59,10 +60,8 @@ const App: React.FC = () => {
   }, [setAppInfo, setUserInfo]);
 
   useEffect(() => {
-    if (_isEmpty(userInfo) || _isEmpty(appInfo)) {
-      getInitialData();
-    }
-  }, [getInitialData, userInfo, appInfo]);
+    getInitialData();
+  }, [getInitialData]);
 
   if (loadingState === 'loading') {
     return (

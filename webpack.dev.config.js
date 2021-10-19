@@ -11,17 +11,6 @@ const dotenv = require('dotenv').config({
 let commonWebpackConfig = commonConfig;
 
 const headers = {};
-
-// `process.env` is defined in the webpack's DefinePlugin
-const envVariables = process.env;
-const {
-  KEYCLOAK_IP,
-  KEYCLOAK_ADMIN_USER,
-  KEYCLOAK_ADMIN_PWD,
-  KEYCLOAK_CLIENT_ID,
-  KEYCLOAK_REALM
-} = envVariables;
-
 const delayedConf = new Promise(function(resolve) {
   commonWebpackConfig.plugins = [
     ...commonWebpackConfig.plugins || [],
@@ -71,6 +60,7 @@ const delayedConf = new Promise(function(resolve) {
         '/actuator/**',
         '/cache/**',
         '/sso/**',
+        '/config/**',
         '/v2/**'
       ],
       target: 'https://localhost/'
@@ -86,16 +76,10 @@ const delayedConf = new Promise(function(resolve) {
         '/actuator',
         '/cache',
         '/sso',
-        '/v2'
+        '/v2',
+        '/config'
       ],
       target: 'https://localhost/'
-    }, {
-      ...proxyCommonConf,
-      pathRewrite: { '^/shogun-boot/client-config.js': '' },
-      context: [
-        '/shogun-boot/client-config.js',
-      ],
-      target: 'https://localhost/admin/client-config.js'
     }]
   };
   const loginUrl = `https://${KEYCLOAK_IP}/auth/realms/${KEYCLOAK_REALM}/protocol/openid-connect/token`;

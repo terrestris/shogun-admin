@@ -42,7 +42,6 @@ export function GeneralEntityRoot<T extends BaseEntity> ({
   formConfig
 }: GeneralEntityRootProps<T>) {
 
-  // application => Model
   const history = useHistory();
   const location = useLocation();
   const match = matchPath<{ entityId: string }>(location.pathname, {
@@ -84,7 +83,7 @@ export function GeneralEntityRoot<T extends BaseEntity> ({
     entityType,
     formConfig,
     updateForm
-  }), []) as GenericEntityController<T>;
+  }), [endpoint, entityType]) as GenericEntityController<T>;
 
   /**
    * Fetch entity with given id

@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 
-import { Button } from 'antd';
+import { Button, message } from 'antd';
 import { Switch, Route } from 'react-router-dom';
 
+import _toLowerCase from 'lodash/lowerCase';
+import _isEqual from 'lodash/isEqual';
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined
@@ -20,12 +22,14 @@ import Logs from '../../Component/Logs/Logs';
 import GlobalSettingsRoot from '../../Component/GlobalSettings/GlobalSettingsRoot/GlobalSettingsRoot';
 import LogSettingsRoot from '../../Component/LogSettings/LogSettingsRoot/LogSettingsRoot';
 import MetricsRoot from '../../Component/Metrics/MetricsRoot/MetricsRoot';
+import { keycloak } from '../../Util/KeyCloakUtil';
 
 import config from 'shogunApplicationConfig';
 
-import './Portal.less';
 import GeneralEntityRoot,
 { GeneralEntityConfigType } from '../../Component/GeneralEntity/GeneralEntityRoot/GeneralEntityRoot';
+import { CsrfUtil, Logger } from '@terrestris/base-util';
+import './Portal.less';
 
 interface OwnProps { }
 
@@ -35,63 +39,48 @@ export const Portal: React.FC<PortalProps> = () => {
 
   const [collapsed, setCollapsed] = useState<boolean>(false);
   const toggleCollapsed = () => setCollapsed(!collapsed);
+  const [entitiesToLoad, setEntitiesToLoad] = useState<GeneralEntityConfigType[]>([]);
+  const [configsAreLoading, setConfigsAreLoading] = useState<boolean>(false);
 
-  const entitiesToLoad: GeneralEntityConfigType[] = [{
-    endpoint: 'applications',
-    entityType: 'application',
-    entityName: 'Applikation',
-    navigationTitle: 'Applikationen',
-    subTitle: 'die meiste Applikation aller Zeiten...',
-    formConfig: {
-      name: 'application',
-      fields: [{
-        dataType: 'number',
-        dataField: 'id',
-        labelI18n: 'Identifier',
-        readOnly: true
-      }, {
-        dataField: 'created',
-        dataType: 'date',
-        readOnly: true,
-        component: 'DateField',
-        labelI18n: 'Erstellt am',
-        fieldProps: {
-          dateFormat: 'DD.MM.YYYY HH:mm'
-        }
-      }, {
-        dataField: 'modified',
-        dataType: 'date',
-        readOnly: true,
-        labelI18n: 'Editiert am',
-        component: 'DateField',
-        fieldProps: {
-          dateFormat: 'DD.MM.YYYY HH:mm'
-        }
-      }, {
-        component: 'Input',
-        dataField: 'name',
-        labelI18n: 'Der Name der Applikation',
-        required: true
-      }, {
-        component: 'Switch',
-        dataField: 'stateOnly',
-        labelI18n: 'Arbeitstand',
-        readOnly: true
-      }, {
-        component: 'JSONEditor',
-        dataField: 'clientConfig',
-        labelI18n: 'Client-Konfiguration'
-      }, {
-        component: 'JSONEditor',
-        dataField: 'layerTree',
-        labelI18n: 'Themen-Baum'
-      }, {
-        component: 'JSONEditor',
-        dataField: 'layerConfig',
-        labelI18n: 'Themen-Konfiguration'
-      }]
+  const fetchConfigForModel = async (modelName: string): Promise<GeneralEntityConfigType> => {
+    if (!keycloak.token) {
+      Logger.warn('No keycloak token available.');
+      return null;
     }
-  }];
+    const reqOpts = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-XSRF-TOKEN': CsrfUtil.getCsrfValueFromCookie(),
+        'Authorization': `Bearer ${keycloak.token}`
+      }
+    };
+    const response = await fetch(`${config.appPrefix}${config.path.configBase}/${_toLowerCase(modelName)}.json`, reqOpts);
+    if (response.ok) {
+      if (response.status === 204) {
+      // No Data
+        return null;
+      }
+      return await response.json() as GeneralEntityConfigType;
+    } else {
+      message.error(`Could not load config for model: ${modelName}`);
+      throw new Error(response.statusText);
+    }
+  };
+
+  const fetchConfigsForModels = async () => {
+    setConfigsAreLoading(true);
+    const formConfigsPromises: Promise<GeneralEntityConfigType>[] = await config?.models?.map(fetchConfigForModel);
+    const formConfigs: GeneralEntityConfigType[] = await Promise.all(formConfigsPromises);
+    if (!_isEqual(formConfigs, entitiesToLoad)) {
+      setEntitiesToLoad(formConfigs);
+    }
+    setConfigsAreLoading(false);
+  };
+
+  if (config?.models && config?.models?.length !== entitiesToLoad?.length && !configsAreLoading) {
+    fetchConfigsForModels();
+  }
 
   return (
     <div className="portal">
@@ -110,8 +99,8 @@ export const Portal: React.FC<PortalProps> = () => {
       <div className="content">
         <Switch>
           {
-            entitiesToLoad.map(entityConfig => <Route
-              key={entityConfig.endpoint}
+            !configsAreLoading && entitiesToLoad?.map(entityConfig => <Route
+              key={entityConfig.entityType}
               path={`${config.appPrefix}/portal/${entityConfig?.entityType}`}
               render={() => <GeneralEntityRoot
                 {...entityConfig}
