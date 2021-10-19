@@ -66,7 +66,6 @@ export const Portal: React.FC<PortalProps> = () => {
       message.error(`Could not load config for model: ${modelName}`);
       throw new Error(response.statusText);
     }
-    return cfg;
   };
 
   const fetchConfigsForModels = async () => {
