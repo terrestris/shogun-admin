@@ -76,7 +76,7 @@ export const Portal: React.FC<PortalProps> = () => {
     setConfigsAreLoading(true);
     const formConfigsPromises: Promise<GeneralEntityConfigType<BaseEntity>>[] =
       await config?.models?.map(fetchConfigForModel);
-    const formConfigs: GeneralEntityConfigType<BaseEntity>[] =await Promise.all(formConfigsPromises);
+    const formConfigs: GeneralEntityConfigType<BaseEntity>[] = await Promise.all(formConfigsPromises);
     if (!_isEqual(formConfigs, entitiesToLoad)) {
       setEntitiesToLoad(formConfigs);
     }
