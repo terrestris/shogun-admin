@@ -34,7 +34,8 @@ const config = {
     'js',
     'jsx',
     'json'
-  ]
+  ],
+  testEnvironment: 'jsdom'
 };
 
 module.exports = config;
