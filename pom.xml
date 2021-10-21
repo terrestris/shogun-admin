@@ -4,7 +4,7 @@
 
   <groupId>de.terrestris</groupId>
   <artifactId>shogun-admin</artifactId>
-  <version>0.0.11</version>
+  <version>0.0.12-SNAPSHOT</version>
   <packaging>jar</packaging>
 
   <name>shogun-admin</name>
@@ -14,7 +14,7 @@
     <url>https://github.com/terrestris/shogun-admin</url>
     <connection>scm:git:git@github.com:terrestris/shogun-admin.git</connection>
     <developerConnection>scm:git:git@github.com:terrestris/shogun-admin.git</developerConnection>
-    <tag>shogun-admin-0.0.11</tag>
+    <tag>HEAD</tag>
   </scm>
 
   <repositories>
