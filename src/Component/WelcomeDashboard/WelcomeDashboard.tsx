@@ -12,7 +12,6 @@ import {
 import Avatar from 'antd/lib/avatar/avatar';
 
 import {
-  AppstoreOutlined,
   DashboardOutlined,
   LikeOutlined,
   MailOutlined,
@@ -21,7 +20,6 @@ import {
 
 import { Dashboard } from '../Dashboard/Dashboard';
 import { DashboardCard } from '../Dashboard/DashboardCard/DashboardCard';
-import LayerTable from '../Layer/LayerTable/LayerTable';
 import UserTable from '../User/UserTable/UserTable';
 
 import config from 'shogunApplicationConfig';
@@ -81,17 +79,6 @@ export const WelcomeDashboard: React.FC<WelcomeDashboardProps> = () => {
                 <Statistic title="Unmerged" value={93} suffix="/ 100" />
               </Col>
             </Row>
-          </DashboardCard>
-      }
-      {
-        dashboardConf?.layers?.visible &&
-          <DashboardCard
-            className="layer-dashboard-card"
-            title={<Link to={`${config.appPrefix}/portal/layer`}>Themen</Link>}
-            description="… die die Welt bewegen"
-            avatar={<Link to={`${config.appPrefix}/portal/layer`}><AppstoreOutlined /></Link>}
-          >
-            <LayerTable />
           </DashboardCard>
       }
       {

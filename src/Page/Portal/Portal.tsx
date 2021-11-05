@@ -11,7 +11,6 @@ import {
 } from '@ant-design/icons';
 
 import Navigation from '../../Component/Menu/Navigation/Navigation';
-import LayerRoot from '../../Component/Layer/LayerRoot/LayerRoot';
 import WelcomeDashboard from '../../Component/WelcomeDashboard/WelcomeDashboard';
 import UserProfile from '../../Component/Modal/UserProfile/UserProfile';
 import ApplicationInfo from '../../Component/Modal/ApplicationInfo/ApplicationInfo';
@@ -112,10 +111,6 @@ export const Portal: React.FC<PortalProps> = () => {
               />}
             />)
           }
-          <Route
-            path={`${config.appPrefix}/portal/layer`}
-            component={LayerRoot}
-          />
           <Route
             path={`${config.appPrefix}/portal/user`}
             component={UserRoot}

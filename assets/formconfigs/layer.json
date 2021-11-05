@@ -1,0 +1,77 @@
+{
+  "endpoint": "/layers",
+  "entityType": "layer",
+  "entityName": "Layer",
+  "navigationTitle": "Layers",
+  "subTitle": "List of layers…",
+  "formConfig": {
+    "name": "layer",
+    "fields": [
+      {
+        "dataType": "number",
+        "dataField": "id",
+        "labelI18n": "Identifier",
+        "readOnly": "true"
+      },
+      {
+        "dataField": "created",
+        "dataType": "date",
+        "readOnly": "true",
+        "component": "DateField",
+        "labelI18n": "Created at",
+        "fieldProps": {
+          "dateFormat": "DD.MM.YYYY HH:mm"
+        }
+      },
+      {
+        "dataField": "modified",
+        "dataType": "date",
+        "readOnly": "true",
+        "labelI18n": "Last modified at",
+        "component": "DateField",
+        "fieldProps": {
+          "dateFormat": "DD.MM.YYYY HH:mm"
+        }
+      },
+      {
+        "component": "Input",
+        "dataField": "name",
+        "labelI18n": "Name of the layer",
+        "required": "true"
+      },
+      {
+        "component": "LayerTypeSelect",
+        "dataField": "type",
+        "labelI18n": "Layer type",
+        "required": "true"
+      }
+    ]
+  },
+  "tableConfig": {
+    "columnDefinition": [
+      {
+        "title": "ID",
+        "dataIndex": "id",
+        "sortConfig": {
+          "isSortable": true,
+          "defaultSortOrder": "descend"
+        }
+      },
+      {
+        "title": "Name",
+        "dataIndex": "name",
+        "key": "name",
+        "sortConfig": {
+          "isSortable": false
+        },
+        "filterConfig": {
+          "isFilterable": true
+        }
+      },
+      {
+        "title": "Type",
+        "dataIndex": "type"
+      }
+    ]
+  }
+}
