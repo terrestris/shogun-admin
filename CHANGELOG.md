@@ -1,3 +1,28 @@
+## [4.0.0](https://github.com/terrestris/shogun-admin/compare/v3.0.0...v4.0.0) (2021-11-05)
+
+
+### Features
+
+* adds further proxy methods in controller ([fea6469](https://github.com/terrestris/shogun-admin/commit/fea6469ac63e265fc28abd6ad9841167b760391c))
+* adds JSON as type for display field ([79b9df9](https://github.com/terrestris/shogun-admin/commit/79b9df975b098af8536f7dd9437d00d951baa54f))
+* adds page header in form ([dbab50d](https://github.com/terrestris/shogun-admin/commit/dbab50d959bf050b6df933de97abd65be37d7724))
+
+
+### Breaking changes
+
+* make general entity table configurable via JSON config ([744a36d](https://github.com/terrestris/shogun-admin/commit/744a36dbf2d98ec8edc12d570f467167be9e5d73))
+
+
+### Bugfixes
+
+* set baseEntity as generic type in Portal component ([a262e3e](https://github.com/terrestris/shogun-admin/commit/a262e3ec230c53ee0ba3a7d85b2fa6a8ff7fc862))
+
+
+### Dependencies
+
+* fix dependencies ([#55](https://github.com/terrestris/shogun-admin/issues/55)) ([c0427c0](https://github.com/terrestris/shogun-admin/commit/c0427c08f2dc154b0dbba821b5724b9af2f72d90))
+* update dependencies ([#53](https://github.com/terrestris/shogun-admin/issues/53)) ([4219f0f](https://github.com/terrestris/shogun-admin/commit/4219f0f09f2426eba029ce9840807176584738b7))
+
 ## [3.0.0](https://github.com/terrestris/shogun-admin/compare/v2.0.0...v3.0.0) (2021-10-19)
 
 
