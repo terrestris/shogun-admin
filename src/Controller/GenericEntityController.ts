@@ -34,7 +34,7 @@ export type GenericEntityControllerArgs<T extends BaseEntity> = {
 export class GenericEntityController<T extends BaseEntity> {
   protected entity: T;
   protected initialValues: FormValues;
-  protected service:  GenericService<T>;
+  protected service: GenericService<T>;
   private formConfig: FormConfig;
   private formUpdater?: (values: FormValues) => void; // maybe not required
   private nextUpdate: FormValues;
@@ -88,9 +88,11 @@ export class GenericEntityController<T extends BaseEntity> {
     await this.service.delete(entity?.id);
   }
 
-  // TODO: This can be removed in the future
-  public getService(): GenericService<T> {
-    return this.service;
+  /**
+   * Fetch all entities
+   */
+  public async findAll(): Promise<T[]> {
+    return await this.service?.findAll();
   }
 
   /**
@@ -158,6 +160,24 @@ export class GenericEntityController<T extends BaseEntity> {
     return {
       validateStatus: 'success'
     };
+  }
+
+  /**
+   * Update passed entity
+   * @param e The entity of type T
+   * @returns The updated entity
+   */
+  public async update(e: T): Promise<T> {
+    return await this.service?.update(e);
+  }
+
+  /**
+   * Save passed entity
+   * @param e The entity of type T
+   * @returns The saved entity
+   */
+  public async add(e: T): Promise<T> {
+    return await this.service?.add(e);
   }
 
   /**

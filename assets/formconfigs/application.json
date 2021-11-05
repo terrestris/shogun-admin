@@ -52,5 +52,38 @@
       "dataField": "layerConfig",
       "labelI18n": "Layer configuration"
     }]
+  },
+  "tableConfig": {
+    "columnDefinition": [{
+      "title": "ID",
+      "dataIndex": "id",
+      "sortConfig": {
+        "isSortable": true,
+        "defaultSortOrder": "descend"
+      }
+    }, {
+      "title": "Name",
+      "dataIndex": "name",
+      "key": "name",
+      "sortConfig": {
+        "isSortable": false
+      },
+      "filterConfig": {
+        "isFilterable": true
+      }
+    }, {
+      "title": "Last modified",
+      "dataIndex": "modified",
+      "key": "modified",
+      "sortConfig": {
+        "isSortable": true
+      },
+      "cellRenderComponentName": "DateCell"
+    },{
+      "title": "Client configuration",
+      "dataIndex": "clientConfig",
+      "key": "clientConfig",
+      "cellRenderComponentName": "JSONCell"
+    }]
   }
 }

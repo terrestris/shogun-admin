@@ -255,4 +255,4 @@ export const EntityTable: React.FC<EntityTableProps> = ({
   );
 };
 
-export default EntityTableColumn;
+export default EntityTable;

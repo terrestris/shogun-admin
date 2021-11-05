@@ -16,20 +16,21 @@ import { NamePath } from 'rc-field-form/lib/interface';
 import BaseEntity from '../../../Model/BaseEntity';
 import config from 'shogunApplicationConfig';
 import GeneralEntityForm, { FormConfig } from '../GeneralEntityForm/GeneralEntityForm';
-import GeneralEntityTable from '../GeneralEntityTable/GeneralEntityTable';
+import GeneralEntityTable, { TableConfig } from '../GeneralEntityTable/GeneralEntityTable';
 
 import './GeneralEntityRoot.less';
 
-export type GeneralEntityConfigType = {
+export type GeneralEntityConfigType<T extends BaseEntity> = {
   endpoint: string;
   entityType: string;
   entityName?: string;
   navigationTitle?: string;
   subTitle?: string;
   formConfig: FormConfig;
+  tableConfig: TableConfig<T>;
 };
 
-type OwnProps<T extends BaseEntity> = GeneralEntityConfigType;
+type OwnProps<T extends BaseEntity> = GeneralEntityConfigType<T>;
 
 export type GeneralEntityRootProps<T extends BaseEntity> = OwnProps<T> & React.HTMLAttributes<HTMLDivElement>;
 
@@ -39,7 +40,8 @@ export function GeneralEntityRoot<T extends BaseEntity> ({
   entityName = 'Entität',
   navigationTitle = 'Entitäten',
   subTitle = '… mit denen man Dingen tun kann (aus Gründen bspw.)',
-  formConfig
+  formConfig,
+  tableConfig = {}
 }: GeneralEntityRootProps<T>) {
 
   const history = useHistory();
@@ -50,9 +52,11 @@ export function GeneralEntityRoot<T extends BaseEntity> ({
   const entityId = match?.params?.entityId;
 
   const [id, setId] = useState<number | 'create'>();
-  const [entity, setEntity] = useState<T>();
+  const [editEntity, setEditEntity] = useState<T>();
+  const [allEntities, setEntities] = useState<T[]>();
   const [formIsDirty, setFormIsDirty] = useState<boolean>(false);
   const [formValid, setFormValid] = useState<boolean>(true);
+  const [isLoading, setLoading] = useState<boolean>(false);
   const [form] = Form.useForm();
 
   /**
@@ -91,7 +95,7 @@ export function GeneralEntityRoot<T extends BaseEntity> ({
   const fetchEntity = useCallback(async (eId: number) => {
     try {
       const e: T = await entityController?.load(eId) as T;
-      setEntity(e);
+      setEditEntity(e);
       form.resetFields();
     } catch (error) {
       Logger.error(error);
@@ -99,26 +103,39 @@ export function GeneralEntityRoot<T extends BaseEntity> ({
   }, [form, entityController]);
 
   /**
+   * Fetch all entities shown in table
+   */
+  const fetchEntities = useCallback(async () => {
+    setLoading(true);
+    const allEntries: T[] = await entityController?.findAll();
+    setEntities(allEntries || []);
+    setLoading(false);
+  }, [entityController]);
+
+  /**
    * Fetch entity or create new one
    */
   useEffect(() => {
-    if (id && id.toString() !== 'create' && id !== entity?.id) {
+    if (id && id.toString() !== 'create' && id !== editEntity?.id) {
       fetchEntity(parseInt(id.toString(), 10));
     }
-    if (id && id.toString() === 'create' && entity === undefined) {
+    if (id && id.toString() === 'create' && editEntity === undefined) {
       const e: T = entityController?.createEntity();
-      setEntity(e);
+      setEditEntity(e);
       form.setFieldsValue(entityController?.getEntity());
     }
-  }, [id, fetchEntity, entity]);
+  }, [id, fetchEntity, editEntity]);
 
+  /**
+   * Set actual edited entity
+   */
   useEffect(() => {
     if (!entityId) {
       setId(undefined);
       return;
     }
     if (entityId === 'create') {
-      setEntity(undefined);
+      setEditEntity(undefined);
       setId(entityId);
     } else {
       setId(parseInt(entityId, 10));
@@ -133,6 +150,15 @@ export function GeneralEntityRoot<T extends BaseEntity> ({
     }
   }, [updateForm, entityController]);
 
+  /**
+   * Init data
+   */
+  useEffect(() => {
+    if (allEntities === undefined && !isLoading) {
+      fetchEntities();
+    }
+  }, [fetchEntities, allEntities, isLoading]);
+
   const onValuesChange = async (changedValues: any) => {
     setFormIsDirty(true);
     await entityController.updateEntity(changedValues);
@@ -145,13 +171,13 @@ export function GeneralEntityRoot<T extends BaseEntity> ({
 
   const onSaveClick = async () => {
     const updatedEntity: T = await entityController?.saveOrUpdate() as T;
-    setEntity(updatedEntity);
+    setEditEntity(updatedEntity);
     setFormIsDirty(false);
-    // reload grid TODO
+    await fetchEntities();
   }
 
   const initialValues = useMemo(() => entityController?.getInitialFormValues(), [entityController?.getEntity()]);
-  const saveReloadDisabled = useMemo(() => _isEmpty(entity) || !formIsDirty, [formIsDirty, entity]);
+  const saveReloadDisabled = useMemo(() => _isEmpty(editEntity) || !formIsDirty, [formIsDirty, editEntity]);
 
   return (
     <div className="general-entity-root">
@@ -189,14 +215,21 @@ export function GeneralEntityRoot<T extends BaseEntity> ({
       </PageHeader>
       <div className="left-container">
         <GeneralEntityTable
-          entityType={entityType}
+          bordered
           controller={entityController}
+          entities={allEntities}
+          entityType={entityType}
+          fetchEntities={fetchEntities}
+          loading={isLoading}
+          size="small"
+          tableConfig={tableConfig}
         />
       </div>
       {
         id &&
         <div className="right-container">
           <GeneralEntityForm
+            entityName={entityName}
             formConfig={formConfig}
             form={form}
             formProps={{

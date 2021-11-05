@@ -5,10 +5,11 @@ import _isNil from 'lodash/isNil';
 import _isFunction from 'lodash/isFunction';
 import _isFinite from 'lodash/isFinite';
 import _get from 'lodash/get';
+import _isEmpty from 'lodash/isEmpty';
 
 export type DisplayFieldProps = {
   dateFormat?: string;
-  format?: 'date' | 'text';
+  format?: 'date' | 'text' | 'json';
   formatFunction?: (val?: any) => string;
   numberOfDigits?: number;
   suffix?: string;
@@ -45,6 +46,10 @@ const DisplayField: React.FC<DisplayFieldProps> = ({
   let displayText = value;
   if (format === 'date' && value) {
     displayText = moment(value).format(dateFormat);
+  }
+
+  if (format === 'json' && !_isEmpty(value)) {
+    displayText = JSON.stringify(value);
   }
 
   if (Array.isArray(displayText)) {

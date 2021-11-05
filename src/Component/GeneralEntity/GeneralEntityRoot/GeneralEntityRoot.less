@@ -2,13 +2,14 @@
   height: 100%;
   display: grid;
   grid-template-rows: auto 1fr;
-  grid-template-columns: 40% 60%;
+  grid-template-columns: 50% 50%;
   grid-template-areas:
     "header header"
     "left right";
 
   >div {
     flex: 1;
+    overflow: auto;
 
     &.header {
       grid-area: header;
