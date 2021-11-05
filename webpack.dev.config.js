@@ -3,6 +3,7 @@ const webpack = require('webpack');
 const fetch = require('node-fetch');
 const https = require('https');
 const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const dotenv = require('dotenv').config({
   path: path.join(__dirname, '.env'),
   debug: true
@@ -36,19 +37,28 @@ const delayedConf = new Promise(function(resolve) {
     KEYCLOAK_REALM
   } = envVars;
 
+  commonWebpackConfig.mode = 'development';
+  commonWebpackConfig.output.publicPath = 'https://localhost:9090/';
+  commonWebpackConfig.devtool = 'source-map';
+
+  commonWebpackConfig.plugins[0] = new HtmlWebpackPlugin({
+    favicon: './assets/favicon.ico',
+    filename: 'index.html',
+    template: './assets/index.html',
+    title: 'SHOGun admin -- DEVELOPMENT'
+  });
+
   commonWebpackConfig.devServer = {
     historyApiFallback: true,
-    contentBase: '.',
-    useLocalIp: false,
-    disableHostCheck: true,
     host: '0.0.0.0',
     https: true,
-    inline: true,
+    http2: true,
+    compress: true,
+    magicHtml: false,
+    client: {
+      logging: 'log'
+    },
     port: 9090,
-    publicPath: 'http://localhost:9090/',
-    // https://github.com/chimurai/http-proxy-middleware#context-matching
-    // Note: In multiple path matching, you cannot use string paths and
-    //       wildcard paths together!
     proxy: [{
       ...proxyCommonConf,
       context: [
