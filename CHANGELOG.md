@@ -1,3 +1,12 @@
+### [4.0.1](https://github.com/terrestris/shogun-admin/compare/v4.0.0...v4.0.1) (2022-01-28)
+
+
+### Bugfixes
+
+* configuration for webpack 5 ([b04cebb](https://github.com/terrestris/shogun-admin/commit/b04cebb9a70b84567a8d0134fd65cff48bbd0b95))
+* formatting of application config json ([6fdf89a](https://github.com/terrestris/shogun-admin/commit/6fdf89aeed9e653d4f386025576f9a89d8f2402b))
+* path to fallback config ([2bc59d0](https://github.com/terrestris/shogun-admin/commit/2bc59d02468d8289d75e02fb07905e69d6dea2f4))
+
 ## [4.0.0](https://github.com/terrestris/shogun-admin/compare/v3.0.0...v4.0.0) (2021-11-05)
 
 
