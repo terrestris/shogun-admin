@@ -14,10 +14,8 @@ module.exports = {
     shogunApplicationConfig: 'shogunApplicationConfig'
   },
   output: {
-    filename: 'js/[name].bundle.js',
-    path: path.resolve(__dirname, 'dist')
+    filename: 'js/[name].bundle.js'
   },
-  devtool: 'source-map',
   resolve: {
     extensions: [
       '.tsx',
@@ -62,7 +60,7 @@ module.exports = {
       use: [{
         loader: 'file-loader',
         options: {
-          name: 'static/font/[name].[hash:8].[ext]'
+          name: 'static/font/[name].[contenthash:8].[ext]'
         }
       }]
     }, {
@@ -70,7 +68,7 @@ module.exports = {
       use: [{
         loader: 'file-loader',
         options: {
-          name: 'static/img/[name].[hash:8].[ext]'
+          name: 'static/img/[name].[contenthash:8].[ext]'
         }
       }]
     }]
@@ -90,6 +88,8 @@ module.exports = {
     new CopyPlugin({
       patterns: [
         { from: './assets/formconfigs/', to: 'formconfigs' },
+        { from: './assets/img/', to: 'img' },
+        { from: './assets/fallbackConfig.js', to: 'fallbackConfig.js' }
       ],
     }),
     new SimpleProgressWebpackPlugin({
