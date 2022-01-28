@@ -38,7 +38,7 @@
     "@terrestris/ol-util": "^5.0.0",
     "antd": "4.16.13",
     "js-logger": "^1.6.1",
-    "json-schema": "0.3.0",
+    "json-schema": "0.4.0",
     "keycloak-js": "^15.0.2",
     "lodash": "4.17.21",
     "moment": "^2.29.1",
