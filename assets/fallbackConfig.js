@@ -2,12 +2,12 @@ var shogunApplicationConfig = {
   appPrefix: '',
   path: {
     base: 'http://localhost:8080',
-    swagger: '/shogun-boot/v2/api-docs',
-    user: '/shogun-boot/users',
-    layer: '/shogun-boot/layers',
-    imageFile: '/shogun-boot/imagefiles',
-    application: '/shogun-boot/applications',
-    appInfo: '/shogun-boot/info/app',
+    swagger: '/v2/api-docs',
+    user: '/users',
+    layer: '/layers',
+    imageFile: '/imagefiles',
+    application: '/applications',
+    appInfo: '/info/app',
     auth: {
       login: '/auth/login',
       logout: '/auth/logout',
@@ -46,16 +46,16 @@ var shogunApplicationConfig = {
       applications: {
         visible: true,
         schemas: {
-          clientConfig: 'ApplicationClientConfig',
-          layerTree: 'LayerTree',
-          layerConfig: 'LayerConfig'
+          clientConfig: 'DefaultApplicationClientConfig',
+          layerTree: 'DefaultLayerTree',
+          layerConfig: 'DefaultLayerConfig'
         }
       },
       layers: {
         visible: true,
         schemas: {
-          clientConfig: 'LayerClientConfig',
-          sourceConfig: 'LayerSourceConfig',
+          clientConfig: 'DefaultLayerClientConfig',
+          sourceConfig: 'DefaultLayerSourceConfig',
           features: 'GeoJsonObject'
         }
       },

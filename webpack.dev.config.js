@@ -1,8 +1,8 @@
 // please adapt keycloak parameters before start webpack
-const keycloakHost = '<<INSERT_YOUR_KEYCLOAK_IP>>';
-const keycloakUser = '<<INSERT_KEYCLOAK_ADMIN_USER>>';
-const keycloakPassword = '<<INSERT_KEYCLOAK_ADMIN_PWD>>';
-const keycloakClientId = '<<INSERT_KEYCLOAK_CLIENT_ID>>';
+const keycloakHost = '10.133.9.138';
+const keycloakUser = 'shogun';
+const keycloakPassword = 'shogun';
+const keycloakClientId = 'shogun-app';
 
 const commonConfig = require('./webpack.common.config.js');
 const webpack = require('webpack');
@@ -13,7 +13,7 @@ let commonWebpackConfig = commonConfig;
 
 const headers = {};
 
-const delayedConf = new Promise(function(resolve) {
+const delayedConf = new Promise(function(resolve, reject) {
   commonWebpackConfig.plugins = [
     ...commonWebpackConfig.plugins || [],
     new webpack.HotModuleReplacementPlugin(),
@@ -38,7 +38,7 @@ const delayedConf = new Promise(function(resolve) {
     https: true,
     inline: true,
     port: 9090,
-    publicPath: 'http://localhost:9090/',
+    publicPath: 'https://localhost:9090/',
     // https://github.com/chimurai/http-proxy-middleware#context-matching
     // Note: In multiple path matching, you cannot use string paths and
     //       wildcard paths together!
@@ -73,9 +73,9 @@ const delayedConf = new Promise(function(resolve) {
       target: 'https://localhost/'
     }, {
       ...proxyCommonConf,
-      pathRewrite: { '^/shogun-boot/client-config.js': '' },
+      pathRewrite: { '^/client-config.js': '' },
       context: [
-        '/shogun-boot/client-config.js',
+        '/client-config.js',
       ],
       target: 'https://localhost/admin/client-config.js'
     }]
@@ -93,22 +93,56 @@ const delayedConf = new Promise(function(resolve) {
       'Content-type': 'application/x-www-form-urlencoded'
     },
     agent
-  }).then(response => response.json())
-    .then(response => {
-      const accessToken = response.access_token;
+  })
+    .then(loginResponse => {
+      if (!loginResponse.ok) {
+        return reject(`Could not login user ${keycloakUser}`);
+      }
+      return loginResponse.json()
+    })
+    .then(loginResponseJson => {
+      const accessToken = loginResponseJson.access_token;
+
       headers['Access-Control-Allow-Origin'] = '*';
       headers.Authorization = `Bearer ${accessToken}`;
       headers.Cookie = `token=${accessToken}`;
+
+      return fetch('https://localhost/', {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          Cookie: `token=${accessToken}`
+        },
+        agent
+      })
+    })
+    .then(csrfTokenResponse => {
+      if (!csrfTokenResponse.ok) {
+        return reject(`Could not get CSRF token`);
+      }
+      const setCookie = csrfTokenResponse.headers.get('set-cookie');
+      const regExp = /XSRF-TOKEN=([\w]+-[\w]+-[\w]+-[\w]+-[\w]+);/g;
+      const match = regExp.exec(setCookie);
+
+      if (!match) {
+        return reject(`Could not read CSRF token`);
+      }
+
+      headers.Cookie = `${headers.Cookie}; X-XSRF-TOKEN=${match[1]};`;
+
       commonWebpackConfig.devServer.proxy[0].headers = headers;
       commonWebpackConfig.devServer.proxy[1].headers = headers;
 
       resolve(commonWebpackConfig);
+    })
+    .catch(error => {
+      console.error('Could not start the dev server: ', error)
     });
-
 });
 
 module.exports = new Promise((resolve) => {
-  delayedConf.then((conf) => {
-    resolve(conf);
-  });
+  delayedConf
+    .then(conf => {
+      resolve(conf);
+    });
 });
