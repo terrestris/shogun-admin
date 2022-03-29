@@ -21,7 +21,7 @@ class LogService {
       const loggerJson = await loggerResponse.json();
 
       return loggerJson.loggers;
-    } catch(error) {
+    } catch (error) {
       Logger.error(`Error while reading the loggers: ${error}`);
 
       return null;
@@ -34,7 +34,7 @@ class LogService {
       const loggerJson = await loggerResponse.json();
 
       return loggerJson;
-    } catch(error) {
+    } catch (error) {
       Logger.error(`Error while reading the logger: ${error}`);
 
       return null;
@@ -55,7 +55,7 @@ class LogService {
       });
 
       return loggerResponse.status === 204;
-    } catch(error) {
+    } catch (error) {
       Logger.error(`Error while setting the logger: ${error}`);
 
       return false;
@@ -68,7 +68,7 @@ class LogService {
       const logText = await logResponse.text();
 
       return logText;
-    } catch(error) {
+    } catch (error) {
       Logger.error(`Error while reading the logs: ${error}`);
 
       return null;

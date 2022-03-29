@@ -3,7 +3,6 @@ import User from '../../Model/User';
 
 import config from 'shogunApplicationConfig';
 import ImageFile from '../../Model/ImageFile';
-import { keycloak } from '../../Util/KeyCloakUtil';
 
 class ImageFileService extends GenericService<ImageFile> {
 
@@ -12,9 +11,6 @@ class ImageFileService extends GenericService<ImageFile> {
   }
 
   getFile(uuid: string | number): Promise<ImageFile> {
-    if (!keycloak.token) {
-      return Promise.reject('No keycloak token available.');
-    }
     const reqOpts = {
       method: 'GET',
       headers: this.getDefaultHeaders()

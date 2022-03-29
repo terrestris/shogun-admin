@@ -32,7 +32,7 @@ class MetricService {
       const responseJson: Metric = await response.json();
 
       return responseJson;
-    } catch(error) {
+    } catch (error) {
       Logger.error(`Error while reading the metric: ${error}`);
 
       return null;

@@ -50,8 +50,10 @@ const App: React.FC = () => {
       setSwaggerDocs(swaggerDoc);
       const appInfo = await AppInfoService.getAppInfo();
       setAppInfo(appInfo);
-      const userInfo = await userService.findOne(appInfo?.userId);
-      setUserInfo(userInfo);
+      if (appInfo.userId) {
+        const userInfo = await userService.findOne(appInfo.userId);
+        setUserInfo(userInfo);
+      }
       setLoadingState('done');
     } catch (error) {
       setLoadingState('failed');
@@ -66,7 +68,7 @@ const App: React.FC = () => {
   if (loadingState === 'loading') {
     return (
       <Result
-        icon={<LoadingOutlined spin/>}
+        icon={<LoadingOutlined spin />}
         title="Loading."
       />
     );

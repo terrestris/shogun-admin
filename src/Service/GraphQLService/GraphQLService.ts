@@ -1,6 +1,5 @@
 import config from 'shogunApplicationConfig';
 import CsrfUtil from '@terrestris/base-util/dist/CsrfUtil/CsrfUtil';
-import { keycloak } from '../../Util/KeyCloakUtil';
 
 // TODO: Make this generic and more specific
 export type GraphQLQueryObject = {
@@ -20,17 +19,11 @@ class GraphQLService {
   clazz: string;
 
   async sendQuery(query: GraphQLQueryObject): Promise<GraphQLRepsonse> {
-
-    if (!keycloak.token) {
-      return Promise.reject('No keycloak token available');
-    }
-
     const reqOpts: RequestInit = {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'X-XSRF-TOKEN': CsrfUtil.getCsrfValueFromCookie(),
-        'Authorization': `Bearer ${keycloak.token}`
+        'X-XSRF-TOKEN': CsrfUtil.getCsrfValueFromCookie()
       },
       body: JSON.stringify(query)
     };
