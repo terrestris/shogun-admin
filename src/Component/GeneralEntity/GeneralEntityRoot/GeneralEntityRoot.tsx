@@ -188,7 +188,12 @@ export function GeneralEntityRoot<T extends BaseEntity> ({
         subTitle={subTitle}
         extra={[
           <Link key="create" to={`${config.appPrefix}/portal/${entityType}/create`}>
-            <Button type="primary" key="create" icon={<FormOutlined />}>
+            <Button
+              type="primary"
+              key="create"
+              icon={<FormOutlined />}
+              onClick={onSaveClick}
+            >
               {`${entityName} anlegen`}
             </Button>
           </Link>,

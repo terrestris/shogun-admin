@@ -26,10 +26,20 @@ export class ControllerUtil {
     switch (_lowerCase(entityType)) {
       case 'application':
         return ControllerUtil
-          .createApplicationController({endpoint, entityType: 'application', formConfig, updateForm});
+          .createApplicationController({
+            endpoint,
+            entityType: 'application',
+            formConfig,
+            updateForm
+          });
       default:
         return ControllerUtil
-          .createGenericController({endpoint, entityType, formConfig, updateForm});
+          .createGenericController({
+            endpoint,
+            entityType,
+            formConfig,
+            updateForm
+          });
     }
   }
 

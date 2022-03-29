@@ -19,17 +19,18 @@ import config from 'shogunApplicationConfig';
 
 interface OwnProps {
   collapsed?: boolean;
+  entityConfigs?: any[];
 }
 
 type NavigationProps = OwnProps;
 
-export const Navigation: React.FC<NavigationProps> = (props) => {
+export const Navigation: React.FC<NavigationProps> = ({
+  collapsed = false,
+  entityConfigs = []
+}) => {
+
   const history = useHistory();
   const location = useLocation();
-
-  const {
-    collapsed = false
-  } = props;
 
   const onSelect = ({ key }) => {
     history.push(`${config.appPrefix}/portal/${key}`);
@@ -59,6 +60,18 @@ export const Navigation: React.FC<NavigationProps> = (props) => {
         title="Inhalte"
       >
         {
+          entityConfigs.map(entityConfig => {
+            return (
+              <Menu.Item
+                key={entityConfig.entityType}
+              >
+                <BankOutlined />
+                <span>{entityConfig.entityName}</span>
+              </Menu.Item>
+            );
+          })
+        }
+        {/* {
           navigationConf?.general?.applications?.visible &&
             <Menu.Item
               key="application"
@@ -66,7 +79,7 @@ export const Navigation: React.FC<NavigationProps> = (props) => {
               <BankOutlined />
               <span>Applikationen</span>
             </Menu.Item>
-        }
+        } */}
         {
           navigationConf?.general?.layers?.visible &&
             <Menu.Item

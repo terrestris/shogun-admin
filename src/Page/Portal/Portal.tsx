@@ -93,6 +93,7 @@ export const Portal: React.FC<PortalProps> = () => {
         </Button>
         <Navigation
           collapsed={collapsed}
+          entityConfigs={entitiesToLoad}
         />
       </div>
       <div className="content">
