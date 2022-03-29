@@ -27,8 +27,7 @@ class GraphQLService {
       },
       body: JSON.stringify(query)
     };
-
-    return fetch(`${config.paths.graphql.base}`, reqOpts)
+    return fetch(`${config.path.graphql}`, reqOpts)
       .then(response => response.json());
   }
 }

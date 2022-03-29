@@ -28,7 +28,7 @@ import config from 'shogunApplicationConfig';
 
 import GeneralEntityRoot,
 { GeneralEntityConfigType } from '../../Component/GeneralEntity/GeneralEntityRoot/GeneralEntityRoot';
-import { CsrfUtil, Logger } from '@terrestris/base-util';
+import { CsrfUtil } from '@terrestris/base-util';
 import './Portal.less';
 
 interface OwnProps { }
@@ -50,10 +50,10 @@ export const Portal: React.FC<PortalProps> = () => {
         'X-XSRF-TOKEN': CsrfUtil.getCsrfValueFromCookie()
       }
     };
-    const response = await fetch(
-      `${config.appPrefix}${config.path.configBase}/${_toLowerCase(modelName)}.json`,
-      reqOpts
-    );
+    let modelPath = process.env.NODE_ENV === 'development' ?
+      `${config.path.configBase}/${_toLowerCase(modelName)}.json` :
+      `${config.appPrefix}${config.path.configBase}/${_toLowerCase(modelName)}.json`;
+    const response = await fetch(modelPath, reqOpts);
     if (response.ok) {
       if (response.status === 204) {
       // No Data
