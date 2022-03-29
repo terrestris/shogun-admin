@@ -13,11 +13,6 @@ var shogunApplicationConfig = {
       logout: '/auth/logout',
       isSessionValid: '/auth/isSessionValid'
     },
-    keycloak: {
-      base: 'http://localhost:8000/auth',
-      realm: 'SpringBootKeycloak',
-      clientId: 'shogun-app'
-    },
     loggers: '/actuator/loggers',
     logfile: '/actuator/logfile',
     logo: null,
