@@ -86,11 +86,18 @@ module.exports = {
       title: 'SHOGun admin'
     }),
     new CopyPlugin({
-      patterns: [
-        { from: './assets/formconfigs/', to: 'formconfigs' },
-        { from: './assets/img/', to: 'img' },
-        { from: './assets/fallbackConfig.js', to: 'fallbackConfig.js' }
-      ],
+      patterns: [{
+        from: './assets/formconfigs/',
+        to: 'formconfigs'
+      },
+      {
+        from: './assets/img/',
+        to: 'img'
+      },
+      {
+        from: './assets/fallbackConfig.js',
+        to: 'fallbackConfig.js'
+      }],
     }),
     new SimpleProgressWebpackPlugin({
       format: 'compact'
