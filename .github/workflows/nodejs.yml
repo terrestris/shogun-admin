@@ -5,17 +5,39 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+
     strategy:
       matrix:
-        node: [ '12', '14' ]
-    name: Node ${{ matrix.node }} sample
+        node: [12.x, 14.x, 16.x]
+
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout sources
+        uses: actions/checkout@v2
+
       - name: Setup node
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node }}
-      - run: npm install
-      - run: npm test
+
+      - name: Cache Node.js modules 💾
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.OS }}-node-
+            ${{ runner.OS }}-
+
+      - name: Install dependencies ⏬
+        run: npm install
+
+      - name: Lint code 💄
+        run: npm run lint
+
+      - name: Typecheck code 👓
+        run: npm run typecheck
+
+      - name: Test code ✅
+        run: npm run test
         env:
           CI: true
