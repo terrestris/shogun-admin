@@ -28,7 +28,7 @@ import config from 'shogunApplicationConfig';
 
 import GeneralEntityRoot,
 { GeneralEntityConfigType } from '../../Component/GeneralEntity/GeneralEntityRoot/GeneralEntityRoot';
-import { CsrfUtil } from '@terrestris/base-util';
+import CsrfUtil from '@terrestris/base-util/dist/CsrfUtil/CsrfUtil';
 import './Portal.less';
 
 interface OwnProps { }

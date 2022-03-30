@@ -11,7 +11,7 @@ import _isEmpty from  'lodash/isEmpty';
 import { ControllerUtil } from '../../../Controller/ControllerUtil';
 import { FormOutlined, SaveOutlined, UndoOutlined } from '@ant-design/icons';
 import { GenericEntityController } from '../../../Controller/GenericEntityController';
-import { Logger } from '@terrestris/base-util';
+import Logger from '@terrestris/base-util/dist/Logger';
 import { NamePath } from 'rc-field-form/lib/interface';
 import BaseEntity from '../../../Model/BaseEntity';
 import config from 'shogunApplicationConfig';

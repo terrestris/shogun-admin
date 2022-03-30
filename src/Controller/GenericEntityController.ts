@@ -9,7 +9,7 @@ import BaseEntity from '../Model/BaseEntity';
 import { ValidateStatus } from 'antd/lib/form/FormItem';
 import GenericService from '../Service/GenericService/GenericService';
 import { FieldConfig, FormConfig } from '../Component/GeneralEntity/GeneralEntityForm/GeneralEntityForm';
-import { Logger } from '@terrestris/base-util';
+import Logger from '@terrestris/base-util/dist/Logger';
 import Application from '../Model/Application';
 
 // TODO: add explicit value objects
