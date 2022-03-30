@@ -43,11 +43,11 @@ jobs:
         with:
           context: .
           tags: |
-            ${{ env.DOCKER_REGISTRY }}/<name>:latest
-            ${{ env.DOCKER_REGISTRY }}/<name>:${{ steps.semantic.outputs.new_release_version }}
+            ${{ env.DOCKER_REGISTRY }}/shogun-admin:latest
+            ${{ env.DOCKER_REGISTRY }}/shogun-admin:${{ steps.semantic.outputs.new_release_version }}
           load: true
 
       - name: Push docker image to Nexus
         run: |
-          docker push ${{ env.DOCKER_REGISTRY }}/<name>:latest
-          docker push ${{ env.DOCKER_REGISTRY }}/<name>:${{ steps.semantic.outputs.new_release_version }}
+          docker push ${{ env.DOCKER_REGISTRY }}/shogun-admin:latest
+          docker push ${{ env.DOCKER_REGISTRY }}/shogun-admin:${{ steps.semantic.outputs.new_release_version }}
