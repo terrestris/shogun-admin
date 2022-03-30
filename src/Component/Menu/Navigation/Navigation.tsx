@@ -16,10 +16,12 @@ import {
 } from 'antd';
 
 import config from 'shogunApplicationConfig';
+import { GeneralEntityConfigType } from '../../GeneralEntity/GeneralEntityRoot/GeneralEntityRoot';
+import BaseEntity from '../../../Model/BaseEntity';
 
 interface OwnProps {
   collapsed?: boolean;
-  entityConfigs?: any[];
+  entityConfigs?: GeneralEntityConfigType<BaseEntity>[];
 }
 
 type NavigationProps = OwnProps;

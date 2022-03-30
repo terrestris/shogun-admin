@@ -50,7 +50,7 @@ const App: React.FC = () => {
       setSwaggerDocs(swaggerDoc);
       const appInfo = await AppInfoService.getAppInfo();
       setAppInfo(appInfo);
-      if (appInfo.userId) {
+      if (appInfo?.userId) {
         const userInfo = await userService.findOne(appInfo.userId);
         setUserInfo(userInfo);
       }

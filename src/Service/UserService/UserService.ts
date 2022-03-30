@@ -10,7 +10,7 @@ class UserService extends GenericService<User> {
   }
 
   static logout(): Promise<string> {
-    return Promise.resolve('TODO');
+    return Promise.reject('Logout is currently not possible.');
   }
 
 }
