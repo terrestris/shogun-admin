@@ -1,3 +1,38 @@
+## [5.0.0](https://github.com/terrestris/shogun-admin/compare/v4.0.1...v5.0.0) (2022-03-30)
+
+
+### Features
+
+* enhance general entity handling ([18beef5](https://github.com/terrestris/shogun-admin/commit/18beef5c653260fcff5c0c837e9dd5975856b9fb))
+* introduce Dockerfile ([89ad842](https://github.com/terrestris/shogun-admin/commit/89ad842e2a4651f486e62713a0d5f00ef6c609be))
+
+
+### Breaking changes
+
+* adjust pathes ([be8b4bf](https://github.com/terrestris/shogun-admin/commit/be8b4bfdc4ffebd959c462ccfed67279f0923ed5))
+* remove keycloak from fallbackConfig ([eddae10](https://github.com/terrestris/shogun-admin/commit/eddae105c7e8e87da9031d85ecdc6bf06006c947))
+* remove keycloak from webpack ([45000af](https://github.com/terrestris/shogun-admin/commit/45000af7f3ae5b4007d32056c7c671a79987b00f))
+* remove keycloak js ([6083777](https://github.com/terrestris/shogun-admin/commit/6083777e87ca13eed60b077d8da3415d1573af72))
+
+
+### Dependencies
+
+* update eslintrc ([3113113](https://github.com/terrestris/shogun-admin/commit/3113113b8eb23115799ac2905216c909f6951810))
+* update packages ([6be3871](https://github.com/terrestris/shogun-admin/commit/6be38710538f0276192087f3a9eb1e46b059b286))
+
+
+### Bugfixes
+
+* add typing and stability enhancements ([93b67eb](https://github.com/terrestris/shogun-admin/commit/93b67ebc8c76d26e09941db99748114abb8bd866))
+
+
+### Changes in configuration
+
+* introduce @semantic-release/npm ([387d2ee](https://github.com/terrestris/shogun-admin/commit/387d2ee46d4168b7e328140fa0a082fe2a0aa1e4))
+* only run node lint, typecheck test on PR ([b94fcea](https://github.com/terrestris/shogun-admin/commit/b94fceae8ef9268801ea798308e5ee0a202fd399))
+* transform release script ([6b8eba6](https://github.com/terrestris/shogun-admin/commit/6b8eba624d3f0571a38ddfdbd32d2e0c47de5033))
+* update nodejs.yml ([58338a7](https://github.com/terrestris/shogun-admin/commit/58338a7c0f975f57b76fb62a83b60cd2b890f363))
+
 ### [4.0.1](https://github.com/terrestris/shogun-admin/compare/v4.0.0...v4.0.1) (2022-01-28)
 
 
