@@ -6,7 +6,7 @@ on:
       - main
 
 env:
-  DOCKER_REGISTRY: https://nexus.terrestris.de/repository/terrestris-public/
+  DOCKER_REGISTRY: nexus.terrestris.de/repository/terrestris-public
 
 jobs:
   release:
