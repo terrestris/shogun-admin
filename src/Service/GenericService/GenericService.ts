@@ -1,7 +1,6 @@
 import CsrfUtil from '@terrestris/base-util/dist/CsrfUtil/CsrfUtil';
 
 import BaseEntity from '../../Model/BaseEntity';
-import { keycloak } from '../../Util/KeyCloakUtil';
 
 export type ReplacerFunction = (key: string, value: any) => any;
 
@@ -20,22 +19,16 @@ abstract class GenericService<T extends BaseEntity> {
   }
 
   findAll(): Promise<T[]> {
-    if (!keycloak.token) {
-      return Promise.reject('No keycloak token available.');
-    }
     const reqOpts = {
       method: 'GET',
       headers: this.getDefaultHeaders()
     };
 
-    return fetch(`${this.basePath}`, reqOpts)
+    return fetch(this.basePath, reqOpts)
       .then(this.isSuccessList.bind(this));
   }
 
   findOne(id: string | number): Promise<T> {
-    if (!keycloak.token) {
-      return Promise.reject('No keycloak token available.');
-    }
     const reqOpts = {
       method: 'GET',
       headers: this.getDefaultHeaders()
@@ -46,9 +39,6 @@ abstract class GenericService<T extends BaseEntity> {
   }
 
   add(t: Partial<T>): Promise<T> {
-    if (!keycloak.token) {
-      return Promise.reject('No keycloak token available.');
-    }
     const reqOpts = {
       method: 'POST',
       headers: this.getDefaultHeaders(),
@@ -60,9 +50,6 @@ abstract class GenericService<T extends BaseEntity> {
   }
 
   update(t: T): Promise<T> {
-    if (!keycloak.token) {
-      return Promise.reject('No keycloak token available.');
-    }
     const reqOpts = {
       method: 'PUT',
       headers: this.getDefaultHeaders(),
@@ -74,9 +61,6 @@ abstract class GenericService<T extends BaseEntity> {
   }
 
   updatePartial(t: Partial<T>): Promise<T> {
-    if (!keycloak.token) {
-      return Promise.reject('No keycloak token available');
-    }
     if (!t.id) {
       return Promise.reject('"id" is missing in the update values.');
     }
@@ -91,9 +75,6 @@ abstract class GenericService<T extends BaseEntity> {
   }
 
   delete(id: string | number): Promise<void> {
-    if (!keycloak.token) {
-      return Promise.reject('No keycloak token available.');
-    }
     const reqOpts = {
       method: 'DELETE',
       headers: this.getDefaultHeaders()
@@ -126,8 +107,7 @@ abstract class GenericService<T extends BaseEntity> {
   getDefaultHeaders() {
     return {
       'Content-Type': 'application/json',
-      'X-XSRF-TOKEN': CsrfUtil.getCsrfValueFromCookie(),
-      'Authorization': `Bearer ${keycloak.token}`
+      'X-XSRF-TOKEN': CsrfUtil.getCsrfValueFromCookie()
     };
   }
 }

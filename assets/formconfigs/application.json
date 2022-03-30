@@ -51,7 +51,7 @@
         "labelI18n": "Client configuration"
       },
       {
-        "component": "Input",
+        "component": "JSONEditor",
         "dataField": "layerTree",
         "labelI18n": "Layer tree"
       },

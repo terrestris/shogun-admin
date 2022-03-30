@@ -2,8 +2,6 @@ import GenericService from '../GenericService/GenericService';
 import User from '../../Model/User';
 
 import config from 'shogunApplicationConfig';
-import { keycloak } from '../../Util/KeyCloakUtil';
-import { KeycloakPromise } from 'keycloak-js';
 
 class UserService extends GenericService<User> {
 
@@ -11,8 +9,8 @@ class UserService extends GenericService<User> {
     super(User, config.path.user);
   }
 
-  static logout(): KeycloakPromise<void, void> {
-    return keycloak.logout();
+  static logout(): Promise<string> {
+    return Promise.reject('Logout is currently not possible.');
   }
 
 }

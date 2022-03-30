@@ -9,6 +9,7 @@ import DisplayField from '../../FormField/DisplayField/DisplayField';
 import { FormInstance, FormItemProps, FormProps } from 'antd/lib/form';
 import YesOrNoField from '../../FormField/YesOrNoField/YesOrNoField';
 import JSONEditor from '../../FormField/JSONEditor/JSONEditor';
+import { InputNumber } from 'antd';
 
 export type FieldConfig = {
   component?: string;
@@ -100,12 +101,12 @@ export const GeneralEntityForm: React.FC<GeneralEntityFormProps> = ({
             {...fieldCfg?.fieldProps}
           />
         );
-      // case 'InputNumberAutoSelect':
-      //   return (
-      //     <InputNumberAutoSelect
-      //       {...fieldConfig.fieldProps}
-      //     />
-      //   );
+      case 'Number':
+        return (
+          <InputNumber
+            {...fieldCfg?.fieldProps}
+          />
+        );
       case 'Switch':
         return (
           <Switch

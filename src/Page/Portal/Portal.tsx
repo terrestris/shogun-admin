@@ -22,14 +22,13 @@ import Logs from '../../Component/Logs/Logs';
 import GlobalSettingsRoot from '../../Component/GlobalSettings/GlobalSettingsRoot/GlobalSettingsRoot';
 import LogSettingsRoot from '../../Component/LogSettings/LogSettingsRoot/LogSettingsRoot';
 import MetricsRoot from '../../Component/Metrics/MetricsRoot/MetricsRoot';
-import { keycloak } from '../../Util/KeyCloakUtil';
 import BaseEntity from '../../Model/BaseEntity';
 
 import config from 'shogunApplicationConfig';
 
 import GeneralEntityRoot,
 { GeneralEntityConfigType } from '../../Component/GeneralEntity/GeneralEntityRoot/GeneralEntityRoot';
-import { CsrfUtil, Logger } from '@terrestris/base-util';
+import CsrfUtil from '@terrestris/base-util/dist/CsrfUtil/CsrfUtil';
 import './Portal.less';
 
 interface OwnProps { }
@@ -44,22 +43,17 @@ export const Portal: React.FC<PortalProps> = () => {
   const [configsAreLoading, setConfigsAreLoading] = useState<boolean>(false);
 
   const fetchConfigForModel = async (modelName: string): Promise<GeneralEntityConfigType<BaseEntity>> => {
-    if (!keycloak.token) {
-      Logger.warn('No keycloak token available.');
-      return null;
-    }
     const reqOpts = {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        'X-XSRF-TOKEN': CsrfUtil.getCsrfValueFromCookie(),
-        'Authorization': `Bearer ${keycloak.token}`
+        'X-XSRF-TOKEN': CsrfUtil.getCsrfValueFromCookie()
       }
     };
-    const response = await fetch(
-      `${config.appPrefix}${config.path.configBase}/${_toLowerCase(modelName)}.json`,
-      reqOpts
-    );
+    let modelPath = process.env.NODE_ENV === 'development' ?
+      `${config.path.configBase}/${_toLowerCase(modelName)}.json` :
+      `${config.appPrefix}${config.path.configBase}/${_toLowerCase(modelName)}.json`;
+    const response = await fetch(modelPath, reqOpts);
     if (response.ok) {
       if (response.status === 204) {
       // No Data
@@ -99,6 +93,7 @@ export const Portal: React.FC<PortalProps> = () => {
         </Button>
         <Navigation
           collapsed={collapsed}
+          entityConfigs={entitiesToLoad}
         />
       </div>
       <div className="content">

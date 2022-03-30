@@ -18,10 +18,10 @@ interface OwnProps {
 
 type HeaderProps = OwnProps;
 
-export const Header: React.FC<HeaderProps> = props => {
+export const Header: React.FC<HeaderProps> = () => {
 
   const logo = config.path?.logo ?
-    `${config.path.base}${config.appPrefix}${config.path?.logo}` :
+    `${config.path.base}${config.path?.logo}` :
     defaultLogo;
 
   return (
@@ -41,7 +41,7 @@ export const Header: React.FC<HeaderProps> = props => {
           </Link>
         }
         extra={[
-          <User key="user"/>
+          <User key="user" />
         ]}
       >
       </PageHeader>
