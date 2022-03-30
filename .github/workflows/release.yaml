@@ -38,16 +38,28 @@ jobs:
           username: ${{ secrets.NEXUS_USERNAME }}
           password: ${{ secrets.NEXUS_PASSWORD }}
 
-      - name: Build docker image
+      - name: Build docker image (latest)
         uses: docker/build-push-action@v2
         with:
           context: .
           tags: |
             ${{ env.DOCKER_REGISTRY }}/shogun-admin:latest
+          load: true
+
+      - name: Build docker image (version)
+        if: steps.semantic.outputs.new_release_published == 'true'
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          tags: |
             ${{ env.DOCKER_REGISTRY }}/shogun-admin:${{ steps.semantic.outputs.new_release_version }}
           load: true
 
-      - name: Push docker image to Nexus
+      - name: Push docker image to Nexus (latest)
         run: |
           docker push ${{ env.DOCKER_REGISTRY }}/shogun-admin:latest
+
+      - name: Push docker image to Nexus (version)
+        if: steps.semantic.outputs.new_release_published == 'true'
+        run: |
           docker push ${{ env.DOCKER_REGISTRY }}/shogun-admin:${{ steps.semantic.outputs.new_release_version }}
