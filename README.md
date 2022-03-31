@@ -5,11 +5,11 @@
 
 # Docker
 
-`shogun-admin` should be used in an Docker environment. The easiest way to do this is to use [shogun-docker](https://github.com/terrestris/shogun-docker) which includes the .
+`shogun-admin` should be used in a Docker environment. The easiest way to do this is to use [shogun-docker](https://github.com/terrestris/shogun-docker) which includes the image.
 
 # Development
 
-The WebPack dev server is configured to generate output into `dist_dev`.
+The webpack dev server is configured to generate output into `dist_dev`.
 
 So to work on the `shogun-admin` you can mount this folder into your docker-compose environment:
 
@@ -22,4 +22,4 @@ So to work on the `shogun-admin` you can mount this folder into your docker-comp
       - ../../shogun-admin/dist_dev:/var/www/html
 ```
 > ⚠️ Currently the dev server will spam your console with websocket warnings as hot reloading is not
-proberly configured for the docker scenario.
+properly configured for the docker scenario.
