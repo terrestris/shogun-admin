@@ -11,8 +11,7 @@
     "eslint": "eslint -c .eslintrc.js --ext .js,.ts,.tsx && tsc --noEmit --project tsconfig.json",
     "lint": "npm run typecheck && npm run eslint ",
     "build": "webpack --config webpack.production.config.js",
-    "start": "webpack serve --config webpack.dev.config.js",
-    "start-gpro": "webpack serve --config webpack.gpro.config.js",
+    "start": "rimraf dist_dev && webpack serve --config webpack.dev.config.js",
     "husky": "husky install",
     "prepare": "npm run husky",
     "semantic-release": "npm run clean; npm run build; npx semantic-release"
