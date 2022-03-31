@@ -3,21 +3,23 @@
 ## A UI for handling SHOGun entities like users, applications, and layers
 ### …easily extendable to manage your project entities, too.
 
-# Keycloak-Setup
+# Docker
 
-# Setup
+`shogun-admin` should be used in an Docker environment. The easiest way to do this is to use [shogun-docker](https://github.com/terrestris/shogun-docker) which includes the .
 
-Requirements:
+# Development
 
-- A runnning shogun instance
-- Keycloak-Preparation
-  - The user you use to login needs the role `admin`
-  - The path of the `shogun-admin` needs to be added to `Valid Redirect URIs` and `Web Origins`
+The WebPack dev server is configured to generate output into `dist_dev`.
 
-To start the admin run:
+So to work on the `shogun-admin` you can mount this folder into your docker-compose environment:
 
-```bash
-npm i && npm start
+```yml
+  shogun-admin:
+    image: nexus.terrestris.de/repository/terrestris-public/shogun-admin:latest
+    ports:
+      - 8005:80
+    volumes:
+      - ../../shogun-admin/dist_dev:/var/www/html
 ```
-
-The `shogun-admin` expects shogun itself to serve a `client-config.js` file which configures the admin client. If this file is not found, the `fallbackConfig.js` from the assets folder is loaded. You can use this as a starting point for your own `client-config.js`.
+> ⚠️ Currently the dev server will spam your console with websocket warnings as hot reloading is not
+proberly configured for the docker scenario.
