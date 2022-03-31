@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { DatePicker, Form, Input, PageHeader, Statistic, Switch } from 'antd';
+import { DatePicker, Form, Input, PageHeader, Select, Statistic, Switch } from 'antd';
 const { TextArea } = Input;
 
 import Logger from 'js-logger';
@@ -112,6 +112,18 @@ export const GeneralEntityForm: React.FC<GeneralEntityFormProps> = ({
           <Switch
             checkedChildren="On"
             unCheckedChildren="Off"
+            {...fieldCfg?.fieldProps}
+          />
+        );
+      case 'Select':
+        return (
+          <Select
+            {...fieldCfg?.fieldProps}
+          />
+        );
+      case 'MarkdownEditor':
+        return (
+          <TextArea
             {...fieldCfg?.fieldProps}
           />
         );
