@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import { Button, message } from 'antd';
 import { Switch, Route } from 'react-router-dom';
 
-import _toLowerCase from 'lodash/lowerCase';
 import _isEqual from 'lodash/isEqual';
 import {
   MenuFoldOutlined,
@@ -50,9 +49,7 @@ export const Portal: React.FC<PortalProps> = () => {
         'X-XSRF-TOKEN': CsrfUtil.getCsrfValueFromCookie()
       }
     };
-    let modelPath = process.env.NODE_ENV === 'development' ?
-      `${config.path.configBase}/${_toLowerCase(modelName)}.json` :
-      `${config.appPrefix}${config.path.configBase}/${_toLowerCase(modelName)}.json`;
+    const modelPath = `${config.path.modelConfigs}/${(modelName.toLowerCase())}.json`;
     const response = await fetch(modelPath, reqOpts);
     if (response.ok) {
       if (response.status === 204) {
