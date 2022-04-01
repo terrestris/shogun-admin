@@ -21,5 +21,3 @@ So to work on the `shogun-admin` you can mount this folder into your docker-comp
     volumes:
       - ../../shogun-admin/dist_dev:/var/www/html
 ```
-> ⚠️ Currently the dev server will spam your console with websocket warnings as hot reloading is not
-properly configured for the docker scenario.

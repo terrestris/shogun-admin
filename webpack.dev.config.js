@@ -26,8 +26,7 @@ devConfig.plugins[0] = new HtmlWebpackPlugin({
 });
 
 devConfig.devServer = {
-  hot: false,
-  liveReload: false,
+  webSocketServer: false,
   devMiddleware: {
     writeToDisk: true
   }
