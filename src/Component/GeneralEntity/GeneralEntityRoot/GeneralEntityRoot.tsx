@@ -80,14 +80,14 @@ export function GeneralEntityRoot<T extends BaseEntity> ({
   const updateForm = useCallback(async (): Promise<void> => {
     const nameList = formConfig?.fields.filter(field => field.required).map(field => field.dataField);
     validate(nameList);
-  }, [form, validate]);
+  }, [formConfig?.fields, validate]);
 
   const entityController: GenericEntityController<T> = useMemo(() => ControllerUtil.createController({
     endpoint,
     entityType,
     formConfig,
     updateForm
-  }), [endpoint, entityType]) as GenericEntityController<T>;
+  }), [endpoint, entityType, formConfig, updateForm]) as GenericEntityController<T>;
 
   /**
    * Fetch entity with given id
@@ -124,7 +124,7 @@ export function GeneralEntityRoot<T extends BaseEntity> ({
       setEditEntity(e);
       form.setFieldsValue(entityController?.getEntity());
     }
-  }, [id, fetchEntity, editEntity]);
+  }, [id, fetchEntity, editEntity, entityController, form]);
 
   /**
    * Set actual edited entity
@@ -167,16 +167,16 @@ export function GeneralEntityRoot<T extends BaseEntity> ({
   const onResetForm = () => {
     form?.resetFields();
     setFormIsDirty(false);
-  }
+  };
 
   const onSaveClick = async () => {
     const updatedEntity: T = await entityController?.saveOrUpdate() as T;
     setEditEntity(updatedEntity);
     setFormIsDirty(false);
     await fetchEntities();
-  }
+  };
 
-  const initialValues = useMemo(() => entityController?.getInitialFormValues(), [entityController?.getEntity()]);
+  const initialValues = useMemo(() => entityController?.getInitialFormValues(), [entityController]);
   const saveReloadDisabled = useMemo(() => _isEmpty(editEntity) || !formIsDirty, [formIsDirty, editEntity]);
 
   return (

@@ -7,6 +7,9 @@ node/
 # Testing
 coverage/
 
+# webpack dev server
+dist_dev/
+
 # production
 build/
 dist/

@@ -1,10 +1,12 @@
 const commonConfig = require('./webpack.common.config.js');
 const webpack = require('webpack');
 
-let commonWebpackConfig = commonConfig;
+let productionConfig = commonConfig;
 
-commonWebpackConfig.plugins = [
-  ...commonWebpackConfig.plugins || [],
+productionConfig.mode = 'production';
+
+productionConfig.plugins = [
+  ...commonConfig.plugins || [],
   new webpack.DefinePlugin({
     'process.env': {
       NODE_ENV: JSON.stringify('production')
@@ -13,6 +15,4 @@ commonWebpackConfig.plugins = [
   })
 ];
 
-commonWebpackConfig.mode = 'production';
-
-module.exports = commonWebpackConfig;
+module.exports = productionConfig;
