@@ -1,3 +1,24 @@
+## [5.1.0](https://github.com/terrestris/shogun-admin/compare/v5.0.0...v5.1.0) (2022-04-01)
+
+
+### Features
+
+* add Select field to GeneralEntityForm ([043485d](https://github.com/terrestris/shogun-admin/commit/043485dc1a0028140b428cf82000456cf22a272a))
+* setup webpack dev server for shogun-docker ([fb5b197](https://github.com/terrestris/shogun-admin/commit/fb5b1979e112f7da092028b085e9199180e46e20))
+
+
+### Changes in configuration
+
+* fix project name in build/push steps ([1163abe](https://github.com/terrestris/shogun-admin/commit/1163abead6c58810fd6af5d98f5a3701f52f4488))
+* make version release conditional ([4b43c4f](https://github.com/terrestris/shogun-admin/commit/4b43c4fc4941c83b17400b177c2b0a1f19c1e667))
+* remove https:// from DOCKER_REGISTRY ([18cfd14](https://github.com/terrestris/shogun-admin/commit/18cfd14588d9d16f503c32de98015c648741c0c6))
+
+
+### Bugfixes
+
+* disable webpack webSocketServer ([4239a8a](https://github.com/terrestris/shogun-admin/commit/4239a8aa67cd7dcd028fda3bdd022b69aacf12de))
+* static modelPath in Portal ([2fc986c](https://github.com/terrestris/shogun-admin/commit/2fc986c1fadbd0722e5deaa2897523fd030e4de5))
+
 ## [5.0.0](https://github.com/terrestris/shogun-admin/compare/v4.0.1...v5.0.0) (2022-03-30)
 
 
