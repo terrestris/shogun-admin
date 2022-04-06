@@ -5,10 +5,10 @@
   "description": "The admin UI for the SHOGun Webmapping backend.",
   "main": "index.js",
   "scripts": {
-    "typecheck": "tsc --project tsconfig.json --noEmit",
+    "typecheck": "tsc --project tsconfig.json --noEmit --skipLibCheck",
     "test": "jest",
     "test:watch": "jest --watch",
-    "eslint": "eslint -c .eslintrc.js --ext .js,.ts,.tsx && tsc --noEmit --project tsconfig.json",
+    "eslint": "eslint -c .eslintrc.js --ext .js,.ts,.tsx",
     "lint": "npm run typecheck && npm run eslint ",
     "build": "webpack --config webpack.production.config.js",
     "start": "rimraf dist_dev && webpack serve --config webpack.dev.config.js",
