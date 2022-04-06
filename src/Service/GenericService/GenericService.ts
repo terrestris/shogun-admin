@@ -1,6 +1,7 @@
-import CsrfUtil from '@terrestris/base-util/dist/CsrfUtil/CsrfUtil';
-
 import BaseEntity from '../../Model/BaseEntity';
+import SecurityUtil from '../../Util/SecurityUtil';
+
+import config from 'shogunApplicationConfig';
 
 export type ReplacerFunction = (key: string, value: any) => any;
 
@@ -107,7 +108,7 @@ abstract class GenericService<T extends BaseEntity> {
   getDefaultHeaders() {
     return {
       'Content-Type': 'application/json',
-      'X-XSRF-TOKEN': CsrfUtil.getCsrfValueFromCookie()
+      ...SecurityUtil.getSecurityHeaders(config)
     };
   }
 }
