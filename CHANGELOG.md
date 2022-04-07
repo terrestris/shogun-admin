@@ -1,3 +1,20 @@
+## [5.2.0](https://github.com/terrestris/shogun-admin/compare/v5.1.0...v5.2.0) (2022-04-07)
+
+
+### Features
+
+* introduce SecurityUtil for JWT authentication ([3ab45a5](https://github.com/terrestris/shogun-admin/commit/3ab45a5c72191520e7dd5e68f5a720fbacac90d6))
+
+
+### Changes in configuration
+
+* add --skipLibCheck to "npm run typecheck" ([ce57bbc](https://github.com/terrestris/shogun-admin/commit/ce57bbc7c1537fa28f96e3cb2e6fe2a2ff7a2c4d))
+
+
+### Bugfixes
+
+* remove dangling comma ([8f76167](https://github.com/terrestris/shogun-admin/commit/8f76167f1592cd3a4ec3131891621cadeeed51d8))
+
 ## [5.1.0](https://github.com/terrestris/shogun-admin/compare/v5.0.0...v5.1.0) (2022-04-01)
 
 
