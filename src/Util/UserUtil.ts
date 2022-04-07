@@ -13,11 +13,14 @@ export default class UserUtil {
    * @method getInitials
    */
   public static getInitials(user: User): string {
+    if (!user?.providerDetails) {
+      return undefined;
+    }
     const {
       username,
       firstName,
       lastName
-    } = user.keycloakRepresentation;
+    } = user.providerDetails;
 
     let name = username;
     if (firstName && lastName) {

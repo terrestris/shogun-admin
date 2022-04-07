@@ -78,10 +78,10 @@ export const User: React.FC<UserProps> = (props) => {
             className="user-name"
           >
             <span>
-              {userInfo?.keycloakRepresentation?.email}
+              {userInfo?.providerDetails?.email}
             </span>
           </div>
-          <Menu.Divider/>
+          <Menu.Divider />
           <Menu.Item
             key="settings"
             icon={<SettingOutlined />}
@@ -94,7 +94,7 @@ export const User: React.FC<UserProps> = (props) => {
           >
             Info
           </Menu.Item>
-          <Menu.Divider/>
+          <Menu.Divider />
           <Menu.Item
             key="logout"
             icon={<LogoutOutlined />}
@@ -118,7 +118,7 @@ export const User: React.FC<UserProps> = (props) => {
         <span
           className="username"
         >
-          {userInfo?.keycloakRepresentation?.username}
+          {userInfo?.providerDetails?.username}
         </span>
       </div>
     </Dropdown>
