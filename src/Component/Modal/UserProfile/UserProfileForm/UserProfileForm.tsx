@@ -55,13 +55,13 @@ export const UserProfileForm: React.FC<UserProfileFormProps> = props => {
 
   useEffect(() => {
     form.setFieldsValue({
-      email: userInfo?.keycloakRepresentation?.email,
-      username: userInfo?.keycloakRepresentation?.username,
+      email: userInfo?.providerDetails?.email,
+      username: userInfo?.providerDetails?.username,
       affiliation: userInfo?.details?.affiliation,
       phone: userInfo?.details?.phone,
       about: userInfo?.details?.about
     });
-  }, [userInfo]);
+  }, [userInfo, form]);
 
   const handleSubmit = (values) => {
     setAlert({});
@@ -69,9 +69,9 @@ export const UserProfileForm: React.FC<UserProfileFormProps> = props => {
 
     const updateUser = new User({
       id: userInfo.id,
-      keycloakRepresentation: {
+      providerDetails: {
         username: values.username,
-        email: userInfo?.keycloakRepresentation?.email,
+        email: userInfo?.providerDetails?.email,
         enabled: true
       },
       details: {

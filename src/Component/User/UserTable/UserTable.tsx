@@ -15,28 +15,28 @@ const columns: any = [
   {
     title: 'Username',
     key: 'username',
-    dataIndex: ['keycloakRepresentation', 'username'],
+    dataIndex: ['providerDetails', 'username'],
     sorter: TableUtil.getSorter('username'),
     defaultSortOrder: 'ascend',
     editable: true,
-    ...TableUtil.getColumnSearchProps(['keycloakRepresentation', 'username'])
+    ...TableUtil.getColumnSearchProps(['providerDetails', 'username'])
   },
   {
     title: 'Vorname',
     key: 'firstname',
-    dataIndex: ['keycloakRepresentation', 'firstName'],
+    dataIndex: ['providerDetails', 'firstName'],
     sorter: TableUtil.getSorter('firstname'),
     defaultSortOrder: 'ascend',
     editable: true,
-    ...TableUtil.getColumnSearchProps(['keycloakRepresentation', 'firstName'])
+    ...TableUtil.getColumnSearchProps(['providerDetails', 'firstName'])
   },
   {
     title: 'Nachname',
-    dataIndex: ['keycloakRepresentation', 'lastName'],
+    dataIndex: ['providerDetails', 'lastName'],
     sorter: TableUtil.getSorter('lastname'),
     defaultSortOrder: 'ascend',
     editable: true,
-    ...TableUtil.getColumnSearchProps(['keycloakRepresentation', 'lastName'])
+    ...TableUtil.getColumnSearchProps(['providerDetails', 'lastName'])
   }
 ];
 
