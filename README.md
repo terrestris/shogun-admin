@@ -21,3 +21,13 @@ So to work on the `shogun-admin` you can mount this folder into your docker-comp
     volumes:
       - ../../shogun-admin/dist_dev:/var/www/html
 ```
+
+# Semantic release
+Allowed Tags for semantic release:
+
+- Breaking changes: `breaking`
+- Features: `feat`
+- Bugfixes: `fix`,
+- Package updates: `chore`
+- Changes in configuration: `ci`, `config`
+- `docs`, `refactor`, `test`, `norelease`
