@@ -19,6 +19,10 @@ var shogunApplicationConfig = {
     metrics: '/actuator/metrics',
     evictCache: '/cache/evict'
   },
+  security: {
+    jwt: false,
+    // authTokenKey: 'shogun-auth-token'
+  },
   models: [
     'Application'
   ],

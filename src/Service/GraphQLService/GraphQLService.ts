@@ -1,5 +1,5 @@
 import config from 'shogunApplicationConfig';
-import CsrfUtil from '@terrestris/base-util/dist/CsrfUtil/CsrfUtil';
+import SecurityUtil from '../../Util/SecurityUtil';
 
 // TODO: Make this generic and more specific
 export type GraphQLQueryObject = {
@@ -23,7 +23,7 @@ class GraphQLService {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'X-XSRF-TOKEN': CsrfUtil.getCsrfValueFromCookie()
+        ...SecurityUtil.getSecurityHeaders(config)
       },
       body: JSON.stringify(query)
     };

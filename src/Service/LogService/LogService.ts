@@ -1,15 +1,14 @@
-import CsrfUtil from '@terrestris/base-util/dist/CsrfUtil/CsrfUtil';
-
 import Logger from '../../Logger';
 
 import config from 'shogunApplicationConfig';
+import SecurityUtil from '../../Util/SecurityUtil';
 
 export type LogLevel = 'OFF' | 'FATAL' | 'ERROR' | 'WARN' | 'INFO' | 'DEBUG' | 'TRACE';
 
-export type Logger = {
-  configuredLevel: LogLevel
-  effectiveLevel: LogLevel
-}
+export type LogLevels = {
+  configuredLevel: LogLevel;
+  effectiveLevel: LogLevel;
+};
 
 class LogService {
 
@@ -28,7 +27,7 @@ class LogService {
     }
   }
 
-  async getLogger(loggerName: string): Promise<Logger> {
+  async getLogger(loggerName: string): Promise<LogLevels> {
     try {
       const loggerResponse = await fetch(`${config.path.loggers}/${loggerName}`);
       const loggerJson = await loggerResponse.json();
@@ -47,7 +46,7 @@ class LogService {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'X-XSRF-TOKEN': CsrfUtil.getCsrfValueFromCookie()
+          ...SecurityUtil.getSecurityHeaders(config)
         },
         body: JSON.stringify({
           'configuredLevel': logLevel

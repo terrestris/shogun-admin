@@ -1,8 +1,7 @@
-import CsrfUtil from '@terrestris/base-util/dist/CsrfUtil/CsrfUtil';
-
 import Logger from '../../Logger';
 
 import config from 'shogunApplicationConfig';
+import SecurityUtil from '../../Util/SecurityUtil';
 
 class CacheService {
 
@@ -12,9 +11,7 @@ class CacheService {
     try {
       const response = await fetch(`${config.path.evictCache}`, {
         method: 'POST',
-        headers: {
-          'X-XSRF-TOKEN': CsrfUtil.getCsrfValueFromCookie()
-        }
+        headers: SecurityUtil.getSecurityHeaders(config)
       });
       return response.status === 200;
     } catch (error) {

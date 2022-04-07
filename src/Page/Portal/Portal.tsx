@@ -27,8 +27,8 @@ import config from 'shogunApplicationConfig';
 
 import GeneralEntityRoot,
 { GeneralEntityConfigType } from '../../Component/GeneralEntity/GeneralEntityRoot/GeneralEntityRoot';
-import CsrfUtil from '@terrestris/base-util/dist/CsrfUtil/CsrfUtil';
 import './Portal.less';
+import SecurityUtil from '../../Util/SecurityUtil';
 
 interface OwnProps { }
 
@@ -46,7 +46,7 @@ export const Portal: React.FC<PortalProps> = () => {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        'X-XSRF-TOKEN': CsrfUtil.getCsrfValueFromCookie()
+        ...SecurityUtil.getSecurityHeaders(config)
       }
     };
     const modelPath = `${config.path.modelConfigs}/${(modelName.toLowerCase())}.json`;
