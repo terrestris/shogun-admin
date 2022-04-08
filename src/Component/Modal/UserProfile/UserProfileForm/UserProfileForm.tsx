@@ -18,7 +18,6 @@ import {
 
 import {
   ContactsOutlined,
-  MailOutlined,
   PhoneOutlined,
   QuestionCircleOutlined,
   UserOutlined
@@ -55,8 +54,6 @@ export const UserProfileForm: React.FC<UserProfileFormProps> = props => {
 
   useEffect(() => {
     form.setFieldsValue({
-      email: userInfo?.providerDetails?.email,
-      username: userInfo?.providerDetails?.username,
       affiliation: userInfo?.details?.affiliation,
       phone: userInfo?.details?.phone,
       about: userInfo?.details?.about
@@ -69,11 +66,6 @@ export const UserProfileForm: React.FC<UserProfileFormProps> = props => {
 
     const updateUser = new User({
       id: userInfo.id,
-      providerDetails: {
-        username: values.username,
-        email: userInfo?.providerDetails?.email,
-        enabled: true
-      },
       details: {
         phone: values?.phone,
         about: values?.about,
@@ -227,22 +219,6 @@ export const UserProfileForm: React.FC<UserProfileFormProps> = props => {
             })
           }
         </Select>
-      </Form.Item>
-      <Form.Item
-        name="email"
-        label="E-Mail"
-      >
-        <Input
-          prefix={
-            <MailOutlined
-              style={{
-                color: 'rgba(0,0,0,.25)'
-              }}
-            />
-          }
-          disabled={true}
-          placeholder="Email"
-        />
       </Form.Item>
       <Button
         type="primary"

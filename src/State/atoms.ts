@@ -17,10 +17,7 @@ export const appInfoAtom = atom<AppInfo>({
 export const userInfoAtom = atom<User>({
   key: 'userInfo',
   default: {
-    providerDetails: {
-      username: 'Peter Pan',
-      email: 'pan@terrestris.de'
-    }
+    authProviderId: 'peter@pan.de'
   }
 });
 

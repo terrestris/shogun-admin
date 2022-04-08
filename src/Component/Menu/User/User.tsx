@@ -78,7 +78,7 @@ export const User: React.FC<UserProps> = (props) => {
             className="user-name"
           >
             <span>
-              {userInfo?.providerDetails?.email}
+              {userInfo?.authProviderId}
             </span>
           </div>
           <Menu.Divider />
@@ -118,7 +118,7 @@ export const User: React.FC<UserProps> = (props) => {
         <span
           className="username"
         >
-          {userInfo?.providerDetails?.username}
+          {userInfo?.authProviderId}
         </span>
       </div>
     </Dropdown>

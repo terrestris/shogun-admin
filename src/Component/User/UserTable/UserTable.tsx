@@ -13,30 +13,13 @@ const userService = new UserService();
 
 const columns: any = [
   {
-    title: 'Username',
-    key: 'username',
-    dataIndex: ['providerDetails', 'username'],
-    sorter: TableUtil.getSorter('username'),
+    title: 'Provider Id',
+    key: 'authProviderId',
+    dataIndex: 'authProviderId',
+    sorter: TableUtil.getSorter('authProviderId'),
     defaultSortOrder: 'ascend',
-    editable: true,
-    ...TableUtil.getColumnSearchProps(['providerDetails', 'username'])
-  },
-  {
-    title: 'Vorname',
-    key: 'firstname',
-    dataIndex: ['providerDetails', 'firstName'],
-    sorter: TableUtil.getSorter('firstname'),
-    defaultSortOrder: 'ascend',
-    editable: true,
-    ...TableUtil.getColumnSearchProps(['providerDetails', 'firstName'])
-  },
-  {
-    title: 'Nachname',
-    dataIndex: ['providerDetails', 'lastName'],
-    sorter: TableUtil.getSorter('lastname'),
-    defaultSortOrder: 'ascend',
-    editable: true,
-    ...TableUtil.getColumnSearchProps(['providerDetails', 'lastName'])
+    editable: false,
+    ...TableUtil.getColumnSearchProps('authProviderId')
   }
 ];
 
