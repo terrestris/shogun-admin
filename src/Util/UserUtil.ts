@@ -13,23 +13,7 @@ export default class UserUtil {
    * @method getInitials
    */
   public static getInitials(user: User): string {
-    const {
-      username,
-      firstName,
-      lastName
-    } = user.keycloakRepresentation;
-
-    let name = username;
-    if (firstName && lastName) {
-      name = `${firstName} ${lastName}`;
-    }
-    const splittedName = name.split(' ');
-    const initals = [];
-    splittedName.forEach((part) => {
-      if (part[0]) {
-        initals.push(part[0].toUpperCase());
-      }
-    });
-    return initals.join('');
+    // TODO: get the intials form a username config
+    return '🔧';
   }
 }

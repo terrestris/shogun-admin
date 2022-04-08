@@ -96,7 +96,7 @@ export function GeneralEntityRoot<T extends BaseEntity> ({
     try {
       const e: T = await entityController?.load(eId) as T;
       setEditEntity(e);
-      form.resetFields();
+      form.setFieldsValue(e);
     } catch (error) {
       Logger.error(error);
     }
@@ -192,7 +192,6 @@ export function GeneralEntityRoot<T extends BaseEntity> ({
               type="primary"
               key="create"
               icon={<FormOutlined />}
-              onClick={onSaveClick}
             >
               {`${entityName} anlegen`}
             </Button>

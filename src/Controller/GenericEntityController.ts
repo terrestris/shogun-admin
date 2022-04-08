@@ -121,10 +121,10 @@ export class GenericEntityController<T extends BaseEntity> {
    * @returns The updated / saved entitiy
    */
   public async saveOrUpdate(): Promise<T> {
-    const isUpdate = _isNumber(this.entity.id);
+    const isUpdate = _isNumber(this?.entity?.id);
 
     // omit constant fields and read only fields
-    let entityUpdateObject: Partial<T> = _omit(this.entity, [
+    let entityUpdateObject: Partial<T> = _omit(this?.entity, [
       'created',
       'modified',
       ...this.formConfig?.fields.filter(field => field.readOnly).map(field => field.dataField)
@@ -134,7 +134,7 @@ export class GenericEntityController<T extends BaseEntity> {
     if (isUpdate) {
       entityUpdateObject = {
         ...entityUpdateObject,
-        id: this.entity.id
+        id: this?.entity?.id
       };
     }
 
