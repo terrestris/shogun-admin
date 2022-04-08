@@ -1,3 +1,18 @@
+## [6.0.0](https://github.com/terrestris/shogun-admin/compare/v5.2.0...v6.0.0) (2022-04-08)
+
+
+### Breaking changes
+
+* remove access to unknonw providerDetails ([2005cec](https://github.com/terrestris/shogun-admin/commit/2005ceca64fc68bfc37db456c0330ef95fa9faf0))
+* remove KeycloakRepresenation ([40d639e](https://github.com/terrestris/shogun-admin/commit/40d639e6a5b08583304c6d6414ad2c453d328d62))
+* replace keycloakRepresentation with providerDetails ([77ab3b4](https://github.com/terrestris/shogun-admin/commit/77ab3b4fce4e6cf73f53d1b992bc5b353ce39afb))
+
+
+### Bugfixes
+
+* form value setting for update case ([522eb6c](https://github.com/terrestris/shogun-admin/commit/522eb6c6235555d4572fa64b7725371ddcaf367c))
+* make GenericEntityControler more failsafe ([439180f](https://github.com/terrestris/shogun-admin/commit/439180f232d5352b99a93170328495e3f32fe82d))
+
 ## [5.2.0](https://github.com/terrestris/shogun-admin/compare/v5.1.0...v5.2.0) (2022-04-07)
 
 
