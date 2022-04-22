@@ -75,12 +75,16 @@ const App: React.FC = () => {
   }
 
   if (loadingState === 'failed') {
-    return (
-      <Result
-        status="warning"
-        title="Failed to load the initial data. Check your console."
-      />
-    );
+    if (config?.path?.auth?.login) {
+      window.location.href = config.path.auth.login;
+    } else {
+      return (
+        <Result
+          status="warning"
+          title="Failed to load the initial data. Check your console."
+        />
+      );
+    }
   }
 
   return (
