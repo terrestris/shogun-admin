@@ -1,3 +1,4 @@
+import Logger from '@terrestris/base-util/dist/Logger';
 import config from 'shogunApplicationConfig';
 import { AppInfo } from '../../Model/AppInfo';
 import { SwaggerDocs } from '../../Model/SwaggerDocs';
@@ -16,8 +17,14 @@ class AppInfoService {
 
   static async getSwaggerDocs(): Promise<SwaggerDocs> {
     try {
-      return fetch(config.path.swagger).then(r => r.json());
+      const response = await fetch(config.path.swagger);
+      if (!response.ok) {
+        throw new Error('Could not fetch swagger API');
+      }
+      const json = await response.json();
+      return json;
     } catch (error) {
+      Logger.error(error);
       return Promise.reject(error);
     }
   }
