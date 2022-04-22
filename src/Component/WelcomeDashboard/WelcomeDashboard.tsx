@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import { Link } from 'react-router-dom';
 
@@ -34,6 +34,10 @@ export const WelcomeDashboard: React.FC<WelcomeDashboardProps> = () => {
 
   const dashboardConf = config.dashboard;
 
+  const layerService = useMemo(() => new LayerService(config.path.layer), []);
+  const userService = useMemo(() => new UserService(config.path.user), []);
+  const appService = useMemo(() => new ApplicationService(config.path.application), []);
+
   return (
     <Dashboard
       className="welcome-dashboard"
@@ -68,7 +72,7 @@ export const WelcomeDashboard: React.FC<WelcomeDashboardProps> = () => {
             avatar={<BankOutlined />}
           >
             <DashboardStatistics
-              service={new ApplicationService(config.path.application)}
+              service={appService}
               name={{
                 singular: 'Applikation',
                 plural: 'Applikationen'
@@ -87,7 +91,7 @@ export const WelcomeDashboard: React.FC<WelcomeDashboardProps> = () => {
             avatar={<AppstoreOutlined />}
           >
             <DashboardStatistics
-              service={new LayerService(config.path.user)}
+              service={layerService}
               name={{
                 singular: 'Thema',
                 plural: 'Themen'
@@ -106,7 +110,7 @@ export const WelcomeDashboard: React.FC<WelcomeDashboardProps> = () => {
             avatar={<UserOutlined />}
           >
             <DashboardStatistics
-              service={new UserService(config.path.layer)}
+              service={userService}
               name={{
                 singular: 'Benutzer',
                 plural: 'Benutzer'
