@@ -1,0 +1,49 @@
+{
+  "endpoint": "/users",
+  "entityType": "user",
+  "entityName": "User",
+  "navigationTitle": "User",
+  "subTitle": "",
+  "formConfig": {
+    "name": "user",
+    "fields": [
+      {
+        "dataType": "number",
+        "dataField": "id",
+        "labelI18n": "ID",
+        "readOnly": "true"
+      },
+      {
+        "dataField": "created",
+        "dataType": "date",
+        "readOnly": "true",
+        "component": "DateField",
+        "labelI18n": "Created at",
+        "fieldProps": {
+          "dateFormat": "DD.MM.YYYY HH:mm"
+        }
+      },
+      {
+        "dataField": "modified",
+        "dataType": "date",
+        "readOnly": "true",
+        "labelI18n": "Modified at",
+        "component": "DateField",
+        "fieldProps": {
+          "dateFormat": "DD.MM.YYYY HH:mm"
+        }
+      }
+    ]
+  },
+  "tableConfig": {
+    "columnDefinition": [
+      {
+        "title": "ID",
+        "dataIndex": "id",
+        "sortConfig": {
+          "isSortable": false
+        }
+      }
+    ]
+  }
+}

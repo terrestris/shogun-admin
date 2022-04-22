@@ -63,14 +63,20 @@ export const User: React.FC<UserProps> = (props) => {
           onClick={onMenuClick}
           className="user-chip-menu"
         >
-          <div
-            className="user-name"
-          >
-            <span>
-              {userInfo?.authProviderId}
-            </span>
-          </div>
-          <Menu.Divider />
+          {
+            userInfo?.authProviderId &&
+            <div
+              className="user-name"
+            >
+              <span>
+                {userInfo.authProviderId}
+              </span>
+            </div>
+          }
+          {
+            userInfo?.authProviderId &&
+            <Menu.Divider />
+          }
           <Menu.Item
             key="settings"
             icon={<SettingOutlined />}

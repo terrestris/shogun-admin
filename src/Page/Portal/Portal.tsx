@@ -14,7 +14,6 @@ import WelcomeDashboard from '../../Component/WelcomeDashboard/WelcomeDashboard'
 import UserProfile from '../../Component/Modal/UserProfile/UserProfile';
 import ApplicationInfo from '../../Component/Modal/ApplicationInfo/ApplicationInfo';
 
-import UserRoot from '../../Component/User/UserRoot/UserRoot';
 import ImageFileRoot from '../../Component/ImageFile/ImageFileRoot/ImageFileRoot';
 import Logs from '../../Component/Logs/Logs';
 import GlobalSettingsRoot from '../../Component/GlobalSettings/GlobalSettingsRoot/GlobalSettingsRoot';
@@ -107,10 +106,6 @@ export const Portal: React.FC<PortalProps> = () => {
               );
             })
           }
-          <Route
-            path={`${config.appPrefix}/portal/user`}
-            component={UserRoot}
-          />
           <Route
             path={`${config.appPrefix}/portal/imagefile`}
             component={ImageFileRoot}
