@@ -60,8 +60,6 @@ export const UserRoot: React.FC<UserRootProps> = props => {
       </div>
       <div className="right-container">
         {id}
-        {/* TODO: */}
-        {/* <LayerEditForm id={id} /> */}
       </div>
     </div>
   );

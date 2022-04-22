@@ -10,7 +10,6 @@ import {
 } from '@ant-design/icons';
 
 import Navigation from '../../Component/Menu/Navigation/Navigation';
-import LayerRoot from '../../Component/Layer/LayerRoot/LayerRoot';
 import WelcomeDashboard from '../../Component/WelcomeDashboard/WelcomeDashboard';
 import UserProfile from '../../Component/Modal/UserProfile/UserProfile';
 import ApplicationInfo from '../../Component/Modal/ApplicationInfo/ApplicationInfo';
@@ -53,7 +52,7 @@ export const Portal: React.FC<PortalProps> = () => {
     const response = await fetch(modelPath, reqOpts);
     if (response.ok) {
       if (response.status === 204) {
-      // No Data
+        // No Data
         return null;
       }
       return await response.json() as GeneralEntityConfigType<BaseEntity>;
@@ -96,18 +95,18 @@ export const Portal: React.FC<PortalProps> = () => {
       <div className="content">
         <Switch>
           {
-            !configsAreLoading && entitiesToLoad?.map(entityConfig => <Route
-              key={entityConfig.entityType}
-              path={`${config.appPrefix}/portal/${entityConfig?.entityType}`}
-              render={() => <GeneralEntityRoot
-                {...entityConfig}
-              />}
-            />)
+            !configsAreLoading && entitiesToLoad?.map(entityConfig => {
+              return (
+                <Route
+                  key={entityConfig.entityType}
+                  path={`${config.appPrefix}/portal/${entityConfig?.entityType}`}
+                  render={() => <GeneralEntityRoot
+                    {...entityConfig}
+                  />}
+                />
+              );
+            })
           }
-          <Route
-            path={`${config.appPrefix}/portal/layer`}
-            component={LayerRoot}
-          />
           <Route
             path={`${config.appPrefix}/portal/user`}
             component={UserRoot}

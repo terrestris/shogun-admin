@@ -1,0 +1,104 @@
+{
+  "endpoint": "/layers",
+  "entityType": "layer",
+  "entityName": "Layer",
+  "navigationTitle": "Layers",
+  "subTitle": "List of layers…",
+  "formConfig": {
+    "name": "layer",
+    "fields": [
+      {
+        "dataType": "number",
+        "dataField": "id",
+        "labelI18n": "Identifier",
+        "readOnly": "true"
+      },
+      {
+        "dataField": "created",
+        "dataType": "date",
+        "readOnly": "true",
+        "component": "DateField",
+        "labelI18n": "Created at",
+        "fieldProps": {
+          "dateFormat": "DD.MM.YYYY HH:mm"
+        }
+      },
+      {
+        "dataField": "modified",
+        "dataType": "date",
+        "readOnly": "true",
+        "labelI18n": "Modified at",
+        "component": "DateField",
+        "fieldProps": {
+          "dateFormat": "DD.MM.YYYY HH:mm"
+        }
+      },
+      {
+        "component": "Input",
+        "dataField": "name",
+        "labelI18n": "Layer name",
+        "required": "true"
+      },
+      {
+        "component": "LayerTypeSelect",
+        "dataField": "type",
+        "labelI18n": "Layer type",
+        "required": "true"
+      },
+      {
+        "component": "JSONEditor",
+        "dataField": "clientConfig",
+        "labelI18n": "Layer configuration",
+        "fieldProps": {
+          "entityName": "LayerClientConfig"
+        }
+      },
+      {
+        "component": "JSONEditor",
+        "dataField": "sourceConfig",
+        "labelI18n": "Layer source config",
+        "fieldProps": {
+          "entityName": "LayerSourceConfig"
+        }
+      },
+      {
+        "component": "JSONEditor",
+        "dataField": "features",
+        "labelI18n": "Features",
+        "fieldProps": {
+          "entityName": "GeoJsonObject"
+        }
+      }
+    ]
+  },
+  "tableConfig": {
+    "columnDefinition": [
+      {
+        "title": "ID",
+        "dataIndex": "id",
+        "sortConfig": {
+          "isSortable": false
+        }
+      },
+      {
+        "title": "Name",
+        "dataIndex": "name",
+        "key": "name",
+        "sortConfig": {
+          "isSortable": true
+        },
+        "filterConfig": {
+          "isFilterable": true
+        }
+      },
+      {
+        "title": "Type",
+        "dataIndex": "type",
+        "key": "type",
+        "sortConfig": {
+          "isSortable": true
+        }
+      }
+    ]
+  }
+}
