@@ -31,7 +31,7 @@ import './App.less';
 
 import config from 'shogunApplicationConfig';
 
-const userService = new UserService();
+const userService = new UserService(config.path.user);
 
 const App: React.FC = () => {
 

@@ -9,7 +9,7 @@ import config from 'shogunApplicationConfig';
 interface OwnProps { }
 
 type UserTableProps = OwnProps & Omit<EntityTableProps, 'service' | 'routePath' | 'name' | 'columns' >;
-const userService = new UserService();
+const userService = new UserService(config.path.user);
 
 const columns: any = [
   {

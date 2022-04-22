@@ -6,8 +6,8 @@ import config from 'shogunApplicationConfig';
 
 class UserService extends GenericService<User> {
 
-  constructor() {
-    super(User, config.path.user);
+  constructor(endPoint: string) {
+    super(User, endPoint);
   }
 
   static logout(): Promise<string> | void {
