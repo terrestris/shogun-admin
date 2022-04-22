@@ -4,10 +4,6 @@ import {
 } from 'recoil';
 
 import {
-  useHistory
-} from 'react-router-dom';
-
-import {
   Dropdown,
   Menu
 } from 'antd';
@@ -26,27 +22,20 @@ import './User.less';
 import Avatar from 'antd/lib/avatar/avatar';
 import UserUtil from '../../../Util/UserUtil';
 
-interface OwnProps {}
+interface OwnProps { }
 
 type UserProps = OwnProps;
 
 export const User: React.FC<UserProps> = (props) => {
 
-  let history = useHistory();
-
   const [userInfo] = useRecoilState(userInfoAtom);
-  const [,setProfileVisible] = useRecoilState(userProfileModalVisibleAtom);
-  const [,setInfoVisible] = useRecoilState(shogunInfoModalVisibleAtom);
+  const [, setProfileVisible] = useRecoilState(userProfileModalVisibleAtom);
+  const [, setInfoVisible] = useRecoilState(shogunInfoModalVisibleAtom);
 
   const avatarSource = '';
 
   const doLogout = () => {
-    UserService.logout()
-      .then(() => {
-        // Force reloading of the login page which may be the current page.
-        history.push('/notavailable');
-        history.replace('/login');
-      });
+    UserService.logout();
   };
 
   const onMenuClick = (evt: any) => {
