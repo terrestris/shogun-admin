@@ -5,26 +5,26 @@ import { Link } from 'react-router-dom';
 import {
   Col,
   Row,
-  Statistic,
-  List
+  Statistic
 } from 'antd';
-
-import Avatar from 'antd/lib/avatar/avatar';
 
 import {
   AppstoreOutlined,
+  BankOutlined,
   DashboardOutlined,
   LikeOutlined,
-  MailOutlined,
   UserOutlined
 } from '@ant-design/icons';
 
 import { Dashboard } from '../Dashboard/Dashboard';
 import { DashboardCard } from '../Dashboard/DashboardCard/DashboardCard';
-import LayerTable from '../Layer/LayerTable/LayerTable';
-import UserTable from '../User/UserTable/UserTable';
 
 import config from 'shogunApplicationConfig';
+
+import DashboardStatistics from '../Dashboard/DashboardStatistics/DashboardStatistics';
+import ApplicationService from '../../Service/ApplicationService/ApplicationService';
+import LayerService from '../../Service/LayerService/LayerService';
+import UserService from '../../Service/UserService/UserService';
 
 import './WelcomeDashboard.less';
 
@@ -41,69 +41,79 @@ export const WelcomeDashboard: React.FC<WelcomeDashboardProps> = () => {
       columns={3}
     >
       {
-        dashboardConf?.news?.visible &&
-          <DashboardCard
-            className="news-dashboard-card"
-            title="Nachrichten"
-            description="… was habe ich verpasst"
-            avatar={<MailOutlined />}
-            hoverable={false}
-          >
-            <List
-              itemLayout="horizontal"
-              dataSource={[]}
-              renderItem={item => (
-                <List.Item>
-                  <List.Item.Meta
-                    avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-                    title={<a href="https://ant.design">{item.title}</a>}
-                    description="Ant Design, a design language for background applications, is refined by Ant UED Team"
-                  />
-                </List.Item>
-              )}
-            />
-          </DashboardCard>
+        dashboardConf?.statistics?.visible &&
+        <DashboardCard
+          className="statistics-dashboard-card"
+          title="Statistiken"
+          description="… wie siehts denn aus"
+          avatar={<DashboardOutlined />}
+        >
+          <Row gutter={16}>
+            <Col span={12}>
+              <Statistic title="Feedback" value={1128} prefix={<LikeOutlined />} />
+            </Col>
+            <Col span={12}>
+              <Statistic title="Unmerged" value={93} suffix="/ 100" />
+            </Col>
+          </Row>
+        </DashboardCard>
       }
       {
-        dashboardConf?.statistics?.visible &&
+        dashboardConf?.applications?.visible &&
+        <Link to={`${config.appPrefix}/portal/application`}>
           <DashboardCard
-            className="statistics-dashboard-card"
-            title="Statistiken"
-            description="… wie siehts denn aus"
-            avatar={<DashboardOutlined />}
-            hoverable={false}
+            className="layer-dashboard-card"
+            title="Applikationen"
+            description="… die die Welt bewegen"
+            avatar={<BankOutlined />}
           >
-            <Row gutter={16}>
-              <Col span={12}>
-                <Statistic title="Feedback" value={1128} prefix={<LikeOutlined />} />
-              </Col>
-              <Col span={12}>
-                <Statistic title="Unmerged" value={93} suffix="/ 100" />
-              </Col>
-            </Row>
+            <DashboardStatistics
+              service={new ApplicationService(config.path.application)}
+              name={{
+                singular: 'Applikation',
+                plural: 'Applikationen'
+              }}
+            />
           </DashboardCard>
+        </Link>
       }
       {
         dashboardConf?.layers?.visible &&
+        <Link to={`${config.appPrefix}/portal/layer`}>
           <DashboardCard
             className="layer-dashboard-card"
-            title={<Link to={`${config.appPrefix}/portal/layer`}>Themen</Link>}
+            title="Themen"
             description="… die die Welt bewegen"
-            avatar={<Link to={`${config.appPrefix}/portal/layer`}><AppstoreOutlined /></Link>}
+            avatar={<AppstoreOutlined />}
           >
-            <LayerTable />
+            <DashboardStatistics
+              service={new LayerService(config.path.user)}
+              name={{
+                singular: 'Thema',
+                plural: 'Themen'
+              }}
+            />
           </DashboardCard>
+        </Link>
       }
       {
         dashboardConf?.users?.visible &&
+        <Link to={`${config.appPrefix}/portal/user`}>
           <DashboardCard
             className="layer-dashboard-card"
-            title={<Link to={`${config.appPrefix}/portal/user`}>User</Link>}
+            title="User"
             description="… die die Welt verbessern"
-            avatar={<Link to={`${config.appPrefix}/portal/user`}><UserOutlined /></Link>}
+            avatar={<UserOutlined />}
           >
-            <UserTable />
+            <DashboardStatistics
+              service={new UserService(config.path.layer)}
+              name={{
+                singular: 'Benutzer',
+                plural: 'Benutzer'
+              }}
+            />
           </DashboardCard>
+        </Link>
       }
     </Dashboard>
   );
