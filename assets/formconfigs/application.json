@@ -48,17 +48,26 @@
       {
         "component": "JSONEditor",
         "dataField": "clientConfig",
-        "labelI18n": "Client configuration"
+        "labelI18n": "Client configuration",
+        "fieldProps": {
+          "entityName": "ApplicationClientConfig"
+        }
       },
       {
         "component": "JSONEditor",
         "dataField": "layerTree",
-        "labelI18n": "Layer tree"
+        "labelI18n": "Layer tree",
+        "fieldProps": {
+          "entityName": "LayerTree"
+        }
       },
       {
         "component": "JSONEditor",
         "dataField": "layerConfig",
-        "labelI18n": "Layer configuration"
+        "labelI18n": "Themen-Konfiguration",
+        "fieldProps": {
+          "entityName": "LayerConfig"
+        }
       }
     ]
   },
@@ -91,12 +100,6 @@
           "isSortable": true
         },
         "cellRenderComponentName": "DateCell"
-      },
-      {
-        "title": "Client configuration",
-        "dataIndex": "clientConfig",
-        "key": "clientConfig",
-        "cellRenderComponentName": "JSONCell"
       }
     ]
   }
