@@ -21,20 +21,21 @@ class UserService extends GenericService<User> {
     }
   };
 
-  static logout(): Promise<string> | void {
+  static logout = async (): Promise<string | void> => {
     if (config?.path?.auth?.logout) {
       let requestCfg: RequestInit = {
         credentials: 'same-origin',
         method: 'POST',
         headers: SecurityUtil.getSecurityHeaders(config)
       };
-      fetch(config?.path?.auth?.logout, requestCfg).then((response) => {
+      const response = await fetch(config.path.auth.logout, requestCfg);
+      if (response.ok) {
         if (response.url) {
           window.location.href = response.url;
         } else {
           window.location.reload();
         }
-      });
+      }
     } else {
       return Promise.reject('Logout is currently not possible.');
     }

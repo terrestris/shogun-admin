@@ -34,10 +34,6 @@ export const User: React.FC<UserProps> = (props) => {
 
   const avatarSource = '';
 
-  const doLogout = () => {
-    UserService.logout();
-  };
-
   const onMenuClick = (evt: any) => {
     switch (evt.key) {
       case 'info':
@@ -47,7 +43,7 @@ export const User: React.FC<UserProps> = (props) => {
         setProfileVisible(true);
         break;
       case 'logout':
-        doLogout();
+        UserService.logout();
         break;
       default:
         break;
