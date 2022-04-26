@@ -4,8 +4,14 @@ import {
   Statistic
 } from 'antd';
 
+import Application from '../../../Model/Application';
+import User from '../../../Model/User';
+import Layer from '../../../Model/Layer';
+import GenericService from 'src/Service/GenericService/GenericService';
+
+
 type DashboardStatisticsProps = {
-  service: any;
+  service: GenericService<Application | User | Layer>;
   name: {
     singular: string;
     plural: string;
