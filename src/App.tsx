@@ -73,9 +73,8 @@ const App: React.FC = () => {
       />
     );
   }
-
   if (loadingState === 'failed') {
-    if (config?.path?.auth?.login) {
+    if (!UserService.userIsLoggedIn() && config?.path?.auth?.login) {
       window.location.href = config.path.auth.login;
     } else {
       return (

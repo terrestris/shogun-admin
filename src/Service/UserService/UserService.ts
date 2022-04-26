@@ -3,12 +3,23 @@ import User from '../../Model/User';
 import SecurityUtil from '../../Util/SecurityUtil';
 
 import config from 'shogunApplicationConfig';
+import Logger from 'js-logger';
 
 class UserService extends GenericService<User> {
 
   constructor(endPoint: string) {
     super(User, endPoint);
   }
+
+  static userIsLoggedIn = async () => {
+    try {
+      const response = await fetch(config?.path?.auth?.isSessionValid);
+      return response.ok;
+    } catch (error) {
+      Logger.error('Could not check session validity.');
+      return false;
+    }
+  };
 
   static logout(): Promise<string> | void {
     if (config?.path?.auth?.logout) {
