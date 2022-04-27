@@ -9,6 +9,7 @@ import DisplayField from '../../FormField/DisplayField/DisplayField';
 import { FormInstance, FormItemProps, FormProps } from 'antd/lib/form';
 import YesOrNoField from '../../FormField/YesOrNoField/YesOrNoField';
 import JSONEditor from '../../FormField/JSONEditor/JSONEditor';
+import LayerTypeSelect from '../../Layer/LayerTypeSelect/LayerTypeSelect';
 import { InputNumber } from 'antd';
 
 export type FieldConfig = {
@@ -118,6 +119,12 @@ export const GeneralEntityForm: React.FC<GeneralEntityFormProps> = ({
       case 'Select':
         return (
           <Select
+            {...fieldCfg?.fieldProps}
+          />
+        );
+      case 'LayerTypeSelect':
+        return (
+          <LayerTypeSelect
             {...fieldCfg?.fieldProps}
           />
         );

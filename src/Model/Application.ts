@@ -17,8 +17,12 @@ export default class Application extends BaseEntity {
   layerTree?: any;
   layerConfig?: any;
 
-  constructor({id, created, modified, name, i18n, stateOnly, clientConfig, layerTree, layerConfig}: ApplicationArgs) {
-    super({id, created, modified});
+  constructor({ id, created, modified, name, i18n, stateOnly, clientConfig, layerTree, layerConfig }: ApplicationArgs) {
+    super({
+      id,
+      created,
+      modified
+    });
 
     this.name = name;
     this.i18n = i18n;

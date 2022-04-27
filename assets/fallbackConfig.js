@@ -3,6 +3,7 @@ var shogunApplicationConfig = {
   path: {
     base: 'http://localhost:8080',
     swagger: '/v2/api-docs',
+    modelConfigs: '/formconfigs',
     user: '/users',
     layer: '/layers',
     imageFile: '/imagefiles',
@@ -24,7 +25,9 @@ var shogunApplicationConfig = {
     // authTokenKey: 'shogun-auth-token'
   },
   models: [
-    'Application'
+    'Application',
+    'Layer',
+    'User'
   ],
   dashboard: {
     news: {

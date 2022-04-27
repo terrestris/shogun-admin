@@ -3,8 +3,6 @@ import { matchPath, useHistory, useLocation } from 'react-router-dom';
 
 import {
   BankOutlined,
-  AppstoreOutlined,
-  UserOutlined,
   FileImageOutlined,
   FileTextOutlined,
   ControlOutlined,
@@ -72,33 +70,6 @@ export const Navigation: React.FC<NavigationProps> = ({
               </Menu.Item>
             );
           })
-        }
-        {/* {
-          navigationConf?.general?.applications?.visible &&
-            <Menu.Item
-              key="application"
-            >
-              <BankOutlined />
-              <span>Applikationen</span>
-            </Menu.Item>
-        } */}
-        {
-          navigationConf?.general?.layers?.visible &&
-            <Menu.Item
-              key="layer"
-            >
-              <AppstoreOutlined />
-              <span>Themen</span>
-            </Menu.Item>
-        }
-        {
-          navigationConf?.general?.users?.visible &&
-            <Menu.Item
-              key="user"
-            >
-              <UserOutlined />
-              <span>Nutzer</span>
-            </Menu.Item>
         }
         {
           navigationConf?.general?.imagefiles?.visible &&

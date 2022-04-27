@@ -1,11 +1,11 @@
 {
-  "endpoint": "/applications",
-  "entityType": "application",
-  "entityName": "Application",
-  "navigationTitle": "Applications",
-  "subTitle": "List of applications…",
+  "endpoint": "/layers",
+  "entityType": "layer",
+  "entityName": "Layer",
+  "navigationTitle": "Layers",
+  "subTitle": "List of layers…",
   "formConfig": {
-    "name": "application",
+    "name": "layer",
     "fields": [
       {
         "dataType": "number",
@@ -27,7 +27,7 @@
         "dataField": "modified",
         "dataType": "date",
         "readOnly": "true",
-        "labelI18n": "Last modified at",
+        "labelI18n": "Modified at",
         "component": "DateField",
         "fieldProps": {
           "dateFormat": "DD.MM.YYYY HH:mm"
@@ -36,37 +36,37 @@
       {
         "component": "Input",
         "dataField": "name",
-        "labelI18n": "Name of the application",
+        "labelI18n": "Layer name",
         "required": "true"
       },
       {
-        "component": "Switch",
-        "dataField": "stateOnly",
-        "labelI18n": "State",
-        "readOnly": "true"
+        "component": "LayerTypeSelect",
+        "dataField": "type",
+        "labelI18n": "Layer type",
+        "required": "true"
       },
       {
         "component": "JSONEditor",
         "dataField": "clientConfig",
-        "labelI18n": "Client configuration",
+        "labelI18n": "Layer configuration",
         "fieldProps": {
-          "entityName": "ApplicationClientConfig"
+          "entityName": "LayerClientConfig"
         }
       },
       {
         "component": "JSONEditor",
-        "dataField": "layerTree",
-        "labelI18n": "Layer tree",
+        "dataField": "sourceConfig",
+        "labelI18n": "Layer source config",
         "fieldProps": {
-          "entityName": "LayerTree"
+          "entityName": "LayerSourceConfig"
         }
       },
       {
         "component": "JSONEditor",
-        "dataField": "layerConfig",
-        "labelI18n": "Themen-Konfiguration",
+        "dataField": "features",
+        "labelI18n": "Features",
         "fieldProps": {
-          "entityName": "LayerConfig"
+          "entityName": "GeoJsonObject"
         }
       }
     ]
@@ -77,8 +77,7 @@
         "title": "ID",
         "dataIndex": "id",
         "sortConfig": {
-          "isSortable": true,
-          "defaultSortOrder": "descend"
+          "isSortable": false
         }
       },
       {
@@ -86,20 +85,19 @@
         "dataIndex": "name",
         "key": "name",
         "sortConfig": {
-          "isSortable": false
+          "isSortable": true
         },
         "filterConfig": {
           "isFilterable": true
         }
       },
       {
-        "title": "Last modified",
-        "dataIndex": "modified",
-        "key": "modified",
+        "title": "Type",
+        "dataIndex": "type",
+        "key": "type",
         "sortConfig": {
           "isSortable": true
-        },
-        "cellRenderComponentName": "DateCell"
+        }
       }
     ]
   }

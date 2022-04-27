@@ -31,7 +31,7 @@ import './App.less';
 
 import config from 'shogunApplicationConfig';
 
-const userService = new UserService();
+const userService = new UserService(config.path.user);
 
 const App: React.FC = () => {
 
@@ -73,14 +73,17 @@ const App: React.FC = () => {
       />
     );
   }
-
   if (loadingState === 'failed') {
-    return (
-      <Result
-        status="warning"
-        title="Failed to load the initial data. Check your console."
-      />
-    );
+    if (!UserService.userIsLoggedIn() && config?.path?.auth?.login) {
+      window.location.href = config.path.auth.login;
+    } else {
+      return (
+        <Result
+          status="warning"
+          title="Failed to load the initial data. Check your console."
+        />
+      );
+    }
   }
 
   return (

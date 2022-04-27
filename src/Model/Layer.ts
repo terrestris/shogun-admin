@@ -16,8 +16,12 @@ export default class Layer extends BaseEntity {
   sourceConfig: any;
   type: LayerType;
 
-  constructor({id, created, modified, clientConfig, features, name, sourceConfig, type}: LayerArgs) {
-    super({id, created, modified});
+  constructor({ id, created, modified, clientConfig, features, name, sourceConfig, type }: LayerArgs) {
+    super({
+      id,
+      created,
+      modified
+    });
 
     this.features = features;
     this.clientConfig = clientConfig;

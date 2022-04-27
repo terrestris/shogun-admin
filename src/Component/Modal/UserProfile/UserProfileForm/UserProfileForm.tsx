@@ -23,6 +23,8 @@ import {
   UserOutlined
 } from '@ant-design/icons';
 
+import config from 'shogunApplicationConfig';
+
 import UserService from '../../../../Service/UserService/UserService';
 
 import User, { UserArgs } from '../../../../Model/User';
@@ -80,7 +82,7 @@ export const UserProfileForm: React.FC<UserProfileFormProps> = props => {
       }
     });
 
-    const userService = new UserService();
+    const userService = new UserService(config.path.user);
 
     userService.update(updateUser)
       .then((updatedUser: UserArgs) => {
