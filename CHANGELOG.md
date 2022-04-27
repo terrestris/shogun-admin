@@ -1,3 +1,31 @@
+## [7.0.0](https://github.com/terrestris/shogun-admin/compare/v6.0.0...v7.0.0) (2022-04-27)
+
+
+### Features
+
+* redirect to login page on failed initial data load ([6f49375](https://github.com/terrestris/shogun-admin/commit/6f493753e2fcd6a182762aa84e5d65e311452f13))
+* show entity statistics in dashboard only ([b58d0c7](https://github.com/terrestris/shogun-admin/commit/b58d0c7abd421c13f0a583cc5d69c1c39c7f95a6))
+
+
+### Breaking changes
+
+* dynamic form configuration for layers ([30e3a5e](https://github.com/terrestris/shogun-admin/commit/30e3a5e7709646c5c04843bf320c678df40ad734))
+* dynamic form configuration for users ([fa5bc9f](https://github.com/terrestris/shogun-admin/commit/fa5bc9f6efdf8e0f9ecdee2cbf7431351ad8ec2b))
+
+
+### Bugfixes
+
+* add model configs ([8ed329a](https://github.com/terrestris/shogun-admin/commit/8ed329ab06b0d6b3b7aa935cdf03e72d01c57c56))
+* enhance check for missing login ([0887c4f](https://github.com/terrestris/shogun-admin/commit/0887c4f312d8b9093a12f50406d92ca97960b459))
+* enhance typing ([2dbd705](https://github.com/terrestris/shogun-admin/commit/2dbd7051c8e518237b62053aab3ef2e0ca4f2bf7))
+* fix formatting ([e6a2919](https://github.com/terrestris/shogun-admin/commit/e6a2919b6c37ac0e9e330d9b28c9be3502711ab4))
+* fix logout ([4393dd7](https://github.com/terrestris/shogun-admin/commit/4393dd7ac4e688667428d61d4128e0a99a252f71))
+* fix service instantiation ([a1beab4](https://github.com/terrestris/shogun-admin/commit/a1beab448714b9c165688ccc8c9b202b6abbc3f1))
+* remove empty line ([edf62ff](https://github.com/terrestris/shogun-admin/commit/edf62ff623c62a02bfb6a282f136670506befa9d))
+* remove obsolete file ([6df7f40](https://github.com/terrestris/shogun-admin/commit/6df7f401b88a9e3910b7c206423a6231d6476224))
+* restore properly parsing of json schema ([b7c15fd](https://github.com/terrestris/shogun-admin/commit/b7c15fd9fc9a04a384b9aaf47696eabe95a16985))
+* use memorized services ([890cbbb](https://github.com/terrestris/shogun-admin/commit/890cbbb3db4acf1f5cd337a0dbbf360831521931))
+
 ## [6.0.0](https://github.com/terrestris/shogun-admin/compare/v5.2.0...v6.0.0) (2022-04-08)
 
 
