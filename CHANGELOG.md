@@ -1,3 +1,10 @@
+## [7.1.0](https://github.com/terrestris/shogun-admin/compare/v7.0.0...v7.1.0) (2022-05-03)
+
+
+### Features
+
+* introduce markdown editor field ([ff2f6be](https://github.com/terrestris/shogun-admin/commit/ff2f6beed3bf7e6ec07b2be425199c96ab836e45))
+
 ## [7.0.0](https://github.com/terrestris/shogun-admin/compare/v6.0.0...v7.0.0) (2022-04-27)
 
 
