@@ -9,9 +9,10 @@ import BaseEntity from '../../../Model/BaseEntity';
 import { GenericEntityController } from '../../../Controller/GenericEntityController';
 import DisplayField from '../../FormField/DisplayField/DisplayField';
 import Table, { ColumnType, TableProps } from 'antd/lib/table';
-import { Tooltip } from 'antd';
-import { SyncOutlined } from '@ant-design/icons';
+import { Input, Modal, notification, Tooltip } from 'antd';
+import { DeleteOutlined, SyncOutlined } from '@ant-design/icons';
 import { SortOrder } from 'antd/lib/table/interface';
+import Logger from 'js-logger';
 import './GeneralEntityTable.less';
 
 export type TableConfig<T extends BaseEntity> = {
@@ -28,6 +29,8 @@ type SortConfig = {
   sortOrder?: SortOrder;
 };
 
+export type EntityTableAction = 'delete';
+
 type GeneralEntityTableColumnType = {
   cellRenderComponentName?: string;
   filterConfig?: FilterConfig; // if available: property is filterable by corresponding property using default config
@@ -39,6 +42,7 @@ export type GeneralEntityTableColumn<T extends BaseEntity> = ColumnType<T> & Gen
 type OwnProps<T extends BaseEntity> = {
   controller: GenericEntityController<T>;
   entities: T[];
+  actions?: EntityTableAction[];
   entityType: string;
   fetchEntities?: () => void;
   onRowClick?: (record: T, event: React.MouseEvent<HTMLElement, MouseEvent>) => void;
@@ -47,10 +51,12 @@ type OwnProps<T extends BaseEntity> = {
 
 type GeneralEntityTableProps<T extends BaseEntity> = OwnProps<T> & TableProps<T> & React.HTMLAttributes<HTMLDivElement>;
 
-export function GeneralEntityTable<T extends BaseEntity> ({
+export function GeneralEntityTable<T extends BaseEntity>({
+  controller,
   entities,
   entityType,
   fetchEntities = () => undefined,
+  actions = ['delete'],
   tableConfig,
   ...tablePassThroughProps
 }: GeneralEntityTableProps<T>) {
@@ -60,19 +66,67 @@ export function GeneralEntityTable<T extends BaseEntity> ({
 
   const onRowClick = (record: T) => hist.push(`${routePath}/${record.id}`);
 
+  const onDeleteClick = async (record: T) => {
+
+    const entityId = record?.id;
+
+    if (!entityId) {
+      fetchEntities();
+      return;
+    }
+
+    let entityName = (record as any).name || (record as any).title;
+
+    if (!entityName) {
+      entityName = entityId;
+    }
+
+    let confirmName: string;
+    Modal.confirm({
+      cancelText: 'Abbrechen',
+      title: 'Entität löschen',
+      content: (
+        <div>
+          <div>{`Die Entität "${entityName}" wird gelöscht!`}</div>
+          <br />
+          <div>Bitte geben sie zum Bestätigen den Namen ein:</div>
+          <Input onChange={(e) => { confirmName = e.target.value; }} />
+        </div>
+      ),
+      onOk: async () => {
+        if (confirmName === entityName) {
+          try {
+            await controller?.delete(record);
+            notification.info({
+              message: 'Löschen erfolgreich',
+              description: `Die Entität "${entityName}" wurde gelöscht!`
+            });
+            fetchEntities();
+          } catch (error) {
+            notification.error({
+              message: 'Löschen fehlgeschlagen',
+              description: `Die Entität "${entityName}" konnte nicht gelöscht werden!`
+            });
+            Logger.error(error);
+          }
+        }
+      }
+    });
+  };
+
   const getRenderer = (cellRendererName: string) => (text) => {
     if (cellRendererName === 'JSONCell') {
-      return <DisplayField value={text} format="json"/>;
+      return <DisplayField value={text} format="json" />;
     }
 
     if (cellRendererName === 'DateCell') {
-      return <DisplayField value={text} format="date"/>;
+      return <DisplayField value={text} format="date" />;
     }
 
     return <>{text}</>;
   };
 
-  const tableColumns: ColumnType<T>[] = useMemo(() => {
+  const getTableColumns = (): ColumnType<T>[] => {
     let cols = tableConfig?.columnDefinition;
     if (_isEmpty(cols)) {
       cols = [{
@@ -137,15 +191,27 @@ export function GeneralEntityTable<T extends BaseEntity> ({
         className: 'operation-column',
         width: 100,
         dataIndex: 'operation',
-        key: 'operation'
+        key: 'operation',
+        render: (_: any, record: T) => {
+          return (
+            <div className="actions">
+              {
+                actions.includes('delete') &&
+                <Tooltip title="Löschen">
+                  <DeleteOutlined onClick={() => onDeleteClick(record)} />
+                </Tooltip>
+              }
+            </div>
+          );
+        }
       }
     ];
-  }, [fetchEntities, tableConfig?.columnDefinition]);
+  };
 
   return (
     <Table
       className="general-entity-table"
-      columns={tableColumns}
+      columns={getTableColumns()}
       dataSource={entities}
       onRow={(record) => {
         return {
