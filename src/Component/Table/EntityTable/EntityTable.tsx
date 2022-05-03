@@ -17,8 +17,7 @@ import {
 import './EntityTable.less';
 import { matchPath, useHistory, useLocation } from 'react-router-dom';
 import BaseEntity from '../../../Model/BaseEntity';
-
-export type EntityTableAction = 'edit' | 'delete';
+import { EntityTableAction } from '../../GeneralEntity/GeneralEntityTable/GeneralEntityTable';
 
 export type EntityTableColumn = ColumnsType<BaseEntity> & {
   editable: boolean;

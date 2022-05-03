@@ -29,7 +29,7 @@ type SortConfig = {
   sortOrder?: SortOrder;
 };
 
-export type EntityTableAction = 'delete';
+export type EntityTableAction = 'delete' | 'edit';
 
 type GeneralEntityTableColumnType = {
   cellRenderComponentName?: string;
