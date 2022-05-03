@@ -1,3 +1,10 @@
+### [7.1.1](https://github.com/terrestris/shogun-admin/compare/v7.1.0...v7.1.1) (2022-05-03)
+
+
+### Bugfixes
+
+* properly set markdown value on edit ([e4dc803](https://github.com/terrestris/shogun-admin/commit/e4dc8033d4a50afdd06d8309c44408b2b650e0c9))
+
 ## [7.1.0](https://github.com/terrestris/shogun-admin/compare/v7.0.0...v7.1.0) (2022-05-03)
 
 
