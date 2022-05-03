@@ -17,6 +17,7 @@ export const MarkdownEditor: React.FC<MarkdownEditorProps> = ({
   }, [value]);
 
   const onMarkdownChange = (val: string) => {
+    setMarkdown(val);
     onChange(val);
   };
 
