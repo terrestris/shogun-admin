@@ -9,6 +9,7 @@ import DisplayField from '../../FormField/DisplayField/DisplayField';
 import { FormInstance, FormItemProps, FormProps } from 'antd/lib/form';
 import YesOrNoField from '../../FormField/YesOrNoField/YesOrNoField';
 import JSONEditor from '../../FormField/JSONEditor/JSONEditor';
+import MarkdownEditor from '../../FormField/MarkdownEditor/MarkdownEditor';
 import LayerTypeSelect from '../../Layer/LayerTypeSelect/LayerTypeSelect';
 import { InputNumber } from 'antd';
 
@@ -130,7 +131,7 @@ export const GeneralEntityForm: React.FC<GeneralEntityFormProps> = ({
         );
       case 'MarkdownEditor':
         return (
-          <TextArea
+          <MarkdownEditor
             {...fieldCfg?.fieldProps}
           />
         );
