@@ -1,3 +1,17 @@
+## [7.2.0](https://github.com/terrestris/shogun-admin/compare/v7.1.1...v7.2.0) (2022-05-04)
+
+
+### Features
+
+* add delete action ([a6a4bb0](https://github.com/terrestris/shogun-admin/commit/a6a4bb0e8ef1c818ef0da3d6cb203ef79f0338ac))
+
+
+### Bugfixes
+
+* centered the reload icon ([4d244a5](https://github.com/terrestris/shogun-admin/commit/4d244a52bbbcd73dda4820280a13ac975da13bdc))
+* enhance divider style between grid containers ([31c7fa8](https://github.com/terrestris/shogun-admin/commit/31c7fa85cbfba9c753bfedf3e444198ae8e1d9e1))
+* use horizontal form layout, break long labels ([073a97b](https://github.com/terrestris/shogun-admin/commit/073a97bd697cededda70e52cea9ec11439735d76))
+
 ### [7.1.1](https://github.com/terrestris/shogun-admin/compare/v7.1.0...v7.1.1) (2022-05-03)
 
 
