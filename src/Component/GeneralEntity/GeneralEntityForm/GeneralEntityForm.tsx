@@ -13,6 +13,8 @@ import MarkdownEditor from '../../FormField/MarkdownEditor/MarkdownEditor';
 import LayerTypeSelect from '../../Layer/LayerTypeSelect/LayerTypeSelect';
 import { InputNumber } from 'antd';
 
+import './GeneralEntityForm.less';
+
 export type FieldConfig = {
   component?: string;
   dataField: string;
@@ -264,7 +266,8 @@ export const GeneralEntityForm: React.FC<GeneralEntityFormProps> = ({
         className="general-entity-form"
         form={form}
         initialValues={initialValues}
-        layout="vertical"
+        labelCol={{ span: 4 }}
+        wrapperCol={{ span: 20 }}
         name={formConfig?.name}
         {...formProps}
       >
