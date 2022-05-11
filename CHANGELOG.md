@@ -1,3 +1,15 @@
+### [7.4.1](https://github.com/terrestris/shogun-admin/compare/v7.4.0...v7.4.1) (2022-05-11)
+
+
+### Changes in configuration
+
+* add "style" as commit type-enum ([4b35d62](https://github.com/terrestris/shogun-admin/commit/4b35d6280fba4220edb80b141fe6a3e9b269fbb5))
+
+
+### Changes in layout
+
+* enhance JSONEditor and MarkdownEditor style ([6002317](https://github.com/terrestris/shogun-admin/commit/6002317dbaa7ee16cfe1177c299b30db450f980c))
+
 ## [7.4.0](https://github.com/terrestris/shogun-admin/compare/v7.3.0...v7.4.0) (2022-05-11)
 
 
