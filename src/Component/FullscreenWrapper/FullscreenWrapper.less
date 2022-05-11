@@ -1,0 +1,50 @@
+.fs-wrapper {
+  border: solid 1px #dedede;
+  border-radius: 3px;
+  flex-direction: column;
+  height: 200px;
+  max-height: 200px;
+  display: flex;
+  padding: 10px;
+
+  >div {
+    width: 100%;
+    border-bottom: solid 1px #dedede;
+    margin: 0 5px 5px 0;
+    padding-bottom: 5px;
+
+    >button {
+      float: right;
+    }
+  }
+
+  &:hover {
+    border: solid 1px #40a9ff;
+  }
+
+  &:hover:active,
+  &:focus {
+    box-shadow: 0 0 0 3px rgb(24 144 255 / 20%);
+  }
+
+  &.fullscreen {
+    transition: ease-in .2s;
+    background: white;
+    height: 100vh;
+    max-height: 100vh;
+    z-index: 999;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    right: 0;
+    bottom: 0;
+    height: 100vh;
+
+    &:hover,
+    &:focus {
+      border: none;
+      box-shadow: none;
+    }
+  }
+}
