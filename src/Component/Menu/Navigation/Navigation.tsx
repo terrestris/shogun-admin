@@ -66,7 +66,7 @@ export const Navigation: React.FC<NavigationProps> = ({
                 key={entityConfig.entityType}
               >
                 <BankOutlined />
-                <span>{entityConfig.entityName}</span>
+                <span>{entityConfig.navigationTitle}</span>
               </Menu.Item>
             );
           })
