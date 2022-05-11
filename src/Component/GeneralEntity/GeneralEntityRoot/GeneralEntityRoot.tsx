@@ -187,15 +187,6 @@ export function GeneralEntityRoot<T extends BaseEntity> ({
         title={navigationTitle}
         subTitle={subTitle}
         extra={[
-          <Link key="create" to={`${config.appPrefix}/portal/${entityType}/create`}>
-            <Button
-              type="primary"
-              key="create"
-              icon={<FormOutlined />}
-            >
-              {`${entityName} anlegen`}
-            </Button>
-          </Link>,
           <Button
             disabled={saveReloadDisabled || !formValid}
             icon={<SaveOutlined />}
@@ -218,6 +209,17 @@ export function GeneralEntityRoot<T extends BaseEntity> ({
       >
       </PageHeader>
       <div className="left-container">
+        <div className="left-toolbar">
+          <Link key="create" to={`${config.appPrefix}/portal/${entityType}/create`}>
+            <Button
+              type="primary"
+              key="create"
+              icon={<FormOutlined />}
+            >
+              {`${entityName} anlegen`}
+            </Button>
+          </Link>
+        </div>
         <GeneralEntityTable
           bordered
           controller={entityController}
