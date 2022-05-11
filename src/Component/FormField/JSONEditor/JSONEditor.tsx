@@ -135,14 +135,19 @@ export const JSONEditor: React.FC<JSONEditorProps> = ({
 
   return (
     <FullscreenWrapper>
-      <Editor
-        value={currentValue}
-        onChange={changeHandler}
-        path={entityName ? `${entityName}.json` : undefined}
-        language="json"
-        beforeMount={onEditorMount}
-        {...editorProps}
-      />
+      <div className='json-editor'>
+        <Editor
+          value={currentValue}
+          onChange={changeHandler}
+          path={entityName ? `${entityName}.json` : undefined}
+          language="json"
+          beforeMount={onEditorMount}
+          options={{
+            scrollBeyondLastLine: false
+          }}
+          {...editorProps}
+        />
+      </div>
     </FullscreenWrapper>
   );
 };
