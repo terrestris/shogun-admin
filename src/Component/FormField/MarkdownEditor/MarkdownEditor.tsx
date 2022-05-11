@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import MDEditor, { ICommand } from '@uiw/react-md-editor';
+import FullscreenWrapper from '../../FullscreenWrapper/FullscreenWrapper';
 
 import './MarkdownEditor.less';
-import FullscreenWrapper from '../../FullscreenWrapper/FullscreenWrapper';
 
 export type MarkdownEditorProps = {
   value?: string;
