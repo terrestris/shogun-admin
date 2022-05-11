@@ -1,3 +1,16 @@
+## [7.4.0](https://github.com/terrestris/shogun-admin/compare/v7.3.0...v7.4.0) (2022-05-11)
+
+
+### Features
+
+* enable fullscreen mode for json and markdown editor ([5c354c5](https://github.com/terrestris/shogun-admin/commit/5c354c50a4ffe8c82fce2d8270ebce8fb0384661))
+* introduce fullscreen wrapper ([1516015](https://github.com/terrestris/shogun-admin/commit/1516015ac58a23f5a06cde4774bf77039fde02ac))
+
+
+### Bugfixes
+
+* prevent scrollbar on viewport ([40455d5](https://github.com/terrestris/shogun-admin/commit/40455d54a2eb5aa4510a54cc9e1d7ec0809306c0))
+
 ## [7.3.0](https://github.com/terrestris/shogun-admin/compare/v7.2.0...v7.3.0) (2022-05-11)
 
 
