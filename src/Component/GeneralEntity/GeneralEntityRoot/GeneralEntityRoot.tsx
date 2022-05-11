@@ -137,10 +137,11 @@ export function GeneralEntityRoot<T extends BaseEntity> ({
     if (entityId === 'create') {
       setEditEntity(undefined);
       setId(entityId);
+      form.resetFields();
     } else {
       setId(parseInt(entityId, 10));
     }
-  }, [entityId]);
+  }, [entityId, form]);
 
   // Once the controller is known we need to set the formUpdater so we can update
   // a given form when the entity is updated via controller
