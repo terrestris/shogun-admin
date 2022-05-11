@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import Editor, { EditorProps, Monaco } from '@monaco-editor/react';
 import Logger from 'js-logger';
+import FullscreenWrapper from '../../FullscreenWrapper/FullscreenWrapper';
 
 import cloneDeep from 'lodash/cloneDeep';
 
@@ -133,15 +134,16 @@ export const JSONEditor: React.FC<JSONEditorProps> = ({
   };
 
   return (
-    <Editor
-      className="json-editor"
-      value={currentValue}
-      onChange={changeHandler}
-      path={entityName ? `${entityName}.json` : undefined}
-      language="json"
-      beforeMount={onEditorMount}
-      {...editorProps}
-    />
+    <FullscreenWrapper>
+      <Editor
+        value={currentValue}
+        onChange={changeHandler}
+        path={entityName ? `${entityName}.json` : undefined}
+        language="json"
+        beforeMount={onEditorMount}
+        {...editorProps}
+      />
+    </FullscreenWrapper>
   );
 };
 
