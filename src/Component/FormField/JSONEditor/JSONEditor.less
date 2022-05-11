@@ -1,3 +1,12 @@
-section .monaco-editor {
-  max-height: 140px !important;
+.json-editor {
+  resize: vertical;
+  overflow: auto;
+
+  section {
+    border: 1px solid #dedede;
+
+    .monaco-editor {
+      min-height: 10em;
+    }
+  }
 }
