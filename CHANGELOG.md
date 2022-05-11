@@ -1,3 +1,16 @@
+## [7.3.0](https://github.com/terrestris/shogun-admin/compare/v7.2.0...v7.3.0) (2022-05-11)
+
+
+### Features
+
+* introduces data mapping for table config ([40d4f66](https://github.com/terrestris/shogun-admin/commit/40d4f66967638017a7932f1bd9fab3ba1c4928f2))
+
+
+### Bugfixes
+
+* clear form on create new click ([737a4ec](https://github.com/terrestris/shogun-admin/commit/737a4ec158f11454aa87916090f8fa4e39fd8fff))
+* use navigationTitle for navigation ([5fd549c](https://github.com/terrestris/shogun-admin/commit/5fd549cb69068f6414ba4f01e1c50faac1195e0d))
+
 ## [7.2.0](https://github.com/terrestris/shogun-admin/compare/v7.1.1...v7.2.0) (2022-05-04)
 
 
