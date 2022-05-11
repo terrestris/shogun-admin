@@ -137,10 +137,11 @@ export function GeneralEntityRoot<T extends BaseEntity> ({
     if (entityId === 'create') {
       setEditEntity(undefined);
       setId(entityId);
+      form.resetFields();
     } else {
       setId(parseInt(entityId, 10));
     }
-  }, [entityId]);
+  }, [entityId, form]);
 
   // Once the controller is known we need to set the formUpdater so we can update
   // a given form when the entity is updated via controller
@@ -187,15 +188,6 @@ export function GeneralEntityRoot<T extends BaseEntity> ({
         title={navigationTitle}
         subTitle={subTitle}
         extra={[
-          <Link key="create" to={`${config.appPrefix}/portal/${entityType}/create`}>
-            <Button
-              type="primary"
-              key="create"
-              icon={<FormOutlined />}
-            >
-              {`${entityName} anlegen`}
-            </Button>
-          </Link>,
           <Button
             disabled={saveReloadDisabled || !formValid}
             icon={<SaveOutlined />}
@@ -218,6 +210,17 @@ export function GeneralEntityRoot<T extends BaseEntity> ({
       >
       </PageHeader>
       <div className="left-container">
+        <div className="left-toolbar">
+          <Link key="create" to={`${config.appPrefix}/portal/${entityType}/create`}>
+            <Button
+              type="primary"
+              key="create"
+              icon={<FormOutlined />}
+            >
+              {`${entityName} anlegen`}
+            </Button>
+          </Link>
+        </div>
         <GeneralEntityTable
           bordered
           controller={entityController}
