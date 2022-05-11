@@ -17,6 +17,13 @@ import './GeneralEntityTable.less';
 
 export type TableConfig<T extends BaseEntity> = {
   columnDefinition?: GeneralEntityTableColumn<T>[];
+  dataMapping?: DataMapping;
+};
+
+type DataMapping = {
+  [dataIndex: string]: {
+    [key: string]: string;
+  };
 };
 
 type FilterConfig = {
@@ -114,21 +121,20 @@ export function GeneralEntityTable<T extends BaseEntity>({
     });
   };
 
-  const getRenderer = (cellRendererName: string) => (text) => {
+  const getRenderer = (cellRendererName: string, mapping?: {[key: string]: string}) => (value: any) => {
+    const displayValue = mapping ? mapping[value] : value;
     if (cellRendererName === 'JSONCell') {
-      return <DisplayField value={text} format="json" />;
+      return <DisplayField value={displayValue} format="json" />;
     }
-
     if (cellRendererName === 'DateCell') {
-      return <DisplayField value={text} format="date" />;
+      return <DisplayField value={displayValue} format="date" />;
     }
-
-    return <>{text}</>;
+    return <>{displayValue}</>;
   };
 
   const getTableColumns = (): ColumnType<T>[] => {
-    let cols = tableConfig?.columnDefinition;
-    if (_isEmpty(cols)) {
+    let cols: GeneralEntityTableColumn<T>[];
+    if (_isEmpty(tableConfig?.columnDefinition)) {
       cols = [{
         title: 'ID',
         key: 'id',
@@ -167,10 +173,11 @@ export function GeneralEntityTable<T extends BaseEntity>({
             ...TableUtil.getColumnSearchProps(cfg.dataIndex.toString())
           };
         }
-        if (!_isEmpty(cellRenderComponentName)) {
+        const mapping = tableConfig.dataMapping?.[cfg.dataIndex.toString()];
+        if (!_isEmpty(cellRenderComponentName) || !_isEmpty(mapping)) {
           columnDef = {
             ...columnDef,
-            render: getRenderer(cellRenderComponentName)
+            render: getRenderer(cellRenderComponentName, mapping)
           };
         }
 
