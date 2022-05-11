@@ -19,7 +19,7 @@ export const FullscreenWrapper: React.FC<React.HTMLAttributes<HTMLDivElement>> =
     <div className={wrapperCls}>
       <div>
         <Tooltip
-          title={`Fullscreenmodus ${fullscreen ? ' verlassen' : ''}`}
+          title={`Vollbild ${fullscreen ? ' verlassen' : ''}`}
           placement='left'
         >
           <Button
