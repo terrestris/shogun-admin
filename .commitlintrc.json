@@ -15,6 +15,7 @@
         "breaking",
         "chore",
         "feat",
+        "style",
         "ci",
         "fix",
         "refactor",

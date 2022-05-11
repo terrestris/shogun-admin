@@ -12,6 +12,7 @@
           {"type": "config", "release": "patch"},
           {"type": "norelease", "release": false},
           {"type": "refactor", "release": "patch"},
+          {"type": "style", "release": "patch"},
           {"type": "test", "release": false}
         ]
       }
@@ -33,7 +34,7 @@
             {"type": "norelease", "hidden": true },
             {"type": "perf", "hidden": true},
             {"type": "refactor", "hidden": true},
-            {"type": "style", "hidden": true},
+            {"type": "style", "section": "Changes in layout"},
             {"type": "test", "hidden": true}
           ]
         }
