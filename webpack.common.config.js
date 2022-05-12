@@ -94,9 +94,6 @@ module.exports = {
         from: './assets/fallbackConfig.js',
         to: 'fallbackConfig.js'
       }],
-    }),
-    new SimpleProgressWebpackPlugin({
-      format: 'compact'
     })
   ]
 };

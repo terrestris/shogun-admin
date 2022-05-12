@@ -7,8 +7,6 @@ let devConfig = commonConfig;
 
 devConfig.mode = 'development';
 
-devConfig.output.path = path.resolve(__dirname, 'dist_dev');
-
 devConfig.plugins = [
   ...commonConfig.plugins || [],
   new webpack.HotModuleReplacementPlugin(),
@@ -26,10 +24,10 @@ devConfig.plugins[0] = new HtmlWebpackPlugin({
 });
 
 devConfig.devServer = {
-  webSocketServer: false,
-  devMiddleware: {
-    writeToDisk: true
-  }
+  server: 'https',
+  compress: true,
+  port: 9090,
+  historyApiFallback: true
 };
 
 module.exports = devConfig;
