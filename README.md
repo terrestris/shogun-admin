@@ -1,6 +1,6 @@
 # shogun-admin
 
-## A UI for handling SHOGun entities like users, applications, and layers
+## An UI for handling SHOGun entities like users, applications, and layers
 ### …easily extendable to manage your project entities, too.
 
 # Docker
@@ -9,17 +9,26 @@
 
 # Development
 
-The webpack dev server is configured to generate output into `dist_dev`.
+Assuming the following directory structure
 
-So to work on the `shogun-admin` you can mount this folder into your docker-compose environment:
+```
+shogun-directory/
+├── shogun-docker (https://github.com/terrestris/shogun-docker)
+├── shogun-admin (this repository)
+└── …
+```
+
+you can simply mount the `shogun-admin` into your docker-compose environment:
 
 ```yml
-  shogun-admin:
-    image: nexus.terrestris.de/repository/terrestris-public/shogun-admin:latest
-    ports:
-      - 8005:80
-    volumes:
-      - ../../shogun-admin/dist_dev:/var/www/html
+shogun-admin:
+  build:
+    context: ../shogun-admin
+    dockerfile: Dockerfile.dev
+  ports:
+    - 9090:9090
+  volumes:
+    - ../shogun-admin:/app
 ```
 
 # Semantic release
