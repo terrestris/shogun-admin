@@ -1,18 +1,40 @@
 import React, { useMemo } from 'react';
+
 import { useHistory } from 'react-router-dom';
-import TableUtil from '../../../Util/TableUtil';
+
+import {
+  Table,
+  Input,
+  Modal,
+  notification,
+  Tooltip
+} from 'antd';
+import {
+  ColumnType,
+  TableProps
+} from 'antd/lib/table';
+import { SortOrder } from 'antd/lib/table/interface';
+
+import {
+  DeleteOutlined,
+  SyncOutlined
+} from '@ant-design/icons';
+
 import _isEmpty from 'lodash/isEmpty';
 
-import config from 'shogunApplicationConfig';
+import Logger from 'js-logger';
+
 import BaseEntity from '../../../Model/BaseEntity';
 
 import { GenericEntityController } from '../../../Controller/GenericEntityController';
+
 import DisplayField from '../../FormField/DisplayField/DisplayField';
-import Table, { ColumnType, TableProps } from 'antd/lib/table';
-import { Input, Modal, notification, Tooltip } from 'antd';
-import { DeleteOutlined, SyncOutlined } from '@ant-design/icons';
-import { SortOrder } from 'antd/lib/table/interface';
-import Logger from 'js-logger';
+import LinkField from '../../FormField/LinkField/LinkField';
+
+import TableUtil from '../../../Util/TableUtil';
+
+import config from 'shogunApplicationConfig';
+
 import './GeneralEntityTable.less';
 
 export type TableConfig<T extends BaseEntity> = {
@@ -40,6 +62,9 @@ export type EntityTableAction = 'delete' | 'edit';
 
 type GeneralEntityTableColumnType = {
   cellRenderComponentName?: string;
+  cellRenderComponentProps?: {
+    [key: string]: any;
+  };
   filterConfig?: FilterConfig; // if available: property is filterable by corresponding property using default config
   sortConfig?: SortConfig; // if available: property is sortable by corresponding property using default config
 };
@@ -121,14 +146,38 @@ export function GeneralEntityTable<T extends BaseEntity>({
     });
   };
 
-  const getRenderer = (cellRendererName: string, mapping?: {[key: string]: string}) => (value: any) => {
+  const getRenderer = (cellRendererName: string, cellRenderComponentProps: {[key: string]: any},
+    mapping?: {[key: string]: string}) => (value: any) => {
     const displayValue = mapping ? mapping[value] : value;
+
     if (cellRendererName === 'JSONCell') {
-      return <DisplayField value={displayValue} format="json" />;
+      return (
+        <DisplayField
+          value={displayValue}
+          format="json"
+          {...cellRenderComponentProps}
+        />
+      );
     }
+
     if (cellRendererName === 'DateCell') {
-      return <DisplayField value={displayValue} format="date" />;
+      return (
+        <DisplayField
+          value={displayValue}
+          format="date"
+          {...cellRenderComponentProps}
+        />);
     }
+
+    if (cellRendererName === 'LinkCell') {
+      return (
+        <LinkField
+          value={displayValue}
+          {...cellRenderComponentProps}
+        />
+      );
+    }
+
     return <>{displayValue}</>;
   };
 
@@ -152,11 +201,11 @@ export function GeneralEntityTable<T extends BaseEntity>({
     } else {
       // check for preconfigured sorters, filters and custom components (TODO)
       cols = tableConfig?.columnDefinition.map(cfg => {
-
         const {
           sortConfig,
           filterConfig,
-          cellRenderComponentName
+          cellRenderComponentName,
+          cellRenderComponentProps
         } = cfg;
 
         let columnDef: ColumnType<T> = cfg as ColumnType<T>;
@@ -177,7 +226,7 @@ export function GeneralEntityTable<T extends BaseEntity>({
         if (!_isEmpty(cellRenderComponentName) || !_isEmpty(mapping)) {
           columnDef = {
             ...columnDef,
-            render: getRenderer(cellRenderComponentName, mapping)
+            render: getRenderer(cellRenderComponentName, cellRenderComponentProps, mapping)
           };
         }
 
