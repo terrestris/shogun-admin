@@ -1,6 +1,5 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
-const SimpleProgressWebpackPlugin = require('simple-progress-webpack-plugin');
 const CustomAntThemeModifyVars = require('./theme.js');
 
 module.exports = {
@@ -94,9 +93,6 @@ module.exports = {
         from: './assets/fallbackConfig.js',
         to: 'fallbackConfig.js'
       }],
-    }),
-    new SimpleProgressWebpackPlugin({
-      format: 'compact'
     })
   ]
 };
