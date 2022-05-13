@@ -1,3 +1,23 @@
+### [7.4.2](https://github.com/terrestris/shogun-admin/compare/v7.4.1...v7.4.2) (2022-05-13)
+
+
+### Dependencies
+
+* remove simple-progress-webpack-plugin ([4e4fe60](https://github.com/terrestris/shogun-admin/commit/4e4fe60a35013b904566cf6cde1a58945a7479eb))
+
+
+### Changes in configuration
+
+* add Dockerfile for development ([0d097c3](https://github.com/terrestris/shogun-admin/commit/0d097c339c69b953bfb7f8f47b7a8a035f9d5646))
+* adjust webpack config for development inside container ([5071062](https://github.com/terrestris/shogun-admin/commit/507106261ad49bdd8dadbbe16ad87d968a3fcad0))
+* readd required default nginx config ([b3a7afb](https://github.com/terrestris/shogun-admin/commit/b3a7afb0e476e70474146a71fff346ac22e7418b))
+* remove unneeded files ([3225d78](https://github.com/terrestris/shogun-admin/commit/3225d78f2aff457a91861bb03a22a8664a0d8025))
+
+
+### Bugfixes
+
+* fix fullscreen mode ([c419677](https://github.com/terrestris/shogun-admin/commit/c41967711627607a0aed9eca75486eddb9a527c4))
+
 ### [7.4.1](https://github.com/terrestris/shogun-admin/compare/v7.4.0...v7.4.1) (2022-05-11)
 
 
