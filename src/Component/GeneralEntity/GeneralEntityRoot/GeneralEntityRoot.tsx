@@ -39,7 +39,7 @@ export function GeneralEntityRoot<T extends BaseEntity> ({
   entityType,
   entityName = 'Entität',
   navigationTitle = 'Entitäten',
-  subTitle = '… mit denen man Dingen tun kann (aus Gründen bspw.)',
+  subTitle = '… mit denen man Dinge tun kann (aus Gründen bspw.)',
   formConfig,
   tableConfig = {}
 }: GeneralEntityRootProps<T>) {
