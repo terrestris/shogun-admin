@@ -4,6 +4,10 @@
   flex-direction: column;
   display: flex;
   padding: 10px;
+  resize: vertical;
+  overflow: hidden;
+  min-height: 25vh;
+  max-height: 50vh;
 
   >div {
     width: 100%;
@@ -27,9 +31,9 @@
 
   &.fullscreen {
     transition: ease-in .2s;
+    resize: none;
     background: white;
-    height: 100vh;
-    max-height: 100vh;
+    min-height: 100vh;
     z-index: 999;
     position: fixed;
     left: 0;
