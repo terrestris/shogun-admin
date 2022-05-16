@@ -1,3 +1,19 @@
+## [7.5.0](https://github.com/terrestris/shogun-admin/compare/v7.4.2...v7.5.0) (2022-05-16)
+
+
+### Features
+
+* introduce LinkCell to apply configurable link in the entity table ([b64e475](https://github.com/terrestris/shogun-admin/commit/b64e475c8aff34ab3250e28182fcad35363e028f))
+
+
+### Bugfixes
+
+* fix typo ([ca119c5](https://github.com/terrestris/shogun-admin/commit/ca119c53019151304905fe90e9b7590f38fcc1d3))
+* remove unused imports ([8b0b745](https://github.com/terrestris/shogun-admin/commit/8b0b745c187777c45a9a2d1b73ecee61395214e4))
+* set margin for the user menu ([ffc4b7c](https://github.com/terrestris/shogun-admin/commit/ffc4b7cf5fb05f31c651eb999c689af8a9b15321))
+* set margin in parent component ([3538886](https://github.com/terrestris/shogun-admin/commit/35388861fef25f270a9befcd478fb1dbda29afd3))
+* set padding for the left toolbar ([1c72426](https://github.com/terrestris/shogun-admin/commit/1c7242683b9fde7cb36359c769f09af3378618ad))
+
 ### [7.4.2](https://github.com/terrestris/shogun-admin/compare/v7.4.1...v7.4.2) (2022-05-13)
 
 
