@@ -7,12 +7,6 @@ import {
 
 import { LinkOutlined } from '@ant-design/icons';
 
-import _isNil from 'lodash/isNil';
-import _isFunction from 'lodash/isFunction';
-import _isFinite from 'lodash/isFinite';
-import _get from 'lodash/get';
-import _isEmpty from 'lodash/isEmpty';
-
 import './LinkField.less';
 
 export type LinkFieldProps = {
