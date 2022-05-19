@@ -5,24 +5,28 @@ import {
   TooltipProps
 } from 'antd';
 
+import _get from 'lodash/get';
+
 import { LinkOutlined } from '@ant-design/icons';
 
 import './LinkField.less';
 
 export type LinkFieldProps = {
-  value: string;
+  value: any;
+  valuePath?: string;
   template?: string;
 } & Partial<TooltipProps>;
 
 export const LinkField: React.FC<LinkFieldProps> = ({
   value,
+  valuePath,
   template = '{}',
   title = 'Öffne Link',
   ...passThroughProps
 }): JSX.Element => {
 
   const onClick = () => {
-    const link = template.replace(/{}/g, value);
+    const link = template.replace(/{}/g, valuePath ? _get(value, valuePath) : value);
     window.open(link, '_blank');
   };
 
