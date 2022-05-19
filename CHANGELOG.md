@@ -1,3 +1,15 @@
+### [7.5.2](https://github.com/terrestris/shogun-admin/compare/v7.5.1...v7.5.2) (2022-05-19)
+
+
+### Changes in configuration
+
+* remove dist and nginx from .gitignore ([d77c6ea](https://github.com/terrestris/shogun-admin/commit/d77c6eadd6a1f0a4988e9fa217195034fc27498b))
+
+
+### Bugfixes
+
+* fix nginx template filename ([a64d737](https://github.com/terrestris/shogun-admin/commit/a64d7374cf095dfef207a4b560374b20ebd0d8f6))
+
 ### [7.5.1](https://github.com/terrestris/shogun-admin/compare/v7.5.0...v7.5.1) (2022-05-19)
 
 
