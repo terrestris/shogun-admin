@@ -2,8 +2,6 @@
 .git
 .husky
 coverage
-dist
-nginx
 node_modules
 .dockerignore
 .editorconfig
