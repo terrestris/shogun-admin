@@ -72,9 +72,12 @@ export default class TableUtil {
 
   public static getSorter = (dataIndex: string) => {
     return (a, b) => {
-      a = typeof a[dataIndex] === 'string' ? a[dataIndex]?.toLowerCase() : a[dataIndex]?.toString();
-      b = typeof b[dataIndex] === 'string' ? b[dataIndex]?.toLowerCase() : b[dataIndex]?.toString();
-      return a?.localeCompare(b) || 0;
+      const valA: string = a[dataIndex]?.toString();
+      const valB: string = b[dataIndex]?.toString();
+      return valA?.localeCompare(valB, undefined, {
+        numeric: true,
+        sensitivity: 'base'
+      });
     };
   };
 
