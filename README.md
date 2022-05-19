@@ -38,5 +38,6 @@ Allowed Tags for semantic release:
 - Features: `feat`
 - Bugfixes: `fix`,
 - Package updates: `chore`
+- Style: `style`
 - Changes in configuration: `ci`, `config`
 - `docs`, `refactor`, `test`, `norelease`
