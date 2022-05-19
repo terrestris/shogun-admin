@@ -1,3 +1,11 @@
+### [7.5.1](https://github.com/terrestris/shogun-admin/compare/v7.5.0...v7.5.1) (2022-05-19)
+
+
+### Bugfixes
+
+* fix buggy reseting of entity form ([45873b3](https://github.com/terrestris/shogun-admin/commit/45873b32055554c200406aa0234faa81b5bc2f12))
+* fix sorting of numbers ([9605fe0](https://github.com/terrestris/shogun-admin/commit/9605fe0a41999275022464161075a2fbb4d774ae))
+
 ## [7.5.0](https://github.com/terrestris/shogun-admin/compare/v7.4.2...v7.5.0) (2022-05-16)
 
 
