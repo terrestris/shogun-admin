@@ -68,11 +68,10 @@ export const JSONEditor: React.FC<JSONEditorProps> = ({
       if (definition.properties) {
         Object.values(definition.properties).forEach((property: any) => {
           if (property.$ref) {
-            property.$ref = `${id}${property.$ref}`;
+            property.$ref = `${property.$ref}`;
           }
-
           if (property.items?.$ref) {
-            property.items.$ref = `${id}${property.items.$ref}`;
+            property.items.$ref = `${property.items.$ref}`;
           }
         });
       }
