@@ -1,3 +1,10 @@
+### [7.5.3](https://github.com/terrestris/shogun-admin/compare/v7.5.2...v7.5.3) (2022-06-02)
+
+
+### Changes in layout
+
+* remove max-height from FullscreenWrapper ([2d5d96b](https://github.com/terrestris/shogun-admin/commit/2d5d96b5a36eb2e1c0098dd7bd22ffcf73e78b1b))
+
 ### [7.5.2](https://github.com/terrestris/shogun-admin/compare/v7.5.1...v7.5.2) (2022-05-19)
 
 
