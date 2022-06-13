@@ -92,7 +92,7 @@
     "less-loader": "^10.2.0",
     "regenerator-runtime": "^0.13.9",
     "rimraf": "^3.0.2",
-    "semantic-release": "^19.0.2",
+    "semantic-release": "^19.0.3",
     "source-map-loader": "^3.0.0",
     "style-loader": "^3.3.0",
     "ts-jest": "^27.1.4",
