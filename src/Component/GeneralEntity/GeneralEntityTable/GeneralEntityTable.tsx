@@ -197,7 +197,7 @@ export function GeneralEntityTable<T extends BaseEntity>({
         sorter: TableUtil.getSorter('name'),
         defaultSortOrder: 'ascend',
         ...TableUtil.getColumnSearchProps('name')
-      }];
+      } as any];
     } else {
       // check for preconfigured sorters, filters and custom components (TODO)
       cols = tableConfig?.columnDefinition.map(cfg => {
@@ -220,7 +220,7 @@ export function GeneralEntityTable<T extends BaseEntity>({
           columnDef = {
             ...columnDef,
             ...TableUtil.getColumnSearchProps(cfg.dataIndex.toString())
-          };
+          } as any;
         }
         const mapping = tableConfig.dataMapping?.[cfg.dataIndex.toString()];
         if (!_isEmpty(cellRenderComponentName) || !_isEmpty(mapping)) {
