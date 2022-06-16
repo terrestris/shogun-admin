@@ -14,7 +14,9 @@ const config = {
   testMatch: [
     '<rootDir>/src/**/?(*.)(spec).(j|t)s?(x)'
   ],
-  testURL: 'http://localhost',
+  testEnvironmentOptions: {
+    url: 'http://localhost',
+  },
   transform: {
     '^.+\\.jsx?$': 'babel-jest',
     '^.+\\.tsx?$': 'babel-jest'
