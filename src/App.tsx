@@ -1,4 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import ReactDOM from 'react-dom';
+import * as antd from 'antd/lib/index';
 import {
   useRecoilState
 } from 'recoil';
@@ -34,10 +36,20 @@ import config from 'shogunApplicationConfig';
 const userService = new UserService(config.path.user);
 
 const App: React.FC = () => {
-
   const [, setUserInfo] = useRecoilState(userInfoAtom);
   const [, setAppInfo] = useRecoilState(appInfoAtom);
+  const [ extensions, setExtensions ] = useState({});
   const [loadingState, setLoadingState] = useState<'failed' | 'loading' | 'done'>();
+
+  useEffect(() => {
+    window.React = React;
+    window.ReactDOM = ReactDOM;
+    // @ts-ignore
+    window.antd = antd;
+    import(/* webpackIgnore: true */ `${window.location.origin}/assets/extra.js`).then(() => {
+      setExtensions(window['admin-extension'].default);
+    });
+  }, [extensions]);
 
   // Fetch initial data:
   // - swagger docs
@@ -103,10 +115,9 @@ const App: React.FC = () => {
         }
       >
         <Switch>
-          <Route
-            path={`${config.appPrefix}/portal`}
-            component={Portal}
-          />
+          <Route path={`${config.appPrefix}/portal`}>
+            <Portal extensions={extensions} />
+          </Route>
           <Redirect
             exact
             from={`${config.appPrefix}/`}

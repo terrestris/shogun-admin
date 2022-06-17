@@ -28,11 +28,13 @@ import GeneralEntityRoot,
 import './Portal.less';
 import SecurityUtil from '../../Util/SecurityUtil';
 
-interface OwnProps { }
+interface OwnProps {
+  extensions: any;
+}
 
 type PortalProps = OwnProps;
 
-export const Portal: React.FC<PortalProps> = () => {
+export const Portal: React.FC<PortalProps> = props => {
 
   const [collapsed, setCollapsed] = useState<boolean>(false);
   const toggleCollapsed = () => setCollapsed(!collapsed);
@@ -89,6 +91,7 @@ export const Portal: React.FC<PortalProps> = () => {
         <Navigation
           collapsed={collapsed}
           entityConfigs={entitiesToLoad}
+          extensions={props.extensions}
         />
       </div>
       <div className="content">

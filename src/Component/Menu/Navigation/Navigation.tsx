@@ -17,16 +17,24 @@ import config from 'shogunApplicationConfig';
 import { GeneralEntityConfigType } from '../../GeneralEntity/GeneralEntityRoot/GeneralEntityRoot';
 import BaseEntity from '../../../Model/BaseEntity';
 
+interface ExtensionType {
+  menus: any[];
+  status: any[];
+  settings: any[];
+};
+
 interface OwnProps {
   collapsed?: boolean;
   entityConfigs?: GeneralEntityConfigType<BaseEntity>[];
+  extensions: ExtensionType;
 }
 
 type NavigationProps = OwnProps;
 
 export const Navigation: React.FC<NavigationProps> = ({
   collapsed = false,
-  entityConfigs = []
+  entityConfigs = [],
+  extensions = {}
 }) => {
 
   const history = useHistory();
@@ -43,6 +51,11 @@ export const Navigation: React.FC<NavigationProps> = ({
   const activeKey = match?.params?.activeKey;
 
   const navigationConf = config.navigation;
+  const {
+    menus,
+    status,
+    settings
+  } = extensions as ExtensionType;
 
   return (
     <Menu
@@ -103,6 +116,10 @@ export const Navigation: React.FC<NavigationProps> = ({
               <span>Logs</span>
             </Menu.Item>
         }
+        {status && status.map((entry, idx) => {
+          const Entry = entry;
+          return <Entry key={`status-item-${idx}`} />;
+        })}
       </Menu.SubMenu>
       <Menu.SubMenu
         key="settings"
@@ -126,7 +143,15 @@ export const Navigation: React.FC<NavigationProps> = ({
               <span>Logs</span>
             </Menu.Item>
         }
+        {settings && settings.map((entry, idx) => {
+          const Entry = entry;
+          return <Entry key={`settings-item-${idx}`} />;
+        })}
       </Menu.SubMenu>
+      {menus && menus.map((menu, idx) => {
+        const CustomMenu = menu;
+        return <CustomMenu key={`custom-menu-${idx}`} />;
+      })}
     </Menu>
   );
 };
