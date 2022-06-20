@@ -50,6 +50,8 @@ export const User: React.FC<UserProps> = (props) => {
     }
   };
 
+  const userName = userInfo?.providerDetails?.username || userInfo?.authProviderId;
+
   return (
     <Dropdown
       className="user-menu"
@@ -60,12 +62,12 @@ export const User: React.FC<UserProps> = (props) => {
           className="user-chip-menu"
         >
           {
-            userInfo?.authProviderId &&
+            userName &&
             <div
               className="user-name"
             >
               <span>
-                {userInfo.authProviderId}
+                {userName}
               </span>
             </div>
           }
@@ -109,7 +111,7 @@ export const User: React.FC<UserProps> = (props) => {
         <span
           className="username"
         >
-          {userInfo?.authProviderId}
+          {userName}
         </span>
       </div>
     </Dropdown>
