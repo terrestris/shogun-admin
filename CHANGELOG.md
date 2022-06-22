@@ -1,3 +1,16 @@
+## [8.0.0](https://github.com/terrestris/shogun-admin/compare/v7.5.3...v8.0.0) (2022-06-22)
+
+
+### Bugfixes
+
+* use username if exists, providerId otherwise ([61e8dd5](https://github.com/terrestris/shogun-admin/commit/61e8dd59a0619519e58cca66825db04ec8dd213c))
+
+
+### Breaking changes
+
+* remove path.base from logo in Header ([17cd95c](https://github.com/terrestris/shogun-admin/commit/17cd95c6b10343de84f11944068de91a7d161952))
+* removes path.base from fallbackConfig ([020cd13](https://github.com/terrestris/shogun-admin/commit/020cd139149fd714f496c43deca8420f4c99dbca))
+
 ### [7.5.3](https://github.com/terrestris/shogun-admin/compare/v7.5.2...v7.5.3) (2022-06-02)
 
 
