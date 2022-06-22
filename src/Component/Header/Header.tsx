@@ -20,9 +20,7 @@ type HeaderProps = OwnProps;
 
 export const Header: React.FC<HeaderProps> = () => {
 
-  const logo = config.path?.logo ?
-    `${config.path.base}${config.path?.logo}` :
-    defaultLogo;
+  const logo = config.path?.logo|| defaultLogo;
 
   return (
     <header>
