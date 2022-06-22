@@ -3,6 +3,8 @@ import {
   useRecoilState
 } from 'recoil';
 
+import { useKeycloak } from '@react-keycloak/web';
+
 import {
   Dropdown,
   Menu
@@ -14,9 +16,7 @@ import {
   SettingOutlined
 } from '@ant-design/icons';
 
-import { shogunInfoModalVisibleAtom, userInfoAtom, userProfileModalVisibleAtom } from '../../../State/atoms';
-
-import UserService from '../../../Service/UserService/UserService';
+import { shogunInfoModalVisibleAtom, userInfoAtom } from '../../../State/atoms';
 
 import './User.less';
 import Avatar from 'antd/lib/avatar/avatar';
@@ -29,8 +29,9 @@ type UserProps = OwnProps;
 export const User: React.FC<UserProps> = (props) => {
 
   const [userInfo] = useRecoilState(userInfoAtom);
-  const [, setProfileVisible] = useRecoilState(userProfileModalVisibleAtom);
   const [, setInfoVisible] = useRecoilState(shogunInfoModalVisibleAtom);
+
+  const { keycloak } = useKeycloak();
 
   const avatarSource = '';
 
@@ -40,10 +41,10 @@ export const User: React.FC<UserProps> = (props) => {
         setInfoVisible(true);
         break;
       case 'settings':
-        setProfileVisible(true);
+        keycloak.accountManagement();
         break;
       case 'logout':
-        UserService.logout();
+        keycloak.logout();
         break;
       default:
         break;
@@ -72,7 +73,7 @@ export const User: React.FC<UserProps> = (props) => {
             </div>
           }
           {
-            userInfo?.authProviderId &&
+            userName &&
             <Menu.Divider />
           }
           <Menu.Item

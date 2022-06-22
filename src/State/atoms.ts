@@ -22,11 +22,6 @@ export const userInfoAtom = atom<User>({
   }
 });
 
-export const userProfileModalVisibleAtom = atom<boolean>({
-  key: 'userProfileVisible',
-  default: false
-});
-
 export const shogunInfoModalVisibleAtom = atom<boolean>({
   key: 'shogunInfoVisible',
   default: false

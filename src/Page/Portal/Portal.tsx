@@ -13,7 +13,6 @@ import BaseEntity from '@terrestris/shogun-util/dist/model/BaseEntity';
 
 import Navigation from '../../Component/Menu/Navigation/Navigation';
 import WelcomeDashboard from '../../Component/WelcomeDashboard/WelcomeDashboard';
-import UserProfile from '../../Component/Modal/UserProfile/UserProfile';
 import ApplicationInfo from '../../Component/Modal/ApplicationInfo/ApplicationInfo';
 
 import ImageFileRoot from '../../Component/ImageFile/ImageFileRoot/ImageFileRoot';
@@ -131,7 +130,6 @@ export const Portal: React.FC<PortalProps> = () => {
         </Switch>
       </div>
       <>
-        <UserProfile />
         <ApplicationInfo />
       </>
     </div>
