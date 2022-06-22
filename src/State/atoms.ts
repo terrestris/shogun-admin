@@ -1,12 +1,13 @@
 import {
   atom
 } from 'recoil';
-import { AppInfo } from '../Model/AppInfo';
-import User from '../Model/User';
+import { AppInfo } from '@terrestris/shogun-util/dist/model/AppInfo';
+import User from '@terrestris/shogun-util/dist/model/User';
 
 export const appInfoAtom = atom<AppInfo>({
   key: 'appInfo',
   default: {
+    commitHash: undefined,
     version: undefined,
     buildTime: undefined,
     userId: undefined,

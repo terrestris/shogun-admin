@@ -21,8 +21,6 @@ import {
 } from '@ant-design/icons';
 
 import Portal from './Page/Portal/Portal';
-import AppInfoService from './Service/AppInfoService/AppInfoService';
-import UserService from './Service/UserService/UserService';
 import Logger from 'js-logger';
 import { appInfoAtom, userInfoAtom } from './State/atoms';
 import { setSwaggerDocs } from './State/static';
@@ -30,14 +28,15 @@ import _isEmpty from 'lodash/isEmpty';
 import './App.less';
 
 import config from 'shogunApplicationConfig';
-
-const userService = new UserService(config.path.user);
+import useSHOGunClient from './Hooks/useSHOGunClient';
 
 const App: React.FC = () => {
 
   const [, setUserInfo] = useRecoilState(userInfoAtom);
   const [, setAppInfo] = useRecoilState(appInfoAtom);
   const [loadingState, setLoadingState] = useState<'failed' | 'loading' | 'done'>();
+
+  const client = useSHOGunClient();
 
   // Fetch initial data:
   // - swagger docs
@@ -46,12 +45,12 @@ const App: React.FC = () => {
   const getInitialData = useCallback(async () => {
     try {
       setLoadingState('loading');
-      const swaggerDoc = await AppInfoService.getSwaggerDocs();
+      const swaggerDoc = await client.openapi().getApiDocs();
       setSwaggerDocs(swaggerDoc);
-      const appInfo = await AppInfoService.getAppInfo();
+      const appInfo = await client.info().getAppInfo();
       setAppInfo(appInfo);
       if (appInfo?.userId) {
-        const userInfo = await userService.findOne(appInfo.userId);
+        const userInfo = await client.user().findOne(appInfo.userId);
         setUserInfo(userInfo);
       }
       setLoadingState('done');
@@ -59,7 +58,7 @@ const App: React.FC = () => {
       setLoadingState('failed');
       Logger.error(error);
     }
-  }, [setAppInfo, setUserInfo]);
+  }, [setAppInfo, setUserInfo, client]);
 
   useEffect(() => {
     getInitialData();
@@ -74,16 +73,12 @@ const App: React.FC = () => {
     );
   }
   if (loadingState === 'failed') {
-    if (!UserService.userIsLoggedIn() && config?.path?.auth?.login) {
-      window.location.href = config.path.auth.login;
-    } else {
-      return (
-        <Result
-          status="warning"
-          title="Failed to load the initial data. Check your console."
-        />
-      );
-    }
+    return (
+      <Result
+        status="warning"
+        title="Failed to load the initial data. Check your console."
+      />
+    );
   }
 
   return (

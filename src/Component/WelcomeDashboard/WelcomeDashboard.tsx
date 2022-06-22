@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 
 import { Link } from 'react-router-dom';
 
@@ -22,11 +22,9 @@ import { DashboardCard } from '../Dashboard/DashboardCard/DashboardCard';
 import config from 'shogunApplicationConfig';
 
 import DashboardStatistics from '../Dashboard/DashboardStatistics/DashboardStatistics';
-import ApplicationService from '../../Service/ApplicationService/ApplicationService';
-import LayerService from '../../Service/LayerService/LayerService';
-import UserService from '../../Service/UserService/UserService';
 
 import './WelcomeDashboard.less';
+import useSHOGunClient from '../../Hooks/useSHOGunClient';
 
 type WelcomeDashboardProps = {};
 
@@ -34,9 +32,7 @@ export const WelcomeDashboard: React.FC<WelcomeDashboardProps> = () => {
 
   const dashboardConf = config.dashboard;
 
-  const layerService = useMemo(() => new LayerService(config.path.layer), []);
-  const userService = useMemo(() => new UserService(config.path.user), []);
-  const appService = useMemo(() => new ApplicationService(config.path.application), []);
+  const client = useSHOGunClient();
 
   return (
     <Dashboard
@@ -72,7 +68,7 @@ export const WelcomeDashboard: React.FC<WelcomeDashboardProps> = () => {
             avatar={<BankOutlined />}
           >
             <DashboardStatistics
-              service={appService}
+              service={client.application()}
               name={{
                 singular: 'Applikation',
                 plural: 'Applikationen'
@@ -91,7 +87,7 @@ export const WelcomeDashboard: React.FC<WelcomeDashboardProps> = () => {
             avatar={<AppstoreOutlined />}
           >
             <DashboardStatistics
-              service={layerService}
+              service={client.layer()}
               name={{
                 singular: 'Thema',
                 plural: 'Themen'
@@ -110,7 +106,7 @@ export const WelcomeDashboard: React.FC<WelcomeDashboardProps> = () => {
             avatar={<UserOutlined />}
           >
             <DashboardStatistics
-              service={userService}
+              service={client.user()}
               name={{
                 singular: 'Benutzer',
                 plural: 'Benutzer'

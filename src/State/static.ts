@@ -1,5 +1,5 @@
 import Logger from 'js-logger';
-import { SwaggerDocs } from '../Model/SwaggerDocs';
+import { SwaggerDocs } from '@terrestris/shogun-util/dist/service/OpenAPIService';
 
 export let swaggerDocs: SwaggerDocs;
 

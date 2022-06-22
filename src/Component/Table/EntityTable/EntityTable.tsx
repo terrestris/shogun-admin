@@ -16,8 +16,9 @@ import {
 
 import './EntityTable.less';
 import { matchPath, useHistory, useLocation } from 'react-router-dom';
-import BaseEntity from '../../../Model/BaseEntity';
+import BaseEntity from '@terrestris/shogun-util/dist/model/BaseEntity';
 import { EntityTableAction } from '../../GeneralEntity/GeneralEntityTable/GeneralEntityTable';
+import File from '@terrestris/shogun-util/dist/model/File';
 
 export type EntityTableColumn = ColumnsType<BaseEntity> & {
   editable: boolean;
@@ -68,7 +69,7 @@ export const EntityTable: React.FC<EntityTableProps> = ({
   const entityId = match?.params?.entityId;
 
   const [entities, setEntities] = useState<BaseEntity[]>();
-  const [editingId, setEditingId] = useState('');
+  const [editingId, setEditingId] = useState<number>(null);
   const [loadingState, setLoadingState] = useState<'failed' | 'loading' | 'done'>();
   const [form] = Form.useForm();
 
@@ -149,7 +150,7 @@ export const EntityTable: React.FC<EntityTableProps> = ({
   };
 
   const stopEditing = () => {
-    setEditingId('');
+    setEditingId(null);
   };
 
   const tableColumns = [

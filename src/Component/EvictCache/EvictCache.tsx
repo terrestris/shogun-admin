@@ -11,9 +11,7 @@ import {
   ClearOutlined
 } from '@ant-design/icons';
 
-import CacheService from '../../Service/CacheService/CacheService';
-
-const cacheService = new CacheService();
+import useSHOGunClient from '../../Hooks/useSHOGunClient';
 
 export interface EvictCacheProps extends Omit<ButtonProps, 'onClick' | 'loading'> { };
 
@@ -23,15 +21,17 @@ export const EvictCache: React.FC<EvictCacheProps> = ({
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
+  const client = useSHOGunClient();
+
   const onClearCacheClick = async () => {
 
     setIsLoading(true);
 
-    const success = await cacheService.evictCache();
+    try {
+      await client.cache().evictCache();
 
-    if (success) {
       message.success('Successfully cleared the cache');
-    } else {
+    } catch (error) {
       message.error('Could not clear the cache');
     }
 

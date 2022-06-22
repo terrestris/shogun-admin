@@ -14,11 +14,11 @@ import { StatisticProps } from 'antd/lib/statistic/Statistic';
 
 import { ReloadOutlined } from '@ant-design/icons';
 
+import { useKeycloak } from '@react-keycloak/web';
+
 import isFunction from 'lodash/isFunction';
 
 import MetricService, { Metric } from '../../../Service/MetricService/MetricService';
-
-const metricService = new MetricService();
 
 type StatisticPropExcludes = 'value' | 'prefix' | 'suffix' | 'title' | 'formatter';
 
@@ -42,6 +42,8 @@ export const MetricEntry: React.FC<MetricEntryProps> = ({
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [metric, setMetric] = useState<Metric>();
 
+  const { keycloak } = useKeycloak();
+
   useEffect(() => {
     fetchMetric();
   }, []);
@@ -49,6 +51,9 @@ export const MetricEntry: React.FC<MetricEntryProps> = ({
   const fetchMetric = async () => {
     setIsLoading(true);
 
+    const metricService = new MetricService({
+      keycloak: keycloak
+    });
     const metricResponse = await metricService.getMetric(type);
 
     setMetric(metricResponse);
@@ -84,7 +89,7 @@ export const MetricEntry: React.FC<MetricEntryProps> = ({
         <span>{metric?.description}</span>
       </Tooltip>
     );
-  }
+  };
 
   const getFormatter = (value: number | string): ReactNode => {
     if (isFunction(valueRenderer)) {
@@ -92,13 +97,14 @@ export const MetricEntry: React.FC<MetricEntryProps> = ({
     }
 
     return value;
-  }
+  };
 
   return (
     <Card
       loading={isLoading}
       actions={[
         <Tooltip
+          key="tooltip"
           title="Reload"
           mouseEnterDelay={0.5}
         >

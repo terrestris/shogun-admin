@@ -9,6 +9,8 @@ import {
   MenuUnfoldOutlined
 } from '@ant-design/icons';
 
+import BaseEntity from '@terrestris/shogun-util/dist/model/BaseEntity';
+
 import Navigation from '../../Component/Menu/Navigation/Navigation';
 import WelcomeDashboard from '../../Component/WelcomeDashboard/WelcomeDashboard';
 import UserProfile from '../../Component/Modal/UserProfile/UserProfile';
@@ -19,14 +21,12 @@ import Logs from '../../Component/Logs/Logs';
 import GlobalSettingsRoot from '../../Component/GlobalSettings/GlobalSettingsRoot/GlobalSettingsRoot';
 import LogSettingsRoot from '../../Component/LogSettings/LogSettingsRoot/LogSettingsRoot';
 import MetricsRoot from '../../Component/Metrics/MetricsRoot/MetricsRoot';
-import BaseEntity from '../../Model/BaseEntity';
 
 import config from 'shogunApplicationConfig';
 
 import GeneralEntityRoot,
 { GeneralEntityConfigType } from '../../Component/GeneralEntity/GeneralEntityRoot/GeneralEntityRoot';
 import './Portal.less';
-import SecurityUtil from '../../Util/SecurityUtil';
 
 interface OwnProps { }
 
@@ -43,8 +43,7 @@ export const Portal: React.FC<PortalProps> = () => {
     const reqOpts = {
       method: 'GET',
       headers: {
-        'Content-Type': 'application/json',
-        ...SecurityUtil.getSecurityHeaders(config)
+        'Content-Type': 'application/json'
       }
     };
     const modelPath = `${config.path.modelConfigs}/${(modelName.toLowerCase())}.json`;

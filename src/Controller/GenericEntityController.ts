@@ -5,12 +5,15 @@ import _isNil from 'lodash/isNil';
 import _isNumber from 'lodash/isNumber';
 import _omit from 'lodash/omit';
 
-import BaseEntity from '../Model/BaseEntity';
 import { ValidateStatus } from 'antd/lib/form/FormItem';
-import GenericService from '../Service/GenericService/GenericService';
-import { FieldConfig, FormConfig } from '../Component/GeneralEntity/GeneralEntityForm/GeneralEntityForm';
+
+import BaseEntity from '@terrestris/shogun-util/dist/model/BaseEntity';
+import GenericService from '@terrestris/shogun-util/dist/service/GenericService';
+import Application from '@terrestris/shogun-util/dist/model/Application';
+
 import Logger from '@terrestris/base-util/dist/Logger';
-import Application from '../Model/Application';
+
+import { FieldConfig, FormConfig } from '../Component/GeneralEntity/GeneralEntityForm/GeneralEntityForm';
 
 // TODO: add explicit value objects
 export type FieldValue = any;
@@ -140,7 +143,7 @@ export class GenericEntityController<T extends BaseEntity> {
 
     this.entity = isUpdate ?
       await this.service?.updatePartial(entityUpdateObject) :
-      await this.service.add(entityUpdateObject);
+      await this.service.add(entityUpdateObject as T);
 
     return this.entity;
   }

@@ -1,14 +1,19 @@
 import _lowerCase from 'lodash/lowerCase';
-import { FormConfig } from '../Component/GeneralEntity/GeneralEntityForm/GeneralEntityForm';
-import BaseEntity from '../Model/BaseEntity';
-import Application from '../Model/File';
-import ApplicationService from '../Service/ApplicationService/ApplicationService';
-import GenericService from '../Service/GenericService/GenericService';
-import { GenericServiceImpl } from '../Service/GenericService/GenericServiceImpl';
+
+import Keycloak from 'keycloak-js';
+
+import BaseEntity from '@terrestris/shogun-util/dist/model/BaseEntity';
+import Application from '@terrestris/shogun-util/dist/model/File';
+import GenericService from '@terrestris/shogun-util/dist/service/GenericService';
+import ApplicationService from '@terrestris/shogun-util/dist/service/ApplicationService';
+
+import { GenericServiceImpl } from '../Service/GenericServiceImpl/GenericServiceImpl';
 import { FormValues, GenericEntityController } from './GenericEntityController';
+import { FormConfig } from '../Component/GeneralEntity/GeneralEntityForm/GeneralEntityForm';
 
 export type ControllerCfg = {
   endpoint: string;
+  keycloak?: Keycloak;
   entityType: string;
   formConfig: FormConfig;
   updateForm?: (values: FormValues) => void;
@@ -18,6 +23,7 @@ export class ControllerUtil {
 
   static createController({
     endpoint,
+    keycloak,
     entityType,
     formConfig,
     updateForm
@@ -28,6 +34,7 @@ export class ControllerUtil {
         return ControllerUtil
           .createApplicationController({
             endpoint,
+            keycloak,
             entityType: 'application',
             formConfig,
             updateForm
@@ -36,6 +43,7 @@ export class ControllerUtil {
         return ControllerUtil
           .createGenericController({
             endpoint,
+            keycloak,
             entityType,
             formConfig,
             updateForm
@@ -49,7 +57,10 @@ export class ControllerUtil {
    * @returns an application controller instance
    */
   static createApplicationController(controllerCfg: ControllerCfg): GenericEntityController<Application> {
-    const appService = new ApplicationService(controllerCfg?.endpoint);
+    const appService = new ApplicationService({
+      basePath: controllerCfg?.endpoint,
+      keycloak: controllerCfg.keycloak
+    });
     const appController = new GenericEntityController<Application>({
       service: appService,
       formUpdater: controllerCfg?.updateForm,
@@ -64,7 +75,10 @@ export class ControllerUtil {
    * @returns a generic Controller
    */
   static createGenericController(controllerCfg: ControllerCfg): GenericEntityController<BaseEntity> {
-    const genericService: GenericServiceImpl = new GenericServiceImpl(controllerCfg?.endpoint);
+    const genericService: GenericServiceImpl = new GenericServiceImpl({
+      basePath: controllerCfg?.endpoint,
+      keycloak: controllerCfg.keycloak
+    });
     const genericController: GenericEntityController<BaseEntity> = new GenericEntityController<BaseEntity>({
       service: genericService as GenericService<BaseEntity>,
       formUpdater: controllerCfg?.updateForm,
