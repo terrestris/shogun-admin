@@ -1,7 +1,6 @@
 var shogunApplicationConfig = {
   appPrefix: '',
   path: {
-    base: 'http://localhost:8080',
     swagger: '/v2/api-docs',
     modelConfigs: '/formconfigs',
     user: '/users',
