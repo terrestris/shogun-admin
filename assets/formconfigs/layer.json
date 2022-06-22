@@ -1,16 +1,16 @@
 {
   "endpoint": "/layers",
   "entityType": "layer",
-  "entityName": "Layer",
-  "navigationTitle": "Layers",
-  "subTitle": "List of layers…",
+  "entityName": "Thema",
+  "navigationTitle": "Themen",
+  "subTitle": "",
   "formConfig": {
     "name": "layer",
     "fields": [
       {
         "dataType": "number",
         "dataField": "id",
-        "labelI18n": "Identifier",
+        "labelI18n": "ID",
         "readOnly": "true"
       },
       {
@@ -18,7 +18,7 @@
         "dataType": "date",
         "readOnly": "true",
         "component": "DateField",
-        "labelI18n": "Created at",
+        "labelI18n": "Erstellt am",
         "fieldProps": {
           "dateFormat": "DD.MM.YYYY HH:mm"
         }
@@ -27,7 +27,7 @@
         "dataField": "modified",
         "dataType": "date",
         "readOnly": "true",
-        "labelI18n": "Modified at",
+        "labelI18n": "Zuletzt editiert am",
         "component": "DateField",
         "fieldProps": {
           "dateFormat": "DD.MM.YYYY HH:mm"
@@ -36,29 +36,29 @@
       {
         "component": "Input",
         "dataField": "name",
-        "labelI18n": "Layer name",
+        "labelI18n": "Name",
         "required": "true"
       },
       {
         "component": "LayerTypeSelect",
         "dataField": "type",
-        "labelI18n": "Layer type",
+        "labelI18n": "Typ",
         "required": "true"
       },
       {
         "component": "JSONEditor",
         "dataField": "clientConfig",
-        "labelI18n": "Layer configuration",
+        "labelI18n": "Konfiguration",
         "fieldProps": {
-          "entityName": "LayerClientConfig"
+          "entityName": "DefaultLayerClientConfig"
         }
       },
       {
         "component": "JSONEditor",
         "dataField": "sourceConfig",
-        "labelI18n": "Layer source config",
+        "labelI18n": "Datenquelle",
         "fieldProps": {
-          "entityName": "LayerSourceConfig"
+          "entityName": "DefaultLayerSourceConfig"
         }
       },
       {
@@ -92,11 +92,21 @@
         }
       },
       {
-        "title": "Type",
+        "title": "Typ",
         "dataIndex": "type",
         "key": "type",
         "sortConfig": {
           "isSortable": true
+        }
+      },
+      {
+        "title": "Layervorschau (GeoServer)",
+        "dataIndex": ["sourceConfig", "layerNames"],
+        "key": "preview",
+        "cellRenderComponentName": "LinkCell",
+        "cellRenderComponentProps": {
+          "title": "Öffne Layervorschau",
+          "template": "/geoserver/wms/reflect?format=application/openlayers&layers={}"
         }
       }
     ]

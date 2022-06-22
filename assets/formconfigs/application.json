@@ -1,9 +1,9 @@
 {
   "endpoint": "/applications",
   "entityType": "application",
-  "entityName": "Application",
-  "navigationTitle": "Applications",
-  "subTitle": "List of applications…",
+  "entityName": "Applikation",
+  "navigationTitle": "Applikationen",
+  "subTitle": "",
   "formConfig": {
     "name": "application",
     "fields": [
@@ -18,7 +18,7 @@
         "dataType": "date",
         "readOnly": "true",
         "component": "DateField",
-        "labelI18n": "Created at",
+        "labelI18n": "Erstellt am",
         "fieldProps": {
           "dateFormat": "DD.MM.YYYY HH:mm"
         }
@@ -27,7 +27,7 @@
         "dataField": "modified",
         "dataType": "date",
         "readOnly": "true",
-        "labelI18n": "Last modified at",
+        "labelI18n": "Zuletzt editiert am",
         "component": "DateField",
         "fieldProps": {
           "dateFormat": "DD.MM.YYYY HH:mm"
@@ -36,35 +36,35 @@
       {
         "component": "Input",
         "dataField": "name",
-        "labelI18n": "Name of the application",
+        "labelI18n": "Name",
         "required": "true"
       },
       {
         "component": "Switch",
         "dataField": "stateOnly",
-        "labelI18n": "State",
+        "labelI18n": "Arbeitsstand",
         "readOnly": "true"
       },
       {
         "component": "JSONEditor",
         "dataField": "clientConfig",
-        "labelI18n": "Client configuration",
+        "labelI18n": "Klient Konfiguration",
         "fieldProps": {
-          "entityName": "ApplicationClientConfig"
+          "entityName": "DefaultApplicationClientConfig"
         }
       },
       {
         "component": "JSONEditor",
         "dataField": "layerTree",
-        "labelI18n": "Layer tree",
+        "labelI18n": "Themenbaum",
         "fieldProps": {
-          "entityName": "LayerTree"
+          "entityName": "DefaultLayerTree"
         }
       },
       {
         "component": "JSONEditor",
         "dataField": "layerConfig",
-        "labelI18n": "Themen-Konfiguration",
+        "labelI18n": "Layer Konfiguration",
         "fieldProps": {
           "entityName": "LayerConfig"
         }
@@ -93,13 +93,23 @@
         }
       },
       {
-        "title": "Last modified",
+        "title": "Zuletzt editiert am",
         "dataIndex": "modified",
         "key": "modified",
         "sortConfig": {
           "isSortable": true
         },
         "cellRenderComponentName": "DateCell"
+      },
+      {
+        "title": "Link zur Applikation",
+        "dataIndex": "id",
+        "key": "link",
+        "cellRenderComponentName": "LinkCell",
+        "cellRenderComponentProps": {
+          "title": "Öffne Applikation",
+          "template": "/client?applicationId={}"
+        }
       }
     ]
   }
