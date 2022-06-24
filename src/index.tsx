@@ -8,7 +8,7 @@ import {
 
 import Keycloak from 'keycloak-js';
 
-import SHOGunClient from '@terrestris/shogun-util/dist/service/SHOGunClient';
+import SHOGunAPIClient from '@terrestris/shogun-util/dist/service/SHOGunAPIClient';
 
 const App = React.lazy(() => import('./App'));
 
@@ -64,7 +64,7 @@ const initKeycloak = async (): Promise<Keycloak | undefined> => {
 };
 
 const initSHOGunClient = (keycloak?: Keycloak) => {
-  const client = new SHOGunClient({
+  const client = new SHOGunAPIClient({
     url: config.path.shogunBase || '/',
     keycloak: keycloak
   });
