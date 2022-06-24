@@ -16,12 +16,12 @@ import config from 'shogunApplicationConfig';
 
 import './index.less';
 import Logger from './Logger';
-import { SHOGunClientProvider } from './Context/SHOGunClientContext';
+import { SHOGunAPIClientProvider } from './Context/SHOGunAPIClientContext';
 import { Result } from 'antd';
 
 const initKeycloak = async (): Promise<Keycloak | undefined> => {
   const keycloakEnabled = config.security.keycloak.enabled;
-  const keycloakHost = config.security.keycloak.base;
+  const keycloakHost = config.security.keycloak.host;
   const keycloakRealm = config.security.keycloak.realm;
   const keycloakClientId = config.security.keycloak.clientId;
 
@@ -31,7 +31,7 @@ const initKeycloak = async (): Promise<Keycloak | undefined> => {
   }
 
   if (!keycloakHost) {
-    throw new Error('Config key security.keycloak.base is not set');
+    throw new Error('Config key security.keycloak.host is not set');
   }
 
   if (!keycloakRealm) {
@@ -63,7 +63,7 @@ const initKeycloak = async (): Promise<Keycloak | undefined> => {
   return keycloak;
 };
 
-const initSHOGunClient = (keycloak?: Keycloak) => {
+const initSHOGunAPIClient = (keycloak?: Keycloak) => {
   const client = new SHOGunAPIClient({
     url: config.path.shogunBase || '/',
     keycloak: keycloak
@@ -78,10 +78,10 @@ const renderApp = async () => {
   try {
     const keycloak = await initKeycloak();
 
-    const client = initSHOGunClient(keycloak);
+    const client = initSHOGunAPIClient(keycloak);
 
     root.render(
-      <SHOGunClientProvider client={client}>
+      <SHOGunAPIClientProvider client={client}>
         <ReactKeycloakProvider authClient={keycloak}>
           <RecoilRoot>
             <Suspense>
@@ -89,7 +89,7 @@ const renderApp = async () => {
             </Suspense>
           </RecoilRoot>
         </ReactKeycloakProvider>
-      </SHOGunClientProvider>
+      </SHOGunAPIClientProvider>
     );
   } catch (error) {
     Logger.error(error);

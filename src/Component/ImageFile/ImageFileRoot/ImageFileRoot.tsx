@@ -6,7 +6,7 @@ import {
   matchPath
 } from 'react-router-dom';
 
-import useSHOGunClient from '../../../Hooks/useSHOGunClient';
+import useSHOGunAPIClient from '../../../Hooks/useSHOGunAPIClient';
 import ImageFileTable from '../ImageFileTable/ImageFileTable';
 
 import config from 'shogunApplicationConfig';
@@ -23,7 +23,7 @@ export const ImageFileRoot: React.FC<ImageFileRootProps> = props => {
 
   const history = useHistory();
   const location = useLocation();
-  const client = useSHOGunClient();
+  const client = useSHOGunAPIClient();
   const match = matchPath<{ uuid: string }>(location.pathname, {
     path: `${config.appPrefix}/portal/imagefile/:uuid`
   });

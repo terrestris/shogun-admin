@@ -28,7 +28,7 @@ import _isEmpty from 'lodash/isEmpty';
 import './App.less';
 
 import config from 'shogunApplicationConfig';
-import useSHOGunClient from './Hooks/useSHOGunClient';
+import useSHOGunAPIClient from './Hooks/useSHOGunAPIClient';
 
 const App: React.FC = () => {
 
@@ -36,7 +36,7 @@ const App: React.FC = () => {
   const [, setAppInfo] = useRecoilState(appInfoAtom);
   const [loadingState, setLoadingState] = useState<'failed' | 'loading' | 'done'>();
 
-  const client = useSHOGunClient();
+  const client = useSHOGunAPIClient();
 
   // Fetch initial data:
   // - swagger docs

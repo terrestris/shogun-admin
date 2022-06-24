@@ -24,7 +24,7 @@ import config from 'shogunApplicationConfig';
 import DashboardStatistics from '../Dashboard/DashboardStatistics/DashboardStatistics';
 
 import './WelcomeDashboard.less';
-import useSHOGunClient from '../../Hooks/useSHOGunClient';
+import useSHOGunAPIClient from '../../Hooks/useSHOGunAPIClient';
 
 type WelcomeDashboardProps = {};
 
@@ -32,7 +32,7 @@ export const WelcomeDashboard: React.FC<WelcomeDashboardProps> = () => {
 
   const dashboardConf = config.dashboard;
 
-  const client = useSHOGunClient();
+  const client = useSHOGunAPIClient();
 
   return (
     <Dashboard

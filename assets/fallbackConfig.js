@@ -8,7 +8,7 @@ var shogunApplicationConfig = {
   security: {
     keycloak: {
       enabled: true,
-      base: 'https://localhost/auth',
+      host: 'https://localhost/auth',
       realm: 'SpringBootKeycloak',
       clientId: 'shogun-admin'
     }

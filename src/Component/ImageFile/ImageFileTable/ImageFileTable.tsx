@@ -12,7 +12,7 @@ import {
 import ImageFile from '@terrestris/shogun-util/dist/model/ImageFile';
 
 import TableUtil from '../../../Util/TableUtil';
-import useSHOGunClient from '../../../Hooks/useSHOGunClient';
+import useSHOGunAPIClient from '../../../Hooks/useSHOGunAPIClient';
 
 import config from 'shogunApplicationConfig';
 
@@ -47,7 +47,7 @@ export const ImageFileTable: React.FC<ImageFileTableProps> = ({
 }) => {
 
   const history = useHistory();
-  const client = useSHOGunClient();
+  const client = useSHOGunAPIClient();
   const service = client.imagefile();
 
   const onRowClick = (imageFile: ImageFile) => {
