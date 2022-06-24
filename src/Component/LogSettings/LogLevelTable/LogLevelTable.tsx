@@ -9,11 +9,10 @@ import {
 } from 'antd';
 import { TableProps } from 'antd/lib/table';
 
-import { useKeycloak } from '@react-keycloak/web';
-
 import LogLevelSelect from '../LogLevelSelect/LogLevelSelect';
 
 import LogService, { LogLevel } from '../../../Service/LogService/LogService';
+import useSHOGunAPIClient from '../../../Hooks/useSHOGunAPIClient';
 
 interface TableData {
   key: number;
@@ -28,7 +27,7 @@ export const LogLevelTable: React.FC<LogLevelTableProps> = props => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [data, setData] = useState<TableData[]>([]);
 
-  const { keycloak } = useKeycloak();
+  const client = useSHOGunAPIClient();
 
   useEffect(() => {
     fetchLoggers();
@@ -38,7 +37,7 @@ export const LogLevelTable: React.FC<LogLevelTableProps> = props => {
     setIsLoading(true);
 
     const logService = new LogService({
-      keycloak: keycloak
+      keycloak: client.getKeycloak()
     });
     const loggers = await logService.getLoggers();
 
@@ -78,7 +77,7 @@ export const LogLevelTable: React.FC<LogLevelTableProps> = props => {
 
   const onLoggerChange = (level: LogLevel, record: TableData) => {
     const logService = new LogService({
-      keycloak: keycloak
+      keycloak: client.getKeycloak()
     });
     const success = logService.setLogger(record.name, level);
 

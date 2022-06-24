@@ -2,10 +2,6 @@ import React, { Suspense } from 'react';
 import { createRoot } from 'react-dom/client';
 import { RecoilRoot } from 'recoil';
 
-import {
-  ReactKeycloakProvider
-} from '@react-keycloak/web';
-
 import Keycloak from 'keycloak-js';
 
 import SHOGunAPIClient from '@terrestris/shogun-util/dist/service/SHOGunAPIClient';
@@ -19,7 +15,7 @@ import Logger from './Logger';
 import { SHOGunAPIClientProvider } from './Context/SHOGunAPIClientContext';
 import { Result } from 'antd';
 
-const initKeycloak = async (): Promise<Keycloak | undefined> => {
+const initKeycloak = async (): Promise<Keycloak | null> => {
   const keycloakEnabled = config.security.keycloak.enabled;
   const keycloakHost = config.security.keycloak.host;
   const keycloakRealm = config.security.keycloak.realm;
@@ -27,7 +23,7 @@ const initKeycloak = async (): Promise<Keycloak | undefined> => {
 
   if (!keycloakEnabled) {
     Logger.info('Not using the keycloak adapter');
-    return undefined;
+    return null;
   }
 
   if (!keycloakHost) {
@@ -82,13 +78,11 @@ const renderApp = async () => {
 
     root.render(
       <SHOGunAPIClientProvider client={client}>
-        <ReactKeycloakProvider authClient={keycloak}>
-          <RecoilRoot>
-            <Suspense>
-              <App />
-            </Suspense>
-          </RecoilRoot>
-        </ReactKeycloakProvider>
+        <RecoilRoot>
+          <Suspense>
+            <App />
+          </Suspense>
+        </RecoilRoot>
       </SHOGunAPIClientProvider>
     );
   } catch (error) {

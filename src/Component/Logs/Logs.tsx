@@ -5,8 +5,6 @@ import React, {
 
 import { useHistory } from 'react-router-dom';
 
-import { useKeycloak } from '@react-keycloak/web';
-
 import {
   Button,
   Input,
@@ -17,6 +15,7 @@ import {
 const { TextArea } = Input;
 
 import LogService from '../../Service/LogService/LogService';
+import useSHOGunAPIClient from '../../Hooks/useSHOGunAPIClient';
 
 import './Logs.less';
 
@@ -26,7 +25,7 @@ export const Logs: React.FC<LogsProps> = (props) => {
 
   const [logs, setLogs] = useState<string>('');
 
-  const { keycloak } = useKeycloak();
+  const client = useSHOGunAPIClient();
 
   let intervalTimer;
 
@@ -49,7 +48,7 @@ export const Logs: React.FC<LogsProps> = (props) => {
 
   const fetchLogs = async () => {
     const logService = new LogService({
-      keycloak: keycloak
+      keycloak: client.getKeycloak()
     });
     const fetchedLogs = await logService.getLogs();
 

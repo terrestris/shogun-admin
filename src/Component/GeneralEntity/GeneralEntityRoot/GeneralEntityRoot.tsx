@@ -5,7 +5,6 @@ import {
   matchPath,
   Link
 } from 'react-router-dom';
-import { useKeycloak } from '@react-keycloak/web';
 import { Button, PageHeader, Form } from 'antd';
 import _isEmpty from  'lodash/isEmpty';
 
@@ -18,6 +17,7 @@ import BaseEntity from '@terrestris/shogun-util/dist/model/BaseEntity';
 import config from 'shogunApplicationConfig';
 import GeneralEntityForm, { FormConfig } from '../GeneralEntityForm/GeneralEntityForm';
 import GeneralEntityTable, { TableConfig } from '../GeneralEntityTable/GeneralEntityTable';
+import useSHOGunAPIClient from '../../../Hooks/useSHOGunAPIClient';
 
 import './GeneralEntityRoot.less';
 
@@ -60,7 +60,7 @@ export function GeneralEntityRoot<T extends BaseEntity> ({
   const [isLoading, setLoading] = useState<boolean>(false);
   const [form] = Form.useForm();
 
-  const { keycloak } = useKeycloak();
+  const client = useSHOGunAPIClient();
 
   /**
    * Validate form fields
@@ -87,11 +87,11 @@ export function GeneralEntityRoot<T extends BaseEntity> ({
 
   const entityController: GenericEntityController<T> = useMemo(() => ControllerUtil.createController({
     endpoint,
-    keycloak,
+    keycloak: client.getKeycloak(),
     entityType,
     formConfig,
     updateForm
-  }), [endpoint, keycloak, entityType, formConfig, updateForm]) as GenericEntityController<T>;
+  }), [endpoint, client, entityType, formConfig, updateForm]) as GenericEntityController<T>;
 
   /**
    * Fetch entity with given id

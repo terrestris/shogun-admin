@@ -14,11 +14,10 @@ import { StatisticProps } from 'antd/lib/statistic/Statistic';
 
 import { ReloadOutlined } from '@ant-design/icons';
 
-import { useKeycloak } from '@react-keycloak/web';
-
 import isFunction from 'lodash/isFunction';
 
 import MetricService, { Metric } from '../../../Service/MetricService/MetricService';
+import useSHOGunAPIClient from '../../../Hooks/useSHOGunAPIClient';
 
 type StatisticPropExcludes = 'value' | 'prefix' | 'suffix' | 'title' | 'formatter';
 
@@ -42,7 +41,7 @@ export const MetricEntry: React.FC<MetricEntryProps> = ({
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [metric, setMetric] = useState<Metric>();
 
-  const { keycloak } = useKeycloak();
+  const client = useSHOGunAPIClient();
 
   useEffect(() => {
     fetchMetric();
@@ -52,7 +51,7 @@ export const MetricEntry: React.FC<MetricEntryProps> = ({
     setIsLoading(true);
 
     const metricService = new MetricService({
-      keycloak: keycloak
+      keycloak: client.getKeycloak()
     });
     const metricResponse = await metricService.getMetric(type);
 

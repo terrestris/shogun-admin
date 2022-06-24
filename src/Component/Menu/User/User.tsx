@@ -3,8 +3,6 @@ import {
   useRecoilState
 } from 'recoil';
 
-import { useKeycloak } from '@react-keycloak/web';
-
 import {
   Dropdown,
   Menu
@@ -21,6 +19,7 @@ import { shogunInfoModalVisibleAtom, userInfoAtom } from '../../../State/atoms';
 import './User.less';
 import Avatar from 'antd/lib/avatar/avatar';
 import UserUtil from '../../../Util/UserUtil';
+import useSHOGunAPIClient from '../../../Hooks/useSHOGunAPIClient';
 
 interface OwnProps { }
 
@@ -31,7 +30,7 @@ export const User: React.FC<UserProps> = (props) => {
   const [userInfo] = useRecoilState(userInfoAtom);
   const [, setInfoVisible] = useRecoilState(shogunInfoModalVisibleAtom);
 
-  const { keycloak } = useKeycloak();
+  const client = useSHOGunAPIClient();
 
   const avatarSource = '';
 
@@ -41,10 +40,10 @@ export const User: React.FC<UserProps> = (props) => {
         setInfoVisible(true);
         break;
       case 'settings':
-        keycloak.accountManagement();
+        client.getKeycloak()?.accountManagement();
         break;
       case 'logout':
-        keycloak.logout();
+        client.getKeycloak()?.logout();
         break;
       default:
         break;
