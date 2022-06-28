@@ -4,11 +4,10 @@ import {
   Statistic
 } from 'antd';
 
-import Application from '../../../Model/Application';
-import User from '../../../Model/User';
-import Layer from '../../../Model/Layer';
-import GenericService from 'src/Service/GenericService/GenericService';
-
+import Application from '@terrestris/shogun-util/dist/model/Application';
+import User from '@terrestris/shogun-util/dist/model/User';
+import Layer from '@terrestris/shogun-util/dist/model/Layer';
+import GenericService from '@terrestris/shogun-util/dist/service/GenericService';
 
 type DashboardStatisticsProps = {
   service: GenericService<Application | User | Layer>;

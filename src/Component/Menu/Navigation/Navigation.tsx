@@ -15,7 +15,7 @@ import {
 
 import config from 'shogunApplicationConfig';
 import { GeneralEntityConfigType } from '../../GeneralEntity/GeneralEntityRoot/GeneralEntityRoot';
-import BaseEntity from '../../../Model/BaseEntity';
+import BaseEntity from '@terrestris/shogun-util/dist/model/BaseEntity';
 
 interface OwnProps {
   collapsed?: boolean;

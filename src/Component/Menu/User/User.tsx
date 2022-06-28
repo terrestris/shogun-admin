@@ -14,13 +14,12 @@ import {
   SettingOutlined
 } from '@ant-design/icons';
 
-import { shogunInfoModalVisibleAtom, userInfoAtom, userProfileModalVisibleAtom } from '../../../State/atoms';
-
-import UserService from '../../../Service/UserService/UserService';
+import { shogunInfoModalVisibleAtom, userInfoAtom } from '../../../State/atoms';
 
 import './User.less';
 import Avatar from 'antd/lib/avatar/avatar';
 import UserUtil from '../../../Util/UserUtil';
+import useSHOGunAPIClient from '../../../Hooks/useSHOGunAPIClient';
 
 interface OwnProps { }
 
@@ -29,8 +28,9 @@ type UserProps = OwnProps;
 export const User: React.FC<UserProps> = (props) => {
 
   const [userInfo] = useRecoilState(userInfoAtom);
-  const [, setProfileVisible] = useRecoilState(userProfileModalVisibleAtom);
   const [, setInfoVisible] = useRecoilState(shogunInfoModalVisibleAtom);
+
+  const client = useSHOGunAPIClient();
 
   const avatarSource = '';
 
@@ -40,10 +40,10 @@ export const User: React.FC<UserProps> = (props) => {
         setInfoVisible(true);
         break;
       case 'settings':
-        setProfileVisible(true);
+        client.getKeycloak()?.accountManagement();
         break;
       case 'logout':
-        UserService.logout();
+        client.getKeycloak()?.logout();
         break;
       default:
         break;
@@ -72,7 +72,7 @@ export const User: React.FC<UserProps> = (props) => {
             </div>
           }
           {
-            userInfo?.authProviderId &&
+            userName &&
             <Menu.Divider />
           }
           <Menu.Item

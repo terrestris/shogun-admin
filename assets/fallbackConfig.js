@@ -1,39 +1,30 @@
 var shogunApplicationConfig = {
-  appPrefix: '',
+  appPrefix: '/admin',
   path: {
-    swagger: '/v2/api-docs',
-    modelConfigs: '/formconfigs',
-    user: '/users',
-    layer: '/layers',
-    imageFile: '/imagefiles',
-    application: '/applications',
-    appInfo: '/info/app',
-    auth: {
-      login: '/auth/login',
-      logout: '/auth/logout',
-      isSessionValid: '/auth/isSessionValid'
-    },
-    loggers: '/actuator/loggers',
-    logfile: '/actuator/logfile',
-    logo: null,
-    metrics: '/actuator/metrics',
-    evictCache: '/cache/evict'
+    modelConfigs: './formconfigs',
+    shogunBase: '/',
+    logo: null
   },
   security: {
-    jwt: false,
-    // authTokenKey: 'shogun-auth-token'
+    keycloak: {
+      enabled: true,
+      host: 'https://localhost/auth',
+      realm: 'SpringBootKeycloak',
+      clientId: 'shogun-admin'
+    }
   },
   models: [
     'Application',
     'Layer',
-    'User'
+    'User',
+    'Group'
   ],
   dashboard: {
     news: {
       visible: true
     },
     statistics: {
-      visible: true
+      visible: false
     },
     applications: {
       visible: true
@@ -47,25 +38,6 @@ var shogunApplicationConfig = {
   },
   navigation: {
     general: {
-      applications: {
-        visible: true,
-        schemas: {
-          clientConfig: 'ApplicationClientConfig',
-          layerTree: 'LayerTree',
-          layerConfig: 'LayerConfig'
-        }
-      },
-      layers: {
-        visible: true,
-        schemas: {
-          clientConfig: 'LayerClientConfig',
-          sourceConfig: 'LayerSourceConfig',
-          features: 'GeoJsonObject'
-        }
-      },
-      users: {
-        visible: true
-      },
       imagefiles: {
         visible: true
       }

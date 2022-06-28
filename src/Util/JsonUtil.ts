@@ -19,5 +19,5 @@ export default class JsonUtil {
       }
       return value;
     };
-  }
+  };
 }

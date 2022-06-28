@@ -1,4 +1,4 @@
-import User from '../Model/User';
+import User from '@terrestris/shogun-util/dist/model/User';
 
 export default class UserUtil {
 

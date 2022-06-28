@@ -14,11 +14,11 @@ export const JvmMemoryUsed: React.FC<JvmMemoryUsedProps> = ({
     let val = Number(value) * (9.537 * Math.pow(10, -7));
 
     return <span>{val.toFixed(2)}</span>;
-  }
+  };
 
   const suffixRenderer = (): ReactNode => {
     return <span>MB</span>;
-  }
+  };
 
   return (
     <MetricEntry

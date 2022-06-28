@@ -1,7 +1,11 @@
 import Logger from '../../Logger';
 
+import Keycloak from 'keycloak-js';
+
+import { getBearerTokenHeader } from '@terrestris/shogun-util/dist/security/getBearerTokenHeader';
+import { getCsrfTokenHeader } from '@terrestris/shogun-util/dist/security/getCsrfTokenHeader';
+
 import config from 'shogunApplicationConfig';
-import SecurityUtil from '../../Util/SecurityUtil';
 
 export type LogLevel = 'OFF' | 'FATAL' | 'ERROR' | 'WARN' | 'INFO' | 'DEBUG' | 'TRACE';
 
@@ -10,13 +14,25 @@ export type LogLevels = {
   effectiveLevel: LogLevel;
 };
 
+export type LogServiceOpts = {
+  keycloak?: Keycloak;
+};
+
 class LogService {
 
-  constructor() {}
+  private keycloak?: Keycloak;
+
+  constructor(opts?: LogServiceOpts) {
+    this.keycloak = opts.keycloak;
+  }
 
   async getLoggers(): Promise<any> {
     try {
-      const loggerResponse = await fetch(`${config.path.loggers}`);
+      const loggerResponse = await fetch(`${config.path.shogunBase}actuator/loggers`, {
+        headers: {
+          ...getBearerTokenHeader(this.keycloak)
+        }
+      });
       const loggerJson = await loggerResponse.json();
 
       return loggerJson.loggers;
@@ -29,7 +45,11 @@ class LogService {
 
   async getLogger(loggerName: string): Promise<LogLevels> {
     try {
-      const loggerResponse = await fetch(`${config.path.loggers}/${loggerName}`);
+      const loggerResponse = await fetch(`${config.path.shogunBase}actuator/loggers/${loggerName}`, {
+        headers: {
+          ...getBearerTokenHeader(this.keycloak)
+        }
+      });
       const loggerJson = await loggerResponse.json();
 
       return loggerJson;
@@ -42,11 +62,12 @@ class LogService {
 
   async setLogger(loggerName: string, logLevel: LogLevel): Promise<boolean> {
     try {
-      const loggerResponse = await fetch(`${config.path.loggers}/${loggerName}`, {
+      const loggerResponse = await fetch(`${config.path.shogunBase}actuator/loggers/${loggerName}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          ...SecurityUtil.getSecurityHeaders(config)
+          ...getCsrfTokenHeader(),
+          ...getBearerTokenHeader(this.keycloak)
         },
         body: JSON.stringify({
           'configuredLevel': logLevel
@@ -63,7 +84,11 @@ class LogService {
 
   async getLogs(): Promise<string> {
     try {
-      const logResponse = await fetch(`${config.path.logfile}`);
+      const logResponse = await fetch(`${config.path.shogunBase}actuator/logfile`, {
+        headers: {
+          ...getBearerTokenHeader(this.keycloak)
+        }
+      });
       const logText = await logResponse.text();
 
       return logText;

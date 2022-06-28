@@ -24,7 +24,7 @@ import _isEmpty from 'lodash/isEmpty';
 
 import Logger from 'js-logger';
 
-import BaseEntity from '../../../Model/BaseEntity';
+import BaseEntity from '@terrestris/shogun-util/dist/model/BaseEntity';
 
 import { GenericEntityController } from '../../../Controller/GenericEntityController';
 

@@ -15,16 +15,17 @@ import {
 const { TextArea } = Input;
 
 import LogService from '../../Service/LogService/LogService';
+import useSHOGunAPIClient from '../../Hooks/useSHOGunAPIClient';
 
 import './Logs.less';
-
-const logService = new LogService();
 
 type LogsProps = {};
 
 export const Logs: React.FC<LogsProps> = (props) => {
 
   const [logs, setLogs] = useState<string>('');
+
+  const client = useSHOGunAPIClient();
 
   let intervalTimer;
 
@@ -46,9 +47,12 @@ export const Logs: React.FC<LogsProps> = (props) => {
   };
 
   const fetchLogs = async () => {
-    const logs = await logService.getLogs();
+    const logService = new LogService({
+      keycloak: client.getKeycloak()
+    });
+    const fetchedLogs = await logService.getLogs();
 
-    setLogs(logs);
+    setLogs(fetchedLogs);
   };
 
   return (
@@ -62,11 +66,13 @@ export const Logs: React.FC<LogsProps> = (props) => {
         subTitle="… die die Welt erklären"
         extra={[
           <Switch
+            key="reload"
             checkedChildren="Live Reload"
             unCheckedChildren="No Reload"
             onChange={onChange}
           />,
           <Button
+            key="fetch-logs"
             type="primary"
             onClick={fetchLogs}
           >

@@ -1,16 +1,16 @@
-import { Button, PageHeader } from 'antd';
+import { Button, notification, PageHeader, Upload } from 'antd';
 import React, { useEffect, useState } from 'react';
 import {
   useHistory,
   useLocation,
-  matchPath,
-  Link
+  matchPath
 } from 'react-router-dom';
+
+import useSHOGunAPIClient from '../../../Hooks/useSHOGunAPIClient';
+import ImageFileTable from '../ImageFileTable/ImageFileTable';
 
 import config from 'shogunApplicationConfig';
 
-// import ImageFileEditForm from '../ImageFileEditForm/ImageFileEditForm';
-import ImageFileTable from '../ImageFileTable/ImageFileTable';
 import './ImageFileRoot.less';
 
 interface OwnProps { }
@@ -19,10 +19,11 @@ type ImageFileRootProps = OwnProps;
 
 export const ImageFileRoot: React.FC<ImageFileRootProps> = props => {
 
-  const [uuid, setUuid] = useState<string | 'create'>();
+  const [fileBlob, setFileBlob] = useState<Blob>();
 
   const history = useHistory();
   const location = useLocation();
+  const client = useSHOGunAPIClient();
   const match = matchPath<{ uuid: string }>(location.pathname, {
     path: `${config.appPrefix}/portal/imagefile/:uuid`
   });
@@ -30,11 +31,18 @@ export const ImageFileRoot: React.FC<ImageFileRootProps> = props => {
 
   useEffect(() => {
     if (!imageFileUuid) {
-      setUuid(undefined);
+      setFileBlob(null);
       return;
     }
-    setUuid(imageFileUuid);
-  }, [imageFileUuid]);
+
+    const fetchImage = async () => {
+      const file = await client.imagefile().findOne(imageFileUuid);
+
+      setFileBlob(file);
+    };
+
+    fetchImage();
+  }, [imageFileUuid, client]);
 
   return (
     <div className="imagefile-root">
@@ -43,23 +51,47 @@ export const ImageFileRoot: React.FC<ImageFileRootProps> = props => {
         onBack={() => history.goBack()}
         title="Bilddateien"
         subTitle="… die die Welt zeigen"
-        extra={[
-          <Link key="create" to={`${config.appPrefix}/portal/imagefile/create`}>
-            <Button type="primary">
-              Bilddatei hochladen
-            </Button>
-          </Link>
-        ]}
       >
       </PageHeader>
       <div className="left-container">
+        <div className="left-toolbar">
+          <Upload
+            key="upload"
+            showUploadList={false}
+            customRequest={async (options) => {
+              const file = options.file;
+              if (!(file instanceof File)) {
+                return;
+              }
+
+              try {
+                const uploadedFile = await client.imagefile().upload(file);
+
+                notification.info({
+                  message: 'Upload erfolgreich',
+                  description: `Die Datei ${file.name} wurde erfolgreich hochgeladen`
+                });
+
+                history.push(`${config.appPrefix}/portal/imagefile/${uploadedFile.fileUuid}`);
+              } catch (error) {
+                notification.error({
+                  message: 'Fehler beim Upload',
+                  description: `Die Datei ${file.name} konnte nicht hochgeladen werden`
+                });
+              }
+            }}
+          >
+            <Button type="primary">
+              Bilddatei hochladen
+            </Button>
+          </Upload>
+        </div>
         <ImageFileTable />
       </div>
       {
-        uuid &&
+        fileBlob &&
         <div className="right-container">
-          <img src={`${config.path.imageFile}/${uuid}`} />
-          {/* <ImageFileEditForm uuid={uuid} /> */}
+          <img src={URL.createObjectURL(fileBlob)} />
         </div>
       }
     </div>

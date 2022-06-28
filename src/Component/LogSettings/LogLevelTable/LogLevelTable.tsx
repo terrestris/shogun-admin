@@ -12,13 +12,12 @@ import { TableProps } from 'antd/lib/table';
 import LogLevelSelect from '../LogLevelSelect/LogLevelSelect';
 
 import LogService, { LogLevel } from '../../../Service/LogService/LogService';
-
-const logService = new LogService();
+import useSHOGunAPIClient from '../../../Hooks/useSHOGunAPIClient';
 
 interface TableData {
-  key: number,
-  name: string,
-  level: LogLevel
+  key: number;
+  name: string;
+  level: LogLevel;
 };
 
 interface LogLevelTableProps extends Omit<TableProps<TableData>, 'loading' | 'columns' | 'dataSource'> { };
@@ -28,6 +27,8 @@ export const LogLevelTable: React.FC<LogLevelTableProps> = props => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [data, setData] = useState<TableData[]>([]);
 
+  const client = useSHOGunAPIClient();
+
   useEffect(() => {
     fetchLoggers();
   }, []);
@@ -35,6 +36,9 @@ export const LogLevelTable: React.FC<LogLevelTableProps> = props => {
   const fetchLoggers = async () => {
     setIsLoading(true);
 
+    const logService = new LogService({
+      keycloak: client.getKeycloak()
+    });
     const loggers = await logService.getLoggers();
 
     const tableData = Object.keys(loggers)
@@ -64,14 +68,17 @@ export const LogLevelTable: React.FC<LogLevelTableProps> = props => {
           width: '100%'
         }}
         defaultValue={level}
-        onChange={(level: LogLevel) => {
-          onLoggerChange(level, record);
+        onChange={(lvl: LogLevel) => {
+          onLoggerChange(lvl, record);
         }}
       />
     )
   }];
 
   const onLoggerChange = (level: LogLevel, record: TableData) => {
+    const logService = new LogService({
+      keycloak: client.getKeycloak()
+    });
     const success = logService.setLogger(record.name, level);
 
     if (success) {

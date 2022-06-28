@@ -13,10 +13,11 @@ import { FormOutlined, SaveOutlined, UndoOutlined } from '@ant-design/icons';
 import { GenericEntityController } from '../../../Controller/GenericEntityController';
 import Logger from '@terrestris/base-util/dist/Logger';
 import { NamePath } from 'rc-field-form/lib/interface';
-import BaseEntity from '../../../Model/BaseEntity';
+import BaseEntity from '@terrestris/shogun-util/dist/model/BaseEntity';
 import config from 'shogunApplicationConfig';
 import GeneralEntityForm, { FormConfig } from '../GeneralEntityForm/GeneralEntityForm';
 import GeneralEntityTable, { TableConfig } from '../GeneralEntityTable/GeneralEntityTable';
+import useSHOGunAPIClient from '../../../Hooks/useSHOGunAPIClient';
 
 import './GeneralEntityRoot.less';
 
@@ -59,6 +60,8 @@ export function GeneralEntityRoot<T extends BaseEntity> ({
   const [isLoading, setLoading] = useState<boolean>(false);
   const [form] = Form.useForm();
 
+  const client = useSHOGunAPIClient();
+
   /**
    * Validate form fields
    */
@@ -84,10 +87,11 @@ export function GeneralEntityRoot<T extends BaseEntity> ({
 
   const entityController: GenericEntityController<T> = useMemo(() => ControllerUtil.createController({
     endpoint,
+    keycloak: client.getKeycloak(),
     entityType,
     formConfig,
     updateForm
-  }), [endpoint, entityType, formConfig, updateForm]) as GenericEntityController<T>;
+  }), [endpoint, client, entityType, formConfig, updateForm]) as GenericEntityController<T>;
 
   /**
    * Fetch entity with given id

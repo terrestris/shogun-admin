@@ -17,8 +17,7 @@ import { ReloadOutlined } from '@ant-design/icons';
 import isFunction from 'lodash/isFunction';
 
 import MetricService, { Metric } from '../../../Service/MetricService/MetricService';
-
-const metricService = new MetricService();
+import useSHOGunAPIClient from '../../../Hooks/useSHOGunAPIClient';
 
 type StatisticPropExcludes = 'value' | 'prefix' | 'suffix' | 'title' | 'formatter';
 
@@ -42,6 +41,8 @@ export const MetricEntry: React.FC<MetricEntryProps> = ({
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [metric, setMetric] = useState<Metric>();
 
+  const client = useSHOGunAPIClient();
+
   useEffect(() => {
     fetchMetric();
   }, []);
@@ -49,6 +50,9 @@ export const MetricEntry: React.FC<MetricEntryProps> = ({
   const fetchMetric = async () => {
     setIsLoading(true);
 
+    const metricService = new MetricService({
+      keycloak: client.getKeycloak()
+    });
     const metricResponse = await metricService.getMetric(type);
 
     setMetric(metricResponse);
@@ -84,7 +88,7 @@ export const MetricEntry: React.FC<MetricEntryProps> = ({
         <span>{metric?.description}</span>
       </Tooltip>
     );
-  }
+  };
 
   const getFormatter = (value: number | string): ReactNode => {
     if (isFunction(valueRenderer)) {
@@ -92,13 +96,14 @@ export const MetricEntry: React.FC<MetricEntryProps> = ({
     }
 
     return value;
-  }
+  };
 
   return (
     <Card
       loading={isLoading}
       actions={[
         <Tooltip
+          key="tooltip"
           title="Reload"
           mouseEnterDelay={0.5}
         >
