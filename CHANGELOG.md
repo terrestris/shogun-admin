@@ -1,3 +1,38 @@
+## [9.0.0](https://github.com/terrestris/shogun-admin/compare/v8.0.0...v9.0.0) (2022-06-28)
+
+
+### ⚠ BREAKING CHANGES
+
+* Readds the keycloak-js adapter for authentication and removes
+all models and services (except the Metric- and Loglevelservice) with the appropriate
+ones from the shogun-util
+
+### Changes in layout
+
+* add editorconfig ([0e27655](https://github.com/terrestris/shogun-admin/commit/0e276554b86fcba44b91b6c998d0d293406419de))
+
+
+### Breaking changes
+
+* readd-keyloak-js adapter and init shogun-util ([2618685](https://github.com/terrestris/shogun-admin/commit/2618685a0daf27e9249ff85d1fc5dfbc80484076))
+* remove UserProfileForm and redirect to keycloak account settings instead ([ce83381](https://github.com/terrestris/shogun-admin/commit/ce83381f891a90f53438cfaa1f9c2db0ad58babf))
+* update app config and form configs ([7a6db14](https://github.com/terrestris/shogun-admin/commit/7a6db143928cb7e305d99bff0cb51f42b33916a7))
+
+
+### Bugfixes
+
+* rename keycloak host config ([80625a0](https://github.com/terrestris/shogun-admin/commit/80625a0dc942b15214c429dedb5902e2ce76f1e5))
+* update ImageFile root and table work again ([634e45a](https://github.com/terrestris/shogun-admin/commit/634e45ad321383d32ca826fdce2af6ff0a317f53))
+
+
+### Dependencies
+
+* add shogun-util, keycloak-js and @react-keycloak/web dependencies ([04321e5](https://github.com/terrestris/shogun-admin/commit/04321e57662c077ee113d48728796dad4407361b))
+* make default part for the config relative ([25edd9e](https://github.com/terrestris/shogun-admin/commit/25edd9e5c9b23b1c66b1cbf79adda2df303f921e))
+* remove @react-keycloak/web dependency, get keycloak client from the SHOGunAPIClient ([940e637](https://github.com/terrestris/shogun-admin/commit/940e6374a89a193624f774d3e62602c5845887b7))
+* update shogun-util ([e5a4151](https://github.com/terrestris/shogun-admin/commit/e5a4151e95ec0259c356078a3d7fb8b1c5f1dbc1))
+* update to the latest shogun-util ([1da0ba7](https://github.com/terrestris/shogun-admin/commit/1da0ba7fb48188716994770cc234019c23aeb652))
+
 ## [8.0.0](https://github.com/terrestris/shogun-admin/compare/v7.5.3...v8.0.0) (2022-06-22)
 
 
