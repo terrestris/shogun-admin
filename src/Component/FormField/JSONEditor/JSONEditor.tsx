@@ -142,6 +142,7 @@ export const JSONEditor: React.FC<JSONEditorProps> = ({
           language="json"
           beforeMount={onEditorMount}
           options={{
+            lineHeight: 20,
             scrollBeyondLastLine: false
           }}
           {...editorProps}
