@@ -40,9 +40,11 @@ export const User: React.FC<UserProps> = (props) => {
         setInfoVisible(true);
         break;
       case 'settings':
+        // TODO: Fix settings for non keycloak setups
         client.getKeycloak()?.accountManagement();
         break;
       case 'logout':
+        // TODO: Fix logout for non keycloak setups
         client.getKeycloak()?.logout();
         break;
       default:

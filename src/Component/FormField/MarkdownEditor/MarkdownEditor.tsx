@@ -2,8 +2,6 @@ import React, { useEffect } from 'react';
 import MDEditor, { ICommand } from '@uiw/react-md-editor';
 import FullscreenWrapper from '../../FullscreenWrapper/FullscreenWrapper';
 
-import './MarkdownEditor.less';
-
 export type MarkdownEditorProps = {
   value?: string;
   onChange?: (value: string) => void;
@@ -37,6 +35,7 @@ export const MarkdownEditor: React.FC<MarkdownEditorProps> = ({
         value={markdown}
         commandsFilter={commandsFilter}
         onChange={onMarkdownChange}
+        highlightEnable={false}
       />
     </FullscreenWrapper>
   );
