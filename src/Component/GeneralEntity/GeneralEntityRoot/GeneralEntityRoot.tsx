@@ -178,9 +178,8 @@ export function GeneralEntityRoot<T extends BaseEntity> ({
 
   const onSaveClick = async () => {
     const updatedEntity: T = await entityController?.saveOrUpdate() as T;
-    setEditEntity(updatedEntity);
-    setFormIsDirty(false);
     await fetchEntities();
+    history.push(`${config.appPrefix}/portal/${entityType}/${updatedEntity.id}`);
   };
 
   const initialValues = useMemo(() => entityController?.getInitialFormValues(), [entityController]);
