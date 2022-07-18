@@ -1,3 +1,10 @@
+## [9.0.1](https://github.com/terrestris/shogun-admin/compare/v9.0.0...v9.0.1) (2022-07-18)
+
+
+### Changes in layout
+
+* adjust styling of markdown and json editors ([6c13b1b](https://github.com/terrestris/shogun-admin/commit/6c13b1b9237d15e2c90e9d29e600eaa89fe249bb))
+
 ## [9.0.0](https://github.com/terrestris/shogun-admin/compare/v8.0.0...v9.0.0) (2022-06-28)
 
 
