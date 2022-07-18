@@ -100,6 +100,7 @@ export function GeneralEntityRoot<T extends BaseEntity> ({
     try {
       const e: T = await entityController?.load(eId) as T;
       setEditEntity(e);
+      form.resetFields();
       form.setFieldsValue(e);
     } catch (error) {
       Logger.error(error);
