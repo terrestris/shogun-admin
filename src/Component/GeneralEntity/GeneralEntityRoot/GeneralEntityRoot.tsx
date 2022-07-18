@@ -68,6 +68,7 @@ export function GeneralEntityRoot<T extends BaseEntity> ({
   const validate = useCallback(async (nameList?: NamePath[]) => {
     let valid: boolean;
     try {
+      // TODO: check validation of JSON (and MarkDownEditor) if used for field
       await form.validateFields(nameList || []);
       valid = true;
     } catch (e) {
