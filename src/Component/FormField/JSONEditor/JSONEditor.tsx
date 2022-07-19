@@ -50,6 +50,9 @@ export const JSONEditor: React.FC<JSONEditorProps> = ({
       const jsonObject = JSON.parse(val);
       onChange(jsonObject);
     } catch (error) {
+      if (val.length === 0) {
+        onChange(undefined);
+      }
       Logger.trace('JSON-Editor:', error);
     }
   };

@@ -68,6 +68,7 @@ export function GeneralEntityRoot<T extends BaseEntity> ({
   const validate = useCallback(async (nameList?: NamePath[]) => {
     let valid: boolean;
     try {
+      // TODO: check validation of JSON (and MarkDownEditor) if used for field
       await form.validateFields(nameList || []);
       valid = true;
     } catch (e) {
@@ -100,6 +101,7 @@ export function GeneralEntityRoot<T extends BaseEntity> ({
     try {
       const e: T = await entityController?.load(eId) as T;
       setEditEntity(e);
+      form.resetFields();
       form.setFieldsValue(e);
     } catch (error) {
       Logger.error(error);
@@ -177,9 +179,8 @@ export function GeneralEntityRoot<T extends BaseEntity> ({
 
   const onSaveClick = async () => {
     const updatedEntity: T = await entityController?.saveOrUpdate() as T;
-    setEditEntity(updatedEntity);
-    setFormIsDirty(false);
     await fetchEntities();
+    history.push(`${config.appPrefix}/portal/${entityType}/${updatedEntity.id}`);
   };
 
   const initialValues = useMemo(() => entityController?.getInitialFormValues(), [entityController]);
