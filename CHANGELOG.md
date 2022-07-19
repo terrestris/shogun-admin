@@ -1,3 +1,12 @@
+## [9.0.2](https://github.com/terrestris/shogun-admin/compare/v9.0.1...v9.0.2) (2022-07-19)
+
+
+### Bugfixes
+
+* allow clearing JSON fields ([c31a1c2](https://github.com/terrestris/shogun-admin/commit/c31a1c299630cb75e11c863526ce5114a02fe333))
+* fixes updating of object fields ([c2c8661](https://github.com/terrestris/shogun-admin/commit/c2c8661e0b174cc04821a8b9df72267051679896))
+* switch to entity page after creation ([87e7d25](https://github.com/terrestris/shogun-admin/commit/87e7d259f37f8eedc12eb11fc7e2bdb2b214d679))
+
 ## [9.0.1](https://github.com/terrestris/shogun-admin/compare/v9.0.0...v9.0.1) (2022-07-18)
 
 
