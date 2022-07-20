@@ -1,3 +1,10 @@
+## [9.0.3](https://github.com/terrestris/shogun-admin/compare/v9.0.2...v9.0.3) (2022-07-20)
+
+
+### Bugfixes
+
+* fixes changeHanlder of JSONEditor ([b123f87](https://github.com/terrestris/shogun-admin/commit/b123f870dcbef6e53946a508b99a245345a20c00))
+
 ## [9.0.2](https://github.com/terrestris/shogun-admin/compare/v9.0.1...v9.0.2) (2022-07-19)
 
 
