@@ -1,9 +1,9 @@
-import { JvmThreadLive } from './JvmThreadLive';
+import { JvmThreadsLive } from './JvmThreadsLive';
 
-describe('<JvmThreadLive />', () => {
+describe('<JvmThreadsLive />', () => {
 
   it('is defined', () => {
-    expect(JvmThreadLive).not.toBeUndefined();
+    expect(JvmThreadsLive).not.toBeUndefined();
   });
 
 });

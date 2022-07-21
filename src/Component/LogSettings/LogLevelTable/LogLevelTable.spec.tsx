@@ -1,9 +1,9 @@
-import { LogsLevelTable } from './LogsLevelTable';
+import { LogLevelTable } from './LogLevelTable';
 
-describe('<LogsLevelTable />', () => {
+describe('<LogLevelTable />', () => {
 
   it('is defined', () => {
-    expect(LogsLevelTable).not.toBeUndefined();
+    expect(LogLevelTable).not.toBeUndefined();
   });
 
 });

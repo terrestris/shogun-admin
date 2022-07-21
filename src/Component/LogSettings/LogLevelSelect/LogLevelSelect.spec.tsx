@@ -1,9 +1,9 @@
-import { LogsLevelSelect } from './LogsLevelSelect';
+import { LogLevelSelect } from './LogLevelSelect';
 
-describe('<LogsLevelSelect />', () => {
+describe('<LogLevelSelect />', () => {
 
   it('is defined', () => {
-    expect(LogsLevelSelect).not.toBeUndefined();
+    expect(LogLevelSelect).not.toBeUndefined();
   });
 
 });
