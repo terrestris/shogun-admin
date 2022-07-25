@@ -1,3 +1,17 @@
+## [9.1.0](https://github.com/terrestris/shogun-admin/compare/v9.0.3...v9.1.0) (2022-07-25)
+
+
+### Features
+
+* add feedback when saving entities ([ea166d0](https://github.com/terrestris/shogun-admin/commit/ea166d06e7096bd1764d6987580a17b2855adfd3))
+
+
+### Dependencies
+
+* **unit-tests:** added basic unit tests for all components ([8ee1be3](https://github.com/terrestris/shogun-admin/commit/8ee1be3fd623771cb4621270c94d96b9d73e5c18))
+* **unit-tests:** fixed imports and names in tests ([55c67a5](https://github.com/terrestris/shogun-admin/commit/55c67a5d3c8675e20c62192c067ed0e1eb66cbb0))
+* **unit-tests:** fixed jest config ([56c5888](https://github.com/terrestris/shogun-admin/commit/56c5888e91dc4241703cd6542f7146a2bd97fe3b))
+
 ## [9.0.3](https://github.com/terrestris/shogun-admin/compare/v9.0.2...v9.0.3) (2022-07-20)
 
 
