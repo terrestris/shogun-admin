@@ -25,10 +25,10 @@ const config = {
     // eslint-disable-next-line max-len
     '\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$': '<rootDir>/test/__mocks__/fileMock.js',
     '\\.(css|less|scss)$': '<rootDir>/test/__mocks__/styleMock.js',
-    'shogunApplicationConfig': path.resolve(__dirname, 'jest/config.js')
+    'shogunApplicationConfig': path.resolve(__dirname, 'jest.config.js')
   },
   transformIgnorePatterns: [
-    '<rootDir>/node_modules/(?!(ol|antd|(rc-*[a-z]*)|css-animation|@babel/runtime|@ant-design))'
+    '<rootDir>/node_modules/(?!@ngrx|(?!deck.gl)|ng-dynamic)'
   ],
   moduleFileExtensions: [
     'ts',
