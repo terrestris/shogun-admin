@@ -5,7 +5,7 @@ import {
   matchPath,
   Link
 } from 'react-router-dom';
-import { Button, PageHeader, Form } from 'antd';
+import { Button, PageHeader, Form, notification } from 'antd';
 import _isEmpty from  'lodash/isEmpty';
 
 import { ControllerUtil } from '../../../Controller/ControllerUtil';
@@ -178,9 +178,19 @@ export function GeneralEntityRoot<T extends BaseEntity> ({
   };
 
   const onSaveClick = async () => {
-    const updatedEntity: T = await entityController?.saveOrUpdate() as T;
-    await fetchEntities();
-    history.push(`${config.appPrefix}/portal/${entityType}/${updatedEntity.id}`);
+    try {
+      const updatedEntity: T = await entityController?.saveOrUpdate() as T;
+      await fetchEntities();
+      history.push(`${config.appPrefix}/portal/${entityType}/${updatedEntity.id}`);
+      notification.success({
+        message: `${entityName} erfolgreich gespeichert!`
+      });
+    } catch (error) {
+      Logger.error(`Error saving ${entityName}:`, error);
+      notification.error({
+        message: `Fehler: Konnte ${entityName} nicht speichern.`
+      });
+    }
   };
 
   const initialValues = useMemo(() => entityController?.getInitialFormValues(), [entityController]);
