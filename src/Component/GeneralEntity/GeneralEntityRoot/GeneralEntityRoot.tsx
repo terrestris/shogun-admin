@@ -219,7 +219,10 @@ export function GeneralEntityRoot<T extends BaseEntity> ({
             onClick={onSaveClick}
             type="primary"
           >
-            {t('Content.save')}
+            {t('Content.save', {
+              context: i18next.language,
+              entity: entityName
+            })}
           </Button>,
           <Button
             disabled={saveReloadDisabled}
@@ -228,7 +231,10 @@ export function GeneralEntityRoot<T extends BaseEntity> ({
             onClick={onResetForm}
             type="primary"
           >
-            {t('Content.reset')}
+            {t('Content.reset', {
+              context: i18next.language,
+              entity: entityName
+            })}
           </Button>
         ]}
       >

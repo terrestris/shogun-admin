@@ -32,8 +32,8 @@ export default {
         global: 'Global'
       },
       Content: {
-        save: 'Speichern',
-        reset: 'Zurücksetzen',
+        save_de: '{{entity}} speichern',
+        reset_de: '{{entity}} zurücksetzen',
         create_de: '{{entity}} erstellen'
       },
       Status: {
@@ -89,8 +89,8 @@ export default {
         global: 'Global'
       },
       Content: {
-        save: 'Save',
-        reset: 'Reset',
+        save_en: 'Save {{entity}}',
+        reset_en: 'Reset {{entity}}',
         create_en: 'Create {{entity}}'
       },
       Status: {
