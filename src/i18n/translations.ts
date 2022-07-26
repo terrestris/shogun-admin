@@ -53,6 +53,11 @@ export default {
         cache:'Cache leeren',
         tableName: 'Name',
         tableLevel: 'Level'
+      },
+      User: {
+        settings: 'Profil Einstellungen',
+        info: 'Info',
+        logout: 'Ausloggen'
       }
     }
   },
@@ -110,6 +115,11 @@ export default {
         cache:'Clear cache',
         tableName: 'Name',
         tableLevel: 'Level'
+      },
+      User: {
+        settings: 'Profile settings',
+        info: 'Info',
+        logout: 'Logout'
       }
     }
   }
