@@ -19,7 +19,11 @@ import GeneralEntityForm, { FormConfig } from '../GeneralEntityForm/GeneralEntit
 import GeneralEntityTable, { TableConfig } from '../GeneralEntityTable/GeneralEntityTable';
 import useSHOGunAPIClient from '../../../Hooks/useSHOGunAPIClient';
 
+import { useTranslation } from 'react-i18next';
+
 import './GeneralEntityRoot.less';
+import { languages } from 'monaco-editor';
+import i18next from 'i18next';
 
 export type GeneralEntityConfigType<T extends BaseEntity> = {
   endpoint: string;
@@ -61,6 +65,10 @@ export function GeneralEntityRoot<T extends BaseEntity> ({
   const [form] = Form.useForm();
 
   const client = useSHOGunAPIClient();
+
+  const {
+    t
+  } = useTranslation();
 
   /**
    * Validate form fields
@@ -211,7 +219,7 @@ export function GeneralEntityRoot<T extends BaseEntity> ({
             onClick={onSaveClick}
             type="primary"
           >
-            {`${entityName} speichern`}
+            {t('Content.save')}
           </Button>,
           <Button
             disabled={saveReloadDisabled}
@@ -220,7 +228,7 @@ export function GeneralEntityRoot<T extends BaseEntity> ({
             onClick={onResetForm}
             type="primary"
           >
-            {`${entityName} zurücksetzen`}
+            {t('Content.reset')}
           </Button>
         ]}
       >
@@ -237,7 +245,10 @@ export function GeneralEntityRoot<T extends BaseEntity> ({
               key="create"
               icon={<FormOutlined />}
             >
-              {`${entityName} anlegen`}
+              {t('Content.create', {
+                context: i18next.language,
+                entity: entityName
+              })}
             </Button>
           </Link>
         </div>

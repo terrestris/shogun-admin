@@ -9,6 +9,10 @@ import {
 } from 'antd';
 
 import {
+  useTranslation
+} from 'react-i18next';
+
+import {
   AppstoreOutlined,
   BankOutlined,
   DashboardOutlined,
@@ -29,6 +33,9 @@ import useSHOGunAPIClient from '../../Hooks/useSHOGunAPIClient';
 type WelcomeDashboardProps = {};
 
 export const WelcomeDashboard: React.FC<WelcomeDashboardProps> = () => {
+  const {
+    t
+  } = useTranslation();
 
   const dashboardConf = config.dashboard;
 
@@ -63,15 +70,15 @@ export const WelcomeDashboard: React.FC<WelcomeDashboardProps> = () => {
         <Link to={`${config.appPrefix}/portal/application`}>
           <DashboardCard
             className="layer-dashboard-card"
-            title="Applikationen"
-            description="… die die Welt bewegen"
+            title={t('Dashboard.applications')}
+            description={t('Dashboard.applicationInfo')}
             avatar={<BankOutlined />}
           >
             <DashboardStatistics
               service={client.application()}
               name={{
-                singular: 'Applikation',
-                plural: 'Applikationen'
+                singular: t('Dashboard.applicationSingular'),
+                plural: t('Dashboard.applicationPlural')
               }}
             />
           </DashboardCard>
@@ -82,15 +89,15 @@ export const WelcomeDashboard: React.FC<WelcomeDashboardProps> = () => {
         <Link to={`${config.appPrefix}/portal/layer`}>
           <DashboardCard
             className="layer-dashboard-card"
-            title="Themen"
-            description="… die die Welt bewegen"
+            title={t('Dashboard.subject')}
+            description={t('Dashboard.subjectInfo')}
             avatar={<AppstoreOutlined />}
           >
             <DashboardStatistics
               service={client.layer()}
               name={{
-                singular: 'Thema',
-                plural: 'Themen'
+                singular: t('Dashboard.subjectSingluar'),
+                plural: t('Dashboard.subjectPlural')
               }}
             />
           </DashboardCard>
@@ -101,15 +108,15 @@ export const WelcomeDashboard: React.FC<WelcomeDashboardProps> = () => {
         <Link to={`${config.appPrefix}/portal/user`}>
           <DashboardCard
             className="layer-dashboard-card"
-            title="User"
-            description="… die die Welt verbessern"
+            title={t('Dashboard.user')}
+            description={t('Dashboard.userInfo')}
             avatar={<UserOutlined />}
           >
             <DashboardStatistics
               service={client.user()}
               name={{
-                singular: 'Benutzer',
-                plural: 'Benutzer'
+                singular: t('Dashboard.userSingular'),
+                plural: t('Dashboard.userPlural')
               }}
             />
           </DashboardCard>

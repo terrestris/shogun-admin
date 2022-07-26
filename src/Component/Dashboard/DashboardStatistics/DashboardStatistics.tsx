@@ -9,6 +9,10 @@ import User from '@terrestris/shogun-util/dist/model/User';
 import Layer from '@terrestris/shogun-util/dist/model/Layer';
 import GenericService from '@terrestris/shogun-util/dist/service/GenericService';
 
+import {
+  useTranslation
+} from 'react-i18next';
+
 type DashboardStatisticsProps = {
   service: GenericService<Application | User | Layer>;
   name: {
@@ -23,6 +27,9 @@ export const DashboardStatistics: React.FC<DashboardStatisticsProps> = ({
   service,
   name
 }) => {
+  const {
+    t
+  } = useTranslation();
 
   const [entitiesCount, setEntitiesCount] = useState<number>(-1);
   const [loadingState, setLoadingState] = useState<'failed' | 'loading' | 'done'>();
@@ -46,7 +53,7 @@ export const DashboardStatistics: React.FC<DashboardStatisticsProps> = ({
   return (
     <div className="statistics-card">
       <Statistic
-        title="Insgesamt verfügbar"
+        title={t('Dashboard.statisticsTitle')}
         value={`${entitiesCount} ${entitiesCount > 0 ? name.plural : name.singular}`}
       />
     </div>

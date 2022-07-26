@@ -10,11 +10,17 @@ import {
 
 import EvictCache from '../../../Component/EvictCache/EvictCache';
 
+import { useTranslation } from 'react-i18next';
+
 import './GlobalSettingsRoot.less';
 
 type LogsProps = {};
 
 export const GlobalSettings: React.FC<LogsProps> = (props) => {
+
+  const {
+    t
+  } = useTranslation();
 
   const history = useHistory();
 
@@ -28,8 +34,8 @@ export const GlobalSettings: React.FC<LogsProps> = (props) => {
       <PageHeader
         className="header"
         onBack={() => history.goBack()}
-        title="Einstellungen"
-        subTitle="… die die Welt lenken"
+        title={t('Configuration.global')}
+        subTitle={t('Configuration.globalInfo')}
       />
       <div className="global-settings-container">
         <EvictCache />

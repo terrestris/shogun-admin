@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { useTranslation } from 'react-i18next';
+
 import { useHistory } from 'react-router-dom';
 
 import { PageHeader } from 'antd';
@@ -10,6 +12,10 @@ type LogSettingsRootProps = {};
 
 export const LogSettingsRoot: React.FC<LogSettingsRootProps> = (props) => {
 
+  const {
+    t
+  } = useTranslation();
+
   const history = useHistory();
 
   return (
@@ -19,8 +25,8 @@ export const LogSettingsRoot: React.FC<LogSettingsRootProps> = (props) => {
       <PageHeader
         className="header"
         onBack={() => history.goBack()}
-        title="Einstellungen"
-        subTitle="… die die Welt lenken"
+        title={t('Configuration.logs')}
+        subTitle={t('Configuration.logsInfo')}
       />
       <LogLevelTable />
     </div>

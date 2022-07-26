@@ -13,6 +13,8 @@ import {
 
 import useSHOGunAPIClient from '../../Hooks/useSHOGunAPIClient';
 
+import { useTranslation } from 'react-i18next';
+
 export interface EvictCacheProps extends Omit<ButtonProps, 'onClick' | 'loading'> { };
 
 export const EvictCache: React.FC<EvictCacheProps> = ({
@@ -22,6 +24,10 @@ export const EvictCache: React.FC<EvictCacheProps> = ({
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const client = useSHOGunAPIClient();
+
+  const {
+    t
+  } = useTranslation();
 
   const onClearCacheClick = async () => {
 
@@ -45,7 +51,7 @@ export const EvictCache: React.FC<EvictCacheProps> = ({
       icon={<ClearOutlined />}
       {...passThroughProps}
     >
-      Cache leeren
+      {t('Configuration.cache')}
     </Button>
   );
 };

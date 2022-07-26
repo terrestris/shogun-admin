@@ -17,6 +17,10 @@ import config from 'shogunApplicationConfig';
 import { GeneralEntityConfigType } from '../../GeneralEntity/GeneralEntityRoot/GeneralEntityRoot';
 import BaseEntity from '@terrestris/shogun-util/dist/model/BaseEntity';
 
+import {
+  useTranslation
+} from 'react-i18next';
+
 interface OwnProps {
   collapsed?: boolean;
   entityConfigs?: GeneralEntityConfigType<BaseEntity>[];
@@ -28,6 +32,9 @@ export const Navigation: React.FC<NavigationProps> = ({
   collapsed = false,
   entityConfigs = []
 }) => {
+  const {
+    t
+  } = useTranslation();
 
   const history = useHistory();
   const location = useLocation();
@@ -57,7 +64,7 @@ export const Navigation: React.FC<NavigationProps> = ({
     >
       <Menu.SubMenu
         key="general"
-        title="Inhalte"
+        title={t('Menu.content')}
       >
         {
           entityConfigs.map(entityConfig => {
@@ -83,7 +90,7 @@ export const Navigation: React.FC<NavigationProps> = ({
       </Menu.SubMenu>
       <Menu.SubMenu
         key="status"
-        title="Status"
+        title={t('Menu.status')}
       >
         {
           navigationConf?.status?.metrics?.visible &&
@@ -91,7 +98,7 @@ export const Navigation: React.FC<NavigationProps> = ({
               key="status/metrics"
             >
               <BarChartOutlined />
-              <span>Metriken</span>
+              <span>{t('Menu.metrics')}</span>
             </Menu.Item>
         }
         {
@@ -100,13 +107,13 @@ export const Navigation: React.FC<NavigationProps> = ({
               key="status/logs"
             >
               <FileTextOutlined />
-              <span>Logs</span>
+              <span>{t('Menu.logs')}</span>
             </Menu.Item>
         }
       </Menu.SubMenu>
       <Menu.SubMenu
         key="settings"
-        title="Einstellungen"
+        title={t('Menu.configuration')}
       >
         {
           navigationConf?.settings?.global?.visible &&
@@ -114,7 +121,7 @@ export const Navigation: React.FC<NavigationProps> = ({
               key="settings/global"
             >
               <ControlOutlined />
-              <span>Global</span>
+              <span>{t('Menu.global')}</span>
             </Menu.Item>
         }
         {
@@ -123,7 +130,7 @@ export const Navigation: React.FC<NavigationProps> = ({
               key="settings/logs"
             >
               <FileTextOutlined />
-              <span>Logs</span>
+              <span>{t('Menu.logs')}</span>
             </Menu.Item>
         }
       </Menu.SubMenu>
