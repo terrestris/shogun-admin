@@ -22,7 +22,6 @@ import useSHOGunAPIClient from '../../../Hooks/useSHOGunAPIClient';
 import { useTranslation } from 'react-i18next';
 
 import './GeneralEntityRoot.less';
-import { languages } from 'monaco-editor';
 import i18next from 'i18next';
 
 export type GeneralEntityConfigType<T extends BaseEntity> = {
