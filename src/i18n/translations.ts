@@ -6,15 +6,15 @@ export default {
       },
       DashboardStatistics: {
         applications: 'Applikationen',
-        applicationInfo: '... die die Welt bewegen',
+        applicationInfo: '… die die Welt bewegen',
         applicationSingular: 'Applikation',
         applicationPlural: 'Applikationen',
         subject: 'Themen',
-        subjectInfo: '... die die Welt bewegen',
+        subjectInfo: '… die die Welt bewegen',
         subjectSingluar: 'Thema',
         subjectPlural: 'Themen',
         user: 'Benutzer',
-        userInfo: '... die die Welt verbessern',
+        userInfo: '… die die Welt verbessern',
         userSingular: 'Benutzer',
         userPlural: 'Benutzer',
         statisticsTitle: 'Insgesamt verfügbar'
@@ -38,18 +38,18 @@ export default {
       },
       Logs: {
         metric: 'Metriken',
-        metricsInfo: '... die die Welt vermessen',
+        metricsInfo: '… die die Welt vermessen',
         logs: 'Logs',
-        logsInfo: '... die die Welt erklären',
+        logsInfo: '… die die Welt erklären',
         refresh: 'Aktualisieren',
         reloadChecked: 'Automatisches Nachladen',
         reloadUnChecked: 'Kein Nachladen'
       },
       GlobalSettingsRoot: {
         global: 'Einstellungen',
-        globalInfo: '... die die Welt lenken',
+        globalInfo: '… die die Welt lenken',
         logs: 'Einstellungen',
-        logsInfo: '... die die Welt lenken',
+        logsInfo: '… die die Welt lenken',
         cache:'Cache leeren',
         tableName: 'Name',
         tableLevel: 'Level'
@@ -68,15 +68,15 @@ export default {
       },
       DashboardStatistics: {
         applications: 'Applications',
-        applicationInfo: '... that move the world',
+        applicationInfo: '… that move the world',
         applicationSingular: 'application',
         applicationPlural: 'applications',
         subject: 'Subjects',
-        subjectInfo: '... that move the world',
+        subjectInfo: '… that move the world',
         subjectSingluar: 'subject',
         subjectPlural: 'subjects',
         user: 'User',
-        userInfo: '... that improve the world',
+        userInfo: '… that improve the world',
         userSingular: 'user',
         userPlural: 'users',
         statisticsTitle: 'Total available'
@@ -100,18 +100,18 @@ export default {
       },
       Logs: {
         metric: 'Metrics',
-        metricsInfo: '... that measure the world',
+        metricsInfo: '… that measure the world',
         logs: 'Logs',
-        logsInfo: '... that explain the world',
+        logsInfo: '… that explain the world',
         refresh: 'Refresh',
         reloadChecked: 'Live Reload',
         reloadUnChecked: 'No Reload'
       },
       GlobalSettingsRoot: {
         global: 'Configuration',
-        globalInfo: '... that guide the world',
+        globalInfo: '… that guide the world',
         logs: 'Configuration',
-        logsInfo: '... that guide the world',
+        logsInfo: '… that guide the world',
         cache:'Clear cache',
         tableName: 'Name',
         tableLevel: 'Level'
