@@ -229,6 +229,12 @@
       "config": {
         "visible": true
       }
+    },
+    {
+      "name": "language_selector",
+      "config": {
+        "visible": true
+      }
     }
   ]
 }
