@@ -58,6 +58,9 @@ export default {
         settings: 'Profil Einstellungen',
         info: 'Info',
         logout: 'Ausloggen'
+      },
+      Language: {
+        title: 'Sprachauswahl'
       }
     }
   },
@@ -120,6 +123,9 @@ export default {
         settings: 'Profile settings',
         info: 'Info',
         logout: 'Logout'
+      },
+      Language: {
+        title: 'Language selection'
       }
     }
   }
