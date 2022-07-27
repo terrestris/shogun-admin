@@ -49,9 +49,11 @@ export default {
         title: 'Metriken',
         info: '… die die Welt vermessen',
       },
-      LogSettings: {
+      GlobalSettings: {
         global: 'Einstellungen',
         globalInfo: '… die die Welt lenken',
+      },
+      LogSettings: {
         logs: 'Einstellungen',
         logsInfo: '… die die Welt lenken',
         tableName: 'Name',
@@ -119,9 +121,11 @@ export default {
         title: 'Metrics',
         info: '… that measure the world',
       },
-      LogSettings: {
+      GlobalSettings: {
         global: 'Configuration',
-        globalInfo: '… that guide the world',
+        globalInfo: '… that guide the world'
+      },
+      LogSettings: {
         logs: 'Configuration',
         logsInfo: '… that guide the world',
         tableName: 'Name',
