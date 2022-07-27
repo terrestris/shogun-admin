@@ -116,7 +116,7 @@ export const WelcomeDashboard: React.FC<WelcomeDashboardProps> = () => {
               service={client.user()}
               name={{
                 singular: t('WelcomeDashboard.userSingular'),
-                plural: t('WelcomeDashboard:.userPlural')
+                plural: t('WelcomeDashboard.userPlural')
               }}
             />
           </DashboardCard>
