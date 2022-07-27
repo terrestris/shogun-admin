@@ -64,7 +64,7 @@ export const Navigation: React.FC<NavigationProps> = ({
     >
       <Menu.SubMenu
         key="general"
-        title={t('Menu.content')}
+        title={t('Navigation.content')}
       >
         {
           entityConfigs.map(entityConfig => {
@@ -90,7 +90,7 @@ export const Navigation: React.FC<NavigationProps> = ({
       </Menu.SubMenu>
       <Menu.SubMenu
         key="status"
-        title={t('Menu.status')}
+        title={t('Navigation.status')}
       >
         {
           navigationConf?.status?.metrics?.visible &&
@@ -98,7 +98,7 @@ export const Navigation: React.FC<NavigationProps> = ({
               key="status/metrics"
             >
               <BarChartOutlined />
-              <span>{t('Menu.metrics')}</span>
+              <span>{t('Navigation.metrics')}</span>
             </Menu.Item>
         }
         {
@@ -107,13 +107,13 @@ export const Navigation: React.FC<NavigationProps> = ({
               key="status/logs"
             >
               <FileTextOutlined />
-              <span>{t('Menu.logs')}</span>
+              <span>{t('Navigation.logs')}</span>
             </Menu.Item>
         }
       </Menu.SubMenu>
       <Menu.SubMenu
         key="settings"
-        title={t('Menu.configuration')}
+        title={t('Navigation.configuration')}
       >
         {
           navigationConf?.settings?.global?.visible &&
@@ -121,7 +121,7 @@ export const Navigation: React.FC<NavigationProps> = ({
               key="settings/global"
             >
               <ControlOutlined />
-              <span>{t('Menu.global')}</span>
+              <span>{t('Navigation.global')}</span>
             </Menu.Item>
         }
         {
@@ -130,7 +130,7 @@ export const Navigation: React.FC<NavigationProps> = ({
               key="settings/logs"
             >
               <FileTextOutlined />
-              <span>{t('Menu.logs')}</span>
+              <span>{t('Navigation.logs')}</span>
             </Menu.Item>
         }
       </Menu.SubMenu>

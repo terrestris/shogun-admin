@@ -61,11 +61,11 @@ export const LogLevelTable: React.FC<LogLevelTableProps> = props => {
   };
 
   const columns = [{
-    title: t('Configuration.tableName'),
+    title: t('GlobalSettingsRoot.tableName'),
     dataIndex: 'name',
     key: 'name',
   }, {
-    title: t('Configuration.tableLevel'),
+    title: t('GlobalSettingsRoot.tableLevel'),
     dataIndex: 'level',
     key: 'level',
     render: (level: LogLevel, record: TableData) => (

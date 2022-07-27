@@ -68,13 +68,13 @@ export const Logs: React.FC<LogsProps> = (props) => {
       <PageHeader
         className="header"
         onBack={() => history.goBack()}
-        title={t('Status.logs')}
-        subTitle={t('Status.logsInfo')}
+        title={t('Logs.logs')}
+        subTitle={t('Logs.logsInfo')}
         extra={[
           <Switch
             key="reload"
-            checkedChildren={t('Status.reloadChecked')}
-            unCheckedChildren={t('Status.reloadUnChecked')}
+            checkedChildren={t('Logs.reloadChecked')}
+            unCheckedChildren={t('Logs.reloadUnChecked')}
             onChange={onChange}
           />,
           <Button
@@ -82,7 +82,7 @@ export const Logs: React.FC<LogsProps> = (props) => {
             type="primary"
             onClick={fetchLogs}
           >
-            {t('Status.refresh')}
+            {t('Logs.refresh')}
           </Button>
         ]}
       />

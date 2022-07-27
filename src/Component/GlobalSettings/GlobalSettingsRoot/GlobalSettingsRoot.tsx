@@ -34,8 +34,8 @@ export const GlobalSettings: React.FC<LogsProps> = (props) => {
       <PageHeader
         className="header"
         onBack={() => history.goBack()}
-        title={t('Configuration.global')}
-        subTitle={t('Configuration.globalInfo')}
+        title={t('GlobalSettingsRoot.global')}
+        subTitle={t('GlobalSettingsRoot.globalInfo')}
       />
       <div className="global-settings-container">
         <EvictCache />

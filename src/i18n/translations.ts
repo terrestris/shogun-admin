@@ -4,7 +4,7 @@ export default {
       Render: {
         title: 'Die Anwendung konnte nicht geladen werden. Prüfen Sie Ihre Konsole.'
       },
-      Dashboard: {
+      DashboardStatistics: {
         applications: 'Applikationen',
         applicationInfo: '... die die Welt bewegen',
         applicationSingular: 'Applikation',
@@ -19,7 +19,7 @@ export default {
         userPlural: 'Benutzer',
         statisticsTitle: 'Insgesamt verfügbar'
       },
-      Menu: {
+      Navigation: {
         content: 'Inhalte',
         application: 'Applikationen',
         subject: 'Themen',
@@ -31,12 +31,12 @@ export default {
         configuration: 'Einstellungen',
         global: 'Global'
       },
-      Content: {
+      GeneralEntityRoot: {
         save_de: '{{entity}} speichern',
         reset_de: '{{entity}} zurücksetzen',
         create_de: '{{entity}} erstellen'
       },
-      Status: {
+      Logs: {
         metric: 'Metriken',
         metricsInfo: '... die die Welt vermessen',
         logs: 'Logs',
@@ -45,7 +45,7 @@ export default {
         reloadChecked: 'Automatisches Nachladen',
         reloadUnChecked: 'Kein Nachladen'
       },
-      Configuration: {
+      GlobalSettingsRoot: {
         global: 'Einstellungen',
         globalInfo: '... die die Welt lenken',
         logs: 'Einstellungen',
@@ -58,9 +58,6 @@ export default {
         settings: 'Profil Einstellungen',
         info: 'Info',
         logout: 'Ausloggen'
-      },
-      Language: {
-        title: 'Sprachauswahl'
       }
     }
   },
@@ -69,7 +66,7 @@ export default {
       Render: {
         title: 'Failed to load the application. Check your console.'
       },
-      Dashboard: {
+      DashboardStatistics: {
         applications: 'Applications',
         applicationInfo: '... that move the world',
         applicationSingular: 'application',
@@ -84,7 +81,7 @@ export default {
         userPlural: 'users',
         statisticsTitle: 'Total available'
       },
-      Menu: {
+      Navigation: {
         content: 'Content',
         application: 'Application',
         subject: 'Subject',
@@ -96,12 +93,12 @@ export default {
         configuration: 'Configuration',
         global: 'Global'
       },
-      Content: {
+      GeneralEntityRoot: {
         save_en: 'Save {{entity}}',
         reset_en: 'Reset {{entity}}',
         create_en: 'Create {{entity}}'
       },
-      Status: {
+      Logs: {
         metric: 'Metrics',
         metricsInfo: '... that measure the world',
         logs: 'Logs',
@@ -110,7 +107,7 @@ export default {
         reloadChecked: 'Live Reload',
         reloadUnChecked: 'No Reload'
       },
-      Configuration: {
+      GlobalSettingsRoot: {
         global: 'Configuration',
         globalInfo: '... that guide the world',
         logs: 'Configuration',
@@ -123,9 +120,6 @@ export default {
         settings: 'Profile settings',
         info: 'Info',
         logout: 'Logout'
-      },
-      Language: {
-        title: 'Language selection'
       }
     }
   }

@@ -51,7 +51,7 @@ export const EvictCache: React.FC<EvictCacheProps> = ({
       icon={<ClearOutlined />}
       {...passThroughProps}
     >
-      {t('Configuration.cache')}
+      {t('GlobalSettingsRoot.cache')}
     </Button>
   );
 };

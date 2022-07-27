@@ -218,7 +218,7 @@ export function GeneralEntityRoot<T extends BaseEntity> ({
             onClick={onSaveClick}
             type="primary"
           >
-            {t('Content.save', {
+            {t('GeneralEntityRoot.save', {
               context: i18next.language,
               entity: entityName
             })}
@@ -230,7 +230,7 @@ export function GeneralEntityRoot<T extends BaseEntity> ({
             onClick={onResetForm}
             type="primary"
           >
-            {t('Content.reset', {
+            {t('GeneralEntityRoot.reset', {
               context: i18next.language,
               entity: entityName
             })}
@@ -250,7 +250,7 @@ export function GeneralEntityRoot<T extends BaseEntity> ({
               key="create"
               icon={<FormOutlined />}
             >
-              {t('Content.create', {
+              {t('GeneralEntityRoot.create', {
                 context: i18next.language,
                 entity: entityName
               })}

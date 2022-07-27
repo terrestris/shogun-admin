@@ -53,7 +53,7 @@ export const DashboardStatistics: React.FC<DashboardStatisticsProps> = ({
   return (
     <div className="statistics-card">
       <Statistic
-        title={t('Dashboard.statisticsTitle')}
+        title={t('DashboardStatistics.statisticsTitle')}
         value={`${entitiesCount} ${entitiesCount > 0 ? name.plural : name.singular}`}
       />
     </div>
