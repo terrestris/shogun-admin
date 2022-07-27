@@ -1,3 +1,10 @@
+## [9.3.0](https://github.com/terrestris/shogun-admin/compare/v9.2.0...v9.3.0) (2022-07-27)
+
+
+### Features
+
+* admin client translation ([#104](https://github.com/terrestris/shogun-admin/issues/104)) ([9a63800](https://github.com/terrestris/shogun-admin/commit/9a638000d261c1e767e837f848f1fa1508aedcca))
+
 ## [9.2.0](https://github.com/terrestris/shogun-admin/compare/v9.1.0...v9.2.0) (2022-07-27)
 
 
