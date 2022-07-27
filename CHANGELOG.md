@@ -1,3 +1,15 @@
+## [9.2.0](https://github.com/terrestris/shogun-admin/compare/v9.1.0...v9.2.0) (2022-07-27)
+
+
+### Features
+
+* integrates sonarscanner into builing pipeline ([60279b1](https://github.com/terrestris/shogun-admin/commit/60279b1f5933adda1df18187cef47b2bcee0806e))
+
+
+### Bugfixes
+
+* uses a absolute image ([04685e1](https://github.com/terrestris/shogun-admin/commit/04685e135c554a1b9a5e3681e0017c6733d46ea6))
+
 ## [9.1.0](https://github.com/terrestris/shogun-admin/compare/v9.0.3...v9.1.0) (2022-07-25)
 
 
