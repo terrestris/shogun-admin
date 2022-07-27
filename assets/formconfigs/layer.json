@@ -1,8 +1,45 @@
 {
+  "i18n": {
+    "de": {
+      "entityName": "Thema",
+      "navigationTitle": "Themen",
+      "labelId": "ID",
+      "labelEstabl": "Erstellt am",
+      "labelEdit": "Zuletzt editiert am",
+      "labelName": "Name",
+      "labelType": "Typ",
+      "labelConfig": "Konfiguration",
+      "labelSource": "Datenquelle",
+      "labelFeat": "Features",
+      "titleId": "ID",
+      "titleName": "Name",
+      "titleType": "Typ",
+      "titlePrev": "Layervorschau (GeoServer)",
+      "titleOpenPrev": "Öffne Layervorschau"
+
+    },
+    "en": {
+      "entityName": "Subject",
+      "navigationTitle": "Subjects",
+      "labelId": "ID",
+      "labelEstabl": "Created at",
+      "labelEdit": "Last edited on",
+      "labelName": "Name",
+      "labelType": "Type",
+      "labelConfig": "Configuration",
+      "labelSource": "Datasource",
+      "labelFeat": "Features",
+      "titleId": "ID",
+      "titleName": "Name",
+      "titleType": "Type",
+      "titlePrev": "Layer preview (GeoServer)",
+      "titleOpenPrev": "Open layer preview"
+    }
+  },
   "endpoint": "/layers",
   "entityType": "layer",
-  "entityName": "Thema",
-  "navigationTitle": "Themen",
+  "entityName": "i18n.entityName",
+  "navigationTitle": "i18n.navigationTitle",
   "subTitle": "",
   "formConfig": {
     "name": "layer",
@@ -10,7 +47,7 @@
       {
         "dataType": "number",
         "dataField": "id",
-        "labelI18n": "ID",
+        "label": "i18n.labelId",
         "readOnly": "true"
       },
       {
@@ -18,7 +55,7 @@
         "dataType": "date",
         "readOnly": "true",
         "component": "DateField",
-        "labelI18n": "Erstellt am",
+        "label": "i18n.labelEstabl",
         "fieldProps": {
           "dateFormat": "DD.MM.YYYY HH:mm"
         }
@@ -27,7 +64,7 @@
         "dataField": "modified",
         "dataType": "date",
         "readOnly": "true",
-        "labelI18n": "Zuletzt editiert am",
+        "label": "i18n.labelEdit",
         "component": "DateField",
         "fieldProps": {
           "dateFormat": "DD.MM.YYYY HH:mm"
@@ -36,19 +73,19 @@
       {
         "component": "Input",
         "dataField": "name",
-        "labelI18n": "Name",
+        "label": "i18n.labelName",
         "required": "true"
       },
       {
         "component": "LayerTypeSelect",
         "dataField": "type",
-        "labelI18n": "Typ",
+        "label": "i18n.labelType",
         "required": "true"
       },
       {
         "component": "JSONEditor",
         "dataField": "clientConfig",
-        "labelI18n": "Konfiguration",
+        "label": "i18n.labelConfig",
         "fieldProps": {
           "entityName": "DefaultLayerClientConfig"
         }
@@ -56,7 +93,7 @@
       {
         "component": "JSONEditor",
         "dataField": "sourceConfig",
-        "labelI18n": "Datenquelle",
+        "label": "i18n.labelSource",
         "fieldProps": {
           "entityName": "DefaultLayerSourceConfig"
         }
@@ -64,7 +101,7 @@
       {
         "component": "JSONEditor",
         "dataField": "features",
-        "labelI18n": "Features",
+        "label": "i18n.labelFeat",
         "fieldProps": {
           "entityName": "GeoJsonObject"
         }
@@ -74,14 +111,14 @@
   "tableConfig": {
     "columnDefinition": [
       {
-        "title": "ID",
+        "title": "i18n.titleId",
         "dataIndex": "id",
         "sortConfig": {
           "isSortable": false
         }
       },
       {
-        "title": "Name",
+        "title": "i18n.titleName",
         "dataIndex": "name",
         "key": "name",
         "sortConfig": {
@@ -92,7 +129,7 @@
         }
       },
       {
-        "title": "Typ",
+        "title": "i18n.titleType",
         "dataIndex": "type",
         "key": "type",
         "sortConfig": {
@@ -100,12 +137,12 @@
         }
       },
       {
-        "title": "Layervorschau (GeoServer)",
+        "title": "i18n.titlePrev",
         "dataIndex": ["sourceConfig", "layerNames"],
         "key": "preview",
         "cellRenderComponentName": "LinkCell",
         "cellRenderComponentProps": {
-          "title": "Öffne Layervorschau",
+          "title": "i18n.titleOpenPrev",
           "template": "/geoserver/wms/reflect?format=application/openlayers&layers={}"
         }
       }

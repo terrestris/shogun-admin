@@ -1,8 +1,40 @@
 {
+  "i18n": {
+    "de": {
+      "entityName": "Benutzer",
+      "navigationTitle": "Benutzer",
+      "labelId": "ID",
+      "labelEstabl": "Erstellt am",
+      "labelEdit": "Zuletzt editiert am",
+      "labelKey": "Keycloak ID",
+      "labelKeyProvDetail": "Keycloak Details",
+      "labelKeyDetail": "Details",
+      "labelSource": "Datenquelle",
+      "titleId": "ID",
+      "titleKeyId": "Keycloak ID",
+      "titleLink": "Link zum Benutzer",
+      "titleOpen": "Öffne User in Keycloak"
+    },
+    "en": {
+      "entityName": "User",
+      "navigationTitle": "User",
+      "labelId": "ID",
+      "labelEstabl": "Created at",
+      "labelEdit": "Last edited on",
+      "labelKey": "Keycloak ID",
+      "labelKeyProvDetail": "Keycloak details",
+      "labelKeyDetail": "Details",
+      "labelSource": "Datasource",
+      "titleId": "ID",
+      "titleKeyId": "Keycloak ID",
+      "titleLink": "Link to user",
+      "titleOpen": "Open user in Keycloak"
+    }
+  },
   "endpoint": "/users",
   "entityType": "user",
-  "entityName": "Benutzer",
-  "navigationTitle": "Benutzer",
+  "entityName": "i18n.entityName",
+  "navigationTitle": "i18n.navigationTitle",
   "subTitle": "",
   "formConfig": {
     "name": "user",
@@ -10,7 +42,7 @@
       {
         "dataType": "number",
         "dataField": "id",
-        "labelI18n": "ID",
+        "labelI18n": "i18n.labelId",
         "readOnly": "true"
       },
       {
@@ -18,7 +50,7 @@
         "dataType": "date",
         "readOnly": "true",
         "component": "DateField",
-        "labelI18n": "Erstellt am",
+        "label": "i18n.labelEstabl",
         "fieldProps": {
           "dateFormat": "DD.MM.YYYY HH:mm"
         }
@@ -27,7 +59,7 @@
         "dataField": "modified",
         "dataType": "date",
         "readOnly": "true",
-        "labelI18n": "Zuletzt editiert am",
+        "label": "i18n.labelEdit",
         "component": "DateField",
         "fieldProps": {
           "dateFormat": "DD.MM.YYYY HH:mm"
@@ -36,17 +68,17 @@
       {
         "component": "DisplayField",
         "dataField": "authProviderId",
-        "labelI18n": "Keycloak ID"
+        "label": "i18n.labelKey"
       },
       {
         "component": "JSONEditor",
         "dataField": "providerDetails",
-        "labelI18n": "Keycloak Details"
+        "label": "i18n.labelKeyProvDetail"
       },
       {
         "component": "JSONEditor",
         "dataField": "details",
-        "labelI18n": "Details",
+        "label": "Details",
         "fieldProps": {
           "entityName": "UserDetails"
         }
@@ -54,7 +86,7 @@
       {
         "component": "JSONEditor",
         "dataField": "clientConfig",
-        "labelI18n": "Datenquelle",
+        "label": "Datenquelle",
         "fieldProps": {
           "entityName": "UserClientConfig"
         }
@@ -64,14 +96,14 @@
   "tableConfig": {
     "columnDefinition": [
       {
-        "title": "ID",
+        "title": "i18n.titleId",
         "dataIndex": "id",
         "sortConfig": {
           "isSortable": false
         }
       },
       {
-        "title": "Keycloak ID",
+        "title": "i18n.titleKeyId",
         "dataIndex": "authProviderId",
         "key": "authProviderId",
         "sortConfig": {
@@ -82,12 +114,12 @@
         }
       },
       {
-        "title": "Link zum User",
+        "title": "i18n.titleLink",
         "dataIndex": "authProviderId",
         "key": "link",
         "cellRenderComponentName": "LinkCell",
         "cellRenderComponentProps": {
-          "title": "Öffne User in Keycloak",
+          "title": "i18n.titleOpen",
           "template": "/auth/admin/master/console/#/realms/SpringBootKeycloak/users/{}"
         }
       }

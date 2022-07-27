@@ -1,8 +1,34 @@
 {
+  "i18n": {
+    "de": {
+      "entityName": "Gruppe",
+      "navigationTitle": "Gruppen",
+      "labelId": "ID",
+      "labelEstabl": "Erstellt am",
+      "labelEdit": "Zuletzt editiert am",
+      "labelKey": "Keycloak ID",
+      "titleId": "ID",
+      "titleKeyId": "Keycloak ID",
+      "titleLink": "Link zur Gruppe",
+      "titleGroup": "Öffne Gruppe in Keycloak"
+    },
+    "en": {
+      "entityName": "Group",
+      "navigationTitle": "Groups",
+      "labelId": "ID",
+      "labelEstabl": "Created at",
+      "labelEdit": "Last edited on",
+      "labelKey": "Keycloak ID",
+      "titleId": "ID",
+      "titleKeyId": "Keycloak ID",
+      "titleLink": "Link to group",
+      "titleGroup": "Open group in Keycloak"
+    }
+  },
   "endpoint": "/groups",
   "entityType": "group",
-  "entityName": "Gruppe",
-  "navigationTitle": "Gruppen",
+  "entityName": "i18n.entityName",
+  "navigationTitle": "i18n.navigationTitle",
   "subTitle": "",
   "formConfig": {
     "name": "group",
@@ -10,7 +36,7 @@
       {
         "dataType": "number",
         "dataField": "id",
-        "labelI18n": "ID",
+        "label": "i18n.labelId",
         "readOnly": "true"
       },
       {
@@ -18,7 +44,7 @@
         "dataType": "date",
         "readOnly": "true",
         "component": "DateField",
-        "labelI18n": "Erstellt am",
+        "label": "i18n.labelEstabl",
         "fieldProps": {
           "dateFormat": "DD.MM.YYYY HH:mm"
         }
@@ -27,7 +53,7 @@
         "dataField": "modified",
         "dataType": "date",
         "readOnly": "true",
-        "labelI18n": "Zuletzt editiert am",
+        "label": "i18n.labelEdit",
         "component": "DateField",
         "fieldProps": {
           "dateFormat": "DD.MM.YYYY HH:mm"
@@ -36,21 +62,21 @@
       {
         "component": "DisplayField",
         "dataField": "authProviderId",
-        "labelI18n": "Keycloak ID"
+        "label": "i18n.labelKey"
       }
     ]
   },
   "tableConfig": {
     "columnDefinition": [
       {
-        "title": "ID",
+        "title": "i18n.titleId",
         "dataIndex": "id",
         "sortConfig": {
           "isSortable": false
         }
       },
       {
-        "title": "Keycloak ID",
+        "title": "i18n.titleKeyId",
         "dataIndex": "authProviderId",
         "key": "authProviderId",
         "sortConfig": {
@@ -61,12 +87,12 @@
         }
       },
       {
-        "title": "Link zur Gruppe",
+        "title": "i18n.titleLink",
         "dataIndex": "authProviderId",
         "key": "link",
         "cellRenderComponentName": "LinkCell",
         "cellRenderComponentProps": {
-          "title": "Öffne Gruppe in Keycloak",
+          "title": "i18n.titleGroup",
           "template": "/auth/admin/master/console/#/realms/SpringBootKeycloak/groups/{}"
         }
       }
