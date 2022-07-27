@@ -32,9 +32,9 @@ export default {
         global: 'Global'
       },
       GeneralEntityRoot: {
-        save_de: '{{entity}} speichern',
-        reset_de: '{{entity}} zurücksetzen',
-        create_de: '{{entity}} erstellen'
+        save: '{{entity}} speichern',
+        reset: '{{entity}} zurücksetzen',
+        create: '{{entity}} erstellen'
       },
       Logs: {
         metric: 'Metriken',
@@ -50,12 +50,12 @@ export default {
         globalInfo: '… die die Welt lenken',
         logs: 'Einstellungen',
         logsInfo: '… die die Welt lenken',
-        cache:'Cache leeren',
+        cache: 'Cache leeren',
         tableName: 'Name',
         tableLevel: 'Level'
       },
       User: {
-        settings: 'Profil Einstellungen',
+        settings: 'Profileinstellungen',
         info: 'Info',
         logout: 'Ausloggen'
       }
@@ -94,9 +94,9 @@ export default {
         global: 'Global'
       },
       GeneralEntityRoot: {
-        save_en: 'Save {{entity}}',
-        reset_en: 'Reset {{entity}}',
-        create_en: 'Create {{entity}}'
+        save: 'Save {{entity}}',
+        reset: 'Reset {{entity}}',
+        create: 'Create {{entity}}'
       },
       Logs: {
         metric: 'Metrics',
@@ -104,15 +104,15 @@ export default {
         logs: 'Logs',
         logsInfo: '… that explain the world',
         refresh: 'Refresh',
-        reloadChecked: 'Live Reload',
-        reloadUnChecked: 'No Reload'
+        reloadChecked: 'Live reload',
+        reloadUnChecked: 'No reload'
       },
       GlobalSettingsRoot: {
         global: 'Configuration',
         globalInfo: '… that guide the world',
         logs: 'Configuration',
         logsInfo: '… that guide the world',
-        cache:'Clear cache',
+        cache: 'Clear cache',
         tableName: 'Name',
         tableLevel: 'Level'
       },
