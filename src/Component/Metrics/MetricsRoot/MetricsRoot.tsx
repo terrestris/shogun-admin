@@ -46,8 +46,8 @@ export const MetricsRoot: React.FC<MetricsRootProps> = (props) => {
       <PageHeader
         className="header"
         onBack={() => history.goBack()}
-        title={t('Logs.metric')}
-        subTitle={t('Logs.metricsInfo')}
+        title={t('Metrics.title')}
+        subTitle={t('Metrics.info')}
       />
       <div className="metrics-card-container">
         <Row gutter={[16, 16]}>

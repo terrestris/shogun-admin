@@ -70,15 +70,15 @@ export const WelcomeDashboard: React.FC<WelcomeDashboardProps> = () => {
         <Link to={`${config.appPrefix}/portal/application`}>
           <DashboardCard
             className="layer-dashboard-card"
-            title={t('Dashboard.applications')}
-            description={t('Dashboard.applicationInfo')}
+            title={t('WelcomeDashboard.applications')}
+            description={t('WelcomeDashboard.applicationInfo')}
             avatar={<BankOutlined />}
           >
             <DashboardStatistics
               service={client.application()}
               name={{
-                singular: t('Dashboard.applicationSingular'),
-                plural: t('Dashboard.applicationPlural')
+                singular: t('WelcomeDashboard.applicationSingular'),
+                plural: t('WelcomeDashboard.applicationPlural')
               }}
             />
           </DashboardCard>
@@ -89,15 +89,15 @@ export const WelcomeDashboard: React.FC<WelcomeDashboardProps> = () => {
         <Link to={`${config.appPrefix}/portal/layer`}>
           <DashboardCard
             className="layer-dashboard-card"
-            title={t('Dashboard.subject')}
-            description={t('Dashboard.subjectInfo')}
+            title={t('WelcomeDashboard.subject')}
+            description={t('WelcomeDashboard.subjectInfo')}
             avatar={<AppstoreOutlined />}
           >
             <DashboardStatistics
               service={client.layer()}
               name={{
-                singular: t('Dashboard.subjectSingluar'),
-                plural: t('Dashboard.subjectPlural')
+                singular: t('WelcomeDashboard.subjectSingluar'),
+                plural: t('WelcomeDashboard.subjectPlural')
               }}
             />
           </DashboardCard>
@@ -108,15 +108,15 @@ export const WelcomeDashboard: React.FC<WelcomeDashboardProps> = () => {
         <Link to={`${config.appPrefix}/portal/user`}>
           <DashboardCard
             className="layer-dashboard-card"
-            title={t('Dashboard.user')}
-            description={t('Dashboard.userInfo')}
+            title={t('WelcomeDashboard.user')}
+            description={t('WelcomeDashboard.userInfo')}
             avatar={<UserOutlined />}
           >
             <DashboardStatistics
               service={client.user()}
               name={{
-                singular: t('Dashboard.userSingular'),
-                plural: t('Dashboard.userPlural')
+                singular: t('WelcomeDashboard.userSingular'),
+                plural: t('WelcomeDashboard:.userPlural')
               }}
             />
           </DashboardCard>

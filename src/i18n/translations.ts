@@ -4,7 +4,7 @@ export default {
       Render: {
         title: 'Die Anwendung konnte nicht geladen werden. Prüfen Sie Ihre Konsole.'
       },
-      DashboardStatistics: {
+      WelcomeDashboard: {
         applications: 'Applikationen',
         applicationInfo: '… die die Welt bewegen',
         applicationSingular: 'Applikation',
@@ -17,6 +17,8 @@ export default {
         userInfo: '… die die Welt verbessern',
         userSingular: 'Benutzer',
         userPlural: 'Benutzer',
+      },
+      DashboardStatistics: {
         statisticsTitle: 'Insgesamt verfügbar'
       },
       Navigation: {
@@ -37,22 +39,26 @@ export default {
         create: '{{entity}} erstellen'
       },
       Logs: {
-        metric: 'Metriken',
-        metricsInfo: '… die die Welt vermessen',
         logs: 'Logs',
         logsInfo: '… die die Welt erklären',
         refresh: 'Aktualisieren',
         reloadChecked: 'Automatisches Nachladen',
         reloadUnChecked: 'Kein Nachladen'
       },
-      GlobalSettingsRoot: {
+      Metrics: {
+        title: 'Metriken',
+        info: '… die die Welt vermessen',
+      },
+      LogSettings: {
         global: 'Einstellungen',
         globalInfo: '… die die Welt lenken',
         logs: 'Einstellungen',
         logsInfo: '… die die Welt lenken',
-        cache: 'Cache leeren',
         tableName: 'Name',
         tableLevel: 'Level'
+      },
+      EvictCache: {
+        clear: 'Clear cache'
       },
       User: {
         settings: 'Profileinstellungen',
@@ -66,19 +72,21 @@ export default {
       Render: {
         title: 'Failed to load the application. Check your console.'
       },
+      WelcomeDashboard: {
+        applications: 'Applikationen',
+        applicationInfo: '… die die Welt bewegen',
+        applicationSingular: 'Applikation',
+        applicationPlural: 'Applikationen',
+        subject: 'Themen',
+        subjectInfo: '… die die Welt bewegen',
+        subjectSingluar: 'Thema',
+        subjectPlural: 'Themen',
+        user: 'Benutzer',
+        userInfo: '… die die Welt verbessern',
+        userSingular: 'Benutzer',
+        userPlural: 'Benutzer',
+      },
       DashboardStatistics: {
-        applications: 'Applications',
-        applicationInfo: '… that move the world',
-        applicationSingular: 'application',
-        applicationPlural: 'applications',
-        subject: 'Subjects',
-        subjectInfo: '… that move the world',
-        subjectSingluar: 'subject',
-        subjectPlural: 'subjects',
-        user: 'User',
-        userInfo: '… that improve the world',
-        userSingular: 'user',
-        userPlural: 'users',
         statisticsTitle: 'Total available'
       },
       Navigation: {
@@ -107,14 +115,20 @@ export default {
         reloadChecked: 'Live reload',
         reloadUnChecked: 'No reload'
       },
-      GlobalSettingsRoot: {
+      Metrics: {
+        title: 'Metrics',
+        info: '… that measure the world',
+      },
+      LogSettings: {
         global: 'Configuration',
         globalInfo: '… that guide the world',
         logs: 'Configuration',
         logsInfo: '… that guide the world',
-        cache: 'Clear cache',
         tableName: 'Name',
         tableLevel: 'Level'
+      },
+      EvictCache: {
+        clear: 'Clear cache'
       },
       User: {
         settings: 'Profile settings',

@@ -25,8 +25,8 @@ export const LogSettingsRoot: React.FC<LogSettingsRootProps> = (props) => {
       <PageHeader
         className="header"
         onBack={() => history.goBack()}
-        title={t('GlobalSettingsRoot.logs')}
-        subTitle={t('GlobalSettingsRoot.logsInfo')}
+        title={t('LogSettings.logs')}
+        subTitle={t('LogSettings.logsInfo')}
       />
       <LogLevelTable />
     </div>
