@@ -17,6 +17,7 @@ import SystemCpuCount from '../SystemCpuCount/SystemCpuCount';
 import SystemCpuUsage from '../SystemCpuUsage/SystemCpuUsage';
 import ProcessStartTime from '../ProcessStartTime/ProcessStartTime';
 import SystemLoadAverage from '../SystemLoadAverage/SystemLoadAverage';
+import { useTranslation } from 'react-i18next';
 
 import './MetricsRoot.less';
 
@@ -34,6 +35,10 @@ export const MetricsRoot: React.FC<MetricsRootProps> = (props) => {
 
   const history = useHistory();
 
+  const {
+    t
+  } = useTranslation();
+
   return (
     <div
       className="metrics-root"
@@ -41,8 +46,8 @@ export const MetricsRoot: React.FC<MetricsRootProps> = (props) => {
       <PageHeader
         className="header"
         onBack={() => history.goBack()}
-        title="Metriken"
-        subTitle="… die die Welt vermessen"
+        title={t('Metrics.title')}
+        subTitle={t('Metrics.info')}
       />
       <div className="metrics-card-container">
         <Row gutter={[16, 16]}>

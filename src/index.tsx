@@ -10,6 +10,7 @@ const App = React.lazy(() => import('./App'));
 
 import config from 'shogunApplicationConfig';
 
+import i18n from './i18n';
 import './index.less';
 import Logger from './Logger';
 import { SHOGunAPIClientProvider } from './Context/SHOGunAPIClientContext';
@@ -91,7 +92,7 @@ const renderApp = async () => {
     root.render(
       <Result
         status="warning"
-        title="Failed to load the application. Check your console."
+        title={i18n.t('Render.title') as string}
       />
     );
   }

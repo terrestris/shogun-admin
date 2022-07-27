@@ -17,6 +17,8 @@ const { TextArea } = Input;
 import LogService from '../../Service/LogService/LogService';
 import useSHOGunAPIClient from '../../Hooks/useSHOGunAPIClient';
 
+import { useTranslation } from 'react-i18next';
+
 import './Logs.less';
 
 type LogsProps = {};
@@ -30,6 +32,10 @@ export const Logs: React.FC<LogsProps> = (props) => {
   let intervalTimer;
 
   const history = useHistory();
+
+  const {
+    t
+  } = useTranslation();
 
   useEffect(() => {
     fetchLogs();
@@ -62,13 +68,13 @@ export const Logs: React.FC<LogsProps> = (props) => {
       <PageHeader
         className="header"
         onBack={() => history.goBack()}
-        title="Logs"
-        subTitle="… die die Welt erklären"
+        title={t('Logs.logs')}
+        subTitle={t('Logs.logsInfo')}
         extra={[
           <Switch
             key="reload"
-            checkedChildren="Live Reload"
-            unCheckedChildren="No Reload"
+            checkedChildren={t('Logs.reloadChecked')}
+            unCheckedChildren={t('Logs.reloadUnChecked')}
             onChange={onChange}
           />,
           <Button
@@ -76,7 +82,7 @@ export const Logs: React.FC<LogsProps> = (props) => {
             type="primary"
             onClick={fetchLogs}
           >
-            Refresh
+            {t('Logs.refresh')}
           </Button>
         ]}
       />

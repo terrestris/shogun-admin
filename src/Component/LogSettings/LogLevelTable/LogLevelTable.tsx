@@ -9,6 +9,8 @@ import {
 } from 'antd';
 import { TableProps } from 'antd/lib/table';
 
+import { useTranslation } from 'react-i18next';
+
 import LogLevelSelect from '../LogLevelSelect/LogLevelSelect';
 
 import LogService, { LogLevel } from '../../../Service/LogService/LogService';
@@ -28,6 +30,10 @@ export const LogLevelTable: React.FC<LogLevelTableProps> = props => {
   const [data, setData] = useState<TableData[]>([]);
 
   const client = useSHOGunAPIClient();
+
+  const {
+    t
+  } = useTranslation()
 
   useEffect(() => {
     fetchLoggers();
@@ -55,11 +61,11 @@ export const LogLevelTable: React.FC<LogLevelTableProps> = props => {
   };
 
   const columns = [{
-    title: 'Name',
+    title: t('LogSettings.tableName'),
     dataIndex: 'name',
     key: 'name',
   }, {
-    title: 'Level',
+    title: t('LogSettings.tableLevel'),
     dataIndex: 'level',
     key: 'level',
     render: (level: LogLevel, record: TableData) => (

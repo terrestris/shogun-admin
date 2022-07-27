@@ -21,6 +21,8 @@ import Avatar from 'antd/lib/avatar/avatar';
 import UserUtil from '../../../Util/UserUtil';
 import useSHOGunAPIClient from '../../../Hooks/useSHOGunAPIClient';
 
+import { useTranslation } from 'react-i18next';
+
 interface OwnProps { }
 
 type UserProps = OwnProps;
@@ -29,6 +31,10 @@ export const User: React.FC<UserProps> = (props) => {
 
   const [userInfo] = useRecoilState(userInfoAtom);
   const [, setInfoVisible] = useRecoilState(shogunInfoModalVisibleAtom);
+
+  const {
+    t
+  } = useTranslation();
 
   const client = useSHOGunAPIClient();
 
@@ -81,20 +87,20 @@ export const User: React.FC<UserProps> = (props) => {
             key="settings"
             icon={<SettingOutlined />}
           >
-            Profil Einstellungen
+            {t('User.settings')}
           </Menu.Item>
           <Menu.Item
             key="info"
             icon={<InfoCircleOutlined />}
           >
-            Info
+            {t('User.info')}
           </Menu.Item>
           <Menu.Divider />
           <Menu.Item
             key="logout"
             icon={<LogoutOutlined />}
           >
-            Ausloggen
+            {t('User.logout')}
           </Menu.Item>
         </Menu>
       }

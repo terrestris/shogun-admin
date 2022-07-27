@@ -11,6 +11,7 @@ import defaultLogo from '../../../assets/img/shogun_logo.png';
 import config from 'shogunApplicationConfig';
 
 import './Header.less';
+import LanguageSelect from '../LanguageSelector';
 
 interface OwnProps {
   onContactClick?: (event: React.MouseEvent<HTMLElement>) => void;
@@ -39,6 +40,7 @@ export const Header: React.FC<HeaderProps> = () => {
           </Link>
         }
         extra={[
+          <LanguageSelect />,
           <User key="user" />
         ]}
       >
