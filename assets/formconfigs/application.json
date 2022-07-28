@@ -68,6 +68,14 @@
         "fieldProps": {
           "entityName": "LayerConfig"
         }
+      },
+      {
+        "component": "JSONEditor",
+        "dataField": "toolConfig",
+        "labelI18n": "Werkzeug Konfiguration",
+        "fieldProps": {
+          "entityName": "DefaultApplicationToolConfig"
+        }
       }
     ]
   },
