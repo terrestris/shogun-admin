@@ -66,6 +66,25 @@ export default {
         settings: 'Profileinstellungen',
         info: 'Info',
         logout: 'Ausloggen'
+      },
+      Table : {
+        filterTitle: 'Filtermenü',
+        filterConfirm: 'OK',
+        filterReset: 'Zurücksetzen',
+        filterEmptyText: 'Keine Filter',
+        filterCheckall: 'Alles auswählen',
+        filterSearchPlaceholder: 'In Filtern suchen',
+        emptyText: 'Keine Daten',
+        selectAll: 'Diese Seite auswählen',
+        selectInvert: 'Diese Seite invertieren',
+        selectNone: 'Nichts auswählen',
+        selectionAll: 'Alles auswählen',
+        sortTitle: 'Sortieren',
+        expand: 'Zeile ausklappen',
+        collapse: 'Zeile einklappen',
+        triggerDesc: 'Klicken, um absteigend zu sortieren',
+        triggerAsc: 'Klicken, um aufsteigend zu sortieren',
+        cancelSort: 'Klicken, um Sortierung zurückzusetzen'
       }
     }
   },
@@ -138,6 +157,25 @@ export default {
         settings: 'Profile settings',
         info: 'Info',
         logout: 'Logout'
+      },
+      Table: {
+        filterTitle: 'Filter menu',
+        filterConfirm: 'OK',
+        filterReset: 'Reset',
+        filterEmptyText: 'No filters',
+        filterCheckall: 'Select all items',
+        filterSearchPlaceholder: 'Search in filters',
+        emptyText: 'No data',
+        selectAll: 'Select current page',
+        selectInvert: 'Invert current page',
+        selectNone: 'Clear all data',
+        selectionAll: 'Select all data',
+        sortTitle: 'Sort',
+        expand: 'Expand row',
+        collapse: 'Collapse row',
+        triggerDesc: 'Click to sort descending',
+        triggerAsc: 'Click to sort ascending',
+        cancelSort: 'Click to cancel sorting'
       }
     }
   }

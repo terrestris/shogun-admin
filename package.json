@@ -41,6 +41,7 @@
     "i18next": "^21.8.14",
     "i18next-browser-languagedetector": "^6.1.4",
     "js-logger": "^1.6.1",
+    "js-md5": "^0.7.3",
     "json-schema": "^0.4.0",
     "keycloak-js": "^18.0.1",
     "lodash": "^4.17.21",

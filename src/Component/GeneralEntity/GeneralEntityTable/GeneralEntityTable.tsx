@@ -20,6 +20,10 @@ import {
   SyncOutlined
 } from '@ant-design/icons';
 
+import {
+  useTranslation
+} from 'react-i18next';
+
 import _isEmpty from 'lodash/isEmpty';
 
 import Logger from 'js-logger';
@@ -95,6 +99,7 @@ export function GeneralEntityTable<T extends BaseEntity>({
 
   const routePath = useMemo(() => `${config.appPrefix}/portal/${entityType}`, [entityType]);
   const hist = useHistory();
+  const { t } = useTranslation();
 
   const onRowClick = (record: T) => hist.push(`${routePath}/${record.id}`);
 
@@ -268,6 +273,25 @@ export function GeneralEntityTable<T extends BaseEntity>({
     <Table
       className="general-entity-table"
       columns={getTableColumns()}
+      locale={{
+        filterTitle: t('Table.filterTitle'),
+        filterConfirm: t('Table.filterConfirm'),
+        filterReset: t('Table.filterReset'),
+        filterEmptyText: t('Table.filterEmptyText'),
+        filterCheckall: t('Table.filterCheckall'),
+        filterSearchPlaceholder: t('Table.filterSearchPlaceholder'),
+        emptyText: t('Table.emptyText'),
+        selectAll: t('Table.selectAll'),
+        selectInvert: t('Table.selectInvert'),
+        selectNone: t('Table.selectNone'),
+        selectionAll: t('Table.selectionAll'),
+        sortTitle: t('Table.sortTitle'),
+        expand: t('Table.expand'),
+        collapse: t('Table.collapse'),
+        triggerDesc: t('Table.triggerDesc'),
+        triggerAsc: t('Table.triggerAsc'),
+        cancelSort: t('Table.cancelSort')
+      }}
       dataSource={entities}
       onRow={(record) => {
         return {
