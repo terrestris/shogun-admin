@@ -1,3 +1,10 @@
+## [9.3.1](https://github.com/terrestris/shogun-admin/compare/v9.3.0...v9.3.1) (2022-07-28)
+
+
+### Bugfixes
+
+* fixes missing translations and a typo ([#106](https://github.com/terrestris/shogun-admin/issues/106)) ([4fd474b](https://github.com/terrestris/shogun-admin/commit/4fd474b9e7b87fac3e4fe57864e6ca296e7f5dd6))
+
 ## [9.3.0](https://github.com/terrestris/shogun-admin/compare/v9.2.0...v9.3.0) (2022-07-27)
 
 
