@@ -1,3 +1,25 @@
+## [9.4.0](https://github.com/terrestris/shogun-admin/compare/v9.3.1...v9.4.0) (2022-07-28)
+
+
+### Features
+
+* add loading indicator when saving entities ([4e25e4f](https://github.com/terrestris/shogun-admin/commit/4e25e4f0c5f78fb967e8641acafee4db30e87af1))
+* show gravatar in user chip ([64831ba](https://github.com/terrestris/shogun-admin/commit/64831baabd41b201783eb6f46c5a812e71e49fe2))
+* translate antd table texts ([a863522](https://github.com/terrestris/shogun-admin/commit/a863522016816337bc5020f287d3c2af46217303))
+
+
+### Dependencies
+
+* **tool-filtering:** removed tool config from application.json ([bafa211](https://github.com/terrestris/shogun-admin/commit/bafa2112beb106099f08f05329d40a267177f57f))
+* **tool-visibility:** added required configs to application.json, to add the tool config ([e8fce01](https://github.com/terrestris/shogun-admin/commit/e8fce01b7738d24bf3a64174f32da08d2fd24a35))
+* updated application.json ([9cbc341](https://github.com/terrestris/shogun-admin/commit/9cbc341e5a47b3b184382026ec358f26d58d72f7))
+
+
+### Bugfixes
+
+* fix package lock file ([cee3923](https://github.com/terrestris/shogun-admin/commit/cee3923067444329efb8557192b92ed824c9b033))
+* use npm ci in test pipeline ([6099b0a](https://github.com/terrestris/shogun-admin/commit/6099b0ac51a13dc88d3e25594ae4b7da4485da1a))
+
 ## [9.3.1](https://github.com/terrestris/shogun-admin/compare/v9.3.0...v9.3.1) (2022-07-28)
 
 
