@@ -1,3 +1,10 @@
+## [9.4.1](https://github.com/terrestris/shogun-admin/compare/v9.4.0...v9.4.1) (2022-07-28)
+
+
+### Bugfixes
+
+* add semantic-release github plugin ([e9a5fe2](https://github.com/terrestris/shogun-admin/commit/e9a5fe29b8de2f5b1a29f8dd9e905fd8826c5b04))
+
 ## [9.4.0](https://github.com/terrestris/shogun-admin/compare/v9.3.1...v9.4.0) (2022-07-28)
 
 
