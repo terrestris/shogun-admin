@@ -72,7 +72,7 @@
       {
         "component": "JSONEditor",
         "dataField": "toolConfig",
-        "labelI18n": "Werkzeuge Konfiguration",
+        "labelI18n": "Werkzeug Konfiguration",
         "fieldProps": {
           "entityName": "DefaultApplicationToolConfig"
         }
