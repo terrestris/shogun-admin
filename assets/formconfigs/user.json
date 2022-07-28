@@ -42,7 +42,7 @@
       {
         "dataType": "number",
         "dataField": "id",
-        "labelI18n": "i18n.labelId",
+        "label": "i18n.labelId",
         "readOnly": "true"
       },
       {

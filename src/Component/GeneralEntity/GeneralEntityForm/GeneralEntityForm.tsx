@@ -25,7 +25,7 @@ export type FieldConfig = {
   formItemProps?: {
     [key: string]: any;
   };
-  labelI18n?: string;
+  label?: string;
   noOptionValue?: {
     value: string;
   };
@@ -238,7 +238,7 @@ export const GeneralEntityForm: React.FC<GeneralEntityFormProps> = ({
         name={dataField}
         className={`cls-${dataField}`}
         normalize={fieldCfg.component ? getNormalizeFn(dataField) : undefined}
-        label={fieldCfg.labelI18n || `Field: ${fieldCfg.dataField}`}
+        label={fieldCfg.label || `Field: ${fieldCfg.dataField}`}
         {...formItemProps}
         {...fieldCfg.formItemProps}
       >

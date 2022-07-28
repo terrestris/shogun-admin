@@ -33,3 +33,6 @@ yarn-error.log*
 .env
 *.code-workspace
 .idea
+
+# SonarqQube
+.scannerwork

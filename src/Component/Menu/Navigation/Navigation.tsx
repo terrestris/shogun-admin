@@ -43,7 +43,7 @@ export const Navigation: React.FC<NavigationProps> = ({
     history.push(`${config.appPrefix}/portal/${key}`);
   };
 
-  const match = matchPath<{activeKey: string}>(location.pathname, {
+  const match = matchPath<{ activeKey: string }>(location.pathname, {
     path: `${config.appPrefix}/portal/:activeKey`
   });
 
@@ -68,24 +68,31 @@ export const Navigation: React.FC<NavigationProps> = ({
       >
         {
           entityConfigs.map(entityConfig => {
-            return (
-              <Menu.Item
-                key={entityConfig.entityType}
-              >
-                <BankOutlined />
-                <span>{entityConfig.navigationTitle}</span>
-              </Menu.Item>
-            );
+            if ('sprache == de') {
+              let language = 'funktion die die sprache herausfindet';
+              // hier nur zum test:
+              language = 'de';
+              const entityConfigStr = `entityConfig.i18n.${language}.navigationTitle`
+
+              return (
+                <Menu.Item
+                  key={entityConfig.entityType}
+                >
+                  <BankOutlined />
+                  <span>{eval(entityConfigStr)}</span>
+                </Menu.Item>
+              );
+            }
           })
         }
         {
           navigationConf?.general?.imagefiles?.visible &&
-            <Menu.Item
-              key="imagefile"
-            >
-              <FileImageOutlined />
-              <span>Bilddateien</span>
-            </Menu.Item>
+          <Menu.Item
+            key="imagefile"
+          >
+            <FileImageOutlined />
+            <span>Bilddateien</span>
+          </Menu.Item>
         }
       </Menu.SubMenu>
       <Menu.SubMenu
