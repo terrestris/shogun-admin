@@ -5,6 +5,8 @@ const { TextArea } = Input;
 
 import Logger from 'js-logger';
 
+import _cloneDeep from 'lodash/cloneDeep';
+
 import DisplayField from '../../FormField/DisplayField/DisplayField';
 import { FormInstance, FormItemProps, FormProps } from 'antd/lib/form';
 import YesOrNoField from '../../FormField/YesOrNoField/YesOrNoField';
@@ -12,6 +14,8 @@ import JSONEditor from '../../FormField/JSONEditor/JSONEditor';
 import MarkdownEditor from '../../FormField/MarkdownEditor/MarkdownEditor';
 import LayerTypeSelect from '../../Layer/LayerTypeSelect/LayerTypeSelect';
 import { InputNumber } from 'antd';
+import { FormTranslations } from '../GeneralEntityRoot/GeneralEntityRoot';
+import TranslationUtil from '../../../Util/TranslationUtil';
 
 import './GeneralEntityForm.less';
 
@@ -45,6 +49,7 @@ export type FormConfig = {
 };
 
 interface OwnProps {
+  i18n: FormTranslations;
   entityName: string;
   formConfig: FormConfig;
   formProps?: Partial<FormProps>;
@@ -56,6 +61,7 @@ const DEFAULT_DATE_FORMAT = 'DD.MM.YYYY';
 export type GeneralEntityFormProps = OwnProps & React.HTMLAttributes<HTMLDivElement>;
 
 export const GeneralEntityForm: React.FC<GeneralEntityFormProps> = ({
+  i18n,
   entityName,
   formProps,
   form,
@@ -198,18 +204,20 @@ export const GeneralEntityForm: React.FC<GeneralEntityFormProps> = ({
    * @returns An antd FormItem
    */
   const createFormItem = (fieldCfg: FieldConfig): React.ReactNode => {
+    let copyFieldCfg = _cloneDeep(fieldCfg);
+    copyFieldCfg.label = TranslationUtil.getTranslationFromConfig(fieldCfg.label as string, i18n)
     let field: React.ReactNode;
-    if (fieldCfg.readOnly) {
-      field = createReadOnlyComponent(fieldCfg);
-    } else if (fieldCfg.component) {
-      field = createFieldComponent(fieldCfg);
-    } else if (fieldCfg.dataType) {
-      field = getFieldByDataType(fieldCfg);
+    if (copyFieldCfg.readOnly) {
+      field = createReadOnlyComponent(copyFieldCfg);
+    } else if (copyFieldCfg.component) {
+      field = createFieldComponent(copyFieldCfg);
+    } else if (copyFieldCfg.dataType) {
+      field = getFieldByDataType(copyFieldCfg);
     } else {
       Logger.warn('FieldConfig is missing `readOnly`, `component` or `dataType` property.');
       field = (
         <Input
-          key={fieldCfg?.dataField}
+          key={copyFieldCfg?.dataField}
           placeholder=""
         />
       );
@@ -221,26 +229,26 @@ export const GeneralEntityForm: React.FC<GeneralEntityFormProps> = ({
 
     // when determining the status
     formItemProps.rules = [{
-      required: fieldCfg.required
+      required: copyFieldCfg.required
     }];
 
-    if (fieldCfg.component === 'Switch') {
+    if (copyFieldCfg.component === 'Switch') {
       formItemProps.valuePropName = 'checked';
     }
 
     const {
       dataField
-    } = fieldCfg;
+    } = copyFieldCfg;
 
     return (
       <Form.Item
         key={dataField}
         name={dataField}
         className={`cls-${dataField}`}
-        normalize={fieldCfg.component ? getNormalizeFn(dataField) : undefined}
-        label={fieldCfg.label || `Field: ${fieldCfg.dataField}`}
+        normalize={copyFieldCfg.component ? getNormalizeFn(dataField) : undefined}
+        label={copyFieldCfg.label || `Field: ${copyFieldCfg.dataField}`}
         {...formItemProps}
-        {...fieldCfg.formItemProps}
+        {...copyFieldCfg.formItemProps}
       >
         {field}
       </Form.Item>
@@ -257,7 +265,7 @@ export const GeneralEntityForm: React.FC<GeneralEntityFormProps> = ({
 
   const initialValues = {};
 
-  const title = `${entityName}`;
+  const title = TranslationUtil.getTranslationFromConfig(entityName, i18n);
 
   return (
     <>

@@ -21,6 +21,8 @@ import {
   useTranslation
 } from 'react-i18next';
 
+import TranslationUtil from '../../../Util/TranslationUtil';
+
 interface OwnProps {
   collapsed?: boolean;
   entityConfigs?: GeneralEntityConfigType<BaseEntity>[];
@@ -67,23 +69,14 @@ export const Navigation: React.FC<NavigationProps> = ({
         title={t('Navigation.content')}
       >
         {
-          entityConfigs.map(entityConfig => {
-            if ('sprache == de') {
-              let language = 'funktion die die sprache herausfindet';
-              // hier nur zum test:
-              language = 'de';
-              const entityConfigStr = `entityConfig.i18n.${language}.navigationTitle`
-
-              return (
-                <Menu.Item
-                  key={entityConfig.entityType}
-                >
-                  <BankOutlined />
-                  <span>{eval(entityConfigStr)}</span>
-                </Menu.Item>
-              );
-            }
-          })
+          entityConfigs.map(entityConfig => (
+            <Menu.Item
+              key={entityConfig.entityType}
+            >
+              <BankOutlined />
+              <span>{TranslationUtil.getTranslationFromConfig(entityConfig.navigationTitle, entityConfig.i18n)}</span>
+            </Menu.Item>
+          ))
         }
         {
           navigationConf?.general?.imagefiles?.visible &&
@@ -101,21 +94,21 @@ export const Navigation: React.FC<NavigationProps> = ({
       >
         {
           navigationConf?.status?.metrics?.visible &&
-            <Menu.Item
-              key="status/metrics"
-            >
-              <BarChartOutlined />
-              <span>{t('Navigation.metrics')}</span>
-            </Menu.Item>
+          <Menu.Item
+            key="status/metrics"
+          >
+            <BarChartOutlined />
+            <span>{t('Navigation.metrics')}</span>
+          </Menu.Item>
         }
         {
           navigationConf?.status?.logs?.visible &&
-            <Menu.Item
-              key="status/logs"
-            >
-              <FileTextOutlined />
-              <span>{t('Navigation.logs')}</span>
-            </Menu.Item>
+          <Menu.Item
+            key="status/logs"
+          >
+            <FileTextOutlined />
+            <span>{t('Navigation.logs')}</span>
+          </Menu.Item>
         }
       </Menu.SubMenu>
       <Menu.SubMenu
@@ -124,21 +117,21 @@ export const Navigation: React.FC<NavigationProps> = ({
       >
         {
           navigationConf?.settings?.global?.visible &&
-            <Menu.Item
-              key="settings/global"
-            >
-              <ControlOutlined />
-              <span>{t('Navigation.global')}</span>
-            </Menu.Item>
+          <Menu.Item
+            key="settings/global"
+          >
+            <ControlOutlined />
+            <span>{t('Navigation.global')}</span>
+          </Menu.Item>
         }
         {
           navigationConf?.settings?.logs?.visible &&
-            <Menu.Item
-              key="settings/logs"
-            >
-              <FileTextOutlined />
-              <span>{t('Navigation.logs')}</span>
-            </Menu.Item>
+          <Menu.Item
+            key="settings/logs"
+          >
+            <FileTextOutlined />
+            <span>{t('Navigation.logs')}</span>
+          </Menu.Item>
         }
       </Menu.SubMenu>
     </Menu>
