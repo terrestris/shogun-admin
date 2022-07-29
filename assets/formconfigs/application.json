@@ -35,8 +35,8 @@
   },
   "endpoint": "/applications",
   "entityType": "application",
-  "entityName": "i18n.entityName",
-  "navigationTitle": "i18n.navigationTitle",
+  "entityName": "#i18n.entityName",
+  "navigationTitle": "#i18n.navigationTitle",
   "subTitle": "",
   "formConfig": {
     "name": "application",
@@ -44,7 +44,7 @@
       {
         "dataType": "number",
         "dataField": "id",
-        "label": "i18n.labelID",
+        "label": "#i18n.labelID",
         "readOnly": "true"
       },
       {
@@ -52,7 +52,7 @@
         "dataType": "date",
         "readOnly": "true",
         "component": "DateField",
-        "label": "i18n.labelEstabl",
+        "label": "#i18n.labelEstabl",
         "fieldProps": {
           "dateFormat": "DD.MM.YYYY HH:mm"
         }
@@ -61,7 +61,7 @@
         "dataField": "modified",
         "dataType": "date",
         "readOnly": "true",
-        "label": "i18n.labelEdit",
+        "label": "#i18n.labelEdit",
         "component": "DateField",
         "fieldProps": {
           "dateFormat": "DD.MM.YYYY HH:mm"
@@ -70,19 +70,19 @@
       {
         "component": "Input",
         "dataField": "name",
-        "label": "i18n.labelName",
+        "label": "#i18n.labelName",
         "required": "true"
       },
       {
         "component": "Switch",
         "dataField": "stateOnly",
-        "label": "i18n.labelWork",
+        "label": "#i18n.labelWork",
         "readOnly": "true"
       },
       {
         "component": "JSONEditor",
         "dataField": "clientClConfig",
-        "label": "i18n.labelConfig",
+        "label": "#i18n.labelConfig",
         "fieldProps": {
           "entityName": "DefaultApplicationClientConfig"
         }
@@ -90,7 +90,7 @@
       {
         "component": "JSONEditor",
         "dataField": "layerTree",
-        "label": "i18n.labelTree",
+        "label": "#i18n.labelTree",
         "fieldProps": {
           "entityName": "DefaultLayerTree"
         }
@@ -98,7 +98,7 @@
       {
         "component": "JSONEditor",
         "dataField": "layerConfig",
-        "label": "i18n.labelLaConfig",
+        "label": "#i18n.labelLaConfig",
         "fieldProps": {
           "entityName": "LayerConfig"
         }
@@ -108,7 +108,7 @@
   "tableConfig": {
     "columnDefinition": [
       {
-        "title": "i18n.titleId",
+        "title": "#i18n.titleId",
         "dataIndex": "id",
         "sortConfig": {
           "isSortable": true,
@@ -116,7 +116,7 @@
         }
       },
       {
-        "title": "i18n.titleName",
+        "title": "#i18n.titleName",
         "dataIndex": "name",
         "key": "name",
         "sortConfig": {
@@ -127,7 +127,7 @@
         }
       },
       {
-        "title": "i18n.titleEdit",
+        "title": "#i18n.titleEdit",
         "dataIndex": "modified",
         "key": "modified",
         "sortConfig": {
@@ -136,7 +136,7 @@
         "cellRenderComponentName": "DateCell"
       },
       {
-        "title": "i18n.titleLink",
+        "title": "#i18n.titleLink",
         "dataIndex": "id",
         "key": "link",
         "cellRenderComponentName": "LinkCell",

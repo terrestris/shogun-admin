@@ -38,8 +38,8 @@
   },
   "endpoint": "/layers",
   "entityType": "layer",
-  "entityName": "i18n.entityName",
-  "navigationTitle": "i18n.navigationTitle",
+  "entityName": "#i18n.entityName",
+  "navigationTitle": "#i18n.navigationTitle",
   "subTitle": "",
   "formConfig": {
     "name": "layer",
@@ -47,7 +47,7 @@
       {
         "dataType": "number",
         "dataField": "id",
-        "label": "i18n.labelId",
+        "label": "#i18n.labelId",
         "readOnly": "true"
       },
       {
@@ -55,7 +55,7 @@
         "dataType": "date",
         "readOnly": "true",
         "component": "DateField",
-        "label": "i18n.labelEstabl",
+        "label": "#i18n.labelEstabl",
         "fieldProps": {
           "dateFormat": "DD.MM.YYYY HH:mm"
         }
@@ -64,7 +64,7 @@
         "dataField": "modified",
         "dataType": "date",
         "readOnly": "true",
-        "label": "i18n.labelEdit",
+        "label": "#i18n.labelEdit",
         "component": "DateField",
         "fieldProps": {
           "dateFormat": "DD.MM.YYYY HH:mm"
@@ -73,19 +73,19 @@
       {
         "component": "Input",
         "dataField": "name",
-        "label": "i18n.labelName",
+        "label": "#i18n.labelName",
         "required": "true"
       },
       {
         "component": "LayerTypeSelect",
         "dataField": "type",
-        "label": "i18n.labelType",
+        "label": "#i18n.labelType",
         "required": "true"
       },
       {
         "component": "JSONEditor",
         "dataField": "clientConfig",
-        "label": "i18n.labelConfig",
+        "label": "#i18n.labelConfig",
         "fieldProps": {
           "entityName": "DefaultLayerClientConfig"
         }
@@ -93,7 +93,7 @@
       {
         "component": "JSONEditor",
         "dataField": "sourceConfig",
-        "label": "i18n.labelSource",
+        "label": "#i18n.labelSource",
         "fieldProps": {
           "entityName": "DefaultLayerSourceConfig"
         }
@@ -101,7 +101,7 @@
       {
         "component": "JSONEditor",
         "dataField": "features",
-        "label": "i18n.labelFeat",
+        "label": "#i18n.labelFeat",
         "fieldProps": {
           "entityName": "GeoJsonObject"
         }
@@ -111,14 +111,14 @@
   "tableConfig": {
     "columnDefinition": [
       {
-        "title": "i18n.titleId",
+        "title": "#i18n.titleId",
         "dataIndex": "id",
         "sortConfig": {
           "isSortable": false
         }
       },
       {
-        "title": "i18n.titleName",
+        "title": "#i18n.titleName",
         "dataIndex": "name",
         "key": "name",
         "sortConfig": {
@@ -129,7 +129,7 @@
         }
       },
       {
-        "title": "i18n.titleType",
+        "title": "#i18n.titleType",
         "dataIndex": "type",
         "key": "type",
         "sortConfig": {
@@ -137,12 +137,12 @@
         }
       },
       {
-        "title": "i18n.titlePrev",
+        "title": "#i18n.titlePrev",
         "dataIndex": ["sourceConfig", "layerNames"],
         "key": "preview",
         "cellRenderComponentName": "LinkCell",
         "cellRenderComponentProps": {
-          "title": "i18n.titleOpenPrev",
+          "title": "#i18n.titleOpenPrev",
           "template": "/geoserver/wms/reflect?format=application/openlayers&layers={}"
         }
       }
