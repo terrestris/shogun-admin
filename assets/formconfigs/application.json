@@ -82,7 +82,7 @@
       {
         "component": "JSONEditor",
         "dataField": "clientClConfig",
-        "label": "#i18n.labelConfig",
+        "label": "#i18n.labelClConfig",
         "fieldProps": {
           "entityName": "DefaultApplicationClientConfig"
         }
