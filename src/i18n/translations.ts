@@ -5,8 +5,8 @@ export default {
         title: 'Die Anwendung konnte nicht geladen werden. Prüfen Sie Ihre Konsole.'
       },
       App: {
-        loading: 'loading',
-        loadFail: 'Failed to load the initial data. Check your console.'
+        loading: 'laden',
+        loadFail: 'Die Daten konnten nicht geladen werden. Überprüfen Sie Ihre Konsole.'
       },
       WelcomeDashboard: {
         applications: 'Applikationen',
@@ -107,6 +107,10 @@ export default {
         triggerAsc: 'Klicken, um aufsteigend zu sortieren',
         cancelSort: 'Klicken, um Sortierung zurückzusetzen'
       },
+      YesorNoField: {
+        yes: 'Ja',
+        no: 'Nein'
+      },
       ImageFileTable : {
         imageSingular: 'Bilddatei',
         imagePlural: 'Bilddateien',
@@ -119,10 +123,6 @@ export default {
         deleteFail: 'Löschen fehlgeschlagen',
         deleteFailDescript: 'Die Datei "{{record}}" konnte nicht gelöscht werden!',
         reloadTooltip: 'Neu laden',
-
-
-
-
       }
     }
   },
@@ -130,6 +130,10 @@ export default {
     translation: {
       Render: {
         title: 'Failed to load the application. Check your console.'
+      },
+      App: {
+        loading: 'loading',
+        loadFail: 'Failed to load the initial data. Check your console.'
       },
       WelcomeDashboard: {
         applications: 'Applications',
@@ -158,12 +162,29 @@ export default {
         metrics: 'Metrics',
         logs: 'Logs',
         configuration: 'Configuration',
-        global: 'Global'
+        global: 'Global',
+        image:' Image'
       },
       GeneralEntityRoot: {
         save: 'Save {{entity}}',
         reset: 'Reset {{entity}}',
-        create: 'Create {{entity}}'
+        create: 'Create {{entity}}',
+        saveSuccess: '{{entity}} erfolgreich gespeichert!',
+        saveFail: 'Fehler: Konnte {{entity}} nicht speichern.'
+      },
+      GeneralEntityTable: {
+        cancelText: 'Cancel',
+        title: 'Delete entity',
+        contentInfo: 'The entity "{{entityName}}" will be deleted!',
+        contentConfirmInfo: 'Please enter the name to confirm:',
+        deleteConfirm: 'Delete successful',
+        deleteConfirmDescript: 'The entity "{{entityName}}" was deleted',
+        deleteFail: 'Deletion failed',
+        deleteFailDescript: 'The entity "{{entityName}}" could not be deleted!',
+        columnId: 'ID',
+        columnName: 'Name',
+        tooltipReload: 'Reload',
+        tooltipDelete: 'Delete'
       },
       Logs: {
         metric: 'Metrics',
@@ -214,6 +235,23 @@ export default {
         triggerDesc: 'Click to sort descending',
         triggerAsc: 'Click to sort ascending',
         cancelSort: 'Click to cancel sorting'
+      },
+      YesorNoField: {
+        yes: 'Yes',
+        no: 'No'
+      },
+      ImageFileTable : {
+        imageSingular: 'Image',
+        imagePlural: 'Images',
+        delete: 'Delete {{entity}}',
+        cancel:'Cancel',
+        confirmInfo: 'The {{entity}} will be deleted!',
+        conFirmTooltip: 'Do you really want to delete the {{entity}} file?',
+        deletionInfo: '{{entity}} has been deleted',
+        deletionDescription: '{{entity}} "{{record}}" has been deleted',
+        deleteFail: 'Deletion failed',
+        deleteFailDescript: 'The file "{{record}}" could not be deleted!',
+        reloadTooltip: 'Reload',
       }
     }
   }
