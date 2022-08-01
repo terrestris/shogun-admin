@@ -16,6 +16,8 @@ import useSHOGunAPIClient from '../../../Hooks/useSHOGunAPIClient';
 
 import config from 'shogunApplicationConfig';
 
+import { useTranslation } from 'react-i18next';
+
 import './ImageFileTable.less';
 
 interface OwnProps { }
@@ -50,6 +52,10 @@ export const ImageFileTable: React.FC<ImageFileTableProps> = ({
   const client = useSHOGunAPIClient();
   const service = client.imagefile();
 
+  const {
+    t
+  } = useTranslation();
+
   const onRowClick = (imageFile: ImageFile) => {
     history.push(`${config.appPrefix}/portal/imagefile/${imageFile.fileUuid}`);
   };
@@ -58,8 +64,8 @@ export const ImageFileTable: React.FC<ImageFileTableProps> = ({
   const [loadingState, setLoadingState] = useState<'failed' | 'loading' | 'done'>();
 
   const name = {
-    singular: 'Bilddatei',
-    plural: 'Bilddateien'
+    singular: t('ImageFileTable.imageSingular'),
+    plural: t('ImageFileTable.imagePlural')
   };
 
   const fetchEntities = async () => {
@@ -84,13 +90,13 @@ export const ImageFileTable: React.FC<ImageFileTableProps> = ({
     }
 
     Modal.confirm({
-      cancelText: 'Abbrechen',
-      title: `${name.singular} löschen`,
+      cancelText: t('ImageFileTable.cancel'),
+      title: t('ImageFileTable.delete', { entity: name.singular}),
       content: (
         <div>
-          <div>Die {name.singular} wird gelöscht!</div>
+          <div>{t('ImageFileTable.confirmInfo', { entity: name.singular})}</div>
           <br />
-          <div>Möchten Sie die Datei {record.fileName} wirklich löschen?</div>
+          <div>{t('ImageFileTable.conFirmTooltip', { entity: name.singular})}</div>
         </div>
       ),
       onOk: async () => {
@@ -98,8 +104,8 @@ export const ImageFileTable: React.FC<ImageFileTableProps> = ({
           await service?.delete(record.fileUuid);
 
           notification.info({
-            message: `${name.singular} gelöscht`,
-            description: `${name.singular} "${record.fileName}" wurde gelöscht`
+            message: t('ImageFileTable.deletionInfo', { entity: name.singular}),
+            description: t('ImageFileTable.deletionInfo', { entity: name.singular, record: record.fileName })
           });
 
           fetchEntities();
@@ -107,8 +113,8 @@ export const ImageFileTable: React.FC<ImageFileTableProps> = ({
           history.push(`${config.appPrefix}/portal/imagefile`);
         } catch (error) {
           notification.error({
-            message: 'Löschen fehlgeschlagen',
-            description: `Die Datei "${record.fileName}" konnte nicht gelöscht werden!`
+            message: t('ImageFileTable.deleteFail'),
+            description: t('ImageFileTable.deleteFailDescript', { record: record.fileName })
           });
         }
       }
@@ -119,7 +125,7 @@ export const ImageFileTable: React.FC<ImageFileTableProps> = ({
     ...columns,
     {
       title: (
-        <Tooltip title="Neu laden">
+        <Tooltip title={t('ImageFileTable.reloadTooltip')}>
           <SyncOutlined
             onClick={fetchEntities}
           />

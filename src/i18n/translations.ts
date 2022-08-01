@@ -4,6 +4,10 @@ export default {
       Render: {
         title: 'Die Anwendung konnte nicht geladen werden. Prüfen Sie Ihre Konsole.'
       },
+      App: {
+        loading: 'loading',
+        loadFail: 'Failed to load the initial data. Check your console.'
+      },
       WelcomeDashboard: {
         applications: 'Applikationen',
         applicationInfo: '… die die Welt bewegen',
@@ -31,12 +35,29 @@ export default {
         metrics: 'Metriken',
         logs: 'Logs',
         configuration: 'Einstellungen',
-        global: 'Global'
+        global: 'Global',
+        image:' Bilddateien'
       },
       GeneralEntityRoot: {
         save: '{{entity}} speichern',
         reset: '{{entity}} zurücksetzen',
-        create: '{{entity}} erstellen'
+        create: '{{entity}} erstellen',
+        saveSuccess: '{{entity}} erfolgreich gespeichert!',
+        saveFail: 'Fehler: Konnte {{entity}} nicht speichern.'
+      },
+      GeneralEntityTable: {
+        cancelText: 'Abbrechen',
+        title: 'Entität löschen',
+        contentInfo: 'Die Entität "{{entityName}}" wird gelöscht!',
+        contentConfirmInfo: 'Bitte geben sie zum Bestätigen den Namen ein:',
+        deleteConfirm: 'Löschen erfolgreich',
+        deleteConfirmDescript: 'Die Entität "{{entityName}}" wurde gelöscht!',
+        deleteFail: 'Löschen fehlgeschlagen',
+        deleteFailDescript: 'Die Entität "{{entityName}}" konnte nicht gelöscht werden!',
+        columnId: 'ID',
+        columnName: 'Name',
+        tooltipReload: 'Neu laden',
+        tooltipDelete: 'Löschen'
       },
       Logs: {
         logs: 'Logs',
@@ -67,7 +88,7 @@ export default {
         info: 'Info',
         logout: 'Ausloggen'
       },
-      Table : {
+      Table: {
         filterTitle: 'Filtermenü',
         filterConfirm: 'OK',
         filterReset: 'Zurücksetzen',
@@ -85,6 +106,23 @@ export default {
         triggerDesc: 'Klicken, um absteigend zu sortieren',
         triggerAsc: 'Klicken, um aufsteigend zu sortieren',
         cancelSort: 'Klicken, um Sortierung zurückzusetzen'
+      },
+      ImageFileTable : {
+        imageSingular: 'Bilddatei',
+        imagePlural: 'Bilddateien',
+        delete: '{{entity}} löschen',
+        cancel:'Abbrechen',
+        confirmInfo: 'Die {{entity}} wird gelöscht!',
+        conFirmTooltip: 'Möchten Sie die Datei {{entity}} wirklich löschen?',
+        deletionInfo: '{{entity}} gelöscht',
+        deletionDescription: '{{entity}} "{{record}}" wurde gelöscht',
+        deleteFail: 'Löschen fehlgeschlagen',
+        deleteFailDescript: 'Die Datei "{{record}}" konnte nicht gelöscht werden!',
+        reloadTooltip: 'Neu laden',
+
+
+
+
       }
     }
   },

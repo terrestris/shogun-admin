@@ -29,6 +29,7 @@ import './App.less';
 
 import config from 'shogunApplicationConfig';
 import useSHOGunAPIClient from './Hooks/useSHOGunAPIClient';
+import { useTranslation } from 'react-i18next';
 
 const App: React.FC = () => {
 
@@ -42,6 +43,10 @@ const App: React.FC = () => {
   // - swagger docs
   // - applicationInfo
   // - logged in User
+  const {
+    t
+  } = useTranslation();
+
   const getInitialData = useCallback(async () => {
     try {
       setLoadingState('loading');
@@ -68,7 +73,7 @@ const App: React.FC = () => {
     return (
       <Result
         icon={<LoadingOutlined spin />}
-        title="Loading."
+        title= {t('App.loading')}
       />
     );
   }
@@ -76,7 +81,7 @@ const App: React.FC = () => {
     return (
       <Result
         status="warning"
-        title="Failed to load the initial data. Check your console."
+        title={t('App.loadFail')}
       />
     );
   }

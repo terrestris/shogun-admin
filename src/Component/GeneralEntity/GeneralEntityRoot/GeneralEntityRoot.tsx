@@ -22,7 +22,6 @@ import useSHOGunAPIClient from '../../../Hooks/useSHOGunAPIClient';
 import { useTranslation } from 'react-i18next';
 
 import './GeneralEntityRoot.less';
-import i18next from 'i18next';
 
 export type GeneralEntityConfigType<T extends BaseEntity> = {
   endpoint: string;
@@ -192,12 +191,16 @@ export function GeneralEntityRoot<T extends BaseEntity> ({
       await fetchEntities();
       history.push(`${config.appPrefix}/portal/${entityType}/${updatedEntity.id}`);
       notification.success({
-        message: `${entityName} erfolgreich gespeichert!`
+        message: t('GeneralEntityRoot.saveSuccess', {
+          entity: entityName
+        })
       });
     } catch (error) {
       Logger.error(`Error saving ${entityName}:`, error);
       notification.error({
-        message: `Fehler: Konnte ${entityName} nicht speichern.`
+        message: t('GeneralEntityRoot.saveSuccess', {
+          entity: entityName
+        })
       });
     } finally {
       setIsSaving(false);
@@ -224,7 +227,6 @@ export function GeneralEntityRoot<T extends BaseEntity> ({
             loading={isSaving}
           >
             {t('GeneralEntityRoot.save', {
-              context: i18next.language,
               entity: entityName
             })}
           </Button>,
@@ -236,7 +238,6 @@ export function GeneralEntityRoot<T extends BaseEntity> ({
             type="primary"
           >
             {t('GeneralEntityRoot.reset', {
-              context: i18next.language,
               entity: entityName
             })}
           </Button>
@@ -256,7 +257,6 @@ export function GeneralEntityRoot<T extends BaseEntity> ({
               icon={<FormOutlined />}
             >
               {t('GeneralEntityRoot.create', {
-                context: i18next.language,
                 entity: entityName
               })}
             </Button>
