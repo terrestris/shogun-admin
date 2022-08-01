@@ -73,7 +73,7 @@ const App: React.FC = () => {
     return (
       <Result
         icon={<LoadingOutlined spin />}
-        title= {t('App.loading')}
+        title={t('App.loading')}
       />
     );
   }

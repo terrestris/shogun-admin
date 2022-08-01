@@ -94,9 +94,9 @@ export const ImageFileTable: React.FC<ImageFileTableProps> = ({
       title: t('ImageFileTable.delete', { entity: name.singular}),
       content: (
         <div>
-          <div>{t('ImageFileTable.confirmInfo', { entity: name.singular})}</div>
+          <div>{t('ImageFileTable.confirmInfo', { entity: name.singular })}</div>
           <br />
-          <div>{t('ImageFileTable.conFirmTooltip', { entity: name.singular})}</div>
+          <div>{t('ImageFileTable.conFirmTooltip', { entity: name.singular })}</div>
         </div>
       ),
       onOk: async () => {
@@ -104,7 +104,7 @@ export const ImageFileTable: React.FC<ImageFileTableProps> = ({
           await service?.delete(record.fileUuid);
 
           notification.info({
-            message: t('ImageFileTable.deletionInfo', { entity: name.singular}),
+            message: t('ImageFileTable.deletionInfo', { entity: name.singular }),
             description: t('ImageFileTable.deletionInfo', { entity: name.singular, record: record.fileName })
           });
 

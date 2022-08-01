@@ -36,7 +36,7 @@ export default {
         logs: 'Logs',
         configuration: 'Einstellungen',
         global: 'Global',
-        image:' Bilddateien'
+        image: 'Bilddateien'
       },
       GeneralEntityRoot: {
         save: '{{entity}} speichern',
@@ -163,7 +163,7 @@ export default {
         logs: 'Logs',
         configuration: 'Configuration',
         global: 'Global',
-        image:' Image'
+        image: 'Image'
       },
       GeneralEntityRoot: {
         save: 'Save {{entity}}',
