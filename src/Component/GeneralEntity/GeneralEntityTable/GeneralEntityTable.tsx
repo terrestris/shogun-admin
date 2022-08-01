@@ -120,13 +120,13 @@ export function GeneralEntityTable<T extends BaseEntity>({
 
     let confirmName: string;
     Modal.confirm({
-      cancelText: 'Abbrechen',
-      title: 'Entität löschen',
+      cancelText: t('GeneralEntityTable.cancelText'),
+      title: t('GeneralEntityTable.title'),
       content: (
         <div>
-          <div>{`Die Entität "${entityName}" wird gelöscht!`}</div>
+          <div>{t('GeneralEntityTable.contentInfo', { entityName: entityName })}</div>
           <br />
-          <div>Bitte geben sie zum Bestätigen den Namen ein:</div>
+          <div>{t('GeneralEntityTable.contentConfirmInfo')}</div>
           <Input onChange={(e) => { confirmName = e.target.value; }} />
         </div>
       ),
@@ -135,14 +135,14 @@ export function GeneralEntityTable<T extends BaseEntity>({
           try {
             await controller?.delete(record);
             notification.info({
-              message: 'Löschen erfolgreich',
-              description: `Die Entität "${entityName}" wurde gelöscht!`
+              message: t('GeneralEntityTable.deleteConfirm'),
+              description: t('GeneralEntityTable.contentConfirmInfo', { entityName: entityName })
             });
             fetchEntities();
           } catch (error) {
             notification.error({
-              message: 'Löschen fehlgeschlagen',
-              description: `Die Entität "${entityName}" konnte nicht gelöscht werden!`
+              message: t('GeneralEntityTable.deleteFail'),
+              description: t('GeneralEntityTable.deleteFailDescript', { entityName: entityName })
             });
             Logger.error(error);
           }
@@ -190,13 +190,13 @@ export function GeneralEntityTable<T extends BaseEntity>({
     let cols: GeneralEntityTableColumn<T>[];
     if (_isEmpty(tableConfig?.columnDefinition)) {
       cols = [{
-        title: 'ID',
+        title: t('GeneralEntityTable.columnId'),
         key: 'id',
         dataIndex: 'id',
         sorter: TableUtil.getSorter('id'),
         defaultSortOrder: 'ascend'
       }, {
-        title: 'Name',
+        title: t('GeneralEntityTable.columnName'),
         dataIndex: 'name',
         key: 'name',
         sorter: TableUtil.getSorter('name'),
@@ -243,7 +243,7 @@ export function GeneralEntityTable<T extends BaseEntity>({
       ...cols,
       {
         title: (
-          <Tooltip title="Neu laden">
+          <Tooltip title={t('GeneralEntityTable.tooltipReload')}>
             <SyncOutlined
               onClick={fetchEntities}
             />
@@ -258,7 +258,7 @@ export function GeneralEntityTable<T extends BaseEntity>({
             <div className="actions">
               {
                 actions.includes('delete') &&
-                <Tooltip title="Löschen">
+                <Tooltip title={t('GeneralEntityTable.tooltipDelete')}>
                   <DeleteOutlined onClick={() => onDeleteClick(record)} />
                 </Tooltip>
               }
