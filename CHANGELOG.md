@@ -1,3 +1,15 @@
+## [9.4.2](https://github.com/terrestris/shogun-admin/compare/v9.4.1...v9.4.2) (2022-08-01)
+
+
+### Dependencies
+
+* **log-doc-height:** fix display area of status logs ([a4151b0](https://github.com/terrestris/shogun-admin/commit/a4151b071d99419429a178630af94ad4e9c5436e))
+
+
+### Bugfixes
+
+* adding missing translations ([#112](https://github.com/terrestris/shogun-admin/issues/112)) ([a5f5c25](https://github.com/terrestris/shogun-admin/commit/a5f5c25b27687056e89761ec786a9175ee982d87))
+
 ## [9.4.1](https://github.com/terrestris/shogun-admin/compare/v9.4.0...v9.4.1) (2022-07-28)
 
 
