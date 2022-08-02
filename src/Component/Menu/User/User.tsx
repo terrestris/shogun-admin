@@ -14,6 +14,8 @@ import {
   SettingOutlined
 } from '@ant-design/icons';
 
+import _isNil from 'lodash/isNil';
+
 import { shogunInfoModalVisibleAtom, userInfoAtom } from '../../../State/atoms';
 
 import './User.less';
@@ -38,7 +40,10 @@ export const User: React.FC<UserProps> = (props) => {
 
   const client = useSHOGunAPIClient();
 
-  const avatarSource = '';
+  const avatarSource = !_isNil(userInfo.providerDetails?.email) ? UserUtil.getGravatarUrl({
+    email: userInfo.providerDetails?.email || '',
+    size: 28
+  }) : '';
 
   const onMenuClick = (evt: any) => {
     switch (evt.key) {

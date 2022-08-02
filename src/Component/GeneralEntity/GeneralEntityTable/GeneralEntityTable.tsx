@@ -20,6 +20,10 @@ import {
   SyncOutlined
 } from '@ant-design/icons';
 
+import {
+  useTranslation
+} from 'react-i18next';
+
 import _isEmpty from 'lodash/isEmpty';
 
 import Logger from 'js-logger';
@@ -102,6 +106,7 @@ export function GeneralEntityTable<T extends BaseEntity>({
 
   const routePath = useMemo(() => `${config.appPrefix}/portal/${entityType}`, [entityType]);
   const hist = useHistory();
+  const { t } = useTranslation();
 
   const onRowClick = (record: T) => hist.push(`${routePath}/${record.id}`);
 
@@ -122,13 +127,13 @@ export function GeneralEntityTable<T extends BaseEntity>({
 
     let confirmName: string;
     Modal.confirm({
-      cancelText: 'Abbrechen',
-      title: 'Entität löschen',
+      cancelText: t('GeneralEntityTable.cancelText'),
+      title: t('GeneralEntityTable.title'),
       content: (
         <div>
-          <div>{`Die Entität "${TranslationUtil.getTranslationFromConfig(entityName, i18n)}" wird gelöscht!`}</div>
+          <div>{t('GeneralEntityTable.contentInfo', { entityName: entityName })}</div>
           <br />
-          <div>Bitte geben sie zum Bestätigen den Namen ein:</div>
+          <div>{t('GeneralEntityTable.contentConfirmInfo')}</div>
           <Input onChange={(e) => { confirmName = e.target.value; }} />
         </div>
       ),
@@ -137,14 +142,14 @@ export function GeneralEntityTable<T extends BaseEntity>({
           try {
             await controller?.delete(record);
             notification.info({
-              message: 'Löschen erfolgreich',
-              description: `Die Entität "${TranslationUtil.getTranslationFromConfig(entityName, i18n)}" wurde gelöscht!`
+              message: t('GeneralEntityTable.deleteConfirm'),
+              description: t('GeneralEntityTable.contentConfirmInfo', { entityName: entityName })
             });
             fetchEntities();
           } catch (error) {
             notification.error({
-              message: 'Löschen fehlgeschlagen',
-              description: `Die Entität "${TranslationUtil.getTranslationFromConfig(entityName, i18n)}" konnte nicht gelöscht werden!`
+              message: t('GeneralEntityTable.deleteFail'),
+              description: t('GeneralEntityTable.deleteFailDescript', { entityName: entityName })
             });
             Logger.error(error);
           }
@@ -192,13 +197,13 @@ export function GeneralEntityTable<T extends BaseEntity>({
     let cols: GeneralEntityTableColumn<T>[];
     if (_isEmpty(tableConfig?.columnDefinition)) {
       cols = [{
-        title: 'ID',
+        title: t('GeneralEntityTable.columnId'),
         key: 'id',
         dataIndex: 'id',
         sorter: TableUtil.getSorter('id'),
         defaultSortOrder: 'ascend'
       }, {
-        title: 'Name',
+        title: t('GeneralEntityTable.columnName'),
         dataIndex: 'name',
         key: 'name',
         sorter: TableUtil.getSorter('name'),
@@ -247,7 +252,7 @@ export function GeneralEntityTable<T extends BaseEntity>({
       ...cols,
       {
         title: (
-          <Tooltip title="Neu laden">
+          <Tooltip title={t('GeneralEntityTable.tooltipReload')}>
             <SyncOutlined
               onClick={fetchEntities}
             />
@@ -262,7 +267,7 @@ export function GeneralEntityTable<T extends BaseEntity>({
             <div className="actions">
               {
                 actions.includes('delete') &&
-                <Tooltip title="Löschen">
+                <Tooltip title={t('GeneralEntityTable.tooltipDelete')}>
                   <DeleteOutlined onClick={() => onDeleteClick(record)} />
                 </Tooltip>
               }
@@ -277,6 +282,25 @@ export function GeneralEntityTable<T extends BaseEntity>({
     <Table
       className="general-entity-table"
       columns={getTableColumns()}
+      locale={{
+        filterTitle: t('Table.filterTitle'),
+        filterConfirm: t('Table.filterConfirm'),
+        filterReset: t('Table.filterReset'),
+        filterEmptyText: t('Table.filterEmptyText'),
+        filterCheckall: t('Table.filterCheckall'),
+        filterSearchPlaceholder: t('Table.filterSearchPlaceholder'),
+        emptyText: t('Table.emptyText'),
+        selectAll: t('Table.selectAll'),
+        selectInvert: t('Table.selectInvert'),
+        selectNone: t('Table.selectNone'),
+        selectionAll: t('Table.selectionAll'),
+        sortTitle: t('Table.sortTitle'),
+        expand: t('Table.expand'),
+        collapse: t('Table.collapse'),
+        triggerDesc: t('Table.triggerDesc'),
+        triggerAsc: t('Table.triggerAsc'),
+        cancelSort: t('Table.cancelSort')
+      }}
       dataSource={entities}
       onRow={(record) => {
         return {

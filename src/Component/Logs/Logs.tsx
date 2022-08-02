@@ -57,7 +57,6 @@ export const Logs: React.FC<LogsProps> = (props) => {
       keycloak: client.getKeycloak()
     });
     const fetchedLogs = await logService.getLogs();
-
     setLogs(fetchedLogs);
   };
 
@@ -91,6 +90,7 @@ export const Logs: React.FC<LogsProps> = (props) => {
         value={logs}
         readOnly={true}
         bordered={false}
+        autoSize
       />
     </div>
   );
