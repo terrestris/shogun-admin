@@ -1,8 +1,44 @@
 {
+  "i18n": {
+    "de": {
+      "entityName": "Applikation",
+      "navigationTitle": "Applikationen",
+      "labelID": "Identifier",
+      "labelEstabl": "Erstellt am",
+      "labelEdit": "Zuletzt editiert am",
+      "labelName": "Name",
+      "labelWork": "Arbeitsstand",
+      "labelClConfig": "Client-Konfiguration",
+      "labelTree": "Themenbaum",
+      "labelLaConfig": "Layer-Konfiguration",
+      "labelToolConfig": "Werkzeug Konfiguration",
+      "titleId": "ID",
+      "titleName": "Name",
+      "titleEdit": "Zuletzt editiert am",
+      "titleLink": "Link zur Applikation"
+    },
+    "en": {
+      "entityName": "Application",
+      "navigationTitle": "Application",
+      "labelID": "Identifier",
+      "labelEstabl": "Created at",
+      "labelEdit": "Last edited on",
+      "labelName": "Name",
+      "labelWork": "Status of work",
+      "labelClConfig": "Client configuration",
+      "labelTree": "Layertree",
+      "labelLaConfig": "Layer configuration",
+      "labelToolConfig": "Configure Tools",
+      "titleId": "ID",
+      "titleName": "Name",
+      "titleEdit": "Last edited on",
+      "titleLink": "Link to application"
+    }
+  },
   "endpoint": "/applications",
   "entityType": "application",
-  "entityName": "Applikation",
-  "navigationTitle": "Applikationen",
+  "entityName": "#i18n.entityName",
+  "navigationTitle": "#i18n.navigationTitle",
   "subTitle": "",
   "formConfig": {
     "name": "application",
@@ -10,7 +46,7 @@
       {
         "dataType": "number",
         "dataField": "id",
-        "labelI18n": "Identifier",
+        "label": "#i18n.labelID",
         "readOnly": "true"
       },
       {
@@ -18,7 +54,7 @@
         "dataType": "date",
         "readOnly": "true",
         "component": "DateField",
-        "labelI18n": "Erstellt am",
+        "label": "#i18n.labelEstabl",
         "fieldProps": {
           "dateFormat": "DD.MM.YYYY HH:mm"
         }
@@ -27,7 +63,7 @@
         "dataField": "modified",
         "dataType": "date",
         "readOnly": "true",
-        "labelI18n": "Zuletzt editiert am",
+        "label": "#i18n.labelEdit",
         "component": "DateField",
         "fieldProps": {
           "dateFormat": "DD.MM.YYYY HH:mm"
@@ -36,19 +72,19 @@
       {
         "component": "Input",
         "dataField": "name",
-        "labelI18n": "Name",
+        "label": "#i18n.labelName",
         "required": "true"
       },
       {
         "component": "Switch",
         "dataField": "stateOnly",
-        "labelI18n": "Arbeitsstand",
+        "label": "#i18n.labelWork",
         "readOnly": "true"
       },
       {
         "component": "JSONEditor",
-        "dataField": "clientConfig",
-        "labelI18n": "Klient Konfiguration",
+        "dataField": "clientClConfig",
+        "label": "#i18n.labelClConfig",
         "fieldProps": {
           "entityName": "DefaultApplicationClientConfig"
         }
@@ -56,7 +92,7 @@
       {
         "component": "JSONEditor",
         "dataField": "layerTree",
-        "labelI18n": "Themenbaum",
+        "label": "#i18n.labelTree",
         "fieldProps": {
           "entityName": "DefaultLayerTree"
         }
@@ -64,7 +100,7 @@
       {
         "component": "JSONEditor",
         "dataField": "layerConfig",
-        "labelI18n": "Layer Konfiguration",
+        "label": "#i18n.labelLaConfig",
         "fieldProps": {
           "entityName": "LayerConfig"
         }
@@ -72,7 +108,7 @@
       {
         "component": "JSONEditor",
         "dataField": "toolConfig",
-        "labelI18n": "Werkzeug Konfiguration",
+        "label": "#i18n.labelToolConfig",
         "fieldProps": {
           "entityName": "DefaultApplicationToolConfig"
         }
@@ -82,7 +118,7 @@
   "tableConfig": {
     "columnDefinition": [
       {
-        "title": "ID",
+        "title": "#i18n.titleId",
         "dataIndex": "id",
         "sortConfig": {
           "isSortable": true,
@@ -90,7 +126,7 @@
         }
       },
       {
-        "title": "Name",
+        "title": "#i18n.titleName",
         "dataIndex": "name",
         "key": "name",
         "sortConfig": {
@@ -101,7 +137,7 @@
         }
       },
       {
-        "title": "Zuletzt editiert am",
+        "title": "#i18n.titleEdit",
         "dataIndex": "modified",
         "key": "modified",
         "sortConfig": {
@@ -110,7 +146,7 @@
         "cellRenderComponentName": "DateCell"
       },
       {
-        "title": "Link zur Applikation",
+        "title": "#i18n.titleLink",
         "dataIndex": "id",
         "key": "link",
         "cellRenderComponentName": "LinkCell",

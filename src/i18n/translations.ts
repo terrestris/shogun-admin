@@ -163,7 +163,7 @@ export default {
         logs: 'Logs',
         configuration: 'Configuration',
         global: 'Global',
-        image: 'Image'
+        image: 'Images'
       },
       GeneralEntityRoot: {
         save: 'Save {{entity}}',

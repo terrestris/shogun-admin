@@ -6,7 +6,7 @@ import {
   Link
 } from 'react-router-dom';
 import { Button, PageHeader, Form, notification } from 'antd';
-import _isEmpty from  'lodash/isEmpty';
+import _isEmpty from 'lodash/isEmpty';
 
 import { ControllerUtil } from '../../../Controller/ControllerUtil';
 import { FormOutlined, SaveOutlined, UndoOutlined } from '@ant-design/icons';
@@ -23,7 +23,11 @@ import { useTranslation } from 'react-i18next';
 
 import './GeneralEntityRoot.less';
 
+import i18next from 'i18next';
+import TranslationUtil from '../../../Util/TranslationUtil';
+
 export type GeneralEntityConfigType<T extends BaseEntity> = {
+  i18n: FormTranslations;
   endpoint: string;
   entityType: string;
   entityName?: string;
@@ -37,7 +41,8 @@ type OwnProps<T extends BaseEntity> = GeneralEntityConfigType<T>;
 
 export type GeneralEntityRootProps<T extends BaseEntity> = OwnProps<T> & React.HTMLAttributes<HTMLDivElement>;
 
-export function GeneralEntityRoot<T extends BaseEntity> ({
+export function GeneralEntityRoot<T extends BaseEntity>({
+  i18n,
   endpoint,
   entityType,
   entityName = 'Entität',
@@ -215,7 +220,7 @@ export function GeneralEntityRoot<T extends BaseEntity> ({
       <PageHeader
         className="header"
         onBack={() => history.goBack()}
-        title={navigationTitle}
+        title={TranslationUtil.getTranslationFromConfig(navigationTitle, i18n)}
         subTitle={subTitle}
         extra={[
           <Button
@@ -227,7 +232,8 @@ export function GeneralEntityRoot<T extends BaseEntity> ({
             loading={isSaving}
           >
             {t('GeneralEntityRoot.save', {
-              entity: entityName
+              context: i18next.language,
+              entity: TranslationUtil.getTranslationFromConfig(entityName, i18n)
             })}
           </Button>,
           <Button
@@ -238,7 +244,8 @@ export function GeneralEntityRoot<T extends BaseEntity> ({
             type="primary"
           >
             {t('GeneralEntityRoot.reset', {
-              entity: entityName
+              context: i18next.language,
+              entity: TranslationUtil.getTranslationFromConfig(entityName, i18n)
             })}
           </Button>
         ]}
@@ -257,12 +264,14 @@ export function GeneralEntityRoot<T extends BaseEntity> ({
               icon={<FormOutlined />}
             >
               {t('GeneralEntityRoot.create', {
-                entity: entityName
+                context: i18next.language,
+                entity: TranslationUtil.getTranslationFromConfig(entityName, i18n)
               })}
             </Button>
           </Link>
         </div>
         <GeneralEntityTable
+          i18n={i18n}
           bordered
           controller={entityController}
           entities={allEntities}
@@ -277,6 +286,7 @@ export function GeneralEntityRoot<T extends BaseEntity> ({
         id &&
         <div className="right-container">
           <GeneralEntityForm
+            i18n={i18n}
             entityName={entityName}
             formConfig={formConfig}
             form={form}

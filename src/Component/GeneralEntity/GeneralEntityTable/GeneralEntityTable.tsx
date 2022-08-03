@@ -41,6 +41,10 @@ import config from 'shogunApplicationConfig';
 
 import './GeneralEntityTable.less';
 
+import TranslationUtil from '../../../Util/TranslationUtil';
+
+import _cloneDeep from 'lodash/cloneDeep';
+
 export type TableConfig<T extends BaseEntity> = {
   columnDefinition?: GeneralEntityTableColumn<T>[];
   dataMapping?: DataMapping;
@@ -76,6 +80,7 @@ type GeneralEntityTableColumnType = {
 export type GeneralEntityTableColumn<T extends BaseEntity> = ColumnType<T> & GeneralEntityTableColumnType;
 
 type OwnProps<T extends BaseEntity> = {
+  i18n: FormTranslations;
   controller: GenericEntityController<T>;
   entities: T[];
   actions?: EntityTableAction[];
@@ -88,6 +93,7 @@ type OwnProps<T extends BaseEntity> = {
 type GeneralEntityTableProps<T extends BaseEntity> = OwnProps<T> & TableProps<T> & React.HTMLAttributes<HTMLDivElement>;
 
 export function GeneralEntityTable<T extends BaseEntity>({
+  i18n,
   controller,
   entities,
   entityType,
@@ -131,7 +137,7 @@ export function GeneralEntityTable<T extends BaseEntity>({
         </div>
       ),
       onOk: async () => {
-        if (confirmName === entityName) {
+        if (confirmName === TranslationUtil.getTranslationFromConfig(entityName, i18n)) {
           try {
             await controller?.delete(record);
             notification.info({
@@ -206,28 +212,30 @@ export function GeneralEntityTable<T extends BaseEntity>({
     } else {
       // check for preconfigured sorters, filters and custom components (TODO)
       cols = tableConfig?.columnDefinition.map(cfg => {
+        let copyCfg = _cloneDeep(cfg);
+        copyCfg.title = TranslationUtil.getTranslationFromConfig(cfg.title as string, i18n)
         const {
           sortConfig,
           filterConfig,
           cellRenderComponentName,
           cellRenderComponentProps
-        } = cfg;
+        } = copyCfg;
 
-        let columnDef: ColumnType<T> = cfg as ColumnType<T>;
+        let columnDef: ColumnType<T> = copyCfg as ColumnType<T>;
         if (!_isEmpty(sortConfig) && sortConfig.isSortable) {
           columnDef = {
             ...columnDef,
-            sorter: TableUtil.getSorter(cfg.dataIndex.toString()),
+            sorter: TableUtil.getSorter(copyCfg.dataIndex.toString()),
             defaultSortOrder: sortConfig.sortOrder || 'ascend'
           };
         }
         if (!_isEmpty(filterConfig) && filterConfig.isFilterable) {
           columnDef = {
             ...columnDef,
-            ...TableUtil.getColumnSearchProps(cfg.dataIndex.toString())
+            ...TableUtil.getColumnSearchProps(copyCfg.dataIndex.toString())
           } as any;
         }
-        const mapping = tableConfig.dataMapping?.[cfg.dataIndex.toString()];
+        const mapping = tableConfig.dataMapping?.[copyCfg.dataIndex.toString()];
         if (!_isEmpty(cellRenderComponentName) || !_isEmpty(mapping)) {
           columnDef = {
             ...columnDef,

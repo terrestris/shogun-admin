@@ -21,6 +21,8 @@ import {
   useTranslation
 } from 'react-i18next';
 
+import TranslationUtil from '../../../Util/TranslationUtil';
+
 interface OwnProps {
   collapsed?: boolean;
   entityConfigs?: GeneralEntityConfigType<BaseEntity>[];
@@ -43,7 +45,7 @@ export const Navigation: React.FC<NavigationProps> = ({
     history.push(`${config.appPrefix}/portal/${key}`);
   };
 
-  const match = matchPath<{activeKey: string}>(location.pathname, {
+  const match = matchPath<{ activeKey: string }>(location.pathname, {
     path: `${config.appPrefix}/portal/:activeKey`
   });
 
@@ -67,25 +69,23 @@ export const Navigation: React.FC<NavigationProps> = ({
         title={t('Navigation.content')}
       >
         {
-          entityConfigs.map(entityConfig => {
-            return (
-              <Menu.Item
-                key={entityConfig.entityType}
-              >
-                <BankOutlined />
-                <span>{entityConfig.navigationTitle}</span>
-              </Menu.Item>
-            );
-          })
+          entityConfigs.map(entityConfig => (
+            <Menu.Item
+              key={entityConfig.entityType}
+            >
+              <BankOutlined />
+              <span>{TranslationUtil.getTranslationFromConfig(entityConfig.navigationTitle, entityConfig.i18n)}</span>
+            </Menu.Item>
+          ))
         }
         {
           navigationConf?.general?.imagefiles?.visible &&
-            <Menu.Item
-              key="imagefile"
-            >
-              <FileImageOutlined />
-              <span>{t('Navigation.image')}</span>
-            </Menu.Item>
+          <Menu.Item
+            key="imagefile"
+          >
+            <FileImageOutlined />
+            <span>{t('Navigation.image')}</span>
+          </Menu.Item>
         }
       </Menu.SubMenu>
       <Menu.SubMenu
@@ -94,21 +94,21 @@ export const Navigation: React.FC<NavigationProps> = ({
       >
         {
           navigationConf?.status?.metrics?.visible &&
-            <Menu.Item
-              key="status/metrics"
-            >
-              <BarChartOutlined />
-              <span>{t('Navigation.metrics')}</span>
-            </Menu.Item>
+          <Menu.Item
+            key="status/metrics"
+          >
+            <BarChartOutlined />
+            <span>{t('Navigation.metrics')}</span>
+          </Menu.Item>
         }
         {
           navigationConf?.status?.logs?.visible &&
-            <Menu.Item
-              key="status/logs"
-            >
-              <FileTextOutlined />
-              <span>{t('Navigation.logs')}</span>
-            </Menu.Item>
+          <Menu.Item
+            key="status/logs"
+          >
+            <FileTextOutlined />
+            <span>{t('Navigation.logs')}</span>
+          </Menu.Item>
         }
       </Menu.SubMenu>
       <Menu.SubMenu
@@ -117,21 +117,21 @@ export const Navigation: React.FC<NavigationProps> = ({
       >
         {
           navigationConf?.settings?.global?.visible &&
-            <Menu.Item
-              key="settings/global"
-            >
-              <ControlOutlined />
-              <span>{t('Navigation.global')}</span>
-            </Menu.Item>
+          <Menu.Item
+            key="settings/global"
+          >
+            <ControlOutlined />
+            <span>{t('Navigation.global')}</span>
+          </Menu.Item>
         }
         {
           navigationConf?.settings?.logs?.visible &&
-            <Menu.Item
-              key="settings/logs"
-            >
-              <FileTextOutlined />
-              <span>{t('Navigation.logs')}</span>
-            </Menu.Item>
+          <Menu.Item
+            key="settings/logs"
+          >
+            <FileTextOutlined />
+            <span>{t('Navigation.logs')}</span>
+          </Menu.Item>
         }
       </Menu.SubMenu>
     </Menu>
