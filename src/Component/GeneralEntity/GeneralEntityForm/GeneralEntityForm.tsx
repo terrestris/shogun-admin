@@ -14,7 +14,6 @@ import JSONEditor from '../../FormField/JSONEditor/JSONEditor';
 import MarkdownEditor from '../../FormField/MarkdownEditor/MarkdownEditor';
 import LayerTypeSelect from '../../Layer/LayerTypeSelect/LayerTypeSelect';
 import { InputNumber } from 'antd';
-import { FormTranslations } from '../GeneralEntityRoot/GeneralEntityRoot';
 import TranslationUtil from '../../../Util/TranslationUtil';
 
 import './GeneralEntityForm.less';

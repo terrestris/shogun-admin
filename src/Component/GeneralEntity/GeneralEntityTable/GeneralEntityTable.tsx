@@ -37,7 +37,6 @@ import config from 'shogunApplicationConfig';
 
 import './GeneralEntityTable.less';
 
-import { FormTranslations } from '../GeneralEntityRoot/GeneralEntityRoot';
 import TranslationUtil from '../../../Util/TranslationUtil';
 
 import _cloneDeep from 'lodash/cloneDeep';

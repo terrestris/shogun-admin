@@ -31,7 +31,8 @@ export default {
         metrics: 'Metriken',
         logs: 'Logs',
         configuration: 'Einstellungen',
-        global: 'Global'
+        global: 'Global',
+        image: 'Bilddateien'
       },
       GeneralEntityRoot: {
         save: '{{entity}} speichern',
@@ -101,7 +102,8 @@ export default {
         metrics: 'Metrics',
         logs: 'Logs',
         configuration: 'Configuration',
-        global: 'Global'
+        global: 'Global',
+        image: 'Images'
       },
       GeneralEntityRoot: {
         save: 'Save {{entity}}',

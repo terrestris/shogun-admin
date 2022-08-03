@@ -1,5 +1,4 @@
 import lng from "../i18n/index";
-import { FormTranslations } from "../Component/GeneralEntity/GeneralEntityRoot/GeneralEntityRoot";
 
 export default class TranslationUtil {
 

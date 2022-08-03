@@ -84,7 +84,7 @@ export const Navigation: React.FC<NavigationProps> = ({
             key="imagefile"
           >
             <FileImageOutlined />
-            <span>Bilddateien</span>
+            <span>{t('Navigation.image')}</span>
           </Menu.Item>
         }
       </Menu.SubMenu>

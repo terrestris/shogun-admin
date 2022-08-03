@@ -25,11 +25,6 @@ import './GeneralEntityRoot.less';
 import i18next from 'i18next';
 import TranslationUtil from '../../../Util/TranslationUtil';
 
-export type FormTranslations = {
-  de: any;
-  en: any;
-}
-
 export type GeneralEntityConfigType<T extends BaseEntity> = {
   i18n: FormTranslations;
   endpoint: string;

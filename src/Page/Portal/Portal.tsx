@@ -27,7 +27,6 @@ import GeneralEntityRoot,
 { GeneralEntityConfigType } from '../../Component/GeneralEntity/GeneralEntityRoot/GeneralEntityRoot';
 import './Portal.less';
 
-
 interface OwnProps { }
 
 type PortalProps = OwnProps;
