@@ -22,6 +22,7 @@ import useSHOGunAPIClient from '../../../Hooks/useSHOGunAPIClient';
 import { useTranslation } from 'react-i18next';
 
 import './GeneralEntityRoot.less';
+
 import i18next from 'i18next';
 import TranslationUtil from '../../../Util/TranslationUtil';
 
@@ -63,7 +64,8 @@ export function GeneralEntityRoot<T extends BaseEntity>({
   const [allEntities, setEntities] = useState<T[]>();
   const [formIsDirty, setFormIsDirty] = useState<boolean>(false);
   const [formValid, setFormValid] = useState<boolean>(true);
-  const [isLoading, setLoading] = useState<boolean>(false);
+  const [isGridLoading, setGridLoading] = useState<boolean>(false);
+  const [isSaving, setIsSaving] = useState<boolean>(false);
   const [form] = Form.useForm();
 
   const client = useSHOGunAPIClient();
@@ -122,10 +124,10 @@ export function GeneralEntityRoot<T extends BaseEntity>({
    * Fetch all entities shown in table
    */
   const fetchEntities = useCallback(async () => {
-    setLoading(true);
+    setGridLoading(true);
     const allEntries: T[] = await entityController?.findAll();
     setEntities(allEntries || []);
-    setLoading(false);
+    setGridLoading(false);
   }, [entityController]);
 
   /**
@@ -171,10 +173,10 @@ export function GeneralEntityRoot<T extends BaseEntity>({
    * Init data
    */
   useEffect(() => {
-    if (allEntities === undefined && !isLoading) {
+    if (allEntities === undefined && !isGridLoading) {
       fetchEntities();
     }
-  }, [fetchEntities, allEntities, isLoading]);
+  }, [fetchEntities, allEntities, isGridLoading]);
 
   const onValuesChange = async (changedValues: any) => {
     setFormIsDirty(true);
@@ -188,18 +190,25 @@ export function GeneralEntityRoot<T extends BaseEntity>({
   };
 
   const onSaveClick = async () => {
+    setIsSaving(true);
     try {
       const updatedEntity: T = await entityController?.saveOrUpdate() as T;
       await fetchEntities();
       history.push(`${config.appPrefix}/portal/${entityType}/${updatedEntity.id}`);
       notification.success({
-        message: `${entityName} erfolgreich gespeichert!`
+        message: t('GeneralEntityRoot.saveSuccess', {
+          entity: entityName
+        })
       });
     } catch (error) {
       Logger.error(`Error saving ${entityName}:`, error);
       notification.error({
-        message: `Fehler: Konnte ${entityName} nicht speichern.`
+        message: t('GeneralEntityRoot.saveSuccess', {
+          entity: entityName
+        })
       });
+    } finally {
+      setIsSaving(false);
     }
   };
 
@@ -220,6 +229,7 @@ export function GeneralEntityRoot<T extends BaseEntity>({
             key="save"
             onClick={onSaveClick}
             type="primary"
+            loading={isSaving}
           >
             {t('GeneralEntityRoot.save', {
               context: i18next.language,
@@ -267,7 +277,7 @@ export function GeneralEntityRoot<T extends BaseEntity>({
           entities={allEntities}
           entityType={entityType}
           fetchEntities={fetchEntities}
-          loading={isLoading}
+          loading={isGridLoading}
           size="small"
           tableConfig={tableConfig}
         />
