@@ -11,6 +11,7 @@
       "labelClConfig": "Client-Konfiguration",
       "labelTree": "Themenbaum",
       "labelLaConfig": "Layer-Konfiguration",
+      "labelToolConfig": "Werkzeug Konfiguration",
       "titleId": "ID",
       "titleName": "Name",
       "titleEdit": "Zuletzt editiert am",
@@ -27,6 +28,7 @@
       "labelClConfig": "Client configuration",
       "labelTree": "Layertree",
       "labelLaConfig": "Layer configuration",
+      "labelToolConfig": "Configure Tools",
       "titleId": "ID",
       "titleName": "Name",
       "titleEdit": "Last edited on",
@@ -106,7 +108,7 @@
       {
         "component": "JSONEditor",
         "dataField": "toolConfig",
-        "labelI18n": "Werkzeug Konfiguration",
+        "label": "#i18n.labelToolConfig",
         "fieldProps": {
           "entityName": "DefaultApplicationToolConfig"
         }
