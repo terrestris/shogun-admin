@@ -183,6 +183,7 @@ export function GeneralEntityTable<T extends BaseEntity>({
     if (cellRendererName === 'LinkCell') {
       return (
         <LinkField
+          i18n={i18n}
           value={displayValue}
           {...cellRenderComponentProps}
         />

@@ -66,6 +66,9 @@ export default {
         reloadChecked: 'Automatisches Nachladen',
         reloadUnChecked: 'Kein Nachladen'
       },
+      LinkField: {
+        title: 'Öffne Link'
+      },
       Metrics: {
         title: 'Metriken',
         info: '… die die Welt vermessen',
@@ -194,6 +197,9 @@ export default {
         refresh: 'Refresh',
         reloadChecked: 'Live reload',
         reloadUnChecked: 'No reload'
+      },
+      LinkField: {
+        title: 'Open link'
       },
       Metrics: {
         title: 'Metrics',

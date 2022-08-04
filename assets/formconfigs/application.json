@@ -15,7 +15,8 @@
       "titleId": "ID",
       "titleName": "Name",
       "titleEdit": "Zuletzt editiert am",
-      "titleLink": "Link zur Applikation"
+      "titleLink": "Link zur Applikation",
+      "toolTipLink": "Öffne Applikation"
     },
     "en": {
       "entityName": "Application",
@@ -32,7 +33,9 @@
       "titleId": "ID",
       "titleName": "Name",
       "titleEdit": "Last edited on",
-      "titleLink": "Link to application"
+      "titleLink": "Link to application",
+      "toolTipLink": "Open application"
+
     }
   },
   "endpoint": "/applications",
@@ -151,7 +154,7 @@
         "key": "link",
         "cellRenderComponentName": "LinkCell",
         "cellRenderComponentProps": {
-          "title": "Öffne Applikation",
+          "title": "#i18n.toolTipLink",
           "template": "/client?applicationId={}"
         }
       }
