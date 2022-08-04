@@ -78,7 +78,7 @@
       {
         "component": "JSONEditor",
         "dataField": "details",
-        "label": "Details",
+        "label": "#i18n.labelKeyDetail",
         "fieldProps": {
           "entityName": "UserDetails"
         }
@@ -86,7 +86,7 @@
       {
         "component": "JSONEditor",
         "dataField": "clientConfig",
-        "label": "Datenquelle",
+        "label": "#i18n.labelSource",
         "fieldProps": {
           "entityName": "UserClientConfig"
         }
