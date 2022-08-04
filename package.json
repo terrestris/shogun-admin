@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "typecheck": "tsc --project tsconfig.json --noEmit --skipLibCheck",
-    "test": "jest",
+    "test": "jest --coverage",
     "test:watch": "jest --watch",
     "eslint": "eslint -c .eslintrc.js --ext .js,.ts,.tsx",
     "lint": "npm run typecheck && npm run eslint ",
