@@ -18,7 +18,7 @@ shogun-directory/
 └── …
 ```
 
-you can simply mount the `shogun-admin` into your docker-compose environment:
+You can simply mount the `shogun-admin` into your docker-compose environment:
 
 ```yml
 shogun-admin:
