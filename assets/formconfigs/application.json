@@ -8,9 +8,9 @@
       "labelEdit": "Zuletzt editiert am",
       "labelName": "Name",
       "labelWork": "Arbeitsstand",
-      "labelClConfig": "Client-Konfiguration",
+      "labelClientConfig": "Client-Konfiguration",
       "labelTree": "Themenbaum",
-      "labelLaConfig": "Layer-Konfiguration",
+      "labelLayerConfig": "Layer-Konfiguration",
       "labelToolConfig": "Werkzeug Konfiguration",
       "titleId": "ID",
       "titleName": "Name",
@@ -25,9 +25,9 @@
       "labelEdit": "Last edited on",
       "labelName": "Name",
       "labelWork": "Status of work",
-      "labelClConfig": "Client configuration",
+      "labelClientConfig": "Client configuration",
       "labelTree": "Layertree",
-      "labelLaConfig": "Layer configuration",
+      "labelLayerConfig": "Layer configuration",
       "labelToolConfig": "Configure Tools",
       "titleId": "ID",
       "titleName": "Name",
@@ -83,8 +83,8 @@
       },
       {
         "component": "JSONEditor",
-        "dataField": "clientClConfig",
-        "label": "#i18n.labelClConfig",
+        "dataField": "clientClientConfig",
+        "label": "#i18n.labelClientConfig",
         "fieldProps": {
           "entityName": "DefaultApplicationClientConfig"
         }
@@ -100,7 +100,7 @@
       {
         "component": "JSONEditor",
         "dataField": "layerConfig",
-        "label": "#i18n.labelLaConfig",
+        "label": "#i18n.labelLayerConfig",
         "fieldProps": {
           "entityName": "LayerConfig"
         }
