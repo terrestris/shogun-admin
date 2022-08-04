@@ -1,3 +1,11 @@
+## [10.0.0](https://github.com/terrestris/shogun-admin/compare/v9.4.2...v10.0.0) (2022-08-04)
+
+
+### Breaking changes
+
+* Json translation ([#111](https://github.com/terrestris/shogun-admin/issues/111)) ([e667309](https://github.com/terrestris/shogun-admin/commit/e6673091d560424e4cf0c39051b69bd7cc74e70b))
+* trigger major release ([902fdbc](https://github.com/terrestris/shogun-admin/commit/902fdbc49a9be145a0c255a79a4b7748981395c6))
+
 ## [9.4.2](https://github.com/terrestris/shogun-admin/compare/v9.4.1...v9.4.2) (2022-08-01)
 
 
