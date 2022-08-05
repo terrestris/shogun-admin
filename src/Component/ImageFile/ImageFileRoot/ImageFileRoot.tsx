@@ -1,7 +1,7 @@
 import { Button, notification, PageHeader, Upload } from 'antd';
 import React, { useEffect, useState } from 'react';
 import {
-  useHistory,
+  useNavigate,
   useLocation,
   matchPath
 } from 'react-router-dom';
@@ -21,12 +21,12 @@ export const ImageFileRoot: React.FC<ImageFileRootProps> = props => {
 
   const [fileBlob, setFileBlob] = useState<Blob>();
 
-  const history = useHistory();
+  const navigate = useNavigate();
   const location = useLocation();
   const client = useSHOGunAPIClient();
-  const match = matchPath<{ uuid: string }>(location.pathname, {
+  const match = matchPath({
     path: `${config.appPrefix}/portal/imagefile/:uuid`
-  });
+  }, location.pathname);
   const imageFileUuid = match?.params?.uuid;
 
   useEffect(() => {
@@ -48,7 +48,7 @@ export const ImageFileRoot: React.FC<ImageFileRootProps> = props => {
     <div className="imagefile-root">
       <PageHeader
         className="header"
-        onBack={() => history.goBack()}
+        onBack={() => navigate(-1)}
         title="Bilddateien"
         subTitle="… die die Welt zeigen"
       >
@@ -72,7 +72,7 @@ export const ImageFileRoot: React.FC<ImageFileRootProps> = props => {
                   description: `Die Datei ${file.name} wurde erfolgreich hochgeladen`
                 });
 
-                history.push(`${config.appPrefix}/portal/imagefile/${uploadedFile.fileUuid}`);
+                navigate(`${config.appPrefix}/portal/imagefile/${uploadedFile.fileUuid}`);
               } catch (error) {
                 notification.error({
                   message: 'Fehler beim Upload',

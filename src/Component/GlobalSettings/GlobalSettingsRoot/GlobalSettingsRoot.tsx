@@ -2,7 +2,7 @@ import React, {
   useEffect
 } from 'react';
 
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import {
   PageHeader
@@ -22,7 +22,7 @@ export const GlobalSettings: React.FC<LogsProps> = (props) => {
     t
   } = useTranslation();
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   useEffect(() => {
   }, []);
@@ -33,7 +33,7 @@ export const GlobalSettings: React.FC<LogsProps> = (props) => {
     >
       <PageHeader
         className="header"
-        onBack={() => history.goBack()}
+        onBack={() => navigate(-1)}
         title={t('GlobalSettings.global')}
         subTitle={t('GlobalSettings.globalInfo')}
       />

@@ -1,9 +1,10 @@
 import React, {
+  useCallback,
   useEffect,
   useState
 } from 'react';
 
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import {
   Button,
@@ -29,17 +30,13 @@ export const Logs: React.FC<LogsProps> = (props) => {
 
   const client = useSHOGunAPIClient();
 
-  let intervalTimer;
+  let intervalTimer: NodeJS.Timer;
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const {
     t
   } = useTranslation();
-
-  useEffect(() => {
-    fetchLogs();
-  }, []);
 
   const onChange = (checked: boolean) => {
     if (checked) {
@@ -52,13 +49,17 @@ export const Logs: React.FC<LogsProps> = (props) => {
     }
   };
 
-  const fetchLogs = async () => {
+  const fetchLogs = useCallback(async () => {
     const logService = new LogService({
       keycloak: client.getKeycloak()
     });
     const fetchedLogs = await logService.getLogs();
     setLogs(fetchedLogs);
-  };
+  }, [client]);
+
+  useEffect(() => {
+    fetchLogs();
+  }, [fetchLogs]);
 
   return (
     <div
@@ -66,7 +67,7 @@ export const Logs: React.FC<LogsProps> = (props) => {
     >
       <PageHeader
         className="header"
-        onBack={() => history.goBack()}
+        onBack={() => navigate(-1)}
         title={t('Logs.logs')}
         subTitle={t('Logs.logsInfo')}
         extra={[

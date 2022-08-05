@@ -40,7 +40,7 @@ export const Header: React.FC<HeaderProps> = () => {
           </Link>
         }
         extra={[
-          <LanguageSelect />,
+          <LanguageSelect key="languageselect" />,
           <User key="user" />
         ]}
       >
