@@ -56,12 +56,9 @@ export function GeneralEntityRoot<T extends BaseEntity>({
   const location = useLocation();
   const navigate = useNavigate();
 
-  const match = matchPath(
-    {
-      path: `${config.appPrefix}/portal/${entityType}/:entityId`
-    },
-    location.pathname
-  );
+  const match = matchPath({
+    path: `${config.appPrefix}/portal/${entityType}/:entityId`
+  }, location.pathname);
   const entityId = match?.params?.entityId;
 
   const [id, setId] = useState<number | 'create'>();
