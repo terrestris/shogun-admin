@@ -198,14 +198,14 @@ export function GeneralEntityRoot<T extends BaseEntity>({
       history.push(`${config.appPrefix}/portal/${entityType}/${updatedEntity.id}`);
       notification.success({
         message: t('GeneralEntityRoot.saveSuccess', {
-          entity: entityName
+          entity: TranslationUtil.getTranslationFromConfig(entityName, i18n)
         })
       });
     } catch (error) {
       Logger.error(`Error saving ${entityName}:`, error);
       notification.error({
-        message: t('GeneralEntityRoot.saveSuccess', {
-          entity: entityName
+        message: t('GeneralEntityRoot.saveFail', {
+          entity: TranslationUtil.getTranslationFromConfig(entityName, i18n)
         })
       });
     } finally {
@@ -225,6 +225,7 @@ export function GeneralEntityRoot<T extends BaseEntity>({
     enableOnTags: ['INPUT', 'TEXTAREA', 'SELECT'],
     filter: () => !saveReloadDisabled && formValid
   });
+
   const initialValues = useMemo(() => entityController?.getInitialFormValues(), [entityController]);
   const saveReloadDisabled = useMemo(() => _isEmpty(editEntity) || !formIsDirty, [formIsDirty, editEntity]);
 
