@@ -5,6 +5,7 @@ import {
   matchPath,
   Link
 } from 'react-router-dom';
+import { useHotkeys } from 'react-hotkeys-hook';
 import { Button, PageHeader, Form, notification } from 'antd';
 import _isEmpty from 'lodash/isEmpty';
 
@@ -212,6 +213,18 @@ export function GeneralEntityRoot<T extends BaseEntity>({
     }
   };
 
+  /**
+   * Shortcut: Save entity form when ctrl+s is pressed.
+   */
+  const handleKeyboardSave = (event: KeyboardEvent) => {
+    event.preventDefault();
+    onSaveClick();
+  };
+
+  useHotkeys('ctrl+s', handleKeyboardSave, {
+    enableOnTags: ['INPUT', 'TEXTAREA', 'SELECT'],
+    filter: () => !saveReloadDisabled && formValid
+  });
   const initialValues = useMemo(() => entityController?.getInitialFormValues(), [entityController]);
   const saveReloadDisabled = useMemo(() => _isEmpty(editEntity) || !formIsDirty, [formIsDirty, editEntity]);
 
