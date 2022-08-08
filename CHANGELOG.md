@@ -1,3 +1,16 @@
+## [10.1.0](https://github.com/terrestris/shogun-admin/compare/v10.0.0...v10.1.0) (2022-08-08)
+
+
+### Features
+
+* add keyboard shortcut to save configs ([2aaa2d6](https://github.com/terrestris/shogun-admin/commit/2aaa2d62fec898d7c5957a57fff8261fc3d5681e))
+
+
+### Bugfixes
+
+* also translate success / error messages ([8b577dd](https://github.com/terrestris/shogun-admin/commit/8b577ddc42f00ae7be4bb90e612afb46528647ef))
+* code style improvement ([a2dacc1](https://github.com/terrestris/shogun-admin/commit/a2dacc109f26cf1fa72e8abd89a11cff863d1ec1))
+
 ## [10.0.0](https://github.com/terrestris/shogun-admin/compare/v9.4.2...v10.0.0) (2022-08-04)
 
 
