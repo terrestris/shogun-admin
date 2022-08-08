@@ -67,12 +67,35 @@ jobs:
     name: SonarQube Trigger
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout sources 🔰
         uses: actions/checkout@v2
         with:
           # Disabling shallow clone is recommended for improving relevancy of reporting
           fetch-depth: 0
-      - name: SonarQube Scan
+
+      - name: Setup Node.js 16 🧮
+        uses: actions/setup-node@v1
+        with:
+          node-version: 16
+
+      - name: Cache Node.js modules 💾
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.OS }}-node-
+            ${{ runner.OS }}-
+
+      - name: Install dependencies ⏬
+        run: npm ci
+
+      - name: Test code ✅
+        run: npm run test
+        env:
+          CI: true
+
+      - name: SonarQube Scan 🔬
         uses: kitabisa/sonarqube-action@v1.2.0
         with:
           host: ${{ secrets.SONARQUBE_HOST }}
