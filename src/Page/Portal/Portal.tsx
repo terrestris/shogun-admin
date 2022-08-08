@@ -1,7 +1,16 @@
-import React, { useState } from 'react';
+import React, {
+  useState
+} from 'react';
 
-import { Button, message } from 'antd';
-import { Switch, Route } from 'react-router-dom';
+import {
+  Button,
+  message
+} from 'antd';
+
+import {
+  Routes,
+  Route
+} from 'react-router-dom';
 
 import _isEqual from 'lodash/isEqual';
 import {
@@ -23,8 +32,10 @@ import MetricsRoot from '../../Component/Metrics/MetricsRoot/MetricsRoot';
 
 import config from 'shogunApplicationConfig';
 
-import GeneralEntityRoot,
-{ GeneralEntityConfigType } from '../../Component/GeneralEntity/GeneralEntityRoot/GeneralEntityRoot';
+import GeneralEntityRoot, {
+  GeneralEntityConfigType
+} from '../../Component/GeneralEntity/GeneralEntityRoot/GeneralEntityRoot';
+
 import './Portal.less';
 
 interface OwnProps { }
@@ -90,14 +101,18 @@ export const Portal: React.FC<PortalProps> = () => {
         />
       </div>
       <div className="content">
-        <Switch>
+        <Routes>
+          <Route
+            path={'/'}
+            element={<WelcomeDashboard />}
+          />
           {
             !configsAreLoading && entitiesToLoad?.map(entityConfig => {
               return (
                 <Route
                   key={entityConfig.entityType}
-                  path={`${config.appPrefix}/portal/${entityConfig?.entityType}`}
-                  render={() => <GeneralEntityRoot
+                  path={`${entityConfig?.entityType}/*`}
+                  element={<GeneralEntityRoot
                     {...entityConfig}
                   />}
                 />
@@ -105,29 +120,26 @@ export const Portal: React.FC<PortalProps> = () => {
             })
           }
           <Route
-            path={`${config.appPrefix}/portal/imagefile`}
-            component={ImageFileRoot}
+            path={'imagefile/*'}
+            element={<ImageFileRoot />}
           />
           <Route
-            path={`${config.appPrefix}/portal/status/metrics`}
-            component={MetricsRoot}
+            path={'status/metrics/*'}
+            element={<MetricsRoot />}
           />
           <Route
-            path={`${config.appPrefix}/portal/status/logs`}
-            component={Logs}
+            path={'status/logs/*'}
+            element={<Logs />}
           />
           <Route
-            path={`${config.appPrefix}/portal/settings/global`}
-            component={GlobalSettingsRoot}
+            path={'settings/global/*'}
+            element={<GlobalSettingsRoot />}
           />
           <Route
-            path={`${config.appPrefix}/portal/settings/logs`}
-            component={LogSettingsRoot}
+            path={'settings/logs/*'}
+            element={<LogSettingsRoot />}
           />
-          <Route
-            component={WelcomeDashboard}
-          />
-        </Switch>
+        </Routes>
       </div>
       <>
         <ApplicationInfo />

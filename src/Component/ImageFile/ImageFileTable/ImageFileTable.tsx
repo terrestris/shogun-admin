@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { Modal, notification, Tooltip, Table, TableProps } from 'antd';
 
@@ -48,7 +48,7 @@ export const ImageFileTable: React.FC<ImageFileTableProps> = ({
   ...passThroughProps
 }) => {
 
-  const history = useHistory();
+  const navigate = useNavigate();
   const client = useSHOGunAPIClient();
   const service = client.imagefile();
 
@@ -57,7 +57,7 @@ export const ImageFileTable: React.FC<ImageFileTableProps> = ({
   } = useTranslation();
 
   const onRowClick = (imageFile: ImageFile) => {
-    history.push(`${config.appPrefix}/portal/imagefile/${imageFile.fileUuid}`);
+    navigate(`${config.appPrefix}/portal/imagefile/${imageFile.fileUuid}`);
   };
 
   const [entities, setEntities] = useState<ImageFile[]>();
@@ -105,12 +105,15 @@ export const ImageFileTable: React.FC<ImageFileTableProps> = ({
 
           notification.info({
             message: t('ImageFileTable.deletionInfo', { entity: name.singular }),
-            description: t('ImageFileTable.deletionInfo', { entity: name.singular, record: record.fileName })
+            description: t('ImageFileTable.deletionInfo', {
+              entity: name.singular,
+              record: record.fileName
+            })
           });
 
           fetchEntities();
 
-          history.push(`${config.appPrefix}/portal/imagefile`);
+          navigate(`${config.appPrefix}/portal/imagefile`);
         } catch (error) {
           notification.error({
             message: t('ImageFileTable.deleteFail'),

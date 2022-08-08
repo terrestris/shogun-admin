@@ -1,10 +1,11 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import {
-  useHistory,
+  useNavigate,
   useLocation,
   matchPath,
   Link
 } from 'react-router-dom';
+import { useHotkeys } from 'react-hotkeys-hook';
 import { Button, PageHeader, Form, notification } from 'antd';
 import _isEmpty from 'lodash/isEmpty';
 
@@ -52,11 +53,12 @@ export function GeneralEntityRoot<T extends BaseEntity>({
   tableConfig = {}
 }: GeneralEntityRootProps<T>) {
 
-  const history = useHistory();
   const location = useLocation();
-  const match = matchPath<{ entityId: string }>(location.pathname, {
+  const navigate = useNavigate();
+
+  const match = matchPath({
     path: `${config.appPrefix}/portal/${entityType}/:entityId`
-  });
+  }, location.pathname);
   const entityId = match?.params?.entityId;
 
   const [id, setId] = useState<number | 'create'>();
@@ -66,8 +68,8 @@ export function GeneralEntityRoot<T extends BaseEntity>({
   const [formValid, setFormValid] = useState<boolean>(true);
   const [isGridLoading, setGridLoading] = useState<boolean>(false);
   const [isSaving, setIsSaving] = useState<boolean>(false);
-  const [form] = Form.useForm();
 
+  const [form] = Form.useForm();
   const client = useSHOGunAPIClient();
 
   const {
@@ -194,23 +196,36 @@ export function GeneralEntityRoot<T extends BaseEntity>({
     try {
       const updatedEntity: T = await entityController?.saveOrUpdate() as T;
       await fetchEntities();
-      history.push(`${config.appPrefix}/portal/${entityType}/${updatedEntity.id}`);
+      navigate(`${config.appPrefix}/portal/${entityType}/${updatedEntity.id}`);
       notification.success({
         message: t('GeneralEntityRoot.saveSuccess', {
-          entity: entityName
+          entity: TranslationUtil.getTranslationFromConfig(entityName, i18n)
         })
       });
     } catch (error) {
       Logger.error(`Error saving ${entityName}:`, error);
       notification.error({
-        message: t('GeneralEntityRoot.saveSuccess', {
-          entity: entityName
+        message: t('GeneralEntityRoot.saveFail', {
+          entity: TranslationUtil.getTranslationFromConfig(entityName, i18n)
         })
       });
     } finally {
       setIsSaving(false);
     }
   };
+
+  /**
+   * Shortcut: Save entity form when ctrl+s is pressed.
+   */
+  const handleKeyboardSave = (event: KeyboardEvent) => {
+    event.preventDefault();
+    onSaveClick();
+  };
+
+  useHotkeys('ctrl+s', handleKeyboardSave, {
+    enableOnTags: ['INPUT', 'TEXTAREA', 'SELECT'],
+    filter: () => !saveReloadDisabled && formValid
+  });
 
   const initialValues = useMemo(() => entityController?.getInitialFormValues(), [entityController]);
   const saveReloadDisabled = useMemo(() => _isEmpty(editEntity) || !formIsDirty, [formIsDirty, editEntity]);
@@ -219,7 +234,7 @@ export function GeneralEntityRoot<T extends BaseEntity>({
     <div className="general-entity-root">
       <PageHeader
         className="header"
-        onBack={() => history.goBack()}
+        onBack={() => navigate(-1)}
         title={TranslationUtil.getTranslationFromConfig(navigationTitle, i18n)}
         subTitle={subTitle}
         extra={[

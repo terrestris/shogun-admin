@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import {
   Col,
@@ -33,7 +33,7 @@ type MetricsRootProps = {};
 
 export const MetricsRoot: React.FC<MetricsRootProps> = (props) => {
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const {
     t
@@ -45,7 +45,7 @@ export const MetricsRoot: React.FC<MetricsRootProps> = (props) => {
     >
       <PageHeader
         className="header"
-        onBack={() => history.goBack()}
+        onBack={() => navigate(-1)}
         title={t('Metrics.title')}
         subTitle={t('Metrics.info')}
       />

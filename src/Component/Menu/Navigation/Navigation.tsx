@@ -1,5 +1,5 @@
 import React from 'react';
-import { matchPath, useHistory, useLocation } from 'react-router-dom';
+import { matchPath, useNavigate, useLocation } from 'react-router-dom';
 
 import {
   BankOutlined,
@@ -38,16 +38,16 @@ export const Navigation: React.FC<NavigationProps> = ({
     t
   } = useTranslation();
 
-  const history = useHistory();
+  const navigate = useNavigate();
   const location = useLocation();
 
   const onSelect = ({ key }) => {
-    history.push(`${config.appPrefix}/portal/${key}`);
+    navigate(`${config.appPrefix}/portal/${key}`);
   };
 
-  const match = matchPath<{ activeKey: string }>(location.pathname, {
+  const match = matchPath({
     path: `${config.appPrefix}/portal/:activeKey`
-  });
+  }, location.pathname);
 
   const activeKey = match?.params?.activeKey;
 

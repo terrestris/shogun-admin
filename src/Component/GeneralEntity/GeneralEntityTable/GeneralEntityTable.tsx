@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import {
   Table,
@@ -104,10 +104,10 @@ export function GeneralEntityTable<T extends BaseEntity>({
 }: GeneralEntityTableProps<T>) {
 
   const routePath = useMemo(() => `${config.appPrefix}/portal/${entityType}`, [entityType]);
-  const hist = useHistory();
+  const navigate = useNavigate();
   const { t } = useTranslation();
 
-  const onRowClick = (record: T) => hist.push(`${routePath}/${record.id}`);
+  const onRowClick = (record: T) => navigate(`${routePath}/${record.id}`);
 
   const onDeleteClick = async (record: T) => {
 
@@ -213,7 +213,7 @@ export function GeneralEntityTable<T extends BaseEntity>({
       // check for preconfigured sorters, filters and custom components (TODO)
       cols = tableConfig?.columnDefinition.map(cfg => {
         let copyCfg = _cloneDeep(cfg);
-        copyCfg.title = TranslationUtil.getTranslationFromConfig(cfg.title as string, i18n)
+        copyCfg.title = TranslationUtil.getTranslationFromConfig(cfg.title as string, i18n);
         const {
           sortConfig,
           filterConfig,

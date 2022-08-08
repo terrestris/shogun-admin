@@ -204,7 +204,7 @@ export const GeneralEntityForm: React.FC<GeneralEntityFormProps> = ({
    */
   const createFormItem = (fieldCfg: FieldConfig): React.ReactNode => {
     let copyFieldCfg = _cloneDeep(fieldCfg);
-    copyFieldCfg.label = TranslationUtil.getTranslationFromConfig(fieldCfg.label as string, i18n)
+    copyFieldCfg.label = TranslationUtil.getTranslationFromConfig(fieldCfg.label as string, i18n);
     let field: React.ReactNode;
     if (copyFieldCfg.readOnly) {
       field = createReadOnlyComponent(copyFieldCfg);

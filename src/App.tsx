@@ -5,9 +5,9 @@ import {
 
 import {
   BrowserRouter as Router,
-  Switch,
-  Redirect,
-  Route
+  Navigate,
+  Route,
+  Routes
 } from 'react-router-dom';
 import Header from './Component/Header/Header';
 
@@ -102,17 +102,16 @@ const App: React.FC = () => {
           />
         }
       >
-        <Switch>
+        <Routes>
           <Route
-            path={`${config.appPrefix}/portal`}
-            component={Portal}
+            path={`${config.appPrefix}/portal/*`}
+            element={<Portal />}
           />
-          <Redirect
-            exact
-            from={`${config.appPrefix}/`}
-            to={`${config.appPrefix}/portal`}
+          <Route
+            path={`${config.appPrefix}/`}
+            element={<Navigate to={`${config.appPrefix}/portal`} />}
           />
-        </Switch>
+        </Routes>
       </React.Suspense>
     </Router>
   );

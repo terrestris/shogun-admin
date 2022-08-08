@@ -2,7 +2,7 @@ import React from 'react';
 
 import { useTranslation } from 'react-i18next';
 
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { PageHeader } from 'antd';
 
@@ -16,7 +16,7 @@ export const LogSettingsRoot: React.FC<LogSettingsRootProps> = (props) => {
     t
   } = useTranslation();
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   return (
     <div
@@ -24,7 +24,7 @@ export const LogSettingsRoot: React.FC<LogSettingsRootProps> = (props) => {
     >
       <PageHeader
         className="header"
-        onBack={() => history.goBack()}
+        onBack={() => navigate(-1)}
         title={t('LogSettings.logs')}
         subTitle={t('LogSettings.logsInfo')}
       />
