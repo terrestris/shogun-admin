@@ -8,6 +8,10 @@ export default {
         loading: 'laden',
         loadFail: 'Die Daten konnten nicht geladen werden. Überprüfen Sie Ihre Konsole.'
       },
+      FullscreenWrapper: {
+        fullscreen: 'Vollbild',
+        leaveFullscreen: 'Vollbild verlassen'
+      },
       WelcomeDashboard: {
         applications: 'Applikationen',
         applicationInfo: '… die die Welt bewegen',
@@ -137,6 +141,10 @@ export default {
       App: {
         loading: 'loading',
         loadFail: 'Failed to load the initial data. Check your console.'
+      },
+      FullscreenWrapper: {
+        fullscreen: 'Fullscreen',
+        leaveFullscreen: 'Leave fullscreen'
       },
       WelcomeDashboard: {
         applications: 'Applications',

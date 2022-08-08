@@ -35,7 +35,6 @@
       "titleEdit": "Last edited on",
       "titleLink": "Link to application",
       "toolTipLink": "Open application"
-
     }
   },
   "endpoint": "/applications",
@@ -86,7 +85,7 @@
       },
       {
         "component": "JSONEditor",
-        "dataField": "clientClientConfig",
+        "dataField": "clientConfig",
         "label": "#i18n.labelClientConfig",
         "fieldProps": {
           "entityName": "DefaultApplicationClientConfig"
