@@ -110,7 +110,6 @@ export function GeneralEntityTable<T extends BaseEntity>({
   const onRowClick = (record: T) => navigate(`${routePath}/${record.id}`);
 
   const onDeleteClick = async (record: T) => {
-
     const entityId = record?.id;
 
     if (!entityId) {
@@ -118,7 +117,7 @@ export function GeneralEntityTable<T extends BaseEntity>({
       return;
     }
 
-    let entityName = (record as any).name || (record as any).title;
+    let entityName: string | number = (record as any).name || (record as any).title;
 
     if (!entityName) {
       entityName = entityId;
@@ -137,7 +136,11 @@ export function GeneralEntityTable<T extends BaseEntity>({
         </div>
       ),
       onOk: async () => {
-        if (confirmName === TranslationUtil.getTranslationFromConfig(entityName, i18n)) {
+        let isCheck = typeof entityName === 'string' ?
+          confirmName === TranslationUtil.getTranslationFromConfig(entityName, i18n) :
+          parseInt(confirmName, 10) === entityName;
+
+        if (isCheck) {
           try {
             await controller?.delete(record);
             notification.info({
