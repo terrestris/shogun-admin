@@ -1,3 +1,15 @@
+## [10.1.1](https://github.com/terrestris/shogun-admin/compare/v10.1.0...v10.1.1) (2022-08-10)
+
+
+### Changes in configuration
+
+* scans the jest coverage and sends a report to sonarqube ([#113](https://github.com/terrestris/shogun-admin/issues/113)) ([910945f](https://github.com/terrestris/shogun-admin/commit/910945fbdb870d9effcf657b1f33cb1a79a59967))
+
+
+### Bugfixes
+
+* ensures fullscreen for all childs except the first ([cc6c71d](https://github.com/terrestris/shogun-admin/commit/cc6c71d6432474de627e57f4b7f3cac8a2ac7371))
+
 ## [10.1.0](https://github.com/terrestris/shogun-admin/compare/v10.0.0...v10.1.0) (2022-08-08)
 
 
