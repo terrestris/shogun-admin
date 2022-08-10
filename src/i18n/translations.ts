@@ -8,6 +8,10 @@ export default {
         loading: 'laden',
         loadFail: 'Die Daten konnten nicht geladen werden. Überprüfen Sie Ihre Konsole.'
       },
+      FullscreenWrapper: {
+        fullscreen: 'Vollbild',
+        leaveFullscreen: 'Vollbild verlassen'
+      },
       WelcomeDashboard: {
         applications: 'Applikationen',
         applicationInfo: '… die die Welt bewegen',
@@ -65,6 +69,9 @@ export default {
         refresh: 'Aktualisieren',
         reloadChecked: 'Automatisches Nachladen',
         reloadUnChecked: 'Kein Nachladen'
+      },
+      LinkField: {
+        title: 'Öffne Link'
       },
       Metrics: {
         title: 'Metriken',
@@ -135,6 +142,10 @@ export default {
         loading: 'loading',
         loadFail: 'Failed to load the initial data. Check your console.'
       },
+      FullscreenWrapper: {
+        fullscreen: 'Fullscreen',
+        leaveFullscreen: 'Leave fullscreen'
+      },
       WelcomeDashboard: {
         applications: 'Applications',
         applicationInfo: '… that move the world',
@@ -194,6 +205,9 @@ export default {
         refresh: 'Refresh',
         reloadChecked: 'Live reload',
         reloadUnChecked: 'No reload'
+      },
+      LinkField: {
+        title: 'Open link'
       },
       Metrics: {
         title: 'Metrics',

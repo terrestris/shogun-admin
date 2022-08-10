@@ -1,6 +1,7 @@
 import React from 'react';
 import { FullscreenExitOutlined, FullscreenOutlined } from '@ant-design/icons';
 import { Button, Tooltip } from 'antd';
+import { useTranslation } from 'react-i18next';
 
 import './FullscreenWrapper.less';
 
@@ -8,6 +9,10 @@ export const FullscreenWrapper: React.FC<React.HTMLAttributes<HTMLDivElement>> =
   children
 }) => {
   const [fullscreen, setFullscreen] = React.useState<boolean>(false);
+
+  const {
+    t
+  } = useTranslation();
 
   const toggleFullscreen = () => {
     setFullscreen(!fullscreen);
@@ -19,7 +24,7 @@ export const FullscreenWrapper: React.FC<React.HTMLAttributes<HTMLDivElement>> =
     <div className={wrapperCls}>
       <div>
         <Tooltip
-          title={`Vollbild ${fullscreen ? ' verlassen' : ''}`}
+          title={fullscreen ? t('FullscreenWrapper.leaveFullscreen') : t('FullscreenWrapper.fullscreen') }
           placement='left'
         >
           <Button
