@@ -1,3 +1,11 @@
+## [10.1.2](https://github.com/terrestris/shogun-admin/compare/v10.1.1...v10.1.2) (2022-08-10)
+
+
+### Bugfixes
+
+* adds fullscreen translation ([e635339](https://github.com/terrestris/shogun-admin/commit/e635339c8de1fe5ffd9911361d6c7dea53d6160b))
+* adds missing translation ([f740338](https://github.com/terrestris/shogun-admin/commit/f7403388f26a492ea19403fe082054eeede1eb47))
+
 ## [10.1.1](https://github.com/terrestris/shogun-admin/compare/v10.1.0...v10.1.1) (2022-08-10)
 
 
