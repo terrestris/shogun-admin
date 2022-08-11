@@ -180,6 +180,15 @@ export function GeneralEntityRoot<T extends BaseEntity>({
     }
   }, [fetchEntities, allEntities, isGridLoading]);
 
+  /**
+   * Table updates when Entities change
+   */
+  useEffect(() => {
+    if (entityType) {
+      fetchEntities();
+    }
+  }, [entityType]);
+
   const onValuesChange = async (changedValues: any) => {
     setFormIsDirty(true);
     await entityController.updateEntity(changedValues);
