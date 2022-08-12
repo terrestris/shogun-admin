@@ -4,8 +4,16 @@
   flex-direction: column;
   display: flex;
   padding: 10px;
+  resize: vertical;
+  overflow: hidden;
+  min-height: 25vh;
 
   >div {
+    width: 100%;
+    border-bottom: solid 1px #dedede;
+    margin: 0 5px 5px 0;
+    padding-bottom: 5px;
+
     >button {
       float: right;
     }
@@ -38,11 +46,6 @@
     &:focus {
       border: none;
       box-shadow: none;
-    }
-
-    :not(:first-child) {
-      height: 100%;
-      padding-top: 10px;
     }
   }
 }
