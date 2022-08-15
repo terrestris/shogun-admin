@@ -1,3 +1,10 @@
+## [10.1.4](https://github.com/terrestris/shogun-admin/compare/v10.1.3...v10.1.4) (2022-08-15)
+
+
+### Bugfixes
+
+* adds a effect to update the table entries when the entity changes ([cef0e67](https://github.com/terrestris/shogun-admin/commit/cef0e67bdab7202abe7de80015d1d624a94d3ddd))
+
 ## [10.1.3](https://github.com/terrestris/shogun-admin/compare/v10.1.2...v10.1.3) (2022-08-15)
 
 
