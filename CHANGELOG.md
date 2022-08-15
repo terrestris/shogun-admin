@@ -1,3 +1,10 @@
+## [10.1.3](https://github.com/terrestris/shogun-admin/compare/v10.1.2...v10.1.3) (2022-08-15)
+
+
+### Bugfixes
+
+* fix fullscreen mode again ([3051fb3](https://github.com/terrestris/shogun-admin/commit/3051fb3d25c3322816de648703b1ea44e3067a5c))
+
 ## [10.1.2](https://github.com/terrestris/shogun-admin/compare/v10.1.1...v10.1.2) (2022-08-10)
 
 
