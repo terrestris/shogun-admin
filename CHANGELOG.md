@@ -1,3 +1,10 @@
+## [10.1.5](https://github.com/terrestris/shogun-admin/compare/v10.1.4...v10.1.5) (2022-08-18)
+
+
+### Bugfixes
+
+* adds missing translation ([#122](https://github.com/terrestris/shogun-admin/issues/122)) ([cea5c88](https://github.com/terrestris/shogun-admin/commit/cea5c88824ab7da00ff2ce702231cf9c6c47738d))
+
 ## [10.1.4](https://github.com/terrestris/shogun-admin/compare/v10.1.3...v10.1.4) (2022-08-15)
 
 
