@@ -206,8 +206,8 @@ const UserPermissionGrid: React.FC<UserPermissionGridProps> = ({
     title: t('UserPermissionGrid.userColumnTitle'),
     dataIndex: 'name',
     key: 'name',
-    defaultSortOrder: 'descend',
-    sorter: (a, b) => b.user?.providerDetails?.username?.localeCompare(a.user?.providerDetails?.username),
+    defaultSortOrder: 'ascend',
+    sorter: (a, b) => a.user?.providerDetails?.username?.localeCompare(b.user?.providerDetails?.username),
     render: (value: any, record: DataType) => (
       <UserAvatar
         user={record.user}
