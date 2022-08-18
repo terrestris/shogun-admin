@@ -1,4 +1,4 @@
-import lng from "../i18n/index";
+import lng from '../i18n/index';
 
 export default class TranslationUtil {
 
@@ -16,5 +16,5 @@ export default class TranslationUtil {
     } else {
       return key;
     }
-  }
+  };
 }

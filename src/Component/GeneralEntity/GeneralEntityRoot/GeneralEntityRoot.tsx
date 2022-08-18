@@ -312,6 +312,7 @@ export function GeneralEntityRoot<T extends BaseEntity>({
           <GeneralEntityForm
             i18n={i18n}
             entityName={entityName}
+            entityType={entityType}
             formConfig={formConfig}
             form={form}
             formProps={{
