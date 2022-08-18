@@ -63,6 +63,15 @@ export default {
         tooltipReload: 'Neu laden',
         tooltipDelete: 'Löschen'
       },
+      ImageFileRoot: {
+        title: 'Bilddateien',
+        subTitle: '… die die Welt zeigen',
+        button: 'Bilddatei hochladen',
+        success: 'Upload erfolgreich',
+        failure: 'Fehler beim Upload',
+        uploadSuccess: 'Die Datei {{entityName}} wurde erfolgreich hochgeladen',
+        uploadFailure: 'Die Datei {{entityName}} konnte nicht hochgeladen werden'
+      },
       Logs: {
         logs: 'Logs',
         logsInfo: '… die die Welt erklären',
@@ -196,6 +205,15 @@ export default {
         columnName: 'Name',
         tooltipReload: 'Reload',
         tooltipDelete: 'Delete'
+      },
+      ImageFileRoot: {
+        title: 'Images',
+        subTitle: '… that show the world',
+        button: 'Upload image',
+        success: 'Upload successful',
+        failure: 'Error during upload',
+        uploadSuccess: 'The {{entityName}} file was successfully uploaded',
+        uploadFailure: 'The file {{entityName}} could not be uploaded'
       },
       Logs: {
         metric: 'Metrics',

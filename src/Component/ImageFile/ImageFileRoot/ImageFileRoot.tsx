@@ -12,6 +12,7 @@ import ImageFileTable from '../ImageFileTable/ImageFileTable';
 import config from 'shogunApplicationConfig';
 
 import './ImageFileRoot.less';
+import { useTranslation } from 'react-i18next';
 
 interface OwnProps { }
 
@@ -28,6 +29,10 @@ export const ImageFileRoot: React.FC<ImageFileRootProps> = props => {
     path: `${config.appPrefix}/portal/imagefile/:uuid`
   }, location.pathname);
   const imageFileUuid = match?.params?.uuid;
+
+  const {
+    t
+  } = useTranslation();
 
   useEffect(() => {
     if (!imageFileUuid) {
@@ -49,8 +54,8 @@ export const ImageFileRoot: React.FC<ImageFileRootProps> = props => {
       <PageHeader
         className="header"
         onBack={() => navigate(-1)}
-        title="Bilddateien"
-        subTitle="… die die Welt zeigen"
+        title={t('ImageFileRoot.title')}
+        subTitle={t('ImageFileRoot.subTitle')}
       >
       </PageHeader>
       <div className="left-container">
@@ -68,21 +73,21 @@ export const ImageFileRoot: React.FC<ImageFileRootProps> = props => {
                 const uploadedFile = await client.imagefile().upload(file);
 
                 notification.info({
-                  message: 'Upload erfolgreich',
-                  description: `Die Datei ${file.name} wurde erfolgreich hochgeladen`
+                  message: t('ImageFileRoot.success'),
+                  description: t('ImageFileRoot.uploadSuccess', { entityName: file.name })
                 });
 
                 navigate(`${config.appPrefix}/portal/imagefile/${uploadedFile.fileUuid}`);
               } catch (error) {
                 notification.error({
-                  message: 'Fehler beim Upload',
-                  description: `Die Datei ${file.name} konnte nicht hochgeladen werden`
+                  message: t('ImageFileRoot.failure'),
+                  description: t('ImageFileRoot.uploadFailure', { entityName: file.name })
                 });
               }
             }}
           >
             <Button type="primary">
-              Bilddatei hochladen
+            {t('ImageFileRoot.button')}
             </Button>
           </Upload>
         </div>
