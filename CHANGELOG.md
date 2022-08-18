@@ -1,3 +1,27 @@
+## [10.2.0](https://github.com/terrestris/shogun-admin/compare/v10.1.5...v10.2.0) (2022-08-18)
+
+
+### Features
+
+* add the UserPermissionGrid to configure the UserInstancePermissions for a given entity ([b5dbb4b](https://github.com/terrestris/shogun-admin/commit/b5dbb4b9e0dd8fe22da77eecb4be0becb235b794))
+
+
+### Changes in layout
+
+* allow dot and bracket notation ([66ad8fb](https://github.com/terrestris/shogun-admin/commit/66ad8fbd40950a4606192b72fe90aeea78fbb259))
+* fix lint warnings ([43120a9](https://github.com/terrestris/shogun-admin/commit/43120a9966b1c4f311a04a9deb5c396127f26d5a))
+
+
+### Dependencies
+
+* update shogun-util ([a7c3e8c](https://github.com/terrestris/shogun-admin/commit/a7c3e8cb52ebdcd670990f4406581ce1df6389be))
+
+
+### Bugfixes
+
+* check if name (as string) is available ([a74c34a](https://github.com/terrestris/shogun-admin/commit/a74c34a0a918cb96531d67fe98bca0e482ab7045))
+* sort users ascending initially ([5c30c0b](https://github.com/terrestris/shogun-admin/commit/5c30c0b2305b483e9b88a0719c8c9d0d13ad3fca))
+
 ## [10.1.5](https://github.com/terrestris/shogun-admin/compare/v10.1.4...v10.1.5) (2022-08-18)
 
 
