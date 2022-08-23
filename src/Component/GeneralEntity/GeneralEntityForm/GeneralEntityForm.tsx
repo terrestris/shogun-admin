@@ -12,6 +12,7 @@ import { FormInstance, FormItemProps, FormProps } from 'antd/lib/form';
 import YesOrNoField from '../../FormField/YesOrNoField/YesOrNoField';
 import JSONEditor from '../../FormField/JSONEditor/JSONEditor';
 import MarkdownEditor from '../../FormField/MarkdownEditor/MarkdownEditor';
+import UserPermissionGrid from '../../FormField/UserPermissionGrid/UserPermissionGrid';
 import LayerTypeSelect from '../../Layer/LayerTypeSelect/LayerTypeSelect';
 import { InputNumber } from 'antd';
 import TranslationUtil from '../../../Util/TranslationUtil';
@@ -50,6 +51,7 @@ export type FormConfig = {
 interface OwnProps {
   i18n: FormTranslations;
   entityName: string;
+  entityType: string;
   formConfig: FormConfig;
   formProps?: Partial<FormProps>;
   form: FormInstance;
@@ -62,6 +64,7 @@ export type GeneralEntityFormProps = OwnProps & React.HTMLAttributes<HTMLDivElem
 export const GeneralEntityForm: React.FC<GeneralEntityFormProps> = ({
   i18n,
   entityName,
+  entityType,
   formProps,
   form,
   formConfig
@@ -158,6 +161,14 @@ export const GeneralEntityForm: React.FC<GeneralEntityFormProps> = ({
         return (
           <DatePicker
             format={DEFAULT_DATE_FORMAT}
+            {...fieldCfg?.fieldProps}
+          />
+        );
+      case 'UserPermissionGrid':
+        return (
+          <UserPermissionGrid
+            entityId={form.getFieldValue('id')}
+            entityType={entityType.toLowerCase()}
             {...fieldCfg?.fieldProps}
           />
         );

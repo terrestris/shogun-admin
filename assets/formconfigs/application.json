@@ -12,6 +12,7 @@
       "labelTree": "Themenbaum",
       "labelLayerConfig": "Layer-Konfiguration",
       "labelToolConfig": "Werkzeug Konfiguration",
+      "labelUserPermissions": "Nutzerberechtigungen",
       "titleId": "ID",
       "titleName": "Name",
       "titleEdit": "Zuletzt editiert am",
@@ -30,6 +31,7 @@
       "labelTree": "Layertree",
       "labelLayerConfig": "Layer configuration",
       "labelToolConfig": "Configure Tools",
+      "labelUserPermissions": "User permissions",
       "titleId": "ID",
       "titleName": "Name",
       "titleEdit": "Last edited on",
@@ -114,6 +116,11 @@
         "fieldProps": {
           "entityName": "DefaultApplicationToolConfig"
         }
+      },
+      {
+        "component": "UserPermissionGrid",
+        "label": "#i18n.labelUserPermissions",
+        "fieldProps": {}
       }
     ]
   },

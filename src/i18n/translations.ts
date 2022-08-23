@@ -24,7 +24,7 @@ export default {
         user: 'Benutzer',
         userInfo: '… die die Welt verbessern',
         userSingular: 'Benutzer',
-        userPlural: 'Benutzer',
+        userPlural: 'Benutzer'
       },
       DashboardStatistics: {
         statisticsTitle: 'Insgesamt verfügbar'
@@ -84,11 +84,11 @@ export default {
       },
       Metrics: {
         title: 'Metriken',
-        info: '… die die Welt vermessen',
+        info: '… die die Welt vermessen'
       },
       GlobalSettings: {
         global: 'Einstellungen',
-        globalInfo: '… die die Welt lenken',
+        globalInfo: '… die die Welt lenken'
       },
       LogSettings: {
         logs: 'Einstellungen',
@@ -127,18 +127,36 @@ export default {
         yes: 'Ja',
         no: 'Nein'
       },
-      ImageFileTable : {
-        imageSingular: 'Bilddatei',
-        imagePlural: 'Bilddateien',
-        delete: '{{entity}} löschen',
-        cancel: 'Abbrechen',
-        confirmInfo: 'Die {{entity}} wird gelöscht!',
-        conFirmTooltip: 'Möchten Sie die Datei {{entity}} wirklich löschen?',
-        deletionInfo: '{{entity}} gelöscht',
-        deletionDescription: '{{entity}} "{{record}}" wurde gelöscht',
-        deleteFail: 'Löschen fehlgeschlagen',
-        deleteFailDescript: 'Die Datei "{{record}}" konnte nicht gelöscht werden!',
-        reloadTooltip: 'Neu laden',
+      UserPermissionGrid: {
+        loadErrorMsg: 'Fehler beim Laden der Berechtigungen',
+        updateErrorMsg: 'Fehler beim Aktualisieren der Berechtigung',
+        deleteErrorMsg: 'Fehler beim Löschen der Berechtigung',
+        filterInputPlaceholder: 'Suche…',
+        filterSearchButtonText: 'Suche',
+        filterResetButtonText: 'Zurücksetzen',
+        userColumnTitle: 'Name',
+        permissionColumnTitle: 'Berechtigung',
+        deletePermissionButtonTooltip: 'Berechtigung löschen'
+      },
+      PermissionSelect: {
+        placeholder: 'Berechtigung auswählen…',
+        readLabel: 'Lesen',
+        readUpdateLabel: 'Aktualisieren',
+        readUpdateDeleteLabel: 'Aktualisieren & Löschen',
+        adminLabel: 'Besitzer'
+      },
+      UserPermissionModal: {
+        loadErrorMsg: 'Fehler beim Laden der Berechtigungen',
+        saveErrorMsg: 'Fehler beim Speichern der Berechtigung für die Nutzer mit den IDs: {{userIds}}',
+        openModalButtonTooltipTitle: 'Berechtigung hinzufügen',
+        title: 'Berechtigung hinzufügen',
+        description: 'Wählen Sie einen oder mehrere Nutzer sowie die zugehörige Berechtigung aus.',
+        userSelectLabel: 'Nutzername oder Email Adresse',
+        userSelectExtra: 'Wählen Sie die Nutzer aus der Liste aus oder geben Sie einen ' +
+          'Suchbegriff (Nutzername oder Email Adresse) ein',
+        userSelectPlaceholder: 'Nutzer auswählen…',
+        permissionSelectLabel: 'Berechtigung',
+        permissionSelectExtra: 'Wählen Sie die Berechtigung aus, die die Nutzer erhalten sollen.'
       }
     }
   },
@@ -167,7 +185,7 @@ export default {
         user: 'User',
         userInfo: '… that improve the world',
         userSingular: 'User',
-        userPlural: 'Users',
+        userPlural: 'Users'
       },
       DashboardStatistics: {
         statisticsTitle: 'Total available'
@@ -229,7 +247,7 @@ export default {
       },
       Metrics: {
         title: 'Metrics',
-        info: '… that measure the world',
+        info: '… that measure the world'
       },
       GlobalSettings: {
         global: 'Configuration',
@@ -283,7 +301,37 @@ export default {
         deletionDescription: '{{entity}} "{{record}}" has been deleted',
         deleteFail: 'Deletion failed',
         deleteFailDescript: 'The file "{{record}}" could not be deleted!',
-        reloadTooltip: 'Reload',
+        reloadTooltip: 'Reload'
+      },
+      UserPermissionGrid: {
+        loadErrorMsg: 'Error while loading the permissions',
+        updateErrorMsg: 'Error while updating the permission',
+        deleteErrorMsg: 'Error while deleting the permission',
+        filterInputPlaceholder: 'Search…',
+        filterSearchButtonText: 'Search',
+        filterResetButtonText: 'Reset',
+        userColumnTitle: 'Name',
+        permissionColumnTitle: 'Permission',
+        deletePermissionButtonTooltip: 'Delete permission'
+      },
+      PermissionSelect: {
+        placeholder: 'Select a permission…',
+        readLabel: 'Read',
+        readUpdateLabel: 'Update',
+        readUpdateDeleteLabel: 'Update & Delete',
+        adminLabel: 'Owner'
+      },
+      UserPermissionModal: {
+        loadErrorMsg: 'Error while loading the permissions',
+        saveErrorMsg: 'Error while setting the permission for users with IDs: {{userIds}}',
+        openModalButtonTooltipTitle: 'Add permission',
+        title: 'Add permission',
+        description: 'Select one or more users and the respective permission.',
+        userSelectLabel: 'Username or email address',
+        userSelectExtra: 'Select users from the list or search via username or email address.',
+        userSelectPlaceholder: 'Select user(s)…',
+        permissionSelectLabel: 'Permission',
+        permissionSelectExtra: 'Select the permission the users should be granted.'
       }
     }
   }
