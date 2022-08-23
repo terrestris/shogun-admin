@@ -32,6 +32,7 @@
   "homepage": "https://github.com/terrestris/shogun-admin#readme",
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
+    "@casualbot/jest-sonar-reporter": "^2.2.5",
     "@monaco-editor/react": "^4.4.5",
     "@terrestris/base-util": "^1.0.1",
     "@terrestris/ol-util": "^6.0.1",
@@ -110,5 +111,16 @@
     "webpack-cli": "^4.10.0",
     "webpack-dev-server": "^4.9.2",
     "whatwg-fetch": "^3.6.2"
+  },
+  "@casualbot/jest-sonar-reporter": {
+    "suiteName": "jest tests",
+    "outputDirectory": "coverage",
+    "outputName": "jest-report.xml",
+    "uniqueOutputName": "false",
+    "classNameTemplate": "{classname}-{title}",
+    "titleTemplate": "{classname}-{title}",
+    "ancestorSeparator": " › ",
+    "usePathForSuiteName": "true",
+    "relativePaths": "true"
   }
 }

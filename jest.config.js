@@ -37,7 +37,8 @@ const config = {
     'jsx',
     'json'
   ],
-  testEnvironment: 'jsdom'
+  testEnvironment: 'jsdom',
+  reporters: [ "default", "@casualbot/jest-sonar-reporter" ]
 };
 
 module.exports = config;
