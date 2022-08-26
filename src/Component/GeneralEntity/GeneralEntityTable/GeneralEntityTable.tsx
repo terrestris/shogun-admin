@@ -145,7 +145,7 @@ export function GeneralEntityTable<T extends BaseEntity>({
             await controller?.delete(record);
             notification.info({
               message: t('GeneralEntityTable.deleteConfirm'),
-              description: t('GeneralEntityTable.contentConfirmInfo', { entityName: entityName })
+              description: t('GeneralEntityTable.deleteConfirmDescript', { entityName: entityName })
             });
             fetchEntities();
           } catch (error) {
