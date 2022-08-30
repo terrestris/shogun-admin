@@ -1,3 +1,15 @@
+## [10.2.1](https://github.com/terrestris/shogun-admin/compare/v10.2.0...v10.2.1) (2022-08-30)
+
+
+### Changes in configuration
+
+* integrate sonarqube ([#124](https://github.com/terrestris/shogun-admin/issues/124)) ([2364b97](https://github.com/terrestris/shogun-admin/commit/2364b9712402bcb908a668338ea55488bdf84556))
+
+
+### Bugfixes
+
+* fixing typo ([48acaeb](https://github.com/terrestris/shogun-admin/commit/48acaeb98f7704fc2340ae2cf48ae1a537f587da))
+
 ## [10.2.0](https://github.com/terrestris/shogun-admin/compare/v10.1.5...v10.2.0) (2022-08-18)
 
 
