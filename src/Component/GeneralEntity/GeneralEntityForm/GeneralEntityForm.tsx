@@ -258,7 +258,7 @@ export const GeneralEntityForm: React.FC<GeneralEntityFormProps> = ({
 
     return (
       <Form.Item
-        key={dataField}
+        key={`${entityType}-${form.getFieldValue('id')}-${dataField}`}
         name={dataField}
         className={`cls-${dataField}`}
         normalize={copyFieldCfg.component ? getNormalizeFn(dataField) : undefined}
