@@ -89,33 +89,25 @@
         "component": "JSONEditor",
         "dataField": "clientConfig",
         "label": "#i18n.labelClientConfig",
-        "fieldProps": {
-          "entityName": "DefaultApplicationClientConfig"
-        }
+        "fieldProps": {}
       },
       {
         "component": "JSONEditor",
         "dataField": "layerTree",
         "label": "#i18n.labelTree",
-        "fieldProps": {
-          "entityName": "DefaultLayerTree"
-        }
+        "fieldProps": {}
       },
       {
         "component": "JSONEditor",
         "dataField": "layerConfig",
         "label": "#i18n.labelLayerConfig",
-        "fieldProps": {
-          "entityName": "LayerConfig"
-        }
+        "fieldProps": {}
       },
       {
         "component": "JSONEditor",
         "dataField": "toolConfig",
         "label": "#i18n.labelToolConfig",
-        "fieldProps": {
-          "entityName": "DefaultApplicationToolConfig"
-        }
+        "fieldProps": {}
       },
       {
         "component": "UserPermissionGrid",

@@ -73,23 +73,20 @@
       {
         "component": "JSONEditor",
         "dataField": "providerDetails",
-        "label": "#i18n.labelKeyProvDetail"
+        "label": "#i18n.labelKeyProvDetail",
+        "fieldProps": {}
       },
       {
         "component": "JSONEditor",
         "dataField": "details",
         "label": "#i18n.labelKeyDetail",
-        "fieldProps": {
-          "entityName": "UserDetails"
-        }
+        "fieldProps": {}
       },
       {
         "component": "JSONEditor",
         "dataField": "clientConfig",
         "label": "#i18n.labelSource",
-        "fieldProps": {
-          "entityName": "UserClientConfig"
-        }
+        "fieldProps": {}
       }
     ]
   },

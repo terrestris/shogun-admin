@@ -86,25 +86,19 @@
         "component": "JSONEditor",
         "dataField": "clientConfig",
         "label": "#i18n.labelConfig",
-        "fieldProps": {
-          "entityName": "DefaultLayerClientConfig"
-        }
+        "fieldProps": {}
       },
       {
         "component": "JSONEditor",
         "dataField": "sourceConfig",
         "label": "#i18n.labelSource",
-        "fieldProps": {
-          "entityName": "DefaultLayerSourceConfig"
-        }
+        "fieldProps": {}
       },
       {
         "component": "JSONEditor",
         "dataField": "features",
         "label": "#i18n.labelFeat",
-        "fieldProps": {
-          "entityName": "GeoJsonObject"
-        }
+        "fieldProps": {}
       }
     ]
   },
