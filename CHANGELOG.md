@@ -1,3 +1,12 @@
+## [10.2.2](https://github.com/terrestris/shogun-admin/compare/v10.2.1...v10.2.2) (2022-08-31)
+
+
+### Bugfixes
+
+* fix schema validation for array types ([928c2fb](https://github.com/terrestris/shogun-admin/commit/928c2fb0df854110e3f7d3cc6df93b5f0b7f20e5))
+* provide unique component keys ([4ca3e08](https://github.com/terrestris/shogun-admin/commit/4ca3e0836204493c8c9e44b42f2105369485e2bc))
+* remove unneeded field prop ([cbda0fb](https://github.com/terrestris/shogun-admin/commit/cbda0fb7b5cd50bc8b989bc58097373572316fb1))
+
 ## [10.2.1](https://github.com/terrestris/shogun-admin/compare/v10.2.0...v10.2.1) (2022-08-30)
 
 
