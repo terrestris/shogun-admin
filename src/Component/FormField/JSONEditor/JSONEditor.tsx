@@ -1,4 +1,7 @@
-import React, { useEffect } from 'react';
+import React, {
+  useEffect,
+  useState
+} from 'react';
 import Editor, { EditorProps, Monaco } from '@monaco-editor/react';
 import Logger from 'js-logger';
 import FullscreenWrapper from '../../FullscreenWrapper/FullscreenWrapper';
@@ -19,16 +22,18 @@ export type JSONEditorProps = {
   value?: string;
   onChange?: (value: string) => void;
   editorProps?: EditorProps;
-  entityName?: string;
+  entityType: string;
+  dataField: string;
 };
 
 export const JSONEditor: React.FC<JSONEditorProps> = ({
   value,
   onChange,
   editorProps,
-  entityName
+  entityType,
+  dataField
 }) => {
-  const [currentValue, setCurrentValue] = React.useState<string>();
+  const [currentValue, setCurrentValue] = useState<string>();
 
   useEffect(() => {
     if (!value) {
@@ -57,7 +62,62 @@ export const JSONEditor: React.FC<JSONEditorProps> = ({
     }
   };
 
-  const createDefinitions = (id: string): JSONSchemaDefinition => {
+  const getEntityTypeDefinition = () => {
+    // TODO Enhance typing for swaggerDocs in shogun-util
+    const entry = Object.entries(swaggerDocs.definitions)
+      .find(([definitionKey]) => {
+        return definitionKey.toLowerCase() === entityType.toLowerCase();
+      });
+
+    if (!entry) {
+      Logger.warn(`The entity definition for ${entityType} does not exist `+
+        'in the OpenAPI specification');
+      return;
+    }
+
+    return entry[1];
+  };
+
+  const getDataTypeDefinition = () => {
+    const entityTypeDefinition = getEntityTypeDefinition();
+
+    if (!entityTypeDefinition || !(entityTypeDefinition.properties &&
+        entityTypeDefinition.properties[dataField])) {
+      Logger.warn(`The property definition ${dataField} for ${entityType} ` +
+        'does not exist in the OpenAPI specification');
+      return;
+    }
+
+    return entityTypeDefinition.properties[dataField];
+  };
+
+  const getEntityName = (): string => {
+    const dataFieldDefinition = getDataTypeDefinition();
+
+    if (dataFieldDefinition.type === 'array' && dataFieldDefinition.items?.$ref) {
+      const splitParts = dataFieldDefinition.items.$ref?.split('/');
+      return splitParts[splitParts.length - 1] as string;
+    }
+
+    if (!dataFieldDefinition.type && dataFieldDefinition.$ref) {
+      const splitParts = dataFieldDefinition.$ref.split('/');
+      return splitParts[splitParts.length - 1] as string;
+    }
+
+    return dataField;
+  };
+
+  const getEntityType = (): string => {
+    const dataFieldDefinition = getDataTypeDefinition();
+
+    if (!dataFieldDefinition.type) {
+      return 'object';
+    }
+
+    return dataFieldDefinition.type;
+  };
+
+  const createDefinitions = (): JSONSchemaDefinition => {
     const definitions: JSONSchemaDefinition = {};
 
     for (const schemaName in swaggerDocs.definitions) {
@@ -70,6 +130,9 @@ export const JSONEditor: React.FC<JSONEditorProps> = ({
 
       if (definition.properties) {
         Object.values(definition.properties).forEach((property: any) => {
+          if (property.type === 'object' && property.additionalProperties?.type === 'object') {
+            delete property.additionalProperties;
+          }
           if (property.$ref) {
             property.$ref = `${property.$ref}`;
           }
@@ -88,17 +151,29 @@ export const JSONEditor: React.FC<JSONEditorProps> = ({
   const getSchema = (schemaName: string): JSONSchema7 => {
     const schemaId = `http://shogun/shogun-schema-${schemaName.toLocaleLowerCase()}.json`;
     const schemaDialect = 'http://json-schema.org/draft-07/schema#';
-    const definitions = createDefinitions(schemaId);
+    const definitions = createDefinitions();
+    const type = getEntityType();
 
-    const schema: JSONSchema7 = {
+    let schema: JSONSchema7 = {
       $id: schemaId,
       $schema: schemaDialect,
-      ...definitions[schemaName] as {}
+      definitions: definitions
     };
+    let isValid;
 
-    schema.definitions = definitions;
+    if (type === 'object') {
+      schema = {
+        ...schema,
+        ...definitions[schemaName] as {}
+      };
+      isValid = validate({}, schema);
+    }
 
-    const isValid = validate({}, schema);
+    if (type === 'array') {
+      schema.items = definitions[schemaName] as {};
+      schema.type = 'array';
+      isValid = validate([], schema);
+    }
 
     if (!isValid.valid) {
       Logger.error('Invalid JSON schema detected: ', isValid.errors);
@@ -108,27 +183,26 @@ export const JSONEditor: React.FC<JSONEditorProps> = ({
   };
 
   const setSchemaValidation = (monaco: Monaco) => {
-    if (entityName) {
-      const schema = getSchema(entityName);
+    const entityName = getEntityName();
+    const schema = getSchema(entityName);
 
-      const schemas = [
-        ...cloneDeep(monaco.languages.json.jsonDefaults.diagnosticsOptions.schemas),
-        {
-          uri: schema.$id,
-          fileMatch: [`${entityName}.json`],
-          schema: schema
-        }
-      ];
+    const schemas = [
+      ...cloneDeep(monaco.languages.json.jsonDefaults.diagnosticsOptions.schemas),
+      {
+        uri: schema.$id,
+        fileMatch: [`${entityName}.json`],
+        schema: schema
+      }
+    ];
 
-      monaco.languages.json.jsonDefaults.setDiagnosticsOptions({
-        enableSchemaRequest: true,
-        validate: true,
-        trailingCommas: 'error',
-        schemaValidation: 'error',
-        comments: 'error',
-        schemas: schemas
-      });
-    }
+    monaco.languages.json.jsonDefaults.setDiagnosticsOptions({
+      enableSchemaRequest: true,
+      validate: true,
+      trailingCommas: 'error',
+      schemaValidation: 'error',
+      comments: 'error',
+      schemas: schemas
+    });
   };
 
   const onEditorMount = (monaco: Monaco) => {
@@ -141,7 +215,7 @@ export const JSONEditor: React.FC<JSONEditorProps> = ({
         <Editor
           value={currentValue}
           onChange={changeHandler}
-          path={entityName ? `${entityName}.json` : undefined}
+          path={getEntityName() ? `${getEntityName()}.json` : undefined}
           language="json"
           beforeMount={onEditorMount}
           options={{

@@ -198,6 +198,7 @@ export function GeneralEntityTable<T extends BaseEntity>({
 
   const getTableColumns = (): ColumnType<T>[] => {
     let cols: GeneralEntityTableColumn<T>[];
+
     if (_isEmpty(tableConfig?.columnDefinition)) {
       cols = [{
         title: t('GeneralEntityTable.columnId'),
@@ -310,6 +311,7 @@ export function GeneralEntityTable<T extends BaseEntity>({
           onClick: () => onRowClick(record)
         };
       }}
+      rowKey={'id'}
       pagination={false}
       {...tablePassThroughProps}
     />
