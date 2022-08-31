@@ -151,7 +151,13 @@ export const GeneralEntityForm: React.FC<GeneralEntityFormProps> = ({
         );
       case 'JSONEditor':
         return (
-          <JSONEditor {...fieldCfg?.fieldProps} />
+          <JSONEditor
+            entityType={entityType}
+            dataField={fieldCfg.dataField}
+            {
+              ...fieldCfg?.fieldProps
+            }
+          />
         );
       case 'DisplayField':
         return (
