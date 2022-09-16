@@ -28,10 +28,6 @@ export const ImageFileRoot: React.FC<ImageFileRootProps> = props => {
   const [fileBlob, setFileBlob] = useState<Blob>();
   const [loadingState, setLoadingState] = useState<LoadingState>('idle');
 
-  const graphQLService = new GraphQLService({
-    url: '../graphql'
-  });
-
   const navigate = useNavigate();
   const location = useLocation();
   const client = useSHOGunAPIClient();
@@ -39,6 +35,11 @@ export const ImageFileRoot: React.FC<ImageFileRootProps> = props => {
     path: `${config.appPrefix}/portal/imagefile/:uuid`
   }, location.pathname);
   const imageFileUuid = match?.params?.uuid;
+
+  const graphQLService = new GraphQLService({
+    url: '../graphql',
+    keycloak: client.getKeycloak()
+  });
 
   const {
     t
