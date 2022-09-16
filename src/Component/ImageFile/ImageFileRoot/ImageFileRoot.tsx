@@ -9,18 +9,28 @@ import {
 import useSHOGunAPIClient from '../../../Hooks/useSHOGunAPIClient';
 import ImageFileTable from '../ImageFileTable/ImageFileTable';
 
+import { GraphQLService } from '../../../Service/GraphQLService/GraphQLService';
+
 import config from 'shogunApplicationConfig';
 
 import './ImageFileRoot.less';
 import { useTranslation } from 'react-i18next';
+import Logger from '@terrestris/base-util/dist/Logger';
 
 interface OwnProps { }
 
 type ImageFileRootProps = OwnProps;
 
+type LoadingState = 'idle' | 'loading' | 'finished' | 'failed';
+
 export const ImageFileRoot: React.FC<ImageFileRootProps> = props => {
 
   const [fileBlob, setFileBlob] = useState<Blob>();
+  const [loadingState, setLoadingState] = useState<LoadingState>('idle');
+
+  const graphQLService = new GraphQLService({
+    url: '../graphql'
+  });
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -33,6 +43,10 @@ export const ImageFileRoot: React.FC<ImageFileRootProps> = props => {
   const {
     t
   } = useTranslation();
+
+  const applicationStartsWith = `query($id: Long) {
+    applicationIdStartsWith(id: $id)
+  }`;
 
   useEffect(() => {
     if (!imageFileUuid) {
@@ -49,6 +63,20 @@ export const ImageFileRoot: React.FC<ImageFileRootProps> = props => {
     fetchImage();
   }, [imageFileUuid, client]);
 
+  const fetchEntityIds = async (search) => {
+    setLoadingState('loading');
+    const id = parseInt(search, 10);
+    let dataKey = 'applicationIdStartsWith';
+    try {
+      const data = await graphQLService.sendQuery(applicationStartsWith, { id });
+      setLoadingState('idle');
+      return data[dataKey];
+    } catch (error) {
+      Logger.error(error);
+      setLoadingState('failed');
+    }
+  };
+
   return (
     <div className="imagefile-root">
       <PageHeader
@@ -58,6 +86,14 @@ export const ImageFileRoot: React.FC<ImageFileRootProps> = props => {
         subTitle={t('ImageFileRoot.subTitle')}
       >
       </PageHeader>
+      <Button
+        onClick={async () => {
+          await fetchEntityIds('1');
+        }}
+        loading={loadingState === 'loading'}
+      >
+        Id search test
+      </Button>
       <div className="left-container">
         <div className="left-toolbar">
           <Upload
@@ -87,7 +123,7 @@ export const ImageFileRoot: React.FC<ImageFileRootProps> = props => {
             }}
           >
             <Button type="primary">
-            {t('ImageFileRoot.button')}
+              {t('ImageFileRoot.button')}
             </Button>
           </Upload>
         </div>
