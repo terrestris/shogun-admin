@@ -1,3 +1,10 @@
+## [10.3.0](https://github.com/terrestris/shogun-admin/compare/v10.2.2...v10.3.0) (2022-09-23)
+
+
+### Features
+
+* use docker-public.terrestris.de registry ([eed9cdb](https://github.com/terrestris/shogun-admin/commit/eed9cdb05923ccb881394355257fa3d22f0de1cf))
+
 ## [10.2.2](https://github.com/terrestris/shogun-admin/compare/v10.2.1...v10.2.2) (2022-08-31)
 
 
