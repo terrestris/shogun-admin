@@ -11,6 +11,10 @@ import { useRecoilState } from 'recoil';
 
 import { appInfoAtom, shogunInfoModalVisibleAtom } from '../../../State/atoms';
 
+import {
+    useClientVersion
+} from '../../../Hooks/useClientVersion';
+
 import defaultLogo from '../../../../assets/img/shogun_logo.png';
 
 import './ApplicationInfo.less';
@@ -42,6 +46,10 @@ export const ApplicationInfo: React.FC<ApplicationInfoProps> = ({
       <img
         className="shogun-logo"
         src={defaultLogo}
+      />
+      <Statistic
+        title="Admin Version"
+        value={useClientVersion()}
       />
       <Statistic
         title="SHOGun Version"
