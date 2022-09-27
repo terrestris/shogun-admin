@@ -1,3 +1,3 @@
 export const useClientVersion = () => {
-    return PROJECT_VERSION;
-  };
+  return PROJECT_VERSION;
+};

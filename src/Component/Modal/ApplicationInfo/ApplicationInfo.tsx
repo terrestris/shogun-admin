@@ -12,18 +12,23 @@ import { useRecoilState } from 'recoil';
 import { appInfoAtom, shogunInfoModalVisibleAtom } from '../../../State/atoms';
 
 import {
-    useClientVersion
+  useClientVersion
 } from '../../../Hooks/useClientVersion';
 
 import defaultLogo from '../../../../assets/img/shogun_logo.png';
 
 import './ApplicationInfo.less';
+import { useTranslation } from 'react-i18next';
 
-export interface ApplicationInfoProps extends ModalProps {}
+export interface ApplicationInfoProps extends ModalProps { }
 
 export const ApplicationInfo: React.FC<ApplicationInfoProps> = ({
   ...passThroughProps
 }) => {
+
+  const {
+    t
+  } = useTranslation();
 
   const [isVisible, setVisible] = useRecoilState(shogunInfoModalVisibleAtom);
   const [appInfo] = useRecoilState(appInfoAtom);
@@ -48,15 +53,15 @@ export const ApplicationInfo: React.FC<ApplicationInfoProps> = ({
         src={defaultLogo}
       />
       <Statistic
-        title="Admin Version"
+        title={t('ApplicationInfoModal.clientVersion')}
         value={useClientVersion()}
       />
       <Statistic
-        title="SHOGun Version"
+        title={t('ApplicationInfoModal.backendVersion')}
         value={appInfo.version}
       />
       <Statistic
-        title="Build Zeit"
+        title={t('ApplicationInfoModal.buildTime')}
         value={appInfo.buildTime}
       />
     </Modal>

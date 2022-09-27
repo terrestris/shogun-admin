@@ -97,6 +97,6 @@ module.exports = {
     }),
     new webpack.DefinePlugin({
       PROJECT_VERSION: JSON.stringify(require('./package.json').version),
-    }),
+    })
   ]
 };
