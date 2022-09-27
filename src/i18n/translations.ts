@@ -159,9 +159,10 @@ export default {
         permissionSelectExtra: 'Wählen Sie die Berechtigung aus, die die Nutzer erhalten sollen.'
       },
       ApplicationInfoModal: {
-        clientVersion: "Admin-Version",
-        backendVersion: "SHOGun-Version",
-        buildTime: "Build Zeit"
+        clientVersion: 'Admin-Version',
+        backendVersion: 'SHOGun-Version',
+        buildTime: 'Build Zeit',
+        title: 'SHOGun-Admin Information'
       }
     }
   },
@@ -339,9 +340,10 @@ export default {
         permissionSelectExtra: 'Select the permission the users should be granted.'
       },
       ApplicationInfoModal: {
-        clientVersion: "Admin version",
-        backendVersion: "SHOGun version",
-        buildTime: "Build time"
+        clientVersion: 'Admin version',
+        backendVersion: 'SHOGun version',
+        buildTime: 'Build time',
+        title: 'SHOGun Admin info'
       }
     }
   }

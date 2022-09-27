@@ -40,7 +40,7 @@ export const ApplicationInfo: React.FC<ApplicationInfoProps> = ({
   return (
     <Modal
       className="application-info-modal"
-      title="SHOGun Admin info"
+      title={t('ApplicationInfoModal.title')}
       centered={true}
       visible={isVisible}
       onOk={toggleVisibility}

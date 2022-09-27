@@ -12,29 +12,38 @@ jest.mock('../../../Hooks/useClientVersion', () => ({
   useClientVersion: () => PROJECT_VERSION
 }));
 
+jest.mock('react-i18next', () => ({
+  useTranslation: () => ({
+    t: (key: string) => key,
+    i18n: { changeLanguage: jest.fn() }
+  })
+}));
+
 describe('<ApplicationInfo />', () => {
 
   test('Modal has a title', async () => {
     render(<ApplicationInfo />, recoilInitializer);
-    const modalTitle = await screen.getByText('SHOGun Admin info');
+    // @ts-ignore
+    const modalTitle = await screen.getByText('ApplicationInfoModal.title');
     expect(modalTitle).toBeDefined();
   });
 
   test('Modal contains Build-Info', async () => {
     render(<ApplicationInfo />, recoilInitializer);
-    const buildInfo = await screen.getByText('Build Zeit');
+    // @ts-ignore
+    const buildInfo = await screen.getByText('ApplicationInfoModal.buildTime');
     expect(buildInfo).toBeDefined();
   });
 
   test('Modal contains Version-Info', async () => {
     render(<ApplicationInfo />, recoilInitializer);
-    const versionInfo = await screen.getByText('SHOGun-Version');
+    const versionInfo = await screen.getByText('ApplicationInfoModal.backendVersion');
     expect(versionInfo).toBeDefined();
   });
 
   test('Modal contains Admin-Client-Version-Info', async () => {
     render(<ApplicationInfo />, recoilInitializer);
-    const adminClientVersionInfo = await screen.getByText('Admin-Version');
+    const adminClientVersionInfo = await screen.getByText('ApplicationInfoModal.clientVersion');
     expect(adminClientVersionInfo).toBeDefined();
   });
 
