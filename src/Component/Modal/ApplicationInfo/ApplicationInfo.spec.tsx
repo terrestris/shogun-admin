@@ -28,13 +28,13 @@ describe('<ApplicationInfo />', () => {
 
   test('Modal contains Version-Info', async () => {
     render(<ApplicationInfo />, recoilInitializer);
-    const versionInfo = await screen.getByText('SHOGun Version');
+    const versionInfo = await screen.getByText('SHOGun-Version');
     expect(versionInfo).toBeDefined();
   });
 
   test('Modal contains Admin-Client-Version-Info', async () => {
     render(<ApplicationInfo />, recoilInitializer);
-    const adminClientVersionInfo = await screen.getByText('Admin Version');
+    const adminClientVersionInfo = await screen.getByText('Admin-Version');
     expect(adminClientVersionInfo).toBeDefined();
   });
 

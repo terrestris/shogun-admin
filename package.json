@@ -122,5 +122,9 @@
     "ancestorSeparator": " › ",
     "usePathForSuiteName": "true",
     "relativePaths": "true"
+  },
+  "engines": {
+    "node": ">=16",
+    "npm": ">=8"
   }
 }
