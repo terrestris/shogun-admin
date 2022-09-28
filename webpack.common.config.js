@@ -1,5 +1,6 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
+const webpack = require('webpack');
 const CustomAntThemeModifyVars = require('./theme.js');
 
 module.exports = {
@@ -93,6 +94,9 @@ module.exports = {
         from: './assets/fallbackConfig.js',
         to: 'fallbackConfig.js'
       }],
+    }),
+    new webpack.DefinePlugin({
+      PROJECT_VERSION: JSON.stringify(require('./package.json').version),
     })
   ]
 };
