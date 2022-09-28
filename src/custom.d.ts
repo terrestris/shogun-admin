@@ -3,29 +3,29 @@ declare module '*.svg';
 
 declare module 'shogunApplicationConfig' {
   /**
-   * Config obeject which contains the settings to adapt the admin client
+   * Config object which contains the settings to adapt the admin client
    * to your application.
    */
   type AdminConfiguration = {
     /**
-     * The path to the admin client on your host. e.G.: '/admin'
+     * The path to the admin client on your host, e.g. '/admin'
      */
     appPrefix: string;
     /**
-     * Configuration of pathes relevant for the admin client.
+     * Configuration of paths relevant for the admin client.
      */
     path: {
       /**
-       * The path to the model configs. e.g. '/admin/modelconfigs'
+       * The path to the model configs, e.g. '/admin/modelconfigs'
        */
       modelConfigs: string;
       /**
-       * The path to the shogun entry point: e.g. '/'
+       * The path to the shogun entry point, e.g. '/'
        */
       shogunBase: string;
       /**
-       * The path to the logo used by the admin client:
-       * e.g. '/logo_large.svg' when served by SHOGun backend
+       * The path to the logo used by the admin client, e.g. '/logo_large.svg' 
+       * when served by the SHOGun backend.
        */
       logo: string;
     };
@@ -42,18 +42,18 @@ declare module 'shogunApplicationConfig' {
          */
         enabled: boolean;
         /**
-         * Host config used by keycloak js. Mandatory if keycloak is enabled.
-         * e.g.: 'https://localhost/auth'
+         * Host config used by keycloak-js. Mandatory if keycloak is 
+         * enabled, e.g. 'https://localhost/auth'
          */
         host?: string;
         /**
-         * Realm config used by keycloak js. Mandatory if keycloak is enabled.
-         * e.g.: 'SpringBootKeycloak'
+         * Realm config used by keycloak-js. Mandatory if keycloak is 
+         * enabled, e.g. 'SHOGunKeycloak'
          */
         realm?: string;
         /**
-         * Client id config used by keycloak js. Mandatory if keycloak is enabled.
-         * e.g.: 'shogun-admin'
+         * Client id config used by keycloak-js. Mandatory if keycloak is 
+         * enabled, e.g. 'shogun-admin'
          */
         clientId?: string;
       };
