@@ -1,3 +1,20 @@
+## [10.4.0](https://github.com/terrestris/shogun-admin/compare/v10.3.0...v10.4.0) (2022-09-28)
+
+
+### Features
+
+* added admin version to application info ([a703f09](https://github.com/terrestris/shogun-admin/commit/a703f09b0b27b9080afd8a450e0b1f458bc3587b))
+
+
+### Bugfixes
+
+* added missing translation. fixed test ([0af4192](https://github.com/terrestris/shogun-admin/commit/0af41926e8641b00e7a9692399abeab4b46adce3))
+* added tranlation strings to Application Info modal ([0c7db54](https://github.com/terrestris/shogun-admin/commit/0c7db54c0727163acafa00a52df4a6a5d310d31c))
+* fixed test. added engines to package.json ([38d43f1](https://github.com/terrestris/shogun-admin/commit/38d43f19c82bcf8377490f5ff94f39b1b36266c5))
+* removed unneeded ts-ignore comments ([e188620](https://github.com/terrestris/shogun-admin/commit/e188620ee9021ea42b1608cfc74762072499be9a))
+* reverted package-lock.json changes ([2baa360](https://github.com/terrestris/shogun-admin/commit/2baa360763f48d6a0a00222b6f553f2dbc32d7d6))
+* updated ApplicationInfo test ([125fdd7](https://github.com/terrestris/shogun-admin/commit/125fdd7158e85cccad2fd13ff6bb1c6550c81c07))
+
 ## [10.3.0](https://github.com/terrestris/shogun-admin/compare/v10.2.2...v10.3.0) (2022-09-23)
 
 
