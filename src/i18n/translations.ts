@@ -1,8 +1,10 @@
 export default {
   de: {
     translation: {
-      Render: {
-        title: 'Die Anwendung konnte nicht geladen werden. Prüfen Sie Ihre Konsole.'
+      Index: {
+        unauthorizedTitle: 'Sie sind nicht berechtigt, diese Seite zu öffnen.',
+        errorTitle: 'Die Anwendung konnte nicht geladen werden. Prüfen Sie Ihre Konsole.',
+        backToLoginButtonText: 'Zurück zum Login'
       },
       App: {
         loading: 'laden',
@@ -162,8 +164,10 @@ export default {
   },
   en: {
     translation: {
-      Render: {
-        title: 'Failed to load the application. Check your console.'
+      Index: {
+        unauthorizedTitle: 'You\'re not authorized to access this page.',
+        errorTitle: 'Failed to load the application. Check your console.',
+        backToLoginButtonText: 'Back to login'
       },
       App: {
         loading: 'loading',

@@ -1,20 +1,33 @@
-import React, { Suspense } from 'react';
-import { createRoot } from 'react-dom/client';
-import { RecoilRoot } from 'recoil';
+import React, {
+  Suspense
+} from 'react';
+
+import {
+  createRoot
+} from 'react-dom/client';
+
+import {
+  RecoilRoot
+} from 'recoil';
+
+import {
+  Button,
+  Result
+} from 'antd';
 
 import Keycloak from 'keycloak-js';
 
+import Logger from './Logger';
+
 import SHOGunAPIClient from '@terrestris/shogun-util/dist/service/SHOGunAPIClient';
 
+import i18n from './i18n';
+import { SHOGunAPIClientProvider } from './Context/SHOGunAPIClientContext';
 const App = React.lazy(() => import('./App'));
 
 import config from 'shogunApplicationConfig';
 
-import i18n from './i18n';
 import './index.less';
-import Logger from './Logger';
-import { SHOGunAPIClientProvider } from './Context/SHOGunAPIClientContext';
-import { Result } from 'antd';
 
 const initKeycloak = async (): Promise<Keycloak | null> => {
   const keycloakEnabled = config.security.keycloak.enabled;
@@ -71,9 +84,22 @@ const initSHOGunAPIClient = (keycloak?: Keycloak) => {
 
 const renderApp = async () => {
   const root = createRoot(document.getElementById('app'));
+  let keycloak: Keycloak | null;
 
   try {
-    const keycloak = await initKeycloak();
+    keycloak = await initKeycloak();
+
+    // Only check for roles if keycloak is enabled.
+    if (keycloak) {
+      const authorizedRoles: string[] = config.security.keycloak.authorizedRoles || [];
+      const keycloakClientId: string = config.security.keycloak.clientId;
+
+      const isAuthorized = authorizedRoles.some(role => keycloak.hasResourceRole(role, keycloakClientId));
+
+      if (!isAuthorized) {
+        throw new Error('UNAUTHORIZED');
+      };
+    }
 
     const client = initSHOGunAPIClient(keycloak);
 
@@ -89,12 +115,33 @@ const renderApp = async () => {
   } catch (error) {
     Logger.error(error);
 
-    root.render(
-      <Result
-        status="warning"
-        title={i18n.t('Render.title') as string}
-      />
-    );
+    if (error.message === 'UNAUTHORIZED') {
+      root.render(
+        <Result
+          status={'403'}
+          title={i18n.t('Index.unauthorizedTitle') as string}
+          extra={
+            <Button
+              onClick={async () => {
+                if (keycloak) {
+                  await keycloak.logout();
+                  await keycloak.login();
+                }
+              }}
+            >
+              {i18n.t('Index.backToLoginButtonText') as string}
+            </Button>
+          }
+        />
+      );
+    } else {
+      root.render(
+        <Result
+          status={'warning'}
+          title={i18n.t('Index.errorTitle') as string}
+        />
+      );
+    }
   }
 };
 
