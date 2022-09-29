@@ -10,7 +10,10 @@ var shogunApplicationConfig = {
       enabled: true,
       host: 'https://localhost/auth',
       realm: 'SpringBootKeycloak',
-      clientId: 'shogun-admin'
+      clientId: 'shogun-admin',
+      authorizedRoles: [
+        'admin'
+      ]
     }
   },
   models: [
