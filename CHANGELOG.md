@@ -1,3 +1,10 @@
+## [10.5.0](https://github.com/terrestris/shogun-admin/compare/v10.4.0...v10.5.0) (2022-09-29)
+
+
+### Features
+
+* show app only if the current user has an appropriate role ([7e2fb1a](https://github.com/terrestris/shogun-admin/commit/7e2fb1acf57833570f1869dca6c1964ca86238ce))
+
 ## [10.4.0](https://github.com/terrestris/shogun-admin/compare/v10.3.0...v10.4.0) (2022-09-28)
 
 
