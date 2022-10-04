@@ -1,3 +1,10 @@
+## [10.5.1](https://github.com/terrestris/shogun-admin/compare/v10.5.0...v10.5.1) (2022-10-04)
+
+
+### Bugfixes
+
+* provide an empty string if no mail is present ([5700480](https://github.com/terrestris/shogun-admin/commit/570048042401faf98d9f6eb15270856eaceb8499))
+
 ## [10.5.0](https://github.com/terrestris/shogun-admin/compare/v10.4.0...v10.5.0) (2022-09-29)
 
 
