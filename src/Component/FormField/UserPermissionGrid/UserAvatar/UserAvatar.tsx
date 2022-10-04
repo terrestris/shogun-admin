@@ -21,7 +21,7 @@ const UserAvatar: React.FC<UserAvatarProps> = ({
 }) => {
 
   const avatarSrc = UserUtil.getGravatarUrl({
-    email: user.providerDetails?.email,
+    email: user.providerDetails?.email || '',
     size: 32
   });
 
