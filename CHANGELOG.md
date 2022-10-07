@@ -1,3 +1,10 @@
+## [10.6.0](https://github.com/terrestris/shogun-admin/compare/v10.5.1...v10.6.0) (2022-10-07)
+
+
+### Features
+
+* allow pagination configuration per entity ([7ac1abd](https://github.com/terrestris/shogun-admin/commit/7ac1abd5073c3d5acfcdd38cc23bb735d6806e91))
+
 ## [10.5.1](https://github.com/terrestris/shogun-admin/compare/v10.5.0...v10.5.1) (2022-10-04)
 
 
