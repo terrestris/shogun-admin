@@ -11,7 +11,8 @@ import {
 } from 'antd';
 import {
   ColumnType,
-  TableProps
+  TableProps,
+  TablePaginationConfig
 } from 'antd/lib/table';
 import { SortOrder } from 'antd/lib/table/interface';
 
@@ -48,6 +49,7 @@ import _cloneDeep from 'lodash/cloneDeep';
 export type TableConfig<T extends BaseEntity> = {
   columnDefinition?: GeneralEntityTableColumn<T>[];
   dataMapping?: DataMapping;
+  pagination?: TablePaginationConfig;
 };
 
 type DataMapping = {
@@ -312,7 +314,7 @@ export function GeneralEntityTable<T extends BaseEntity>({
         };
       }}
       rowKey={'id'}
-      pagination={false}
+      pagination={tableConfig.pagination ?? false}
       {...tablePassThroughProps}
     />
   );
