@@ -152,6 +152,8 @@ export function GeneralEntityRoot<T extends BaseEntity>({
   useEffect(() => {
     if (!entityId) {
       setId(undefined);
+      setEditEntity(undefined);
+      setFormIsDirty(false);
       return;
     }
     if (entityId === 'create') {
@@ -160,6 +162,7 @@ export function GeneralEntityRoot<T extends BaseEntity>({
       form.resetFields();
     } else {
       setId(parseInt(entityId, 10));
+      setFormIsDirty(false);
     }
   }, [entityId, form]);
 
@@ -220,6 +223,7 @@ export function GeneralEntityRoot<T extends BaseEntity>({
       });
     } finally {
       setIsSaving(false);
+      setFormIsDirty(false);
     }
   };
 
