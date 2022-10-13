@@ -28,7 +28,6 @@ export class ControllerUtil {
     formConfig,
     updateForm
   }: ControllerCfg): GenericEntityController<BaseEntity> {
-
     switch (_lowerCase(entityType)) {
       case 'application':
         return ControllerUtil
