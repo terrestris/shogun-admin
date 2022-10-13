@@ -1,3 +1,10 @@
+## [10.6.1](https://github.com/terrestris/shogun-admin/compare/v10.6.0...v10.6.1) (2022-10-13)
+
+
+### Bugfixes
+
+* properly reset the dirty state of the entity form ([fa2636a](https://github.com/terrestris/shogun-admin/commit/fa2636a76e59e8ac61c8ac6b75995212d8d1703c))
+
 ## [10.6.0](https://github.com/terrestris/shogun-admin/compare/v10.5.1...v10.6.0) (2022-10-07)
 
 
