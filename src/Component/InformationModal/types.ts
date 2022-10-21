@@ -4,7 +4,7 @@ export interface InformationModalTableDataType {
   description: string;
   example: string | number;
   dataType: string;
-  mandatory: string;
+  required: string;
   subProps?: InformationModalTableDataType[];
 }
 

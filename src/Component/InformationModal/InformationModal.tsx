@@ -1,28 +1,75 @@
 import React from 'react';
-import { Modal, Table } from 'antd';
+import { Divider, Modal, Table, Typography } from 'antd';
 import { useTranslation } from 'react-i18next';
 import Title from 'antd/lib/typography/Title';
 import { ColumnsType } from 'antd/lib/table';
-import { 
+import {
   GroupedInformationModalTableDataType,
   InformationModalTableDataType
 } from './types';
-import { LayerConfigurationDocTableData } from './LayerConfigInformation';
-import { ClientConfigDocTableData } from './ClientConfigInformation';
-import { LayerTreeDocTableData } from './LayerTreeInformation';
-import { ToolConfigDocTableData } from './ToolConfigInformation';
+import {
+  LayerConfigurationDocTableData,
+  exampleConfig as AppLayerConfigExample,
+  description as AppLayerConfigDescription
+} from './information/application/LayerConfigInformation';
+import {
+  ClientConfigDocTableData as AppClientConfigDocTableData,
+  exampleConfig as AppClientConfigExample,
+  description as AppClientConfigDescription
+} from './information/application/ClientConfigInformation';
+import {
+  LayerTreeDocTableData,
+  exampleConfig as AppLayerTreeExample,
+  description as AppLayerTreeDescription
+} from './information/application/LayerTreeInformation';
+import { 
+  ToolConfigDocTableData,
+  exampleConfig as AppToolConfigExample,
+  description as AppToolConfigDescription
+} from './information/application/ToolConfigInformation';
+import {
+  ClientConfigDocTableData as LayerClientConfigDocTableData ,
+  exampleConfig as LayerClientConfigExample,
+  description as LayerClientConfigDescription
+} from './information/layer/ClientConfigInformation';
+import {
+  SourceConfigurationDocTableData,
+  exampleConfig as LayerSourceConfigExample,
+  description as LayerSourceConfigDescription
+} from './information/layer/SourceConfigInformation';
+import {
+  FeaturesDocTableData,
+  exampleConfig as LayerFeaturesExample,
+  description as LayerFeaturesDescription
+} from './information/layer/FeaturesInformation';
+import {
+  ProviderDetailsDocTableData,
+  exampleConfig as UserProviderDetailsExample,
+  description as UserProviderDetailsDescription
+} from './information/user/ProviderDetailsInformation';
+import {
+  DetailsDocTableData,
+  exampleConfig as UserDetailsExample,
+  description as UserDetailsDescription
+} from './information/user/DetailsInformation';
+import {
+  ClientConfigDocTableData as UserClientConfigDocTableData,
+  exampleConfig as UserClientConfigExample,
+  description as UserClientConfigDescription
+} from './information/user/ClientConfigInformation';
 
 interface InformationModalProps {
-  infoFor?: string;
+  dataField?: string;
+  entity?: string;
   isModalOpen: boolean;
   setIsModalOpen: (value: boolean) => void;
 }
 
-
 export const InformationModal: React.FC<InformationModalProps> = ({
-  infoFor = '',
+  dataField = '',
+  entity = '',
   isModalOpen = false,
-  setIsModalOpen,
+  setIsModalOpen
 }) => {
   const tmpFlat = [];
 
@@ -54,24 +101,101 @@ export const InformationModal: React.FC<InformationModalProps> = ({
     },
   ];
 
+  const getDescription = () => {
+    switch (`${entity}-${dataField}`) {
+      case 'application-clientConfig':
+        return AppClientConfigDescription;
+      case 'application-layerTree':
+        return AppLayerTreeDescription;
+      case 'application-layerConfig':
+        return AppLayerConfigDescription;
+      case 'application-toolConfig':
+        return AppToolConfigDescription;
+
+      case 'layer-clientConfig':
+        return LayerClientConfigDescription;
+      case 'layer-sourceConfig':
+        return LayerSourceConfigDescription;
+      case 'layer-features':
+        return LayerFeaturesDescription;
+
+      case 'user-providerDetails':
+        return UserProviderDetailsDescription;
+      case 'user-details':
+        return UserDetailsDescription;
+      case 'user-clientConfig':
+        return UserClientConfigDescription;
+
+      default:
+        return 'TODO';
+    }
+  };
+
   const getTableData = () => {
-    switch (infoFor) {
-      case 'clientConfig':
-        return ClientConfigDocTableData;
-      case 'layerTree':
+    switch (`${entity}-${dataField}`) {
+      case 'application-clientConfig':
+        return AppClientConfigDocTableData;
+      case 'application-layerTree':
         return LayerTreeDocTableData;
-      case 'layerConfig':
+      case 'application-layerConfig':
         return LayerConfigurationDocTableData;
-      case 'toolConfig':
+      case 'application-toolConfig':
         return ToolConfigDocTableData;
+
+      case 'layer-clientConfig':
+        return LayerClientConfigDocTableData;
+      case 'layer-sourceConfig':
+        return SourceConfigurationDocTableData;
+      case 'layer-features':
+        return FeaturesDocTableData;
+
+      case 'user-providerDetails':
+        return ProviderDetailsDocTableData;
+      case 'user-details':
+        return DetailsDocTableData;
+      case 'user-clientConfig':
+        return UserClientConfigDocTableData;
+
       default:
         return [{
           propertyName: 'propertyName',
           description: 'description',
           example: 'example',
           dataType: 'dataType',
-          mandatory: 'mandatory',
+          required: 'required',
         }];
+    }
+  };
+
+  const getExample = (): string => {
+    switch (`${entity}-${dataField}`) {
+      case 'application-clientConfig':
+        return AppClientConfigExample;
+      case 'application-layerTree':
+        return AppLayerTreeExample;
+      case 'application-layerConfig':
+        return AppLayerConfigExample;
+      case 'application-toolConfig':
+        return AppToolConfigExample;
+
+      case 'layer-clientConfig':
+        return LayerClientConfigExample;
+      case 'layer-sourceConfig':
+        return LayerSourceConfigExample;
+      case 'layer-features':
+        return LayerFeaturesExample;
+
+      case 'user-providerDetails':
+        return UserProviderDetailsExample;
+      case 'user-details':
+        return UserDetailsExample;
+      case 'user-clientConfig':
+        return UserClientConfigExample;
+
+      default:
+        return `{
+          Example: 'example'
+        }`;
     }
   };
 
@@ -134,7 +258,7 @@ export const InformationModal: React.FC<InformationModalProps> = ({
     return tmpFlat;
   };
 
-  const documentTableData = groupDocumentationData(getTableData(), infoFor);
+  const documentTableData = groupDocumentationData(getTableData(), dataField);
 
   return (
     <Modal
@@ -142,7 +266,7 @@ export const InformationModal: React.FC<InformationModalProps> = ({
       visible={isModalOpen}
       title={(
         <Title level={2}>
-          {`${infoFor} ${t('InformationModal.titlePredicate')}`}
+          {`${entity} ${t('InformationModal.titlePredicate')}`}
         </Title>
       )}
       onCancel={handleCancel}
@@ -151,6 +275,12 @@ export const InformationModal: React.FC<InformationModalProps> = ({
       cancelText={t('InformationModal.closeButtonText')}
       okButtonProps={{ hidden: true }}
     >
+      <Typography>
+        <Typography.Paragraph>
+          {getDescription()}
+        </Typography.Paragraph>
+      </Typography>
+      <Divider />
       {Object.keys(documentTableData).map(key => {
         return (
           <>
@@ -163,6 +293,11 @@ export const InformationModal: React.FC<InformationModalProps> = ({
           </>
         );
       })}
+      <Divider />
+      <Title level={3}> Example </Title>
+      <pre><code>
+        {getExample()}
+      </code></pre>
     </Modal>
   );
 };

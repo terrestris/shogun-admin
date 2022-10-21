@@ -214,7 +214,8 @@ export const JSONEditor: React.FC<JSONEditorProps> = ({
   return (
     <FullscreenWrapper
       showInformationButton={showInformationButton}
-      infoFor={dataField}
+      dataField={dataField}
+      entity={entityType}
     >
       <div className='json-editor'>
         <Editor

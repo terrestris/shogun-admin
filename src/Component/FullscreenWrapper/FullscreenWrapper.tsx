@@ -8,7 +8,8 @@ import InformationModal from '../InformationModal/InformationModal';
 
 interface OwnProps {
   showInformationButton?: boolean;
-  infoFor?: string;
+  dataField?: string;
+  entity?: string;
 }
 
 type FullscreenWrapperProps = React.HTMLAttributes<HTMLDivElement> & OwnProps;
@@ -16,7 +17,8 @@ type FullscreenWrapperProps = React.HTMLAttributes<HTMLDivElement> & OwnProps;
 export const FullscreenWrapper: React.FC<FullscreenWrapperProps> = ({
   children,
   showInformationButton = false,
-  infoFor = '',
+  dataField = '',
+  entity = ''
 }) => {
   const [fullscreen, setFullscreen] = React.useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = React.useState<boolean>(false);
@@ -68,7 +70,8 @@ export const FullscreenWrapper: React.FC<FullscreenWrapperProps> = ({
       <InformationModal
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
-        infoFor={infoFor}
+        dataField={dataField}
+        entity={entity}
       />
     </>
   );
