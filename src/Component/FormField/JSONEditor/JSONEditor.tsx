@@ -24,6 +24,7 @@ export type JSONEditorProps = {
   editorProps?: EditorProps;
   entityType: string;
   dataField: string;
+  showInformationButton?: boolean;
 };
 
 export const JSONEditor: React.FC<JSONEditorProps> = ({
@@ -31,7 +32,8 @@ export const JSONEditor: React.FC<JSONEditorProps> = ({
   onChange,
   editorProps,
   entityType,
-  dataField
+  dataField,
+  showInformationButton = false
 }) => {
   const [currentValue, setCurrentValue] = useState<string>();
 
@@ -210,7 +212,10 @@ export const JSONEditor: React.FC<JSONEditorProps> = ({
   };
 
   return (
-    <FullscreenWrapper>
+    <FullscreenWrapper
+      showInformationButton={showInformationButton}
+      infoFor={dataField}
+    >
       <div className='json-editor'>
         <Editor
           value={currentValue}

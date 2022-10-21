@@ -1,6 +1,10 @@
 export default {
   de: {
     translation: {
+      InformationModal: {
+        titlePredicate: 'information',
+        closeButtonText: 'Verstanden'
+      },
       Index: {
         unauthorizedTitle: 'Sie sind nicht berechtigt, diese Seite zu öffnen.',
         errorTitle: 'Die Anwendung konnte nicht geladen werden. Prüfen Sie Ihre Konsole.',
@@ -12,7 +16,8 @@ export default {
       },
       FullscreenWrapper: {
         fullscreen: 'Vollbild',
-        leaveFullscreen: 'Vollbild verlassen'
+        leaveFullscreen: 'Vollbild verlassen',
+        information: 'Information'
       },
       WelcomeDashboard: {
         applications: 'Applikationen',
@@ -170,6 +175,10 @@ export default {
   },
   en: {
     translation: {
+      InformationModal: {
+        titlePredicate: 'information',
+        closeButtonText: 'Understood'
+      },
       Index: {
         unauthorizedTitle: 'You\'re not authorized to access this page.',
         errorTitle: 'Failed to load the application. Check your console.',
@@ -181,7 +190,8 @@ export default {
       },
       FullscreenWrapper: {
         fullscreen: 'Fullscreen',
-        leaveFullscreen: 'Leave fullscreen'
+        leaveFullscreen: 'Leave fullscreen',
+        information: 'Information'
       },
       WelcomeDashboard: {
         applications: 'Applications',

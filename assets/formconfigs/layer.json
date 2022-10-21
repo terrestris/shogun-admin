@@ -86,19 +86,25 @@
         "component": "JSONEditor",
         "dataField": "clientConfig",
         "label": "#i18n.labelConfig",
-        "fieldProps": {}
+        "fieldProps": {
+          "showInformationButton": true
+        }
       },
       {
         "component": "JSONEditor",
         "dataField": "sourceConfig",
         "label": "#i18n.labelSource",
-        "fieldProps": {}
+        "fieldProps": {
+          "showInformationButton": true
+        }
       },
       {
         "component": "JSONEditor",
         "dataField": "features",
         "label": "#i18n.labelFeat",
-        "fieldProps": {}
+        "fieldProps": {
+          "showInformationButton": true
+        }
       }
     ]
   },
