@@ -22,7 +22,7 @@ import {
   exampleConfig as AppLayerTreeExample,
   description as AppLayerTreeDescription
 } from './information/application/LayerTreeInformation';
-import { 
+import {
   ToolConfigDocTableData,
   exampleConfig as AppToolConfigExample,
   description as AppToolConfigDescription
@@ -208,10 +208,10 @@ export const InformationModal: React.FC<InformationModalProps> = ({
   };
 
   /**
-   * @description This method grabs the struture
-   * @param data The array containing the json with the structure to present the data
-   * @param parentName The name of the parent node
-   * @returns
+   * @description A method to group the documentation data to make it ready to fit the Table data requirements
+   * @param data InformationModalTableDataType[]
+   * @param parentName string
+   * @returns GroupedInformationModalTableDataType
    */
   const groupDocumentationData = (
     data: InformationModalTableDataType[],
@@ -231,10 +231,11 @@ export const InformationModal: React.FC<InformationModalProps> = ({
   };
 
   /**
-   * An helper function
-   * @param data
-   * @param parentName
-   * @returns
+   * @description A method to read the given table data while also grabing the subProps of a property
+   * in a recursive way.
+   * @param data InformationModalTableDataType[]
+   * @param parentName string
+   * @returns InformationModalTableDataType[]
    */
   const docParser = (
     data: InformationModalTableDataType[],
@@ -258,6 +259,7 @@ export const InformationModal: React.FC<InformationModalProps> = ({
     return tmpFlat;
   };
 
+  // The data to use for the table
   const documentTableData = groupDocumentationData(getTableData(), dataField);
 
   return (
