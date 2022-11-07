@@ -216,6 +216,7 @@ export const JSONEditor: React.FC<JSONEditorProps> = ({
       showInformationButton={showInformationButton}
       dataField={dataField}
       entity={entityType}
+      schema={getSchema(getEntityName())}
     >
       <div className='json-editor'>
         <Editor

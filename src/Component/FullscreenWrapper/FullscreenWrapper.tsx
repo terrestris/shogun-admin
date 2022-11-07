@@ -5,11 +5,13 @@ import { useTranslation } from 'react-i18next';
 
 import './FullscreenWrapper.less';
 import InformationModal from '../InformationModal/InformationModal';
+import { JSONSchema7 } from 'json-schema';
 
 interface OwnProps {
   showInformationButton?: boolean;
   dataField?: string;
   entity?: string;
+  schema?: JSONSchema7;
 }
 
 type FullscreenWrapperProps = React.HTMLAttributes<HTMLDivElement> & OwnProps;
@@ -18,7 +20,8 @@ export const FullscreenWrapper: React.FC<FullscreenWrapperProps> = ({
   children,
   showInformationButton = false,
   dataField = '',
-  entity = ''
+  entity = '',
+  schema = undefined
 }) => {
   const [fullscreen, setFullscreen] = React.useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = React.useState<boolean>(false);
@@ -72,6 +75,7 @@ export const FullscreenWrapper: React.FC<FullscreenWrapperProps> = ({
         setIsModalOpen={setIsModalOpen}
         dataField={dataField}
         entity={entity}
+        schema={schema}
       />
     </>
   );

@@ -8,69 +8,64 @@ import {
   InformationModalTableDataType
 } from './types';
 import {
-  LayerConfigurationDocTableData,
   exampleConfig as AppLayerConfigExample,
   description as AppLayerConfigDescription
 } from './information/application/LayerConfigInformation';
 import {
-  ClientConfigDocTableData as AppClientConfigDocTableData,
   exampleConfig as AppClientConfigExample,
   description as AppClientConfigDescription
 } from './information/application/ClientConfigInformation';
 import {
-  LayerTreeDocTableData,
   exampleConfig as AppLayerTreeExample,
   description as AppLayerTreeDescription
 } from './information/application/LayerTreeInformation';
 import {
-  ToolConfigDocTableData,
   exampleConfig as AppToolConfigExample,
   description as AppToolConfigDescription
 } from './information/application/ToolConfigInformation';
 import {
-  ClientConfigDocTableData as LayerClientConfigDocTableData ,
   exampleConfig as LayerClientConfigExample,
-  description as LayerClientConfigDescription
+  description as LayerClientConfigDescription,
 } from './information/layer/ClientConfigInformation';
 import {
-  SourceConfigurationDocTableData,
   exampleConfig as LayerSourceConfigExample,
   description as LayerSourceConfigDescription
 } from './information/layer/SourceConfigInformation';
 import {
-  FeaturesDocTableData,
   exampleConfig as LayerFeaturesExample,
   description as LayerFeaturesDescription
 } from './information/layer/FeaturesInformation';
 import {
-  ProviderDetailsDocTableData,
   exampleConfig as UserProviderDetailsExample,
   description as UserProviderDetailsDescription
 } from './information/user/ProviderDetailsInformation';
 import {
-  DetailsDocTableData,
   exampleConfig as UserDetailsExample,
   description as UserDetailsDescription
 } from './information/user/DetailsInformation';
 import {
-  ClientConfigDocTableData as UserClientConfigDocTableData,
   exampleConfig as UserClientConfigExample,
   description as UserClientConfigDescription
 } from './information/user/ClientConfigInformation';
+import { JSONSchema7 } from 'json-schema';
+import { getDocDataforTable } from './information/helpers';
 
 interface InformationModalProps {
   dataField?: string;
   entity?: string;
   isModalOpen: boolean;
   setIsModalOpen: (value: boolean) => void;
+  schema: JSONSchema7;
 }
 
 export const InformationModal: React.FC<InformationModalProps> = ({
   dataField = '',
   entity = '',
   isModalOpen = false,
-  setIsModalOpen
+  setIsModalOpen,
+  schema = undefined
 }) => {
+
   const tmpFlat = [];
 
   const docTableColums: ColumnsType  = [
@@ -87,7 +82,7 @@ export const InformationModal: React.FC<InformationModalProps> = ({
     {
       title: 'Example',
       dataIndex: 'example',
-      key: 'example',
+      key: 'example'
     },
     {
       title: 'Data type',
@@ -134,28 +129,27 @@ export const InformationModal: React.FC<InformationModalProps> = ({
   const getTableData = () => {
     switch (`${entity}-${dataField}`) {
       case 'application-clientConfig':
-        return AppClientConfigDocTableData;
+        return getDocDataforTable(schema, 'DefaultApplicationClientConfig');
       case 'application-layerTree':
-        return LayerTreeDocTableData;
+        return getDocDataforTable(schema, 'DefaultLayerTree');
       case 'application-layerConfig':
-        return LayerConfigurationDocTableData;
+        return getDocDataforTable(schema, 'DefaultApplicationLayerConfig');
       case 'application-toolConfig':
-        return ToolConfigDocTableData;
+        return getDocDataforTable(schema, 'DefaultApplicationToolConfig');
 
       case 'layer-clientConfig':
-        return LayerClientConfigDocTableData;
+        return getDocDataforTable(schema, 'DefaultLayerClientConfig');
       case 'layer-sourceConfig':
-        return SourceConfigurationDocTableData;
-      case 'layer-features':
-        return FeaturesDocTableData;
+        return getDocDataforTable(schema, 'DefaultLayerSourceConfig');
 
-      case 'user-providerDetails':
-        return ProviderDetailsDocTableData;
       case 'user-details':
-        return DetailsDocTableData;
+        return getDocDataforTable(schema, 'UserDetails');
       case 'user-clientConfig':
-        return UserClientConfigDocTableData;
+        return getDocDataforTable(schema, 'UserClientConfig');
 
+      // TODO: no definition coming from the backend
+      case 'layer-features':
+      case 'user-providerDetails':
       default:
         return [{
           propertyName: 'propertyName',
