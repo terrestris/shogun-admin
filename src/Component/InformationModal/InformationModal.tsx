@@ -152,11 +152,11 @@ export const InformationModal: React.FC<InformationModalProps> = ({
       case 'user-providerDetails':
       default:
         return [{
-          propertyName: 'propertyName',
-          description: 'description',
-          example: 'example',
-          dataType: 'dataType',
-          required: 'required',
+          propertyName: 'TODO',
+          description: 'TODO',
+          example: 'TODO',
+          dataType: 'TODO',
+          required: 'TODO',
         }];
     }
   };
