@@ -326,7 +326,7 @@ export function GeneralEntityRoot<T extends BaseEntity>({
     }
 
     if (file.status === 'done') {
-      // Add it to the layer list
+      // Add it to layers
       await fetch(
         '/layers',
         {
@@ -340,7 +340,7 @@ export function GeneralEntityRoot<T extends BaseEntity>({
       );
       // refresh the list
       fetchEntities();
-      // Finally, show success mesage
+      // Finally, show success message
       setIsUploadingFile(false);
       message.success(t('GeneralEntityRoot.upload.success.message'), 5);
     } else if (file.status === 'error') {
