@@ -48,6 +48,17 @@ export default {
         save: '{{entity}} speichern',
         reset: '{{entity}} zurücksetzen',
         create: '{{entity}} erstellen',
+        upload: {
+          error: {
+            size: 'Hochgeladene Datei ist zu groß',
+            type: 'Hochgeladener Dateityp wird nicht unterstützt',
+            status: 'Fehler beim Hochladen der Datei'
+          },
+          success: {
+            message: 'Hochladen erfolgreich'
+          },
+          button: '{{entity}} hochladen'
+        },
         saveSuccess: '{{entity}} erfolgreich gespeichert!',
         saveFail: 'Fehler: Konnte {{entity}} nicht speichern.'
       },
@@ -217,6 +228,17 @@ export default {
         save: 'Save {{entity}}',
         reset: 'Reset {{entity}}',
         create: 'Create {{entity}}',
+        upload: {
+          error: {
+            size: 'Uploaded file is too big',
+            type: 'Uploaded file type is not supported',
+            status: 'Error uploading file'
+          },
+          success: {
+            message: 'Upload successful'
+          },
+          button: 'Upload {{entity}}'
+        },
         saveSuccess: '{{entity}} erfolgreich gespeichert!',
         saveFail: 'Fehler: Konnte {{entity}} nicht speichern.'
       },

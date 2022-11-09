@@ -22,6 +22,9 @@ var shogunApplicationConfig = {
     'User',
     'Group'
   ],
+  uploadLimits: {
+    geotiff: 2000000, // 200Mb
+  },
   dashboard: {
     news: {
       visible: true

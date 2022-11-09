@@ -6,26 +6,45 @@ import {
   Link
 } from 'react-router-dom';
 import { useHotkeys } from 'react-hotkeys-hook';
-import { Button, PageHeader, Form, notification } from 'antd';
+import {
+  Button,
+  PageHeader,
+  Form,
+  notification,
+  Upload,
+  message
+} from 'antd';
+import {
+  FormOutlined,
+  SaveOutlined,
+  UndoOutlined,
+  UploadOutlined
+} from '@ant-design/icons';
+import {
+  RcFile,
+  UploadChangeParam
+} from 'antd/lib/upload';
 import _isEmpty from 'lodash/isEmpty';
 
-import { ControllerUtil } from '../../../Controller/ControllerUtil';
-import { FormOutlined, SaveOutlined, UndoOutlined } from '@ant-design/icons';
-import { GenericEntityController } from '../../../Controller/GenericEntityController';
-import Logger from '@terrestris/base-util/dist/Logger';
-import { NamePath } from 'rc-field-form/lib/interface';
+import { useTranslation } from 'react-i18next';
+import i18next from 'i18next';
+import TranslationUtil from '../../../Util/TranslationUtil';
+
+import { getBearerTokenHeader } from '@terrestris/shogun-util/dist/security/getBearerTokenHeader';
+import { getCsrfTokenHeader } from '@terrestris/shogun-util/dist/security/getCsrfTokenHeader';
 import BaseEntity from '@terrestris/shogun-util/dist/model/BaseEntity';
-import config from 'shogunApplicationConfig';
+import Logger from '@terrestris/base-util/dist/Logger';
+
+import { NamePath } from 'rc-field-form/lib/interface';
+
+import { ControllerUtil } from '../../../Controller/ControllerUtil';
+import { GenericEntityController } from '../../../Controller/GenericEntityController';
 import GeneralEntityForm, { FormConfig } from '../GeneralEntityForm/GeneralEntityForm';
 import GeneralEntityTable, { TableConfig } from '../GeneralEntityTable/GeneralEntityTable';
 import useSHOGunAPIClient from '../../../Hooks/useSHOGunAPIClient';
 
-import { useTranslation } from 'react-i18next';
-
+import config from 'shogunApplicationConfig';
 import './GeneralEntityRoot.less';
-
-import i18next from 'i18next';
-import TranslationUtil from '../../../Util/TranslationUtil';
 
 export type GeneralEntityConfigType<T extends BaseEntity> = {
   i18n: FormTranslations;
@@ -68,6 +87,7 @@ export function GeneralEntityRoot<T extends BaseEntity>({
   const [formValid, setFormValid] = useState<boolean>(true);
   const [isGridLoading, setGridLoading] = useState<boolean>(false);
   const [isSaving, setIsSaving] = useState<boolean>(false);
+  const [isUploadingFile, setIsUploadingFile] = useState<boolean>(false);
 
   const [form] = Form.useForm();
   const client = useSHOGunAPIClient();
@@ -227,6 +247,108 @@ export function GeneralEntityRoot<T extends BaseEntity>({
     }
   };
 
+  const onBeforeFileUpload = (file: RcFile): Promise<void> => {
+    // TODO: Complete quality check
+    // 1. Check for file size. What should the limit be? Format dependent?
+    // 2. Check if the selected file format is valid
+    // 3. Check if the file is not broken/corrupted
+    // 4. Other checks
+    const maxSize = config.uploadLimits.geotiff;
+    const fileType = file.type;
+    const fileSize = file.size;
+
+    return new Promise((resolve, reject) => {
+      // 1. Check file size
+      if (fileSize > maxSize) {
+        message.error(t('GeneralEntityRoot.upload.error.size'), 5);
+        reject();
+      }
+      // 2. Check file format
+      if (fileType !== 'image/tiff') {
+        message.error(t('GeneralEntityRoot.upload.error.type'), 5);
+        reject();
+      }
+      resolve();
+    });
+  };
+
+  const onFileUploadAction = async(options) => {
+    const {onError, onSuccess} = options;
+
+    const splittedFileName = options.file.name.split('.');
+    const coverageStoreName = splittedFileName[splittedFileName.length - 2];
+    const layerName = coverageStoreName;
+    const workspace = 'SHOGUN';
+
+    const url = '/geoserver/rest/workspaces/' + workspace + '/coveragestores/' +
+    coverageStoreName + '/file.geotiff?coverageName=' + layerName;
+
+    try {
+      const request = await fetch(
+        url,
+        {
+          method: 'PUT',
+          headers: {
+            ...getBearerTokenHeader(client?.getKeycloak()),
+            'Content-Type': 'image/tiff',
+          },
+          body: options.file
+        }
+      );
+
+      if (!request.ok) {
+        onError();
+        return;
+      }
+      const response = await request.text();
+
+      onSuccess({
+        name: layerName,
+        type:'TILEWMS',
+        clientConfig: {},
+        sourceConfig:{
+          url:'/geoserver/wms?',
+          layerNames:`${workspace}:${layerName}`,
+          useBearerToken:false
+        },
+        response
+      });
+
+    } catch (e) {
+      onError(e.message, e);
+    }
+  };
+
+  const onFileUploadChange = async(info: UploadChangeParam) => {
+    const file = info.file;
+    if (file.status === 'uploading') {
+      setIsUploadingFile(true);
+    }
+
+    if (file.status === 'done') {
+      // Add it to the layer list
+      await fetch(
+        '/layers',
+        {
+          method: 'POST',
+          headers: {
+            ...getBearerTokenHeader(client?.getKeycloak()),
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(file.response)
+        }
+      );
+      // refresh the list
+      fetchEntities();
+      // Finally, show success mesage
+      setIsUploadingFile(false);
+      message.success(t('GeneralEntityRoot.upload.success.message'), 5);
+    } else if (file.status === 'error') {
+      setIsUploadingFile(false);
+      message.error(t('GeneralEntityRoot.upload.error.status'), 5);
+    }
+  };
+
   /**
    * Shortcut: Save entity form when ctrl+s is pressed.
    */
@@ -297,6 +419,34 @@ export function GeneralEntityRoot<T extends BaseEntity>({
               })}
             </Button>
           </Link>
+          {/* Upload only available for layer entities */}
+          {entityType === 'layer' && (
+            <Upload
+              customRequest={onFileUploadAction}
+              accept='image/tiff'
+              headers={{
+                ...getCsrfTokenHeader(),
+                ...getBearerTokenHeader(client.getKeycloak())
+              }}
+              maxCount={1}
+              showUploadList={false}
+              beforeUpload={onBeforeFileUpload}
+              onChange={onFileUploadChange}
+            >
+              <Button
+                type="primary"
+                key="upload"
+                icon={<UploadOutlined />}
+                loading={isUploadingFile}
+                disabled={isUploadingFile}
+              >
+                {t('GeneralEntityRoot.upload.button', {
+                  context: i18next.language,
+                  entity: TranslationUtil.getTranslationFromConfig(entityName, i18n)
+                })}
+              </Button>
+            </Upload>
+          )}
         </div>
         <GeneralEntityTable
           i18n={i18n}
