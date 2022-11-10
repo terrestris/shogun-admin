@@ -16,15 +16,19 @@ var shogunApplicationConfig = {
       ]
     }
   },
+  geoserver: {
+    base: '/geoserver',
+    upload: {
+      workspace: 'SHOGUN',
+      limit: 200000000, // ~200MB
+    }
+  },
   models: [
     'Application',
     'Layer',
     'User',
     'Group'
   ],
-  uploadLimits: {
-    geotiff: 2000000, // 200Mb
-  },
   dashboard: {
     news: {
       visible: true

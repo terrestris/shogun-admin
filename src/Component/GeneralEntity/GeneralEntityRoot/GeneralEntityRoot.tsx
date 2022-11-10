@@ -1,50 +1,97 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useState
+} from 'react';
+
 import {
   useNavigate,
   useLocation,
   matchPath,
   Link
 } from 'react-router-dom';
-import { useHotkeys } from 'react-hotkeys-hook';
+
+import {
+  useHotkeys
+} from 'react-hotkeys-hook';
+
 import {
   Button,
   PageHeader,
   Form,
   notification,
-  Upload,
-  message
+  Upload
 } from 'antd';
+
 import {
   FormOutlined,
   SaveOutlined,
   UndoOutlined,
   UploadOutlined
 } from '@ant-design/icons';
+
 import {
   RcFile,
   UploadChangeParam
 } from 'antd/lib/upload';
+import {
+  UploadFile
+} from 'antd/lib/upload/interface';
+
+import {
+  UploadRequestOption
+} from 'rc-upload/lib/interface';
+
+import {
+  NamePath
+} from 'rc-field-form/lib/interface';
+
 import _isEmpty from 'lodash/isEmpty';
 
-import { useTranslation } from 'react-i18next';
+import {
+  useTranslation
+} from 'react-i18next';
 import i18next from 'i18next';
-import TranslationUtil from '../../../Util/TranslationUtil';
 
-import { getBearerTokenHeader } from '@terrestris/shogun-util/dist/security/getBearerTokenHeader';
-import { getCsrfTokenHeader } from '@terrestris/shogun-util/dist/security/getCsrfTokenHeader';
+import {
+  getBearerTokenHeader
+} from '@terrestris/shogun-util/dist/security/getBearerTokenHeader';
 import BaseEntity from '@terrestris/shogun-util/dist/model/BaseEntity';
 import Logger from '@terrestris/base-util/dist/Logger';
 
-import { NamePath } from 'rc-field-form/lib/interface';
-
-import { ControllerUtil } from '../../../Controller/ControllerUtil';
-import { GenericEntityController } from '../../../Controller/GenericEntityController';
-import GeneralEntityForm, { FormConfig } from '../GeneralEntityForm/GeneralEntityForm';
-import GeneralEntityTable, { TableConfig } from '../GeneralEntityTable/GeneralEntityTable';
+import {
+  ControllerUtil
+} from '../../../Controller/ControllerUtil';
+import {
+  GenericEntityController
+} from '../../../Controller/GenericEntityController';
+import GeneralEntityForm, {
+  FormConfig
+} from '../GeneralEntityForm/GeneralEntityForm';
+import GeneralEntityTable, {
+  TableConfig
+} from '../GeneralEntityTable/GeneralEntityTable';
 import useSHOGunAPIClient from '../../../Hooks/useSHOGunAPIClient';
+import TranslationUtil from '../../../Util/TranslationUtil';
 
 import config from 'shogunApplicationConfig';
+
 import './GeneralEntityRoot.less';
+
+type LayerUploadOptions = {
+  baseUrl: string;
+  workspace: string;
+  storeName: string;
+  layerName: string;
+  file: RcFile;
+};
+
+type LayerUploadResponse = {
+  layerName: string;
+  workspace: string;
+  baseUrl: string;
+};
 
 export type GeneralEntityConfigType<T extends BaseEntity> = {
   i18n: FormTranslations;
@@ -247,105 +294,218 @@ export function GeneralEntityRoot<T extends BaseEntity>({
     }
   };
 
-  const onBeforeFileUpload = (file: RcFile): Promise<void> => {
+  const onBeforeFileUpload = (file: RcFile) => {
     // TODO: Complete quality check
     // 1. Check for file size. What should the limit be? Format dependent?
     // 2. Check if the selected file format is valid
     // 3. Check if the file is not broken/corrupted
     // 4. Other checks
-    const maxSize = config.uploadLimits.geotiff;
+    const maxSize = config.geoserver?.upload?.limit || '200000000';
     const fileType = file.type;
     const fileSize = file.size;
 
-    return new Promise((resolve, reject) => {
-      // 1. Check file size
-      if (fileSize > maxSize) {
-        message.error(t('GeneralEntityRoot.upload.error.size'), 5);
-        reject();
-      }
-      // 2. Check file format
-      if (fileType !== 'image/tiff') {
-        message.error(t('GeneralEntityRoot.upload.error.type'), 5);
-        reject();
-      }
-      resolve();
-    });
-  };
-
-  const onFileUploadAction = async(options) => {
-    const {onError, onSuccess} = options;
-
-    const splittedFileName = options.file.name.split('.');
-    const coverageStoreName = splittedFileName[splittedFileName.length - 2];
-    const layerName = coverageStoreName;
-    const workspace = 'SHOGUN';
-
-    const url = '/geoserver/rest/workspaces/' + workspace + '/coveragestores/' +
-    coverageStoreName + '/file.geotiff?coverageName=' + layerName;
-
-    try {
-      const request = await fetch(
-        url,
-        {
-          method: 'PUT',
-          headers: {
-            ...getBearerTokenHeader(client?.getKeycloak()),
-            'Content-Type': 'image/tiff',
-          },
-          body: options.file
-        }
-      );
-
-      if (!request.ok) {
-        onError();
-        return;
-      }
-      const response = await request.text();
-
-      onSuccess({
-        name: layerName,
-        type:'TILEWMS',
-        clientConfig: {},
-        sourceConfig:{
-          url:'/geoserver/wms?',
-          layerNames:`${workspace}:${layerName}`,
-          useBearerToken:false
-        },
-        response
+    // 1. Check file size
+    if (fileSize > maxSize) {
+      notification.error({
+        message: t('GeneralEntityRoot.upload.error.message', {
+          entity: TranslationUtil.getTranslationFromConfig(entityName, i18n)
+        }),
+        description: t('GeneralEntityRoot.upload.error.descriptionSize', {
+          maxSize: maxSize / 1000000
+        })
       });
 
-    } catch (e) {
-      onError(e.message, e);
+      return false;
+    }
+
+    // 2. Check file format
+    const supportedFormats = ['application/zip', 'image/tiff'];
+    if (!supportedFormats.includes(fileType)) {
+      notification.error({
+        message: t('GeneralEntityRoot.upload.error.message', {
+          entity: TranslationUtil.getTranslationFromConfig(entityName, i18n)
+        }),
+        description: t('GeneralEntityRoot.upload.error.descriptionFormat', {
+          supportedFormats: supportedFormats.join(', ')
+        })
+      });
+
+      return false;
+    }
+
+    return true;
+  };
+
+  const uploadGeoTiff = async (options: LayerUploadOptions): Promise<void> => {
+    const {
+      baseUrl,
+      workspace,
+      storeName,
+      layerName,
+      file
+    } = options;
+
+    const url = `${baseUrl}/rest/workspaces/${workspace}/coveragestores/` +
+      `${storeName}/file.geotiff?coverageName=${layerName}`;
+
+    const response = await fetch(url, {
+      method: 'PUT',
+      headers: {
+        ...getBearerTokenHeader(client?.getKeycloak()),
+        'Content-Type': 'image/tiff'
+      },
+      body: file
+    });
+
+    if (!response.ok) {
+      throw new Error('No successful response while uploading the file');
     }
   };
 
-  const onFileUploadChange = async(info: UploadChangeParam) => {
+  const uploadShapeZip = async (options: LayerUploadOptions): Promise<void> => {
+    const {
+      baseUrl,
+      workspace,
+      storeName,
+      layerName,
+      file
+    } = options;
+
+    const url = `${baseUrl}/rest/workspaces/${workspace}/datastores/` +
+      `${storeName}/file.shp?configure=none`;
+
+    const response = await fetch(url, {
+      method: 'PUT',
+      headers: {
+        ...getBearerTokenHeader(client?.getKeycloak()),
+        'Content-Type': 'application/zip'
+      },
+      body: file
+    });
+
+    if (!response.ok) {
+      throw new Error('No successful response while uploading the file');
+    }
+
+    const featureTypeUrl = `${baseUrl}/rest/workspaces/${workspace}/datastores/${storeName}/featuretypes`;
+
+    const featureTypeResponse = await fetch(featureTypeUrl, {
+      method: 'POST',
+      headers: {
+        ...getBearerTokenHeader(client?.getKeycloak()),
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        featureType: {
+          enabled: true,
+          name: layerName,
+          nativeName: file.name.split('.')[0],
+          title: layerName
+        }
+      })
+    });
+
+    if (!featureTypeResponse.ok) {
+      throw new Error('No successful response while creating the featuretype');
+    }
+  };
+
+  const onFileUploadAction = async (options: UploadRequestOption<LayerUploadResponse>) => {
+    const {
+      onError,
+      onSuccess,
+      file
+    } = options;
+
+    const splittedFileName = (file as RcFile).name.split('.');
+    const fileType = (file as RcFile).type;
+    const geoServerBaseUrl = config.geoserver?.base || '/';
+    const workspace = config.geoserver?.upload?.workspace || 'SHOGUN';
+    const layerName = `${splittedFileName[0]}_${Date.now()}`.toUpperCase();
+
+    try {
+      if (fileType === 'image/tiff') {
+        await uploadGeoTiff({
+          file: file as RcFile,
+          baseUrl: geoServerBaseUrl,
+          workspace: workspace,
+          storeName: layerName,
+          layerName: layerName
+        });
+      }
+
+      if (fileType === 'application/zip') {
+        await uploadShapeZip({
+          file: file as RcFile,
+          baseUrl: geoServerBaseUrl,
+          workspace: workspace,
+          storeName: layerName,
+          layerName: layerName
+        });
+      }
+
+      onSuccess({
+        baseUrl: geoServerBaseUrl,
+        workspace: workspace,
+        layerName: layerName
+      });
+    } catch (error) {
+      onError({
+        name: 'UploadError',
+        message: error.message
+      });
+    }
+  };
+
+  const onFileUploadChange = async(info: UploadChangeParam<UploadFile<LayerUploadResponse>>) => {
     const file = info.file;
+
     if (file.status === 'uploading') {
       setIsUploadingFile(true);
     }
 
     if (file.status === 'done') {
-      // Add it to layers
-      await fetch(
-        '/layers',
-        {
-          method: 'POST',
-          headers: {
-            ...getBearerTokenHeader(client?.getKeycloak()),
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(file.response)
+      await client.layer().add({
+        name: file.response.layerName,
+        type: 'TILEWMS',
+        clientConfig: {
+          hoverable: false
+        },
+        sourceConfig: {
+          url: `${file.response.baseUrl}/ows?`,
+          layerNames: `${file.response.workspace}:${file.response.layerName}`,
+          useBearerToken: true
         }
-      );
-      // refresh the list
+      });
+
+      // Refresh the list
       fetchEntities();
+
       // Finally, show success message
       setIsUploadingFile(false);
-      message.success(t('GeneralEntityRoot.upload.success.message'), 5);
+
+      notification.success({
+        message: t('GeneralEntityRoot.upload.success.message', {
+          entity: TranslationUtil.getTranslationFromConfig(entityName, i18n)
+        }),
+        description: t('GeneralEntityRoot.upload.success.description', {
+          fileName: file.fileName,
+          layerName: file.response.layerName
+        }),
+      });
     } else if (file.status === 'error') {
       setIsUploadingFile(false);
-      message.error(t('GeneralEntityRoot.upload.error.status'), 5);
+
+      Logger.error(file.error);
+
+      notification.error({
+        message: t('GeneralEntityRoot.upload.error.message', {
+          entity: TranslationUtil.getTranslationFromConfig(entityName, i18n)
+        }),
+        description: t('GeneralEntityRoot.upload.error.description', {
+          fileName: file.fileName
+        })
+      });
     }
   };
 
@@ -423,11 +583,7 @@ export function GeneralEntityRoot<T extends BaseEntity>({
           {entityType === 'layer' && (
             <Upload
               customRequest={onFileUploadAction}
-              accept='image/tiff'
-              headers={{
-                ...getCsrfTokenHeader(),
-                ...getBearerTokenHeader(client.getKeycloak())
-              }}
+              accept='image/tiff,application/zip'
               maxCount={1}
               showUploadList={false}
               beforeUpload={onBeforeFileUpload}
