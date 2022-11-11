@@ -419,7 +419,7 @@ export function GeneralEntityRoot<T extends BaseEntity>({
 
     const splittedFileName = (file as RcFile).name.split('.');
     const fileType = (file as RcFile).type;
-    const geoServerBaseUrl = config.geoserver?.base || '/';
+    const geoServerBaseUrl = config.geoserver?.base || '/geoserver';
     const workspace = config.geoserver?.upload?.workspace || 'SHOGUN';
     const layerName = `${splittedFileName[0]}_${Date.now()}`.toUpperCase();
 
