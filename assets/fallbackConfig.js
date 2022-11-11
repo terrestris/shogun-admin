@@ -16,6 +16,13 @@ var shogunApplicationConfig = {
       ]
     }
   },
+  geoserver: {
+    base: '/geoserver',
+    upload: {
+      workspace: 'SHOGUN',
+      limit: 200000000, // ~200MB
+    }
+  },
   models: [
     'Application',
     'Layer',
