@@ -423,25 +423,21 @@ export function GeneralEntityRoot<T extends BaseEntity>({
     const workspace = config.geoserver?.upload?.workspace || 'SHOGUN';
     const layerName = `${splittedFileName[0]}_${Date.now()}`.toUpperCase();
 
+    const uploadData = {
+      file: file as RcFile,
+      baseUrl: geoServerBaseUrl,
+      workspace: workspace,
+      storeName: layerName,
+      layerName: layerName
+    };
+
     try {
       if (fileType === 'image/tiff') {
-        await uploadGeoTiff({
-          file: file as RcFile,
-          baseUrl: geoServerBaseUrl,
-          workspace: workspace,
-          storeName: layerName,
-          layerName: layerName
-        });
+        await uploadGeoTiff(uploadData);
       }
 
       if (fileType === 'application/zip') {
-        await uploadShapeZip({
-          file: file as RcFile,
-          baseUrl: geoServerBaseUrl,
-          workspace: workspace,
-          storeName: layerName,
-          layerName: layerName
-        });
+        await uploadShapeZip(uploadData);
       }
 
       onSuccess({
