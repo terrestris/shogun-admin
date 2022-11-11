@@ -1,3 +1,27 @@
+## [10.7.0](https://github.com/terrestris/shogun-admin/compare/v10.6.1...v10.7.0) (2022-11-11)
+
+
+### Features
+
+* added button to upload new geotiff subject ([65aa6e2](https://github.com/terrestris/shogun-admin/commit/65aa6e237a66b4fb01946b9a51ae4f7b807fc85b))
+* support SHAPE-ZIP upload as well ([25a5ed4](https://github.com/terrestris/shogun-admin/commit/25a5ed4d0691b93bc0257845b7cdb6f87a2fea3c))
+
+
+### Dependencies
+
+* **deps:** bump loader-utils from 2.0.2 to 2.0.3 ([34a4fa6](https://github.com/terrestris/shogun-admin/commit/34a4fa68508d57b74f20d75b939e678f4b54e602))
+
+
+### Bugfixes
+
+* added space between buttons on left toolbar ([13d7984](https://github.com/terrestris/shogun-admin/commit/13d798466cc27ae575e1e2fcf3c6e5d97bcb3ef2))
+* adjust default value ([b9caa33](https://github.com/terrestris/shogun-admin/commit/b9caa33f10452a45149a0b851432ff253b854870))
+
+
+### Changes in layout
+
+* share function arguments ([176fd8b](https://github.com/terrestris/shogun-admin/commit/176fd8bccc5e9aa0a57ea207185e5c024f7b77cb))
+
 ## [10.6.1](https://github.com/terrestris/shogun-admin/compare/v10.6.0...v10.6.1) (2022-10-13)
 
 
