@@ -14,7 +14,8 @@ var shogunApplicationConfig = {
       authorizedRoles: [
         'admin'
       ]
-    }
+    },
+    tokenName: 'security-token'
   },
   geoserver: {
     base: '/geoserver',
