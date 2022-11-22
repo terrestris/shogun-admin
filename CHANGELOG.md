@@ -1,3 +1,15 @@
+## [10.7.1](https://github.com/terrestris/shogun-admin/compare/v10.7.0...v10.7.1) (2022-11-22)
+
+
+### Dependencies
+
+* **deps:** bump loader-utils from 2.0.3 to 2.0.4 ([e8d418d](https://github.com/terrestris/shogun-admin/commit/e8d418d43fe592f74d0a1d5de679dfcdd71bd10c))
+
+
+### Bugfixes
+
+* fix logout for non keycloak setups ([#140](https://github.com/terrestris/shogun-admin/issues/140)) ([52faffb](https://github.com/terrestris/shogun-admin/commit/52faffb9195afe2bd87a83e3d07a16a861696436))
+
 ## [10.7.0](https://github.com/terrestris/shogun-admin/compare/v10.6.1...v10.7.0) (2022-11-11)
 
 
