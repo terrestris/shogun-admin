@@ -12,6 +12,7 @@ import {
 import {
   Menu
 } from 'antd';
+import { ItemType } from 'antd/lib/menu/hooks/useItems';
 
 import config from 'shogunApplicationConfig';
 import { GeneralEntityConfigType } from '../../GeneralEntity/GeneralEntityRoot/GeneralEntityRoot';
@@ -53,6 +54,101 @@ export const Navigation: React.FC<NavigationProps> = ({
 
   const navigationConf = config.navigation;
 
+  const navigationContentChildren: ItemType[] = entityConfigs.map(conf => ({
+    key: conf.entityType,
+    label: (
+      <>
+        <BankOutlined />
+        <span>{TranslationUtil.getTranslationFromConfig(conf.navigationTitle, conf.i18n)}</span>
+      </>
+    )
+  }));
+
+  if (navigationConf?.general?.imagefiles?.visible) {
+    navigationContentChildren.push({
+      key: 'imagefile',
+      label: (
+        <>
+          <FileImageOutlined />
+          <span>{t('Navigation.image')}</span>
+        </>
+      )
+    });
+  }
+
+  const statusChildren: ItemType[] = [];
+
+  if (navigationConf?.status?.metrics?.visible) {
+    statusChildren.push({
+      key: 'status/metrics',
+      label: (
+        <>
+          <BarChartOutlined />
+          <span>{t('Navigation.metrics')}</span>
+        </>
+      )
+    });
+  }
+  if (navigationConf?.status?.logs?.visible) {
+    statusChildren.push({
+      key: 'status/logs',
+      label: (
+        <>
+          <FileTextOutlined />
+          <span>{t('Navigation.logs')}</span>
+        </>
+      )
+    });
+  }
+
+  const settingsChildren: ItemType[] = [];
+
+  if (navigationConf?.settings?.global?.visible) {
+    settingsChildren.push({
+      key: 'settings/global',
+      label: (
+        <>
+          <ControlOutlined />
+          <span>{t('Navigation.global')}</span>
+        </>
+      )
+    });
+  }
+  if (navigationConf?.settings?.logs?.visible) {
+    settingsChildren.push({
+      key: 'settings/logs',
+      label: (
+        <>
+          <FileTextOutlined />
+          <span>{t('Navigation.logs')}</span>
+        </>
+      )
+    });
+  }
+
+  const items: ItemType[] = [];
+  if (navigationContentChildren.length > 0) {
+    items.push({
+      key: 'general',
+      label: t('Navigation.content'),
+      children: navigationContentChildren
+    });
+  }
+  if (statusChildren.length > 0) {
+    items.push({
+      key: 'status',
+      label: t('Navigation.status'),
+      children: statusChildren
+    });
+  }
+  if (settingsChildren.length > 0) {
+    items.push({
+      key: 'settings',
+      label: t('Navigation.configuration'),
+      children: settingsChildren
+    });
+  }
+
   return (
     <Menu
       className="navigation-menu"
@@ -63,77 +159,8 @@ export const Navigation: React.FC<NavigationProps> = ({
       onSelect={onSelect}
       selectedKeys={[activeKey]}
       defaultOpenKeys={['general']}
+      items={items}
     >
-      <Menu.SubMenu
-        key="general"
-        title={t('Navigation.content')}
-      >
-        {
-          entityConfigs.map(entityConfig => (
-            <Menu.Item
-              key={entityConfig.entityType}
-            >
-              <BankOutlined />
-              <span>{TranslationUtil.getTranslationFromConfig(entityConfig.navigationTitle, entityConfig.i18n)}</span>
-            </Menu.Item>
-          ))
-        }
-        {
-          navigationConf?.general?.imagefiles?.visible &&
-          <Menu.Item
-            key="imagefile"
-          >
-            <FileImageOutlined />
-            <span>{t('Navigation.image')}</span>
-          </Menu.Item>
-        }
-      </Menu.SubMenu>
-      <Menu.SubMenu
-        key="status"
-        title={t('Navigation.status')}
-      >
-        {
-          navigationConf?.status?.metrics?.visible &&
-          <Menu.Item
-            key="status/metrics"
-          >
-            <BarChartOutlined />
-            <span>{t('Navigation.metrics')}</span>
-          </Menu.Item>
-        }
-        {
-          navigationConf?.status?.logs?.visible &&
-          <Menu.Item
-            key="status/logs"
-          >
-            <FileTextOutlined />
-            <span>{t('Navigation.logs')}</span>
-          </Menu.Item>
-        }
-      </Menu.SubMenu>
-      <Menu.SubMenu
-        key="settings"
-        title={t('Navigation.configuration')}
-      >
-        {
-          navigationConf?.settings?.global?.visible &&
-          <Menu.Item
-            key="settings/global"
-          >
-            <ControlOutlined />
-            <span>{t('Navigation.global')}</span>
-          </Menu.Item>
-        }
-        {
-          navigationConf?.settings?.logs?.visible &&
-          <Menu.Item
-            key="settings/logs"
-          >
-            <FileTextOutlined />
-            <span>{t('Navigation.logs')}</span>
-          </Menu.Item>
-        }
-      </Menu.SubMenu>
     </Menu>
   );
 };
