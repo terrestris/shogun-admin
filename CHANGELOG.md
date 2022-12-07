@@ -1,3 +1,10 @@
+## [10.7.2](https://github.com/terrestris/shogun-admin/compare/v10.7.1...v10.7.2) (2022-12-07)
+
+
+### Dependencies
+
+* **deps:** bump decode-uri-component from 0.2.0 to 0.2.2 ([baf4036](https://github.com/terrestris/shogun-admin/commit/baf403613447216475a9a9d4a1c9ecbf3d549913))
+
 ## [10.7.1](https://github.com/terrestris/shogun-admin/compare/v10.7.0...v10.7.1) (2022-11-22)
 
 
