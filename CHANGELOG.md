@@ -1,3 +1,15 @@
+## [10.8.0](https://github.com/terrestris/shogun-admin/compare/v10.7.2...v10.8.0) (2022-12-07)
+
+
+### Features
+
+* add typing for config ([e874a2d](https://github.com/terrestris/shogun-admin/commit/e874a2d1469f1f79769c216d8c866eb0b529d574))
+
+
+### Bugfixes
+
+* apply suggestions from code review ([ec29587](https://github.com/terrestris/shogun-admin/commit/ec295873c0ec565553eda68e201fb6455be0f724))
+
 ## [10.7.2](https://github.com/terrestris/shogun-admin/compare/v10.7.1...v10.7.2) (2022-12-07)
 
 
