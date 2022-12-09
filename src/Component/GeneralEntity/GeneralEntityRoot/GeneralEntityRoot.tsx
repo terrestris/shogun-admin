@@ -257,7 +257,7 @@ export function GeneralEntityRoot<T extends BaseEntity>({
     if (entityType) {
       fetchEntities();
     }
-  }, [entityType]);
+  }, [entityType, fetchEntities]);
 
   const onValuesChange = async (changedValues: any) => {
     setFormIsDirty(true);

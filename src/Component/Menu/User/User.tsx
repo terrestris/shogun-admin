@@ -48,6 +48,7 @@ export const User: React.FC<UserProps> = () => {
   }) : '';
 
   const onMenuClick = (evt: any) => {
+
     switch (evt.key) {
       case 'info':
         setInfoVisible(true);
