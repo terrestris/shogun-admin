@@ -290,7 +290,7 @@ export const GeneralEntityForm: React.FC<GeneralEntityFormProps> = ({
         className="general-entity-form"
         form={form}
         initialValues={initialValues}
-        labelCol={{ span: 4 }}
+        labelCol={{ span: 5 }}
         wrapperCol={{ span: 20 }}
         name={formConfig?.name}
         {...formProps}
