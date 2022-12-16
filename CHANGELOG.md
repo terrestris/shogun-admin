@@ -1,3 +1,58 @@
+## [10.8.0](https://github.com/terrestris/shogun-admin/compare/v10.7.2...v10.8.0) (2022-12-07)
+
+
+### Features
+
+* add typing for config ([e874a2d](https://github.com/terrestris/shogun-admin/commit/e874a2d1469f1f79769c216d8c866eb0b529d574))
+
+
+### Bugfixes
+
+* apply suggestions from code review ([ec29587](https://github.com/terrestris/shogun-admin/commit/ec295873c0ec565553eda68e201fb6455be0f724))
+
+## [10.7.2](https://github.com/terrestris/shogun-admin/compare/v10.7.1...v10.7.2) (2022-12-07)
+
+
+### Dependencies
+
+* **deps:** bump decode-uri-component from 0.2.0 to 0.2.2 ([baf4036](https://github.com/terrestris/shogun-admin/commit/baf403613447216475a9a9d4a1c9ecbf3d549913))
+
+## [10.7.1](https://github.com/terrestris/shogun-admin/compare/v10.7.0...v10.7.1) (2022-11-22)
+
+
+### Dependencies
+
+* **deps:** bump loader-utils from 2.0.3 to 2.0.4 ([e8d418d](https://github.com/terrestris/shogun-admin/commit/e8d418d43fe592f74d0a1d5de679dfcdd71bd10c))
+
+
+### Bugfixes
+
+* fix logout for non keycloak setups ([#140](https://github.com/terrestris/shogun-admin/issues/140)) ([52faffb](https://github.com/terrestris/shogun-admin/commit/52faffb9195afe2bd87a83e3d07a16a861696436))
+
+## [10.7.0](https://github.com/terrestris/shogun-admin/compare/v10.6.1...v10.7.0) (2022-11-11)
+
+
+### Features
+
+* added button to upload new geotiff subject ([65aa6e2](https://github.com/terrestris/shogun-admin/commit/65aa6e237a66b4fb01946b9a51ae4f7b807fc85b))
+* support SHAPE-ZIP upload as well ([25a5ed4](https://github.com/terrestris/shogun-admin/commit/25a5ed4d0691b93bc0257845b7cdb6f87a2fea3c))
+
+
+### Dependencies
+
+* **deps:** bump loader-utils from 2.0.2 to 2.0.3 ([34a4fa6](https://github.com/terrestris/shogun-admin/commit/34a4fa68508d57b74f20d75b939e678f4b54e602))
+
+
+### Bugfixes
+
+* added space between buttons on left toolbar ([13d7984](https://github.com/terrestris/shogun-admin/commit/13d798466cc27ae575e1e2fcf3c6e5d97bcb3ef2))
+* adjust default value ([b9caa33](https://github.com/terrestris/shogun-admin/commit/b9caa33f10452a45149a0b851432ff253b854870))
+
+
+### Changes in layout
+
+* share function arguments ([176fd8b](https://github.com/terrestris/shogun-admin/commit/176fd8bccc5e9aa0a57ea207185e5c024f7b77cb))
+
 ## [10.6.1](https://github.com/terrestris/shogun-admin/compare/v10.6.0...v10.6.1) (2022-10-13)
 
 

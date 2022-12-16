@@ -25,11 +25,13 @@ import useSHOGunAPIClient from '../../../Hooks/useSHOGunAPIClient';
 
 import { useTranslation } from 'react-i18next';
 
+import config from 'shogunApplicationConfig';
+
 interface OwnProps { }
 
 type UserProps = OwnProps;
 
-export const User: React.FC<UserProps> = (props) => {
+export const User: React.FC<UserProps> = () => {
 
   const [userInfo] = useRecoilState(userInfoAtom);
   const [, setInfoVisible] = useRecoilState(shogunInfoModalVisibleAtom);
@@ -55,8 +57,20 @@ export const User: React.FC<UserProps> = (props) => {
         client.getKeycloak()?.accountManagement();
         break;
       case 'logout':
-        // TODO: Fix logout for non keycloak setups
-        client.getKeycloak()?.logout();
+        const keycloak = client.getKeycloak();
+        if (keycloak) {
+          keycloak.logout();
+        } else {
+          fetch('/auth/logout', {
+            method: 'POST',
+            credentials: 'same-origin'
+          }).then(response => {
+            if (response.status === 200) {
+              localStorage.removeItem(config?.security?.tokenName);
+              window.location.href = '/';
+            }
+          });
+        }
         break;
       default:
         break;
@@ -88,12 +102,14 @@ export const User: React.FC<UserProps> = (props) => {
             userName &&
             <Menu.Divider />
           }
-          <Menu.Item
-            key="settings"
-            icon={<SettingOutlined />}
-          >
-            {t('User.settings')}
-          </Menu.Item>
+          {client.getKeycloak() &&
+            <Menu.Item
+              key="settings"
+              icon={<SettingOutlined />}
+            >
+              {t('User.settings')}
+            </Menu.Item>
+          }
           <Menu.Item
             key="info"
             icon={<InfoCircleOutlined />}

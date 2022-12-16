@@ -53,8 +53,21 @@ export default {
         save: '{{entity}} speichern',
         reset: '{{entity}} zurücksetzen',
         create: '{{entity}} erstellen',
-        saveSuccess: '{{entity}} erfolgreich gespeichert!',
-        saveFail: 'Fehler: Konnte {{entity}} nicht speichern.'
+        upload: {
+          success: {
+            message: '{{entity}} erfolgreich erstellt',
+            description: 'Datei {{fileName}} wurde erfolgreich geladen und der Layer {{layerName}} erstellt'
+          },
+          error: {
+            message: 'Konnte {{entity}} nicht erstellen',
+            description: 'Fehler beim Hochladen der Datei {{fileName}}',
+            descriptionSize: 'Der Upload überschreitet das Limit von {{maxSize}} MB',
+            descriptionFormat: 'Der Dateityp ist nicht unterstützt ({{supportedFormats}})',
+          },
+          button: 'Upload {{entity}}'
+        },
+        saveSuccess: '{{entity}} erfolgreich gespeichert',
+        saveFail: 'Konnte {{entity}} nicht speichern'
       },
       GeneralEntityTable: {
         cancelText: 'Abbrechen',
@@ -227,8 +240,21 @@ export default {
         save: 'Save {{entity}}',
         reset: 'Reset {{entity}}',
         create: 'Create {{entity}}',
-        saveSuccess: '{{entity}} erfolgreich gespeichert!',
-        saveFail: 'Fehler: Konnte {{entity}} nicht speichern.'
+        upload: {
+          success: {
+            message: '{{entity}} successfully created',
+            description: 'Successfully uploaded file {{fileName}} and created layer {{layerName}}'
+          },
+          error: {
+            message: 'Could not create {{entity}}',
+            description: 'Error while uploading file {{fileName}}',
+            descriptionSize: 'The file exceeds the upload limit of {{maxSize}} MB',
+            descriptionFormat: 'The given file type does not match the supported ones ({{supportedFormats}})',
+          },
+          button: 'Upload {{entity}}'
+        },
+        saveSuccess: '{{entity}} successfully saved',
+        saveFail: 'Could not save {{entity}}'
       },
       GeneralEntityTable: {
         cancelText: 'Cancel',

@@ -14,6 +14,14 @@ var shogunApplicationConfig = {
       authorizedRoles: [
         'admin'
       ]
+    },
+    tokenName: 'security-token'
+  },
+  geoserver: {
+    base: '/geoserver',
+    upload: {
+      workspace: 'SHOGUN',
+      limit: 200000000, // ~200MB
     }
   },
   models: [
