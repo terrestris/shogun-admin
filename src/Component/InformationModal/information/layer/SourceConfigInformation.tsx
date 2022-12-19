@@ -1,5 +1,3 @@
-export const description = 'A small description about this field. Still TODO';
-
 export const exampleConfig = `
   {
     "url": "https://ows.terrestris.de/osm/service?",

@@ -1,10 +1,7 @@
-export const description = 'A small description about this field. Still TODO';
-
-
 export const exampleConfig = `
   [
     {
-      "layerId": 47,
+      "layerId": 2,
       "clientConfig": {
         "opacity": 30
       }

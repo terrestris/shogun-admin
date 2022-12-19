@@ -1,5 +1,3 @@
-export const description = 'A small description about this field. Still TODO';
-
 export const exampleConfig = `
   {
     "mapView": {
@@ -30,12 +28,12 @@ export const exampleConfig = `
         0.07
       ]
     },
-    "description": "EO-Lab",
+    "description": "An awesome shogun app",
     "theme": {
       "primaryColor": "#02203d",
       "secondaryColor": "#73b3fb",
       "complementaryColor": "#ffffff",
-      "logoPath": "https://cloud.code-de.org:8080/279dbc97d5b5434fa8aeacf09c08c520:eolab_prod/static/img/eolab1.png"
+      "logoPath": "https://terrestris.github.io/fossgis2019/shared/img/shogun-qgis-talk/logo-shogun.png"
     }
   }
 `;

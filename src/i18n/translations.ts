@@ -3,7 +3,26 @@ export default {
     translation: {
       InformationModal: {
         titlePredicate: 'information',
-        closeButtonText: 'Verstanden'
+        closeButtonText: 'Verstanden',
+        copiedToClipboard:'Beispiel in die Zwischenablage kopiert',
+        title: {
+          application: {
+            clientConfig: 'Client-Konfiguration',
+            layerTree: 'Themenbaum',
+            layerConfig: 'Layer-Konfiguration',
+            toolConfig: 'Werkzeug Konfiguration'
+          },
+          layer: {
+            clientConfig: 'Konfiguration',
+            sourceConfig: 'Datenquelle',
+            features: 'Features'
+          },
+          user: {
+            details: 'Details',
+            clientConfig: 'Keycloak Details',
+            providerDetails: 'Datenquelle'
+          }
+        }
       },
       Index: {
         unauthorizedTitle: 'Sie sind nicht berechtigt, diese Seite zu öffnen.',
@@ -190,7 +209,26 @@ export default {
     translation: {
       InformationModal: {
         titlePredicate: 'information',
-        closeButtonText: 'Understood'
+        closeButtonText: 'Understood',
+        copiedToClipboard: 'Example copied to clipboard',
+        title: {
+          application: {
+            clientConfig: 'Client configuration',
+            layerTree: 'Layertree',
+            layerConfig: 'Layer configuration',
+            toolConfig: 'Configure Tools'
+          },
+          layer: {
+            clientConfig: 'Configuration',
+            sourceConfig: 'Datasource',
+            features: 'Features'
+          },
+          user: {
+            details: 'Details',
+            clientConfig: 'Keycloak Details',
+            providerDetails: 'Datasource'
+          }
+        }
       },
       Index: {
         unauthorizedTitle: 'You\'re not authorized to access this page.',

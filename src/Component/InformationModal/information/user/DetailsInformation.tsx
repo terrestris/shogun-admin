@@ -1,7 +1,6 @@
-export const description = 'A small description about this field. Still TODO';
-
 export const exampleConfig = `
   {
-    "todo": TODO
+    "favoriteApp": "SHOGun",
+    "lastReadBook: "The art of war"
   }
 `;

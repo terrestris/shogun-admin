@@ -6,6 +6,7 @@ export interface InformationModalTableDataType {
   dataType: string;
   required: string;
   subProps?: InformationModalTableDataType[];
+  keyId: string;
 }
 
 export interface GroupedInformationModalTableDataType {

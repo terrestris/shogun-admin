@@ -1,12 +1,25 @@
 import { InformationModalTableDataType } from '../types';
 
+export const  getDocDescription = (schema, entity: string, property: string): string => {
+  if (
+    schema.definitions[entity] &&
+    !!schema.definitions[entity].properties &&
+    schema.definitions[entity].properties[property] &&
+    !!schema.definitions[entity].properties[property].description
+  ) {
+    return schema.definitions[entity].properties[property].description;
+  }
+  return '';
+};
+
 export const getDocDataforTable = (schema, entity: string): InformationModalTableDataType[] => {
   if (schema.definitions[entity] && !!schema.definitions[entity].properties) {
-    return Object.keys(schema.definitions[entity].properties).map(key => {
-      const finalSchema = {
+    return Object.keys(schema.definitions[entity].properties).map((key, index) => {
+      const finalSchema: InformationModalTableDataType = {
+        keyId: `${key}-${index}`,
         propertyName: key,
         description: schema.definitions[entity].properties[key].description,
-        example: schema.definitions[entity].properties[key].example,
+        example: String(schema.definitions[entity].properties[key].example),
         dataType: schema.definitions[entity].properties[key].type,
         required: String(!!schema.definitions[entity].required && schema.definitions[entity].required.includes(key)),
         subProps: undefined
@@ -30,7 +43,6 @@ export const getDocDataforTable = (schema, entity: string): InformationModalTabl
           delete finalSchema.subProps;
         }
       }
-
       return finalSchema;
     });
   }
@@ -39,6 +51,7 @@ export const getDocDataforTable = (schema, entity: string): InformationModalTabl
     description: 'TODO',
     example: 'TODO',
     dataType: 'TODO',
-    required: 'TODO'
+    required: 'TODO',
+    keyId: String(Math.random())
   }];
 };

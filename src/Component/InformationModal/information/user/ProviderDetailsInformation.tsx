@@ -1,7 +1,7 @@
-export const description = 'A small description about this field. Still TODO';
-
 export const exampleConfig = `
   {
-    "todo": TODO
+    "locale": "DE",
+    "lastViewdApp": "32",
+    "lastLogin": "2022-12-19" 
   }
 `;
