@@ -192,7 +192,7 @@ declare module 'shogunApplicationConfig' {
         /**
          * Size limit for the upload file
          */
-        limit: string | number;
+        limit: number;
         /**
          * Workspace where to upload the file
          */

@@ -300,7 +300,7 @@ export function GeneralEntityRoot<T extends BaseEntity>({
     // 2. Check if the selected file format is valid
     // 3. Check if the file is not broken/corrupted
     // 4. Other checks
-    const maxSize = config.geoserver?.upload?.limit || '200000000';
+    const maxSize = config.geoserver?.upload?.limit || 200000000;
     const fileType = file.type;
     const fileSize = file.size;
 
