@@ -24,7 +24,7 @@ declare module 'shogunApplicationConfig' {
        */
       shogunBase: string;
       /**
-       * The path to the logo used by the admin client, e.g. '/logo_large.svg' 
+       * The path to the logo used by the admin client, e.g. '/logo_large.svg'
        * when served by the SHOGun backend.
        */
       logo: string;
@@ -33,6 +33,7 @@ declare module 'shogunApplicationConfig' {
      * Security related configuration object
      */
     security: {
+      tokenName?: string;
       /**
        * Keycloak configuration object
        */
@@ -42,29 +43,25 @@ declare module 'shogunApplicationConfig' {
          */
         enabled: boolean;
         /**
-         * Host config used by keycloak-js. Mandatory if keycloak is 
+         * Host config used by keycloak-js. Mandatory if keycloak is
          * enabled, e.g. 'https://localhost/auth'
          */
         host?: string;
         /**
-         * Realm config used by keycloak-js. Mandatory if keycloak is 
+         * Realm config used by keycloak-js. Mandatory if keycloak is
          * enabled, e.g. 'SHOGunKeycloak'
          */
         realm?: string;
         /**
-         * Client id config used by keycloak-js. Mandatory if keycloak is 
+         * Client id config used by keycloak-js. Mandatory if keycloak is
          * enabled, e.g. 'shogun-admin'
          */
         clientId?: string;
         /**
-         * Roles authorized to login
+         * Returns all authorized Roles, e.g. 'admin'.
          */
-        authorizedRoles: string[] | never[];
+        authorizedRoles?: string[] | never[];
       };
-      /**
-       * Name that identifies the token
-       */
-      tokenName?: string;
     };
     /**
      * List of model names (camelcase) that should be maintainable in the admin client.
