@@ -173,7 +173,7 @@ export const InformationModal: React.FC<InformationModalProps> = ({
       case 'layer-sourceConfig':
         return getDocDataforTable(schema, 'DefaultLayerSourceConfig');
       case 'layer-features':
-        return getDocDataforTable(schema, 'DefaultLayerFeaturesConfig');
+        return undefined;
 
       case 'user-details':
         return undefined;
