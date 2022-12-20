@@ -56,7 +56,15 @@ declare module 'shogunApplicationConfig' {
          * enabled, e.g. 'shogun-admin'
          */
         clientId?: string;
+        /**
+         * Roles authorized to login
+         */
+        authorizedRoles: string[] | never[];
       };
+      /**
+       * Name that identifies the token
+       */
+      tokenName?: string;
     };
     /**
      * List of model names (camelcase) that should be maintainable in the admin client.
@@ -167,6 +175,28 @@ declare module 'shogunApplicationConfig' {
            */
           visible: boolean;
         };
+      };
+    };
+    /**
+     * Configurations for geoserver
+     */
+    geoserver?: {
+      /**
+       * The base url to access Geoserver
+       */
+      base: string;
+      /**
+       * Upload to geoserver configurations
+       */
+      upload: {
+        /**
+         * Size limit for the upload file
+         */
+        limit: string | number;
+        /**
+         * Workspace where to upload the file
+         */
+        workspace: string;
       };
     };
   };
