@@ -5,22 +5,17 @@ export default {
         titlePredicate: 'information',
         closeButtonText: 'Verstanden',
         copiedToClipboard:'Beispiel in die Zwischenablage kopiert',
+        noDescriptionAvailable: 'Keine Beschreibung für dieses Objekt vorhanden',
         title: {
-          application: {
-            clientConfig: 'Client-Konfiguration',
-            layerTree: 'Themenbaum',
-            layerConfig: 'Layer-Konfiguration',
-            toolConfig: 'Werkzeug Konfiguration'
-          },
-          layer: {
-            clientConfig: 'Konfiguration',
-            sourceConfig: 'Datenquelle',
-            features: 'Features'
-          },
-          user: {
-            details: 'Details',
-            clientConfig: 'Keycloak Details',
-            providerDetails: 'Datenquelle'
+          generic: 'Objekt'
+        },
+        table: {
+          columns: {
+            propertyName: 'Eigenschaftsname',
+            description: 'Beschreibung',
+            example: 'Beispiel',
+            dataType: 'Datentyp',
+            required: 'Erforderlich'
           }
         }
       },
@@ -211,22 +206,17 @@ export default {
         titlePredicate: 'information',
         closeButtonText: 'Understood',
         copiedToClipboard: 'Example copied to clipboard',
+        noDescriptionAvailable: 'No description available for this object',
         title: {
-          application: {
-            clientConfig: 'Client configuration',
-            layerTree: 'Layertree',
-            layerConfig: 'Layer configuration',
-            toolConfig: 'Configure Tools'
-          },
-          layer: {
-            clientConfig: 'Configuration',
-            sourceConfig: 'Datasource',
-            features: 'Features'
-          },
-          user: {
-            details: 'Details',
-            clientConfig: 'Keycloak Details',
-            providerDetails: 'Datasource'
+          generic: 'Object'
+        },
+        table: {
+          columns: {
+            propertyName: 'Property Name',
+            description: 'Description',
+            example: 'Example',
+            dataType: 'Data type',
+            required: 'Required'
           }
         }
       },

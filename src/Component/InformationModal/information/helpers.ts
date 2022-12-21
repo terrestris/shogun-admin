@@ -12,7 +12,7 @@ export const  getDocDescription = (schema, entity: string, property: string): st
   return '';
 };
 
-export const getDocDataforTable = (schema, entity: string): InformationModalTableDataType[] => {
+export const getDocDataforTable = (schema, entity: string): InformationModalTableDataType[] | undefined=> {
   if (schema.definitions[entity] && !!schema.definitions[entity].properties) {
     return Object.keys(schema.definitions[entity].properties).map((key, index) => {
       const finalSchema: InformationModalTableDataType = {
@@ -46,12 +46,5 @@ export const getDocDataforTable = (schema, entity: string): InformationModalTabl
       return finalSchema;
     });
   }
-  return [{
-    propertyName: 'TODO',
-    description: 'TODO',
-    example: 'TODO',
-    dataType: 'TODO',
-    required: 'TODO',
-    keyId: String(Math.random())
-  }];
+  return undefined;
 };

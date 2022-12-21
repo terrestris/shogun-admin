@@ -50,6 +50,7 @@ interface InformationModalProps {
   isModalOpen: boolean;
   setIsModalOpen: (value: boolean) => void;
   schema: JSONSchema7;
+  title?: String;
 }
 
 export const InformationModal: React.FC<InformationModalProps> = ({
@@ -57,8 +58,17 @@ export const InformationModal: React.FC<InformationModalProps> = ({
   entity = '',
   isModalOpen = false,
   setIsModalOpen,
-  schema = undefined
+  schema = undefined,
+  title = ''
 }) => {
+
+  const {
+    t
+  } = useTranslation();
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
 
   const tmpFlat = [];
 
@@ -90,42 +100,7 @@ export const InformationModal: React.FC<InformationModalProps> = ({
     },
   ];
 
-  const getTitle = () => {
-    switch (`${entity}-${dataField}`) {
-      case 'application-clientConfig':
-        return t('InformationModal.title.application.clientConfig');
-      case 'application-layerTree':
-        return t('InformationModal.title.application.layerTree');
-      case 'application-layerConfig':
-        return t('InformationModal.title.application.layerConfig');
-      case 'application-toolConfig':
-        return t('InformationModal.title.application.toolConfig');
-
-      case 'layer-clientConfig':
-        return t('InformationModal.title.layer.clientConfig');
-      case 'layer-sourceConfig':
-        return t('InformationModal.title.layer.sourceConfig');
-      case 'layer-features':
-        return t('InformationModal.title.layer.features');
-
-      case 'user-details':
-        return t('InformationModal.title.user.details');
-      case 'user-clientConfig':
-        return t('InformationModal.title.user.clientConfig');
-      case 'user-providerDetails':
-        return t('InformationModal.title.user.providerDetails');
-
-      default:
-        return [{
-          propertyName: 'TODO',
-          description: 'TODO',
-          example: 'TODO',
-          dataType: 'TODO',
-          required: 'TODO',
-          keyId: String(Math.random())
-        }];
-    }
-  };
+  const getTitle = () => title ? title : t('InformationModal.title.generic');
 
   const getDescription = () => {
     switch (`${entity}-${dataField}`) {
@@ -152,8 +127,9 @@ export const InformationModal: React.FC<InformationModalProps> = ({
       case 'user-clientConfig':
         return getDocDescription(schema, 'User', 'clientConfig');
 
+      // Do not show description
       default:
-        return 'TODO';
+        return undefined;
     }
   };
 
@@ -172,25 +148,14 @@ export const InformationModal: React.FC<InformationModalProps> = ({
         return getDocDataforTable(schema, 'DefaultLayerClientConfig');
       case 'layer-sourceConfig':
         return getDocDataforTable(schema, 'DefaultLayerSourceConfig');
-      case 'layer-features':
-        return undefined;
 
+      // Do not show the tables for the following fields
+      default:
+      case 'layer-features':
       case 'user-details':
-        return undefined;
       case 'user-clientConfig':
-        return undefined;
       case 'user-providerDetails':
         return undefined;
-
-      default:
-        return [{
-          propertyName: 'TODO',
-          description: 'TODO',
-          example: 'TODO',
-          dataType: 'TODO',
-          required: 'TODO',
-          keyId: String(Math.random())
-        }];
     }
   };
 
@@ -219,19 +184,10 @@ export const InformationModal: React.FC<InformationModalProps> = ({
       case 'user-clientConfig':
         return UserClientConfigExample;
 
+      // Do not show example
       default:
-        return `{
-          Example: 'TODO'
-        }`;
+        return undefined;
     }
-  };
-
-  const {
-    t
-  } = useTranslation();
-
-  const handleCancel = () => {
-    setIsModalOpen(false);
   };
 
   /**
@@ -306,7 +262,7 @@ export const InformationModal: React.FC<InformationModalProps> = ({
           level={2}
           key={`title-for-${entity}-${dataField}`}
         >
-          {`${getTitle()} ${t('InformationModal.titlePredicate')}`}
+          {getTitle()}
         </Title>
       )}
       onCancel={handleCancel}
@@ -315,44 +271,56 @@ export const InformationModal: React.FC<InformationModalProps> = ({
       cancelText={t('InformationModal.closeButtonText')}
       okButtonProps={{ hidden: true }}
     >
+
       <Typography key={`description-for-${entity}-${dataField}`}>
         <Typography.Paragraph>
-          {getDescription()}
+          {!!getDescription() ? getDescription() : t('InformationModal.noDescriptionAvailable')}
         </Typography.Paragraph>
       </Typography>
       <Divider />
-      <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
-        {documentTableData && Object.keys(documentTableData).map((key, index) => {
-          return (
-            <div key={`table-for-${entity}-${dataField}-${key}-${index}`}>
-              <Title
-                level={4}
-                key={`table-title-for-${entity}-${dataField}-${key}-${index}`}
-              >
-                {key}
-              </Title>
-              <Table
-                columns={docTableColums(`${dataField}-${key}-${index}`)}
-                dataSource={documentTableData[key]}
-                pagination={false}
-                key={`table-information-for-${entity}-${dataField}-${key}-${index}`}
-              />
-            </div>
-          );
-        })}
-      </Space>
-      <Divider />
-      <Title level={3}> Example </Title>
-      <pre>
-        <Button
-          onClick={copyExample}
-          icon={<CopyOutlined />}
-          className='information-modal-copy-example-button'
-        />
-        <code id='json-example'>
-          {getExample()}
-        </code>
-      </pre>
+
+      {!!getTableData() && (
+        <>
+          <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
+            {documentTableData && Object.keys(documentTableData).map((key, index) => {
+              return (
+                <div key={`table-for-${entity}-${dataField}-${key}-${index}`}>
+                  <Title
+                    level={4}
+                    key={`table-title-for-${entity}-${dataField}-${key}-${index}`}
+                  >
+                    {key}
+                  </Title>
+                  <Table
+                    columns={docTableColums(`${dataField}-${key}-${index}`)}
+                    dataSource={documentTableData[key]}
+                    pagination={false}
+                    key={`table-information-for-${entity}-${dataField}-${key}-${index}`}
+                  />
+                </div>
+              );
+            })}
+          </Space>
+          <Divider />
+        </>
+      )}
+
+      {!!getExample() && (
+        <>
+          <Title level={3}> Example </Title>
+          <pre>
+            <Button
+              onClick={copyExample}
+              icon={<CopyOutlined />}
+              className='information-modal-copy-example-button'
+            />
+            <code id='json-example'>
+              {getExample()}
+            </code>
+          </pre>
+        </>
+      )}
+
     </Modal>
   );
 };
