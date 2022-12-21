@@ -90,7 +90,8 @@
         "dataField": "clientConfig",
         "label": "#i18n.labelClientConfig",
         "fieldProps": {
-          "showInformationButton": true
+          "showInformationButton": true,
+          "customExample": ""
         }
       },
       {
@@ -98,7 +99,8 @@
         "dataField": "layerTree",
         "label": "#i18n.labelTree",
         "fieldProps": {
-          "showInformationButton": true
+          "showInformationButton": true,
+          "customExample": ""
         }
       },
       {
@@ -106,7 +108,8 @@
         "dataField": "layerConfig",
         "label": "#i18n.labelLayerConfig",
         "fieldProps": {
-          "showInformationButton": true
+          "showInformationButton": true,
+          "customExample": ""
         }
       },
       {
@@ -114,7 +117,8 @@
         "dataField": "toolConfig",
         "label": "#i18n.labelToolConfig",
         "fieldProps": {
-          "showInformationButton": true
+          "showInformationButton": true,
+          "customExample": ""
         }
       },
       {

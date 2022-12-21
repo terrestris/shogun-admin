@@ -30,6 +30,7 @@ export type JSONEditorProps = {
   dataField: string;
   showInformationButton?: boolean;
   label: string;
+  customExample?: string;
 };
 
 export const JSONEditor: React.FC<JSONEditorProps> = ({
@@ -39,7 +40,8 @@ export const JSONEditor: React.FC<JSONEditorProps> = ({
   entityType,
   dataField,
   showInformationButton = false,
-  label
+  label,
+  customExample
 }) => {
   const [currentValue, setCurrentValue] = useState<string>();
   const [isInformationModalOpen, setIsInformationModalOpen] = React.useState<boolean>(false);
@@ -230,7 +232,6 @@ export const JSONEditor: React.FC<JSONEditorProps> = ({
 
   if (showInformationButton) {
     // add information modal to tool items
-    console.log(label)
     toolItems.push(
       <>
         <Tooltip
@@ -246,6 +247,7 @@ export const JSONEditor: React.FC<JSONEditorProps> = ({
 
         <InformationModal
           title={`${label} ${t('InformationModal.titlePredicate')}`}
+          customExample={customExample}
           isModalOpen={isInformationModalOpen}
           setIsModalOpen={setIsInformationModalOpen}
           dataField={dataField}

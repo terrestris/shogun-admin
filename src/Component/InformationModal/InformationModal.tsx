@@ -8,38 +8,9 @@ import {
   GroupedInformationModalTableDataType,
   InformationModalTableDataType
 } from './types';
-import {
-  exampleConfig as AppLayerConfigExample
-} from './information/application/LayerConfigInformation';
-import {
-  exampleConfig as AppClientConfigExample
-} from './information/application/ClientConfigInformation';
-import {
-  exampleConfig as AppLayerTreeExample
-} from './information/application/LayerTreeInformation';
-import {
-  exampleConfig as AppToolConfigExample
-} from './information/application/ToolConfigInformation';
-import {
-  exampleConfig as LayerClientConfigExample
-} from './information/layer/ClientConfigInformation';
-import {
-  exampleConfig as LayerSourceConfigExample
-} from './information/layer/SourceConfigInformation';
-import {
-  exampleConfig as LayerFeaturesExample
-} from './information/layer/FeaturesInformation';
-import {
-  exampleConfig as UserProviderDetailsExample
-} from './information/user/ProviderDetailsInformation';
-import {
-  exampleConfig as UserDetailsExample
-} from './information/user/DetailsInformation';
-import {
-  exampleConfig as UserClientConfigExample
-} from './information/user/ClientConfigInformation';
+
 import { JSONSchema7 } from 'json-schema';
-import { getDocDataforTable, getDocDescription } from './information/helpers';
+import { getDocDataforTable, getDocDescription, getDocExample } from './helpers';
 import { CopyOutlined } from '@ant-design/icons';
 
 import './InformationModal.less';
@@ -51,6 +22,7 @@ interface InformationModalProps {
   setIsModalOpen: (value: boolean) => void;
   schema: JSONSchema7;
   title?: String;
+  customExample?: String;
 }
 
 export const InformationModal: React.FC<InformationModalProps> = ({
@@ -59,7 +31,8 @@ export const InformationModal: React.FC<InformationModalProps> = ({
   isModalOpen = false,
   setIsModalOpen,
   schema = undefined,
-  title = ''
+  title = '',
+  customExample = ''
 }) => {
 
   const {
@@ -160,33 +133,37 @@ export const InformationModal: React.FC<InformationModalProps> = ({
   };
 
   const getExample = (): string => {
-    switch (`${entity}-${dataField}`) {
-      case 'application-clientConfig':
-        return AppClientConfigExample;
-      case 'application-layerTree':
-        return AppLayerTreeExample;
-      case 'application-layerConfig':
-        return AppLayerConfigExample;
-      case 'application-toolConfig':
-        return AppToolConfigExample;
+    if (customExample) {
+      return JSON.stringify(customExample, null, 2);
+    } else {
+      switch (`${entity}-${dataField}`) {
+        case 'application-clientConfig':
+          return getDocExample(schema, 'Application', 'clientConfig');
+        case 'application-layerTree':
+          return getDocExample(schema, 'Application', 'layerTree');
+        case 'application-layerConfig':
+          return getDocExample(schema, 'Application', 'layerConfig');
+        case 'application-toolConfig':
+          return getDocExample(schema, 'Application', 'toolConfig');
 
-      case 'layer-clientConfig':
-        return LayerClientConfigExample;
-      case 'layer-sourceConfig':
-        return LayerSourceConfigExample;
-      case 'layer-features':
-        return LayerFeaturesExample;
+        case 'layer-clientConfig':
+          return getDocExample(schema, 'Layer', 'clientConfig');
+        case 'layer-sourceConfig':
+          return getDocExample(schema, 'Layer', 'sourceConfig');
+        case 'layer-features':
+          return getDocExample(schema, 'Layer' , 'features');
 
-      case 'user-providerDetails':
-        return UserProviderDetailsExample;
-      case 'user-details':
-        return UserDetailsExample;
-      case 'user-clientConfig':
-        return UserClientConfigExample;
+        // Do not show example
+        case 'user-providerDetails':
+          return getDocExample(schema, 'User' , 'providerDetails');
+        case 'user-details':
+          return getDocExample(schema, 'User' , 'details');
+        case 'user-clientConfig':
+          return getDocExample(schema, 'User' , 'clientConfig');
 
-      // Do not show example
-      default:
-        return undefined;
+        default:
+          return undefined;
+      }
     }
   };
 

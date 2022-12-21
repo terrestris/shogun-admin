@@ -1,5 +1,13 @@
 import { InformationModalTableDataType } from '../types';
 
+export const getDocExample = (schema, entity: string, property: string ): any => {
+  if (schema.definitions[entity] && !!schema.definitions[entity].properties) {
+    return JSON.stringify(schema.definitions[entity].properties[property].example, null, 2);
+  }
+  return undefined;
+}
+
+
 export const  getDocDescription = (schema, entity: string, property: string): string => {
   if (
     schema.definitions[entity] &&
