@@ -4,7 +4,7 @@ import { Button, Tooltip } from 'antd';
 import { useTranslation } from 'react-i18next';
 
 import './FullscreenWrapper.less';
-// import InformationModal from '../InformationModal/InformationModal';
+
 import { JSONSchema7 } from 'json-schema';
 
 interface OwnProps {
