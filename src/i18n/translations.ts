@@ -1,6 +1,24 @@
 export default {
   de: {
     translation: {
+      InformationModal: {
+        titlePredicate: 'information',
+        closeButtonText: 'Verstanden',
+        copiedToClipboard:'Beispiel in die Zwischenablage kopiert',
+        noDescriptionAvailable: 'Keine Beschreibung für dieses Objekt vorhanden',
+        title: {
+          generic: 'Objekt'
+        },
+        table: {
+          columns: {
+            propertyName: 'Eigenschaftsname',
+            description: 'Beschreibung',
+            example: 'Beispiel',
+            dataType: 'Datentyp',
+            required: 'Erforderlich'
+          }
+        }
+      },
       Index: {
         unauthorizedTitle: 'Sie sind nicht berechtigt, diese Seite zu öffnen.',
         errorTitle: 'Die Anwendung konnte nicht geladen werden. Prüfen Sie Ihre Konsole.',
@@ -12,7 +30,8 @@ export default {
       },
       FullscreenWrapper: {
         fullscreen: 'Vollbild',
-        leaveFullscreen: 'Vollbild verlassen'
+        leaveFullscreen: 'Vollbild verlassen',
+        information: 'Information'
       },
       WelcomeDashboard: {
         applications: 'Applikationen',
@@ -183,6 +202,24 @@ export default {
   },
   en: {
     translation: {
+      InformationModal: {
+        titlePredicate: 'information',
+        closeButtonText: 'Understood',
+        copiedToClipboard: 'Example copied to clipboard',
+        noDescriptionAvailable: 'No description available for this object',
+        title: {
+          generic: 'Object'
+        },
+        table: {
+          columns: {
+            propertyName: 'Property Name',
+            description: 'Description',
+            example: 'Example',
+            dataType: 'Data type',
+            required: 'Required'
+          }
+        }
+      },
       Index: {
         unauthorizedTitle: 'You\'re not authorized to access this page.',
         errorTitle: 'Failed to load the application. Check your console.',
@@ -194,7 +231,8 @@ export default {
       },
       FullscreenWrapper: {
         fullscreen: 'Fullscreen',
-        leaveFullscreen: 'Leave fullscreen'
+        leaveFullscreen: 'Leave fullscreen',
+        information: 'Information'
       },
       WelcomeDashboard: {
         applications: 'Applications',

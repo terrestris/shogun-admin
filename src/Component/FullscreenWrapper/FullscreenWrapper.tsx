@@ -5,8 +5,20 @@ import { useTranslation } from 'react-i18next';
 
 import './FullscreenWrapper.less';
 
-export const FullscreenWrapper: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
-  children
+import { JSONSchema7 } from 'json-schema';
+
+interface OwnProps {
+  dataField?: string;
+  entity?: string;
+  schema?: JSONSchema7;
+  toolItems?: JSX.Element[];
+}
+
+type FullscreenWrapperProps = React.HTMLAttributes<HTMLDivElement> & OwnProps;
+
+export const FullscreenWrapper: React.FC<FullscreenWrapperProps> = ({
+  children,
+  toolItems
 }) => {
   const [fullscreen, setFullscreen] = React.useState<boolean>(false);
 
@@ -21,21 +33,27 @@ export const FullscreenWrapper: React.FC<React.HTMLAttributes<HTMLDivElement>> =
   const wrapperCls = `fs-wrapper${fullscreen ? ' fullscreen' : ''}`;
 
   return (
-    <div className={wrapperCls}>
-      <div>
-        <Tooltip
-          title={fullscreen ? t('FullscreenWrapper.leaveFullscreen') : t('FullscreenWrapper.fullscreen') }
-          placement='left'
-        >
-          <Button
-            icon={fullscreen ? <FullscreenExitOutlined /> : <FullscreenOutlined />}
-            size='small'
-            onClick={toggleFullscreen}
-          />
-        </Tooltip>
+    <>
+      <div className={wrapperCls}>
+        <div className='fs-wrapper-tools'>
+
+          {/* Tools to be shown next to the full screen button */}
+          {toolItems.length > 0 && toolItems.map(tool => tool)}
+
+          <Tooltip
+            title={fullscreen ? t('FullscreenWrapper.leaveFullscreen') : t('FullscreenWrapper.fullscreen') }
+            placement='left'
+          >
+            <Button
+              icon={fullscreen ? <FullscreenExitOutlined /> : <FullscreenOutlined />}
+              size='small'
+              onClick={toggleFullscreen}
+            />
+          </Tooltip>
+        </div>
+        {children}
       </div>
-      {children}
-    </div>
+    </>
   );
 };
 

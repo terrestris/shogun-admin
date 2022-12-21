@@ -89,25 +89,37 @@
         "component": "JSONEditor",
         "dataField": "clientConfig",
         "label": "#i18n.labelClientConfig",
-        "fieldProps": {}
+        "fieldProps": {
+          "showInformationButton": true,
+          "customExample": ""
+        }
       },
       {
         "component": "JSONEditor",
         "dataField": "layerTree",
         "label": "#i18n.labelTree",
-        "fieldProps": {}
+        "fieldProps": {
+          "showInformationButton": true,
+          "customExample": ""
+        }
       },
       {
         "component": "JSONEditor",
         "dataField": "layerConfig",
         "label": "#i18n.labelLayerConfig",
-        "fieldProps": {}
+        "fieldProps": {
+          "showInformationButton": true,
+          "customExample": ""
+        }
       },
       {
         "component": "JSONEditor",
         "dataField": "toolConfig",
         "label": "#i18n.labelToolConfig",
-        "fieldProps": {}
+        "fieldProps": {
+          "showInformationButton": true,
+          "customExample": ""
+        }
       },
       {
         "component": "UserPermissionGrid",

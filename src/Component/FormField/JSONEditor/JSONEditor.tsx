@@ -3,6 +3,7 @@ import React, {
   useState
 } from 'react';
 import Editor, { EditorProps, Monaco } from '@monaco-editor/react';
+import { useTranslation } from 'react-i18next';
 import Logger from 'js-logger';
 import FullscreenWrapper from '../../FullscreenWrapper/FullscreenWrapper';
 
@@ -13,6 +14,9 @@ import { JSONSchema7, JSONSchema7Definition, validate } from 'json-schema';
 import { swaggerDocs } from '../../../State/static';
 
 import './JSONEditor.less';
+import InformationModal from '../../InformationModal/InformationModal';
+import { Button, Tooltip } from 'antd';
+import { InfoCircleOutlined } from '@ant-design/icons';
 
 type JSONSchemaDefinition = {
   [key: string]: JSONSchema7Definition;
@@ -24,6 +28,9 @@ export type JSONEditorProps = {
   editorProps?: EditorProps;
   entityType: string;
   dataField: string;
+  showInformationButton?: boolean;
+  label: string;
+  customExample?: string;
 };
 
 export const JSONEditor: React.FC<JSONEditorProps> = ({
@@ -31,9 +38,17 @@ export const JSONEditor: React.FC<JSONEditorProps> = ({
   onChange,
   editorProps,
   entityType,
-  dataField
+  dataField,
+  showInformationButton = false,
+  label,
+  customExample
 }) => {
   const [currentValue, setCurrentValue] = useState<string>();
+  const [isInformationModalOpen, setIsInformationModalOpen] = React.useState<boolean>(false);
+
+  const {
+    t
+  } = useTranslation();
 
   useEffect(() => {
     if (!value) {
@@ -209,8 +224,48 @@ export const JSONEditor: React.FC<JSONEditorProps> = ({
     setSchemaValidation(monaco);
   };
 
+  const toolItems: JSX.Element[] = [];
+
+  const openInformationModal = () => {
+    setIsInformationModalOpen(true);
+  };
+
+  if (showInformationButton) {
+    // add information modal to tool items
+    toolItems.push(
+      <>
+        <Tooltip
+          title={t('FullscreenWrapper.information') }
+          placement='left'
+        >
+          <Button
+            icon={<InfoCircleOutlined />}
+            size='small'
+            onClick={openInformationModal}
+          />
+        </Tooltip>
+
+        <InformationModal
+          title={`${label} ${t('InformationModal.titlePredicate')}`}
+          customExample={customExample}
+          isModalOpen={isInformationModalOpen}
+          setIsModalOpen={setIsInformationModalOpen}
+          dataField={dataField}
+          entity={entityType}
+          schema={getSchema(getEntityName())}
+        />
+      </>
+    );
+  }
+
+  // add toggle full screen
   return (
-    <FullscreenWrapper>
+    <FullscreenWrapper
+      dataField={dataField}
+      entity={entityType}
+      schema={getSchema(getEntityName())}
+      toolItems={toolItems}
+    >
       <div className='json-editor'>
         <Editor
           value={currentValue}

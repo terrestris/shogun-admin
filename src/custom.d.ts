@@ -7,10 +7,6 @@ declare module 'shogunApplicationConfig' {
    * to your application.
    */
   type AdminConfiguration = {
-  /**
-   * Geoserver configuration object.
-   */
-    geoserver?;
     /**
      * The path to the admin client on your host, e.g. '/admin'
      */
@@ -61,10 +57,10 @@ declare module 'shogunApplicationConfig' {
          * enabled, e.g. 'shogun-admin'
          */
         clientId?: string;
-       /**
+        /**
          * Returns all authorized Roles, e.g. 'admin'.
          */
-        authorizedRoles?: string[];
+        authorizedRoles?: string[] | never[];
       };
     };
     /**
@@ -176,6 +172,28 @@ declare module 'shogunApplicationConfig' {
            */
           visible: boolean;
         };
+      };
+    };
+    /**
+     * Configurations for geoserver
+     */
+    geoserver?: {
+      /**
+       * The base url to access Geoserver
+       */
+      base: string;
+      /**
+       * Upload to geoserver configurations
+       */
+      upload: {
+        /**
+         * Size limit for the upload file
+         */
+        limit: number;
+        /**
+         * Workspace where to upload the file
+         */
+        workspace: string;
       };
     };
   };

@@ -154,6 +154,7 @@ export const GeneralEntityForm: React.FC<GeneralEntityFormProps> = ({
           <JSONEditor
             entityType={entityType}
             dataField={fieldCfg.dataField}
+            label={fieldCfg.label}
             {
               ...fieldCfg?.fieldProps
             }
