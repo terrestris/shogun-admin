@@ -1,4 +1,4 @@
-import { InformationModalTableDataType } from '../types';
+import { InformationModalTableDataType } from './types';
 
 export const getDocExample = (schema, entity: string, property: string ): any => {
   if (schema.definitions[entity] && !!schema.definitions[entity].properties) {

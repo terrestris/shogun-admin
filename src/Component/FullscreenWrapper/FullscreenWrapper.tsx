@@ -1,5 +1,5 @@
 import React from 'react';
-import { FullscreenExitOutlined, FullscreenOutlined, InfoCircleOutlined } from '@ant-design/icons';
+import { FullscreenExitOutlined, FullscreenOutlined } from '@ant-design/icons';
 import { Button, Tooltip } from 'antd';
 import { useTranslation } from 'react-i18next';
 
