@@ -30,6 +30,7 @@ import './App.less';
 import config from 'shogunApplicationConfig';
 import useSHOGunAPIClient from './Hooks/useSHOGunAPIClient';
 import { useTranslation } from 'react-i18next';
+import { OpenAPIV3 } from 'openapi-types';
 
 const App: React.FC = () => {
 
@@ -50,7 +51,7 @@ const App: React.FC = () => {
   const getInitialData = useCallback(async () => {
     try {
       setLoadingState('loading');
-      const swaggerDoc = await client.openapi().getApiDocs();
+      const swaggerDoc = await client.openapi().getApiDocs('v3') as OpenAPIV3.Document;
       setSwaggerDocs(swaggerDoc);
       const appInfo = await client.info().getAppInfo();
       setAppInfo(appInfo);

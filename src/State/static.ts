@@ -1,9 +1,12 @@
 import Logger from 'js-logger';
-import { SwaggerDocs } from '@terrestris/shogun-util/dist/service/OpenAPIService';
 
-export let swaggerDocs: SwaggerDocs;
+import {
+  OpenAPIV3
+} from 'openapi-types';
 
-export const setSwaggerDocs = (docs: SwaggerDocs) => {
+export let swaggerDocs: OpenAPIV3.Document;
+
+export const setSwaggerDocs = (docs: OpenAPIV3.Document) => {
   if (!swaggerDocs) {
     swaggerDocs = docs;
   } else {

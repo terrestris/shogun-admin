@@ -2,15 +2,31 @@ import React, {
   useEffect,
   useState
 } from 'react';
-import Editor, { EditorProps, Monaco } from '@monaco-editor/react';
+
+import Editor, {
+  EditorProps,
+  Monaco
+} from '@monaco-editor/react';
+
 import Logger from 'js-logger';
-import FullscreenWrapper from '../../FullscreenWrapper/FullscreenWrapper';
+
+import {
+  OpenAPIV3
+} from 'openapi-types';
+
+import {
+  JSONSchema7,
+  JSONSchema7Definition,
+  validate
+} from 'json-schema';
 
 import cloneDeep from 'lodash/cloneDeep';
 
-import { JSONSchema7, JSONSchema7Definition, validate } from 'json-schema';
+import FullscreenWrapper from '../../FullscreenWrapper/FullscreenWrapper';
 
-import { swaggerDocs } from '../../../State/static';
+import {
+  swaggerDocs
+} from '../../../State/static';
 
 import './JSONEditor.less';
 
@@ -63,16 +79,14 @@ export const JSONEditor: React.FC<JSONEditorProps> = ({
   };
 
   const getEntityTypeDefinition = () => {
-    // TODO Enhance typing for swaggerDocs in shogun-util
-    const entry = Object.entries(swaggerDocs.definitions)
-      .find(([definitionKey]) => {
-        return definitionKey.toLowerCase() === entityType.toLowerCase();
-      });
+    const entry = Object.entries(swaggerDocs.components.schemas)
+      .find(([definitionKey]) => definitionKey.toLowerCase() === entityType.toLowerCase());
 
     if (!entry) {
       Logger.warn(`The entity definition for ${entityType} does not exist `+
         'in the OpenAPI specification');
-      return;
+
+      return undefined;
     }
 
     return entry[1];
@@ -81,68 +95,116 @@ export const JSONEditor: React.FC<JSONEditorProps> = ({
   const getDataTypeDefinition = () => {
     const entityTypeDefinition = getEntityTypeDefinition();
 
-    if (!entityTypeDefinition || !(entityTypeDefinition.properties &&
-        entityTypeDefinition.properties[dataField])) {
-      Logger.warn(`The property definition ${dataField} for ${entityType} ` +
-        'does not exist in the OpenAPI specification');
-      return;
+    if (!entityTypeDefinition) {
+      return undefined;
     }
 
-    return entityTypeDefinition.properties[dataField];
+    const schemaObject = entityTypeDefinition as OpenAPIV3.SchemaObject;
+
+    if (!schemaObject.properties || !schemaObject.properties[dataField]) {
+      Logger.warn(`The property definition ${dataField} for ${entityType} ` +
+        'does not exist in the OpenAPI specification');
+
+      return undefined;
+    }
+
+    return schemaObject.properties[dataField];
   };
 
   const getEntityName = (): string => {
     const dataFieldDefinition = getDataTypeDefinition();
 
-    if (dataFieldDefinition.type === 'array' && dataFieldDefinition.items?.$ref) {
-      const splitParts = dataFieldDefinition.items.$ref?.split('/');
-      return splitParts[splitParts.length - 1] as string;
+    if (Object.hasOwn(dataFieldDefinition, '$ref')) {
+      return getRefName(dataFieldDefinition as OpenAPIV3.ReferenceObject);
     }
 
-    if (!dataFieldDefinition.type && dataFieldDefinition.$ref) {
-      const splitParts = dataFieldDefinition.$ref.split('/');
-      return splitParts[splitParts.length - 1] as string;
+    if (Object.hasOwn(dataFieldDefinition, 'items')) {
+      const schemaObject = dataFieldDefinition as OpenAPIV3.ArraySchemaObject;
+
+      if (Object.hasOwn(schemaObject.items, '$ref')) {
+        return getRefName(schemaObject.items as OpenAPIV3.ReferenceObject);
+      }
     }
 
     return dataField;
   };
 
+  const getRefName = (definition: OpenAPIV3.ReferenceObject) => {
+    const splitParts = definition.$ref?.split('/');
+
+    return splitParts[splitParts.length - 1];
+  };
+
   const getEntityType = (): string => {
     const dataFieldDefinition = getDataTypeDefinition();
 
-    if (!dataFieldDefinition.type) {
-      return 'object';
+    if (Object.hasOwn(dataFieldDefinition, 'type')) {
+      return (dataFieldDefinition as OpenAPIV3.SchemaObject).type;
     }
 
-    return dataFieldDefinition.type;
+    return 'object';
+  };
+
+  const replaceRefs = (definition: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject) => {
+    if (Object.hasOwn(definition, '$ref')) {
+      replaceRef(definition as OpenAPIV3.ReferenceObject);
+    } else {
+      const schemaObject = definition as OpenAPIV3.SchemaObject;
+      const type = schemaObject.type;
+
+      if (schemaObject.properties) {
+        Object.values(schemaObject.properties).forEach(property => {
+          replaceRefs(property);
+        });
+      }
+
+      if (schemaObject.allOf) {
+        schemaObject.allOf.forEach(def => {
+          replaceRefs(def);
+        });
+      }
+
+      if (schemaObject.anyOf) {
+        schemaObject.anyOf.forEach(def => {
+          replaceRefs(def);
+        });
+      }
+
+      if (schemaObject.oneOf) {
+        schemaObject.oneOf.forEach(def => {
+          replaceRefs(def);
+        });
+      }
+
+      if (schemaObject.not) {
+        replaceRefs(schemaObject.not);
+      }
+
+      if (type === 'array') {
+        replaceRefs(schemaObject.items);
+      }
+    }
+  };
+
+  const replaceRef = (referenceObject: OpenAPIV3.ReferenceObject) => {
+    const splitParts = referenceObject.$ref.split('/');
+    referenceObject.$ref = `#/definitions/${splitParts[splitParts.length - 1]}`;
   };
 
   const createDefinitions = (): JSONSchemaDefinition => {
     const definitions: JSONSchemaDefinition = {};
 
-    for (const schemaName in swaggerDocs.definitions) {
+    for (const schemaName in swaggerDocs.components.schemas) {
       // Ignore the revision types, e.g. Revisions«int,Application»
       if (schemaName.match(/^(.+)«(.+)»$/)) {
         continue;
       }
 
-      let definition: JSONSchema7 = cloneDeep(swaggerDocs.definitions[schemaName]);
+      let definition = cloneDeep(swaggerDocs.components.schemas[schemaName]);
 
-      if (definition.properties) {
-        Object.values(definition.properties).forEach((property: any) => {
-          if (property.type === 'object' && property.additionalProperties?.type === 'object') {
-            delete property.additionalProperties;
-          }
-          if (property.$ref) {
-            property.$ref = `${property.$ref}`;
-          }
-          if (property.items?.$ref) {
-            property.items.$ref = `${property.items.$ref}`;
-          }
-        });
-      }
+      replaceRefs(definition);
 
-      definitions[schemaName] = definition;
+      definitions[schemaName] = definition as JSONSchema7;
     }
 
     return definitions;
