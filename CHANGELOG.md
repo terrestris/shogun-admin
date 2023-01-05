@@ -1,3 +1,15 @@
+## [11.0.0](https://github.com/terrestris/shogun-admin/compare/v10.8.0...v11.0.0) (2023-01-05)
+
+
+### Dependencies
+
+* update to latest shogun-util and add openapi-types ([86f2a2d](https://github.com/terrestris/shogun-admin/commit/86f2a2dd70c188f568a0d20efedd1a9c3e4c97e9))
+
+
+### Breaking changes
+
+* make use of OpenAPI version 3 (available in the SHOGun versions >= 16) ([8123134](https://github.com/terrestris/shogun-admin/commit/8123134429c6a90b1b7649297f78a64b3a24623d))
+
 ## [10.8.0](https://github.com/terrestris/shogun-admin/compare/v10.7.2...v10.8.0) (2022-12-07)
 
 
