@@ -1,4 +1,5 @@
 import React, {
+  useCallback,
   useState
 } from 'react';
 
@@ -13,28 +14,36 @@ import {
 } from 'react-router-dom';
 
 import _isEqual from 'lodash/isEqual';
+
+import {
+  useSetRecoilState
+} from 'recoil';
+
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined
 } from '@ant-design/icons';
 
 import BaseEntity from '@terrestris/shogun-util/dist/model/BaseEntity';
+import Layer from '@terrestris/shogun-util/dist/model/Layer';
 
 import Navigation from '../../Component/Menu/Navigation/Navigation';
 import WelcomeDashboard from '../../Component/WelcomeDashboard/WelcomeDashboard';
 import ApplicationInfo from '../../Component/Modal/ApplicationInfo/ApplicationInfo';
-
 import ImageFileRoot from '../../Component/ImageFile/ImageFileRoot/ImageFileRoot';
 import Logs from '../../Component/Logs/Logs';
 import GlobalSettingsRoot from '../../Component/GlobalSettings/GlobalSettingsRoot/GlobalSettingsRoot';
 import LogSettingsRoot from '../../Component/LogSettings/LogSettingsRoot/LogSettingsRoot';
 import MetricsRoot from '../../Component/Metrics/MetricsRoot/MetricsRoot';
-
-import config from 'shogunApplicationConfig';
-
 import GeneralEntityRoot, {
   GeneralEntityConfigType
 } from '../../Component/GeneralEntity/GeneralEntityRoot/GeneralEntityRoot';
+
+import {
+  layerSuggestionListAtom
+} from '../../State/atoms';
+
+import config from 'shogunApplicationConfig';
 
 import './Portal.less';
 
@@ -43,11 +52,12 @@ interface OwnProps { }
 type PortalProps = OwnProps;
 
 export const Portal: React.FC<PortalProps> = () => {
-
   const [collapsed, setCollapsed] = useState<boolean>(false);
   const toggleCollapsed = () => setCollapsed(!collapsed);
   const [entitiesToLoad, setEntitiesToLoad] = useState<GeneralEntityConfigType<BaseEntity>[]>([]);
   const [configsAreLoading, setConfigsAreLoading] = useState<boolean>(false);
+
+  const setLayerSuggestionList = useSetRecoilState(layerSuggestionListAtom);
 
   const fetchConfigForModel = async (modelName: string): Promise<GeneralEntityConfigType<BaseEntity>> => {
     const reqOpts = {
@@ -81,6 +91,13 @@ export const Portal: React.FC<PortalProps> = () => {
     setConfigsAreLoading(false);
   };
 
+  const onEntitiesLoaded = useCallback((entities: BaseEntity[], entityType: string) => {
+    if (entityType === 'layer') {
+      const layers = entities as Layer[];
+      setLayerSuggestionList(layers);
+    }
+  }, [setLayerSuggestionList]);
+
   if (config?.models && config?.models?.length !== entitiesToLoad?.length && !configsAreLoading) {
     fetchConfigsForModels();
   }
@@ -112,9 +129,12 @@ export const Portal: React.FC<PortalProps> = () => {
                 <Route
                   key={entityConfig.entityType}
                   path={`${entityConfig?.entityType}/*`}
-                  element={<GeneralEntityRoot
-                    {...entityConfig}
-                  />}
+                  element={
+                    <GeneralEntityRoot
+                      {...entityConfig}
+                      onEntitiesLoaded={onEntitiesLoaded}
+                    />
+                  }
                 />
               );
             })
