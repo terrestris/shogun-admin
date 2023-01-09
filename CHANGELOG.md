@@ -1,3 +1,21 @@
+## [11.1.0](https://github.com/terrestris/shogun-admin/compare/v11.0.0...v11.1.0) (2023-01-09)
+
+
+### Features
+
+* show suggestions for layerId fields in the JSON editor ([7aa4194](https://github.com/terrestris/shogun-admin/commit/7aa4194acd4b11e05560acbc676003fd0fa3a48a))
+
+
+### Dependencies
+
+* **deps:** bump json5 from 2.2.1 to 2.2.3 ([6b93ef9](https://github.com/terrestris/shogun-admin/commit/6b93ef987ea1db6abe3330d178071def4b9791f0))
+
+
+### Bugfixes
+
+* load monaco-editor from node_modules instead of external CDN ([6aa723c](https://github.com/terrestris/shogun-admin/commit/6aa723c57e3fef653b40802786c4d4056e73d456))
+* pin version of semantic release to compatible one ([c374d7f](https://github.com/terrestris/shogun-admin/commit/c374d7f8d54c4efdc57bf74605543b1ed8ab392a))
+
 ## [11.0.0](https://github.com/terrestris/shogun-admin/compare/v10.8.0...v11.0.0) (2023-01-05)
 
 
