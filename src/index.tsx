@@ -17,6 +17,10 @@ import {
 
 import Keycloak from 'keycloak-js';
 
+import {
+  loader
+} from '@monaco-editor/react';
+
 import Logger from './Logger';
 
 import SHOGunAPIClient from '@terrestris/shogun-util/dist/service/SHOGunAPIClient';
@@ -102,6 +106,12 @@ const renderApp = async () => {
     }
 
     const client = initSHOGunAPIClient(keycloak);
+
+    loader.config({
+      paths: {
+        vs: './vs'
+      }
+    });
 
     root.render(
       <SHOGunAPIClientProvider client={client}>

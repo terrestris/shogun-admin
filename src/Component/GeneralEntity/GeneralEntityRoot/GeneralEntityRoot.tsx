@@ -102,6 +102,7 @@ export type GeneralEntityConfigType<T extends BaseEntity> = {
   subTitle?: string;
   formConfig: FormConfig;
   tableConfig: TableConfig<T>;
+  onEntitiesLoaded?: (entities: T[], entityType: string) => void;
 };
 
 type OwnProps<T extends BaseEntity> = GeneralEntityConfigType<T>;
@@ -116,7 +117,8 @@ export function GeneralEntityRoot<T extends BaseEntity>({
   navigationTitle = 'Entitäten',
   subTitle = '… mit denen man Dinge tun kann (aus Gründen bspw.)',
   formConfig,
-  tableConfig = {}
+  tableConfig = {},
+  onEntitiesLoaded = () => {}
 }: GeneralEntityRootProps<T>) {
 
   const location = useLocation();
@@ -137,6 +139,7 @@ export function GeneralEntityRoot<T extends BaseEntity>({
   const [isUploadingFile, setIsUploadingFile] = useState<boolean>(false);
 
   const [form] = Form.useForm();
+
   const client = useSHOGunAPIClient();
 
   const {
@@ -196,8 +199,9 @@ export function GeneralEntityRoot<T extends BaseEntity>({
     setGridLoading(true);
     const allEntries: T[] = await entityController?.findAll();
     setEntities(allEntries || []);
+    onEntitiesLoaded(allEntries, entityType);
     setGridLoading(false);
-  }, [entityController]);
+  }, [entityController, onEntitiesLoaded, entityType]);
 
   /**
    * Fetch entity or create new one

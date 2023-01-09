@@ -85,14 +85,15 @@ module.exports = {
       patterns: [{
         from: './assets/formconfigs/',
         to: 'formconfigs'
-      },
-      {
+      }, {
         from: './assets/img/',
         to: 'img'
-      },
-      {
+      }, {
         from: './assets/fallbackConfig.js',
         to: 'fallbackConfig.js'
+      },{
+        from: './node_modules/monaco-editor/min/vs',
+        to: 'vs'
       }],
     }),
     new webpack.DefinePlugin({

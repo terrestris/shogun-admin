@@ -1,4 +1,10 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useRef,
+  useState
+} from 'react';
+
 import {
   useRecoilState
 } from 'recoil';
@@ -9,7 +15,22 @@ import {
   Route,
   Routes
 } from 'react-router-dom';
-import Header from './Component/Header/Header';
+
+import {
+  useTranslation
+} from 'react-i18next';
+
+import {
+  OpenAPIV3
+} from 'openapi-types';
+
+import {
+  useMonaco
+} from '@monaco-editor/react';
+
+import {
+  IDisposable
+} from 'monaco-editor';
 
 import {
   Result,
@@ -20,25 +41,36 @@ import {
   LoadingOutlined
 } from '@ant-design/icons';
 
-import Portal from './Page/Portal/Portal';
 import Logger from 'js-logger';
-import { appInfoAtom, userInfoAtom } from './State/atoms';
-import { setSwaggerDocs } from './State/static';
+
 import _isEmpty from 'lodash/isEmpty';
-import './App.less';
+
+import Header from './Component/Header/Header';
+import Portal from './Page/Portal/Portal';
+import {
+  appInfoAtom,
+  userInfoAtom,
+  layerSuggestionListAtom
+} from './State/atoms';
+import {
+  setSwaggerDocs
+} from './State/static';
+
+import useSHOGunAPIClient from './Hooks/useSHOGunAPIClient';
 
 import config from 'shogunApplicationConfig';
-import useSHOGunAPIClient from './Hooks/useSHOGunAPIClient';
-import { useTranslation } from 'react-i18next';
-import { OpenAPIV3 } from 'openapi-types';
 
 const App: React.FC = () => {
-
   const [, setUserInfo] = useRecoilState(userInfoAtom);
   const [, setAppInfo] = useRecoilState(appInfoAtom);
+  const [layerSuggestionList, setLayerSuggestionList] = useRecoilState(layerSuggestionListAtom);
   const [loadingState, setLoadingState] = useState<'failed' | 'loading' | 'done'>();
 
+  const disposableCompletionItemProviderRef = useRef<IDisposable>();
+
   const client = useSHOGunAPIClient();
+
+  const monaco = useMonaco();
 
   // Fetch initial data:
   // - swagger docs
@@ -66,9 +98,64 @@ const App: React.FC = () => {
     }
   }, [setAppInfo, setUserInfo, client]);
 
+  const registerLayerIdCompletionProvider = useCallback(() => {
+    if (!monaco) {
+      return undefined;
+    }
+
+    const disposableCompletionItemProvider = monaco.languages.registerCompletionItemProvider('json', {
+      triggerCharacters: ['.'],
+      provideCompletionItems: async (model, position) => {
+        const lineContent = model.getLineContent(position.lineNumber).trim();
+
+        if (!lineContent.startsWith('\"layerId\"')) {
+          return null;
+        }
+
+        if (!layerSuggestionList) {
+          try {
+            const layers = await client.layer().findAll();
+
+            setLayerSuggestionList(layers);
+
+            if (disposableCompletionItemProviderRef.current) {
+              disposableCompletionItemProviderRef.current.dispose();
+            }
+          } catch (error) {
+            Logger.error(error);
+          } finally {
+            return null;
+          }
+        }
+
+        return {
+          suggestions: layerSuggestionList.map(layer => ({
+            insertText: layer.id.toString(),
+            label: `${layer.name} (${layer.id})`,
+            kind: monaco.languages.CompletionItemKind.Value,
+            documentation: `${JSON.stringify(layer, null, '  ')}`,
+            range: null
+          }))
+        };
+      }
+    });
+
+    disposableCompletionItemProviderRef.current = disposableCompletionItemProvider;
+  }, [monaco, client, setLayerSuggestionList, layerSuggestionList]);
+
   useEffect(() => {
     getInitialData();
   }, [getInitialData]);
+
+  useEffect(() => {
+    registerLayerIdCompletionProvider();
+
+    return () => {
+      if (disposableCompletionItemProviderRef.current) {
+        disposableCompletionItemProviderRef.current.dispose();
+      }
+    };
+  }, [registerLayerIdCompletionProvider]);
 
   if (loadingState === 'loading') {
     return (

@@ -3,6 +3,7 @@ import {
 } from 'recoil';
 import { AppInfo } from '@terrestris/shogun-util/dist/model/AppInfo';
 import User from '@terrestris/shogun-util/dist/model/User';
+import Layer from '@terrestris/shogun-util/dist/model/Layer';
 
 export const appInfoAtom = atom<AppInfo>({
   key: 'appInfo',
@@ -25,4 +26,9 @@ export const userInfoAtom = atom<User>({
 export const shogunInfoModalVisibleAtom = atom<boolean>({
   key: 'shogunInfoVisible',
   default: false
+});
+
+export const layerSuggestionListAtom = atom<Layer[]>({
+  key: 'layerSuggestionList',
+  default: null
 });
