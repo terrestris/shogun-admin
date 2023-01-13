@@ -1,3 +1,10 @@
+## [11.1.1](https://github.com/terrestris/shogun-admin/compare/v11.1.0...v11.1.1) (2023-01-13)
+
+
+### Bugfixes
+
+* changes method to ensure undefined values can be passed also ([#147](https://github.com/terrestris/shogun-admin/issues/147)) ([f96539d](https://github.com/terrestris/shogun-admin/commit/f96539df868b7058c12c95549278b56e2aa0fd3d))
+
 ## [11.1.0](https://github.com/terrestris/shogun-admin/compare/v11.0.0...v11.1.0) (2023-01-09)
 
 
