@@ -142,7 +142,7 @@ export class GenericEntityController<T extends BaseEntity> {
     }
 
     this.entity = isUpdate ?
-      await this.service?.updatePartial(entityUpdateObject) :
+      await this.service?.update(entityUpdateObject as T) :
       await this.service.add(entityUpdateObject as T);
 
     return this.entity;
