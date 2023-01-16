@@ -7,9 +7,7 @@ const config = {
     '!<rootDir>/src/Model/**/*.{ts,js}'
   ],
   setupFilesAfterEnv: [
-    '<rootDir>/test/setup.js',
-    // '@testing-library/react/cleanup-after-each',
-    // '@testing-library/jest-dom/extend-expect'
+    '<rootDir>/test/setup.js'
   ],
   testMatch: [
     '<rootDir>/src/**/?(*.)(spec).(j|t)s?(x)'
