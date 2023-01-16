@@ -64,6 +64,7 @@ export type FormConfig = {
 };
 
 interface OwnProps {
+  loading?: boolean;
   i18n: FormTranslations;
   entityName: string;
   entityType: string;
@@ -77,6 +78,7 @@ const DEFAULT_DATE_FORMAT = 'DD.MM.YYYY';
 export type GeneralEntityFormProps = OwnProps & React.HTMLAttributes<HTMLDivElement>;
 
 export const GeneralEntityForm: React.FC<GeneralEntityFormProps> = ({
+  loading = false,
   i18n,
   entityName,
   entityType,
@@ -302,20 +304,26 @@ export const GeneralEntityForm: React.FC<GeneralEntityFormProps> = ({
 
   return (
     <>
-      <PageHeader title={title} />
-      <Form
-        className="general-entity-form"
-        form={form}
-        initialValues={initialValues}
-        labelCol={{ span: 5 }}
-        wrapperCol={{ span: 20 }}
-        name={formConfig?.name}
-        {...formProps}
+      <PageHeader
+        title={title}
+      />
+      <Spin
+        spinning={loading}
       >
-        {
-          parseFormConfig()
-        }
-      </Form>
+        <Form
+          className="general-entity-form"
+          form={form}
+          initialValues={initialValues}
+          labelCol={{ span: 5 }}
+          wrapperCol={{ span: 20 }}
+          name={formConfig?.name}
+          {...formProps}
+        >
+          {
+            parseFormConfig()
+          }
+        </Form>
+      </Spin>
     </>
   );
 };

@@ -135,6 +135,7 @@ export function GeneralEntityRoot<T extends BaseEntity>({
   const [formIsDirty, setFormIsDirty] = useState<boolean>(false);
   const [formValid, setFormValid] = useState<boolean>(true);
   const [isGridLoading, setGridLoading] = useState<boolean>(false);
+  const [isFormLoading, setFormLoading] = useState<boolean>(false);
   const [isSaving, setIsSaving] = useState<boolean>(false);
   const [isUploadingFile, setIsUploadingFile] = useState<boolean>(false);
 
@@ -183,12 +184,15 @@ export function GeneralEntityRoot<T extends BaseEntity>({
    */
   const fetchEntity = useCallback(async (eId: number) => {
     try {
+      setFormLoading(true);
       const e: T = await entityController?.load(eId) as T;
       setEditEntity(e);
       form.resetFields();
       form.setFieldsValue(e);
     } catch (error) {
       Logger.error(error);
+    } finally {
+      setFormLoading(false);
     }
   }, [form, entityController]);
 
@@ -621,22 +625,25 @@ export function GeneralEntityRoot<T extends BaseEntity>({
           tableConfig={tableConfig}
         />
       </div>
-      {
-        id &&
-        <div className="right-container">
-          <GeneralEntityForm
-            i18n={i18n}
-            entityName={entityName}
-            entityType={entityType}
-            formConfig={formConfig}
-            form={form}
-            formProps={{
-              initialValues,
-              onValuesChange
-            }}
-          />
-        </div>
-      }
+      <div className="right-container">
+        {
+          id && (
+            <GeneralEntityForm
+              loading={isFormLoading}
+              i18n={i18n}
+              entityId={parseInt(entityId, 10)}
+              entityName={entityName}
+              entityType={entityType}
+              formConfig={formConfig}
+              form={form}
+              formProps={{
+                initialValues,
+                onValuesChange
+              }}
+            />
+          )
+        }
+      </div>
     </div>
   );
 };
