@@ -493,7 +493,7 @@ export function GeneralEntityRoot<T extends BaseEntity>({
       });
 
       // Refresh the list
-      fetchEntities();
+      await fetchEntities();
 
       // Finally, show success message
       setIsUploadingFile(false);
