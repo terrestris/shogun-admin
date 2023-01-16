@@ -26,25 +26,26 @@ import {
 } from 'react-i18next';
 
 import _isEmpty from 'lodash/isEmpty';
+import _cloneDeep from 'lodash/cloneDeep';
 
 import Logger from 'js-logger';
 
 import BaseEntity from '@terrestris/shogun-util/dist/model/BaseEntity';
+import Layer from '@terrestris/shogun-util/dist/model/Layer';
 
 import { GenericEntityController } from '../../../Controller/GenericEntityController';
 
 import DisplayField from '../../FormField/DisplayField/DisplayField';
 import LinkField from '../../FormField/LinkField/LinkField';
 
+import LayerPreview from '../../LayerPreview/LayerPreview';
+
 import TableUtil from '../../../Util/TableUtil';
+import TranslationUtil from '../../../Util/TranslationUtil';
 
 import config from 'shogunApplicationConfig';
 
 import './GeneralEntityTable.less';
-
-import TranslationUtil from '../../../Util/TranslationUtil';
-
-import _cloneDeep from 'lodash/cloneDeep';
 
 export type TableConfig<T extends BaseEntity> = {
   columnDefinition?: GeneralEntityTableColumn<T>[];
@@ -163,7 +164,7 @@ export function GeneralEntityTable<T extends BaseEntity>({
   };
 
   const getRenderer = (cellRendererName: string, cellRenderComponentProps: {[key: string]: any},
-    mapping?: {[key: string]: string}) => (value: any) => {
+    mapping?: {[key: string]: string}) => (value: any, record: T) => {
     const displayValue = mapping ? mapping[value] : value;
 
     if (cellRendererName === 'JSONCell') {
@@ -195,7 +196,24 @@ export function GeneralEntityTable<T extends BaseEntity>({
       );
     }
 
+    if (cellRendererName === 'LayerPreviewCell') {
+      if (!isLayerType(record)) {
+        return undefined;
+      }
+
+      return (
+        <LayerPreview
+          layer={record}
+          {...cellRenderComponentProps}
+        />
+      );
+    }
+
     return <>{displayValue}</>;
+  };
+
+  const isLayerType = (entity: any): entity is Layer => {
+    return Object.hasOwn(entity, 'type') && Object.hasOwn(entity, 'sourceConfig');
   };
 
   const getTableColumns = (): ColumnType<T>[] => {

@@ -14,9 +14,7 @@
       "titleId": "ID",
       "titleName": "Name",
       "titleType": "Typ",
-      "titlePrev": "Layervorschau (GeoServer)",
-      "titleOpenPrev": "Öffne Layervorschau"
-
+      "titlePrev": "Layervorschau"
     },
     "en": {
       "entityName": "Subject",
@@ -32,8 +30,7 @@
       "titleId": "ID",
       "titleName": "Name",
       "titleType": "Type",
-      "titlePrev": "Layer preview (GeoServer)",
-      "titleOpenPrev": "Open layer preview"
+      "titlePrev": "Layer preview"
     }
   },
   "endpoint": "/layers",
@@ -132,13 +129,8 @@
       },
       {
         "title": "#i18n.titlePrev",
-        "dataIndex": ["sourceConfig", "layerNames"],
         "key": "preview",
-        "cellRenderComponentName": "LinkCell",
-        "cellRenderComponentProps": {
-          "title": "#i18n.titleOpenPrev",
-          "template": "/geoserver/wms/reflect?format=application/openlayers&layers={}"
-        }
+        "cellRenderComponentName": "LayerPreviewCell"
       }
     ]
   }
