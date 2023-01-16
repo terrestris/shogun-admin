@@ -66,6 +66,7 @@ export type FormConfig = {
 interface OwnProps {
   loading?: boolean;
   i18n: FormTranslations;
+  entityId?: number;
   entityName: string;
   entityType: string;
   formConfig: FormConfig;
@@ -80,6 +81,7 @@ export type GeneralEntityFormProps = OwnProps & React.HTMLAttributes<HTMLDivElem
 export const GeneralEntityForm: React.FC<GeneralEntityFormProps> = ({
   loading = false,
   i18n,
+  entityId,
   entityName,
   entityType,
   formProps,
@@ -188,6 +190,10 @@ export const GeneralEntityForm: React.FC<GeneralEntityFormProps> = ({
           />
         );
       case 'UserPermissionGrid':
+        if (entityId !== form.getFieldValue('id')) {
+          return undefined;
+        }
+
         return (
           <UserPermissionGrid
             entityId={form.getFieldValue('id')}
