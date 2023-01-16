@@ -8,6 +8,7 @@ import {
 } from 'antd';
 import { SelectProps } from 'antd/lib/select';
 
+// eslint-disable-next-line no-shadow
 export enum LayerType {
   TILEWMS = 'TILEWMS',
   VECTORTILE = 'VECTORTILE',
@@ -50,10 +51,10 @@ export const LayerTypeSelect: React.FC<LayerTypeSelectProps> = ({
     return options;
   };
 
-  const changeHandler = (value: LayerType) => {
-    setCurrentValue(value);
+  const changeHandler = (val: LayerType) => {
+    setCurrentValue(val);
 
-    onChange(value);
+    onChange(val);
   };
 
   return (

@@ -462,7 +462,7 @@ export function GeneralEntityRoot<T extends BaseEntity>({
     }
   };
 
-  const onFileUploadChange = async(info: UploadChangeParam<UploadFile<LayerUploadResponse>>) => {
+  const onFileUploadChange = async (info: UploadChangeParam<UploadFile<LayerUploadResponse>>) => {
     const file = info.file;
 
     if (file.status === 'uploading') {
