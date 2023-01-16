@@ -200,11 +200,16 @@ export function GeneralEntityRoot<T extends BaseEntity>({
    * Fetch all entities shown in table
    */
   const fetchEntities = useCallback(async () => {
-    setGridLoading(true);
-    const allEntries: T[] = await entityController?.findAll();
-    setEntities(allEntries || []);
-    onEntitiesLoaded(allEntries, entityType);
-    setGridLoading(false);
+    try {
+      setGridLoading(true);
+      const allEntries: T[] = await entityController?.findAll();
+      setEntities(allEntries || []);
+      onEntitiesLoaded(allEntries, entityType);
+    } catch (error) {
+      Logger.error(error);
+    } finally {
+      setGridLoading(false);
+    }
   }, [entityController, onEntitiesLoaded, entityType]);
 
   /**
