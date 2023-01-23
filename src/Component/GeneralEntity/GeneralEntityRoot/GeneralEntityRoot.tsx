@@ -269,9 +269,14 @@ export function GeneralEntityRoot<T extends BaseEntity>({
   };
 
   const onResetForm = () => {
-    form?.resetFields();
+    const oldValues = allEntities.find((entity) => entity.id === id);
+    if (!oldValues) {
+      return;
+    }
+
+    form.resetFields();
+    form.setFieldsValue(oldValues);
     setFormIsDirty(false);
-    entityController.createEntity();
   };
 
   const onSaveClick = async () => {
