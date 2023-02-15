@@ -1,3 +1,10 @@
+## [11.1.2](https://github.com/terrestris/shogun-admin/compare/v11.1.1...v11.1.2) (2023-02-15)
+
+
+### Bugfixes
+
+* resets the input form to the initial value ([5e10b5b](https://github.com/terrestris/shogun-admin/commit/5e10b5b0e3b8f9cbe09a5af22d59d0d528525612))
+
 ## [11.1.1](https://github.com/terrestris/shogun-admin/compare/v11.1.0...v11.1.1) (2023-01-13)
 
 
