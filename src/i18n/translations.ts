@@ -178,6 +178,14 @@ export default {
         backendVersion: 'SHOGun-Version',
         buildTime: 'Build Zeit',
         title: 'SHOGun-Admin Information'
+      },
+      LayerPreview: {
+        title: 'Layervorschau ({{layerName}})',
+        tooltipTitle: 'Layervorschau öffnen',
+        extentErrorMsg: 'Fehler beim Zoomen auf die Gesamtansicht des Layers.',
+        addLayerErrorMsg: 'Fehler beim Hinzufügen des Layers zur Karte.',
+        loadLayerErrorMsg: 'Fehler beim Laden des Layers.',
+        extentNotSupportedErrorMsg: 'Zoomen auf Gesamtansicht wird für diesen Typ nicht unterstützt.'
       }
     }
   },
@@ -374,6 +382,14 @@ export default {
         backendVersion: 'SHOGun version',
         buildTime: 'Build time',
         title: 'SHOGun Admin info'
+      },
+      LayerPreview: {
+        title: 'Layer preview ({{layerName}})',
+        tooltipTitle: 'Open layer preview',
+        extentErrorMsg: 'Could not zoom to the extent of the layer.',
+        addLayerErrorMsg: 'Could not add the layer to the map.',
+        loadLayerErrorMsg: 'Error while loading the layer.',
+        extentNotSupportedErrorMsg: 'Zoom to layer is not supported for this type.'
       }
     }
   }

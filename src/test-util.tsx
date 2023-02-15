@@ -11,7 +11,10 @@ const customRender = (ui, recoilInitializer?, options?) => {
       </RecoilRoot>
     );
   };
-  return render(ui, { wrapper: AllTheProviders, ...options });
+  return render(ui, {
+    wrapper: AllTheProviders,
+    ...options
+  });
 };
 
 // re-export everything

@@ -1,20 +1,35 @@
 import React from 'react';
 
-import { DatePicker, Form, Input, PageHeader, Select, Statistic, Switch } from 'antd';
+import {
+  DatePicker,
+  Form,
+  Input,
+  PageHeader,
+  Select,
+  Spin,
+  Statistic,
+  Switch,
+  InputNumber
+} from 'antd';
 const { TextArea } = Input;
+import {
+  FormInstance,
+  FormItemProps,
+  FormProps
+} from 'antd/lib/form';
 
 import Logger from 'js-logger';
 
 import _cloneDeep from 'lodash/cloneDeep';
 
 import DisplayField from '../../FormField/DisplayField/DisplayField';
-import { FormInstance, FormItemProps, FormProps } from 'antd/lib/form';
 import YesOrNoField from '../../FormField/YesOrNoField/YesOrNoField';
 import JSONEditor from '../../FormField/JSONEditor/JSONEditor';
 import MarkdownEditor from '../../FormField/MarkdownEditor/MarkdownEditor';
 import UserPermissionGrid from '../../FormField/UserPermissionGrid/UserPermissionGrid';
+
 import LayerTypeSelect from '../../Layer/LayerTypeSelect/LayerTypeSelect';
-import { InputNumber } from 'antd';
+
 import TranslationUtil from '../../../Util/TranslationUtil';
 
 import './GeneralEntityForm.less';
@@ -49,7 +64,9 @@ export type FormConfig = {
 };
 
 interface OwnProps {
+  loading?: boolean;
   i18n: FormTranslations;
+  entityId?: number;
   entityName: string;
   entityType: string;
   formConfig: FormConfig;
@@ -62,7 +79,9 @@ const DEFAULT_DATE_FORMAT = 'DD.MM.YYYY';
 export type GeneralEntityFormProps = OwnProps & React.HTMLAttributes<HTMLDivElement>;
 
 export const GeneralEntityForm: React.FC<GeneralEntityFormProps> = ({
+  loading = false,
   i18n,
+  entityId,
   entityName,
   entityType,
   formProps,
@@ -171,6 +190,10 @@ export const GeneralEntityForm: React.FC<GeneralEntityFormProps> = ({
           />
         );
       case 'UserPermissionGrid':
+        if (entityId !== form.getFieldValue('id')) {
+          return undefined;
+        }
+
         return (
           <UserPermissionGrid
             entityId={form.getFieldValue('id')}
@@ -271,34 +294,30 @@ export const GeneralEntityForm: React.FC<GeneralEntityFormProps> = ({
     );
   };
 
-  const parseFormConfig = (): React.ReactElement => {
-    return <>
-      {
-        formConfig.fields?.map(createFormItem)
-      }
-    </>;
-  };
-
   const initialValues = {};
 
   const title = TranslationUtil.getTranslationFromConfig(entityName, i18n);
 
   return (
     <>
-      <PageHeader title={title} />
-      <Form
-        className="general-entity-form"
-        form={form}
-        initialValues={initialValues}
-        labelCol={{ span: 5 }}
-        wrapperCol={{ span: 20 }}
-        name={formConfig?.name}
-        {...formProps}
+      <PageHeader
+        title={title}
+      />
+      <Spin
+        spinning={loading}
       >
-        {
-          parseFormConfig()
-        }
-      </Form>
+        <Form
+          className="general-entity-form"
+          form={form}
+          initialValues={initialValues}
+          labelCol={{ span: 5 }}
+          wrapperCol={{ span: 20 }}
+          name={formConfig?.name}
+          {...formProps}
+        >
+          { formConfig.fields?.map(createFormItem) }
+        </Form>
+      </Spin>
     </>
   );
 };
