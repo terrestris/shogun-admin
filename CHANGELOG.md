@@ -1,3 +1,37 @@
+## [11.2.0](https://github.com/terrestris/shogun-admin/compare/v11.1.1...v11.2.0) (2023-02-15)
+
+
+### Features
+
+* add LayerPreview component ([9173344](https://github.com/terrestris/shogun-admin/commit/917334438404592b7d6126f0d4299e7935b012cb))
+
+
+### Changes in configuration
+
+* add ResizeObserver mock and cleanup imports ([a6e1312](https://github.com/terrestris/shogun-admin/commit/a6e131287d729a6c086e173a0da6350a4ba59b0a))
+
+
+### Changes in layout
+
+* minor style fixes ([48e4e1c](https://github.com/terrestris/shogun-admin/commit/48e4e1c850d9de13158542b8232ab87dd21d7f75))
+
+
+### Dependencies
+
+* **release:** 11.1.2 [skip ci] ([aa03392](https://github.com/terrestris/shogun-admin/commit/aa03392c0f6211d8514b35c7ded543a6ac5ed7f0))
+* update @terrestris/ol-util and ol ([e6ad6cd](https://github.com/terrestris/shogun-admin/commit/e6ad6cd61ee1d049107e84120c4d4206506354d2))
+
+
+### Bugfixes
+
+* add loading spinner for the entity form ([b616794](https://github.com/terrestris/shogun-admin/commit/b61679408661645324e4c7ca547b44785b709731))
+* check for base classes ([f9c348f](https://github.com/terrestris/shogun-admin/commit/f9c348f9b6f55140a2e2abce3bcf657d89ac131e))
+* make use of await ([5b71959](https://github.com/terrestris/shogun-admin/commit/5b71959cc7cf9fd23025a055ce5a3e305890bfe4))
+* remove unneeded method ([3992e3a](https://github.com/terrestris/shogun-admin/commit/3992e3ad947b977bff114f760a94da77572d25b1))
+* render permission grid if form and entity in sync only ([7cb85f7](https://github.com/terrestris/shogun-admin/commit/7cb85f78a0dfd5922a5708e1a55e26aa6b838e65))
+* resets the input form to the initial value ([5e10b5b](https://github.com/terrestris/shogun-admin/commit/5e10b5b0e3b8f9cbe09a5af22d59d0d528525612))
+* wrap code in try-catch ([d3c84cd](https://github.com/terrestris/shogun-admin/commit/d3c84cdea6c432b503fd489ad653f683bd867460))
+
 ## [11.1.2](https://github.com/terrestris/shogun-admin/compare/v11.1.1...v11.1.2) (2023-02-15)
 
 
