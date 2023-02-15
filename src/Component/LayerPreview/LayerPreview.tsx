@@ -16,7 +16,8 @@ import OlLayerImage from 'ol/layer/Image';
 import OlSourceOSM from 'ol/source/OSM';
 import OlSourceTileWMS from 'ol/source/TileWMS';
 import OlSourceImageWMS from 'ol/source/ImageWMS';
-import OlSourceWMTS from 'ol/source/WMTS';
+import OlSourceImage from 'ol/source/Image';
+import OlSourceTileImage from 'ol/source/TileImage';
 import OlSourceVector from 'ol/source/Vector';
 import OlView from 'ol/View';
 import {
@@ -112,7 +113,7 @@ export const LayerPreview: React.FC<LayerPreviewProps> = ({
 
       const source = olLayer.getSource();
 
-      if (source instanceof OlSourceImageWMS) {
+      if (source instanceof OlSourceImage) {
         source.on('imageloaderror', (a) => {
           setLoadLayerError(t('LayerPreview.loadLayerErrorMsg'));
         });
@@ -122,7 +123,7 @@ export const LayerPreview: React.FC<LayerPreviewProps> = ({
         });
       }
 
-      if (source instanceof OlSourceTileWMS || source instanceof OlSourceWMTS) {
+      if (source instanceof OlSourceTileImage) {
         source.on('tileloaderror', (a) => {
           setLoadLayerError(t('LayerPreview.loadLayerErrorMsg'));
         });
