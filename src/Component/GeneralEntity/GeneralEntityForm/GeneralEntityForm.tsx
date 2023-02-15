@@ -294,16 +294,6 @@ export const GeneralEntityForm: React.FC<GeneralEntityFormProps> = ({
     );
   };
 
-  const parseFormConfig = (): React.ReactElement => {
-    return (
-      <>
-        {
-          formConfig.fields?.map(createFormItem)
-        }
-      </>
-    );
-  };
-
   const initialValues = {};
 
   const title = TranslationUtil.getTranslationFromConfig(entityName, i18n);
@@ -325,9 +315,7 @@ export const GeneralEntityForm: React.FC<GeneralEntityFormProps> = ({
           name={formConfig?.name}
           {...formProps}
         >
-          {
-            parseFormConfig()
-          }
+          { formConfig.fields?.map(createFormItem) }
         </Form>
       </Spin>
     </>
