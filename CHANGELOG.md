@@ -1,3 +1,10 @@
+## [11.2.1](https://github.com/terrestris/shogun-admin/compare/v11.2.0...v11.2.1) (2023-02-20)
+
+
+### Bugfixes
+
+* upload button translation ([#150](https://github.com/terrestris/shogun-admin/issues/150)) ([22c2446](https://github.com/terrestris/shogun-admin/commit/22c2446e31d065597659323f606d40acd2c66e4a))
+
 ## [11.2.0](https://github.com/terrestris/shogun-admin/compare/v11.1.1...v11.2.0) (2023-02-15)
 
 
