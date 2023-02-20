@@ -59,7 +59,7 @@ export default {
             descriptionSize: 'Der Upload überschreitet das Limit von {{maxSize}} MB',
             descriptionFormat: 'Der Dateityp ist nicht unterstützt ({{supportedFormats}})',
           },
-          button: 'Upload {{entity}}'
+          button: '{{entity}} hochladen'
         },
         saveSuccess: '{{entity}} erfolgreich gespeichert',
         saveFail: 'Konnte {{entity}} nicht speichern'
