@@ -1,7 +1,8 @@
 import React, {
   useEffect,
   useState,
-  useRef
+  useRef,
+  useCallback
 } from 'react';
 
 import {
@@ -34,36 +35,50 @@ import Logger from 'js-logger';
 import _cloneDeep from 'lodash/cloneDeep';
 
 import PermissionCollectionType from '@terrestris/shogun-util/dist/model/enum/PermissionCollectionType';
-import UserInstancePermission from '@terrestris/shogun-util/dist/model/security/UserInstancePermission';
-
-import UserPermissionModal from './UserPermissionModal/UserPermissionModal';
-
-import useSHOGunAPIClient from '../../../Hooks/useSHOGunAPIClient';
-import UserAvatar from './UserAvatar/UserAvatar';
+import InstancePermission from '@terrestris/shogun-util/dist/model/security/InstancePermission';
+import Group from '@terrestris/shogun-util/dist/model/Group';
 import User from '@terrestris/shogun-util/dist/model/User';
-import PermissionSelect from './PermissionSelect/PermissionSelect';
 
-import './UserPermissionGrid.less';
+import PermissionSelect from '../PermissionSelect/PermissionSelect';
+import PermissionModal, {
+  PermissionModalProps
+} from '../PermissionModal/PermissionModal';
 
-interface DataType {
+import useSHOGunAPIClient from '../../../../Hooks/useSHOGunAPIClient';
+
+import './InstancePermissionGrid.less';
+
+export interface DataType<T = User | Group> {
   key: number;
-  user: User;
+  reference: T;
   name: string;
   permission: PermissionCollectionType;
 }
 
-export interface UserPermissionGridProps extends TableProps<DataType> {
+export interface InstancePermissionGridProps extends TableProps<DataType> {
   entityType: string;
   entityId: number;
+  getInstancePermissions: (entityId: number) => Promise<InstancePermission[]>;
+  setInstancePermission: (entityId: number, referenceId: number, permission: PermissionCollectionType) => Promise<void>;
+  deleteInstancePermission: (entityId: number, referenceId: number) => Promise<void>;
+  toDataType: (permission: InstancePermission) => DataType;
+  nameColumnDefinition: ColumnType<DataType>;
+  modalProps: Omit<PermissionModalProps, 'entityId' | 'entityType'>;
 };
 
-const UserPermissionGrid: React.FC<UserPermissionGridProps> = ({
+const InstancePermissionGrid: React.FC<InstancePermissionGridProps> = ({
   entityType,
   entityId,
+  getInstancePermissions,
+  setInstancePermission,
+  deleteInstancePermission,
+  toDataType,
+  modalProps,
+  nameColumnDefinition,
   ...passThroughProps
 }) => {
   const [permissionsLoading, setPermissionsLoading] = useState(false);
-  const [permissions, setPermissions] = useState<UserInstancePermission[]>([]);
+  const [permissions, setPermissions] = useState<InstancePermission[]>([]);
   const [data, setData] = useState<DataType[]>([]);
 
   const searchInput = useRef<InputRef>(null);
@@ -71,35 +86,32 @@ const UserPermissionGrid: React.FC<UserPermissionGridProps> = ({
   const { t } = useTranslation();
   const client = useSHOGunAPIClient();
 
-  useEffect(() => {
-    (async () => {
-      setPermissionsLoading(true);
+  const getPermissions = useCallback(async () => {
+    setPermissionsLoading(true);
 
-      if (Number.isFinite(entityId)) {
-        try {
-          setPermissions(await client[entityType]().getUserInstancePermissions(entityId));
-        } catch (error) {
-          message.error(t('UserPermissionGrid.loadErrorMsg'));
-          Logger.error(error);
-        } finally {
-          setPermissionsLoading(false);
-        }
-      }
-    })();
-  }, [entityId, entityType, client, t]);
+    if (!Number.isFinite(entityId)) {
+      return;
+    }
+
+    try {
+      setPermissions(await getInstancePermissions(entityId));
+    } catch (error) {
+      message.error(t('InstancePermissionGrid.loadErrorMsg'));
+      Logger.error(error);
+    } finally {
+      setPermissionsLoading(false);
+    }
+  }, [entityId, getInstancePermissions, t]);
+
+  useEffect(() => {
+    getPermissions();
+  }, [getPermissions]);
 
   useEffect(() => {
     if (client && Array.isArray(permissions)) {
-      const userData = permissions.map(permission => ({
-        key: permission.user?.id,
-        user: permission.user,
-        name: `${permission.user?.providerDetails?.username} (${permission.user?.authProviderId})`,
-        permission: permission.permission?.name
-      }));
-
-      setData(userData);
+      setData(permissions.map(toDataType));
     }
-  }, [client, permissions]);
+  }, [client, permissions, toDataType]);
 
   const getColumnSearchProps = (dataIndex: string): ColumnType<DataType> => ({
     filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
@@ -108,7 +120,7 @@ const UserPermissionGrid: React.FC<UserPermissionGridProps> = ({
       >
         <Input
           ref={searchInput}
-          placeholder={t('UserPermissionGrid.filterInputPlaceholder')}
+          placeholder={t('InstancePermissionGrid.filterInputPlaceholder')}
           value={selectedKeys[0]}
           onChange={e => setSelectedKeys(e.target.value ? [e.target.value] : [])}
           onPressEnter={() => confirm()}
@@ -120,7 +132,7 @@ const UserPermissionGrid: React.FC<UserPermissionGridProps> = ({
             icon={<SearchOutlined />}
             size="small"
           >
-            {t('UserPermissionGrid.filterSearchButtonText')}
+            {t('InstancePermissionGrid.filterSearchButtonText')}
           </Button>
           <Button
             onClick={() => {
@@ -129,7 +141,7 @@ const UserPermissionGrid: React.FC<UserPermissionGridProps> = ({
             }}
             size="small"
           >
-            {t('UserPermissionGrid.filterResetButtonText')}
+            {t('InstancePermissionGrid.filterResetButtonText')}
           </Button>
         </Space>
       </div>
@@ -157,15 +169,16 @@ const UserPermissionGrid: React.FC<UserPermissionGridProps> = ({
     setPermissionsLoading(true);
 
     try {
-      await client[entityType]().setUserInstancePermission(entityId, record.user?.id, permission);
+      setInstancePermission(entityId, record.reference?.id, permission);
 
       let dataClone = _cloneDeep(data);
-      let match = dataClone.find(entry => entry.user?.id === record.user?.id);
+
+      let match = dataClone.find(entry => entry.reference?.id === record.reference?.id);
       match.permission = permission;
 
       setData(dataClone);
     } catch (error) {
-      message.error(t('UserPermissionGrid.updateErrorMsg'));
+      message.error(t('InstancePermissionGrid.updateErrorMsg'));
       Logger.error(error);
     } finally {
       setPermissionsLoading(false);
@@ -176,46 +189,34 @@ const UserPermissionGrid: React.FC<UserPermissionGridProps> = ({
     setPermissionsLoading(true);
 
     try {
-      await client[entityType]().deleteUserInstancePermission(entityId, record.user?.id);
+      deleteInstancePermission(entityId, record.reference?.id);
 
-      let dataClone = data.filter(entry => entry.user?.id !== record.user?.id);
+      let dataClone = data.filter(entry => entry.reference?.id !== record.reference?.id);
 
       setData(dataClone);
     } catch (error) {
-      message.error(t('UserPermissionGrid.deleteErrorMsg'));
+      message.error(t('InstancePermissionGrid.deleteErrorMsg'));
       Logger.error(error);
     } finally {
       setPermissionsLoading(false);
     }
   };
 
-  const onSave = async () => {
-    setPermissionsLoading(true);
-
-    try {
-      setPermissions(await client[entityType]().getUserInstancePermissions(entityId));
-    } catch (error) {
-      message.error(t('UserPermissionGrid.loadErrorMsg'));
-      Logger.error(error);
-    } finally {
-      setPermissionsLoading(false);
-    }
+  const getNameColumnDef = (): ColumnType<DataType> => {
+    return {
+      ...{
+        title: t('InstancePermissionGrid.nameColumnTitle'),
+        dataIndex: 'name',
+        key: 'name',
+        defaultSortOrder: 'ascend',
+      },
+      ...getColumnSearchProps('name'),
+      ...nameColumnDefinition,
+    };
   };
 
-  const columns: ColumnsType<DataType> = [{
-    title: t('UserPermissionGrid.userColumnTitle'),
-    dataIndex: 'name',
-    key: 'name',
-    defaultSortOrder: 'ascend',
-    sorter: (a, b) => a.user?.providerDetails?.username?.localeCompare(b.user?.providerDetails?.username),
-    render: (value: any, record: DataType) => (
-      <UserAvatar
-        user={record.user}
-      />
-    ),
-    ...getColumnSearchProps('name')
-  }, {
-    title: t('UserPermissionGrid.permissionColumnTitle'),
+  const columns: ColumnsType<DataType> = [getNameColumnDef(), {
+    title: t('InstancePermissionGrid.permissionColumnTitle'),
     dataIndex: 'permission',
     key: 'permission',
     sorter: (a, b) => b.name?.localeCompare(a.name),
@@ -229,10 +230,11 @@ const UserPermissionGrid: React.FC<UserPermissionGridProps> = ({
     )
   }, {
     title: (
-      <UserPermissionModal
+      <PermissionModal
         entityType={entityType}
         entityId={entityId}
-        onSave={onSave}
+        onSave={getPermissions}
+        {...modalProps}
       />
     ),
     key: 'operation',
@@ -242,7 +244,7 @@ const UserPermissionGrid: React.FC<UserPermissionGridProps> = ({
     render: (value: any, record: DataType) => {
       return (
         <Tooltip
-          title={t('UserPermissionGrid.deletePermissionButtonTooltip')}
+          title={t('InstancePermissionGrid.deletePermissionButtonTooltip')}
         >
           <DeleteOutlined
             onClick={() => onDeleteClick(record)}
@@ -254,7 +256,7 @@ const UserPermissionGrid: React.FC<UserPermissionGridProps> = ({
 
   return (
     <Table
-      className='permission-grid'
+      className='instance-permission-grid'
       loading={permissionsLoading}
       columns={columns}
       dataSource={data}
@@ -265,4 +267,4 @@ const UserPermissionGrid: React.FC<UserPermissionGridProps> = ({
   );
 };
 
-export default UserPermissionGrid;
+export default InstancePermissionGrid;

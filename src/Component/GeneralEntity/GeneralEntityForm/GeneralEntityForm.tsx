@@ -26,7 +26,8 @@ import DisplayField from '../../FormField/DisplayField/DisplayField';
 import YesOrNoField from '../../FormField/YesOrNoField/YesOrNoField';
 import JSONEditor from '../../FormField/JSONEditor/JSONEditor';
 import MarkdownEditor from '../../FormField/MarkdownEditor/MarkdownEditor';
-import UserPermissionGrid from '../../FormField/UserPermissionGrid/UserPermissionGrid';
+import UserPermissionGrid from '../../FormField/Permission/UserPermissionGrid/UserPermissionGrid';
+import GroupPermissionGrid from '../../FormField/Permission/GroupPermissionGrid/GroupPermissionGrid';
 
 import LayerTypeSelect from '../../Layer/LayerTypeSelect/LayerTypeSelect';
 
@@ -201,6 +202,18 @@ export const GeneralEntityForm: React.FC<GeneralEntityFormProps> = ({
             {...fieldCfg?.fieldProps}
           />
         );
+      case 'GroupPermissionGrid':
+        if (entityId !== form.getFieldValue('id')) {
+          return undefined;
+        }
+
+        return (
+          <GroupPermissionGrid
+            entityId={form.getFieldValue('id')}
+            entityType={entityType.toLowerCase()}
+            {...fieldCfg?.fieldProps}
+          />
+        );
       default:
         Logger.error(`Cannot create component of type "${fieldCfg?.component}" with name "${fieldCfg?.dataField}"`);
         return null;
@@ -276,12 +289,13 @@ export const GeneralEntityForm: React.FC<GeneralEntityFormProps> = ({
     }
 
     const {
+      component,
       dataField
     } = copyFieldCfg;
 
     return (
       <Form.Item
-        key={`${entityType}-${form.getFieldValue('id')}-${dataField}`}
+        key={`${entityType}-${form.getFieldValue('id')}-${dataField || component.toLocaleLowerCase()}`}
         name={dataField}
         className={`cls-${dataField}`}
         normalize={copyFieldCfg.component ? getNormalizeFn(dataField) : undefined}
