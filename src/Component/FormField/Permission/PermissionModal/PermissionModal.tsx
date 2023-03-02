@@ -11,93 +11,104 @@ import {
 
 import {
   Button,
+  ModalProps,
+  Modal,
+  Select,
   Form,
   message,
-  Modal,
-  ModalProps,
-  Select,
-  Tag,
   Tooltip
 } from 'antd';
+
 import {
   DefaultOptionType
 } from 'antd/lib/select';
+
 import Logger from 'js-logger';
+
 import {
   CustomTagProps
 } from 'rc-select/lib/BaseSelect';
+
 import {
   useTranslation
 } from 'react-i18next';
 
 import PermissionCollectionType from '@terrestris/shogun-util/dist/model/enum/PermissionCollectionType';
+import Group from '@terrestris/shogun-util/dist/model/Group';
 import User from '@terrestris/shogun-util/dist/model/User';
 
-import useSHOGunAPIClient from '../../../../Hooks/useSHOGunAPIClient';
 import PermissionSelect from '../PermissionSelect/PermissionSelect';
-import UserAvatar from '../UserAvatar/UserAvatar';
+
+import './PermissionModal.less';
 
 type FormData = {
-  userIds: number[];
+  referenceIds: number[];
   permission: PermissionCollectionType;
 };
 
-export interface UserPermissionModalProps extends ModalProps {
+export interface PermissionModalProps extends ModalProps {
   entityId: number;
   entityType: string;
+  setInstancePermission: (entityId: number, referenceId: number, permission: PermissionCollectionType) => Promise<void>;
+  getReferences: () => Promise<(User | Group)[]>;
+  toTag: (reference: User | Group) => DefaultOptionType;
+  tagRenderer?: (props: CustomTagProps) => JSX.Element;
   onSave?: () => void;
-}
+  descriptionText?: string;
+  referenceLabelText?: string;
+  referenceExtraText?: string;
+  referenceSelectPlaceholderText?: string;
+  permissionSelectLabel?: string;
+  permissionSelectExtra?: string;
+  saveErrorMsg?: (placeholder: string) => string;
+};
 
-const UserPermissionModal: React.FC<UserPermissionModalProps> = ({
+const PermissionModal: React.FC<PermissionModalProps> = ({
   entityId,
   entityType,
+  setInstancePermission,
+  getReferences,
+  toTag,
+  tagRenderer,
   onSave = () => {},
+  descriptionText = '',
+  referenceLabelText = '',
+  referenceExtraText = '',
+  referenceSelectPlaceholderText = '',
+  permissionSelectLabel = '',
+  permissionSelectExtra = '',
+  saveErrorMsg,
   ...passThroughProps
 }) => {
-  const [usersLoading, setUsersLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
-  const [users, setUsers] = useState<User[]>([]);
+  const [references, setReferences] = useState<(User | Group)[]>([]);
   const [options, setOptions] = useState<DefaultOptionType[]>();
   const [visible, setVisible] = useState(false);
 
   const { t } = useTranslation();
-  const client = useSHOGunAPIClient();
   const [form] = Form.useForm<FormData>();
 
   useEffect(() => {
     (async () => {
-      setUsersLoading(true);
+      setLoading(true);
 
       try {
-        setUsers((await (client as any).user().findAll()).content);
+        setReferences(await getReferences());
       } catch (error) {
-        message.error(t('UserPermissionModal.loadErrorMsg'));
+        message.error(t('PermissionModal.loadErrorMsg'));
         Logger.error(error);
       } finally {
-        setUsersLoading(false);
+        setLoading(false);
       }
     })();
-  }, [client, t]);
+  }, [getReferences, t]);
 
   useEffect(() => {
-    if (Array.isArray(users)) {
-      const opts: DefaultOptionType[] = users.map(user => ({
-        value: user.id,
-        filterValues: [
-          user.providerDetails?.firstName,
-          user.providerDetails?.lastName,
-          user.providerDetails?.username,
-          user.providerDetails?.email
-        ],
-        label: (
-          <UserAvatar
-            user={user}
-          />
-        )
-      }));
-      setOptions(opts);
+    if (Array.isArray(references)) {
+      setOptions(references.map(toTag));
     }
-  }, [users]);
+  }, [references, toTag]);
 
   const onClick = () => {
     setVisible(!visible);
@@ -116,27 +127,25 @@ const UserPermissionModal: React.FC<UserPermissionModalProps> = ({
     }
 
     const {
-      userIds,
+      referenceIds,
       permission
     } = form.getFieldsValue();
 
-    let erroneousRequestUserIds = [];
+    let erroneousRequestReferenceIds = [];
 
     setIsSaving(true);
 
-    for (const userId of userIds) {
+    for (const referenceId of referenceIds) {
       try {
-        await (client as any)[entityType]().setUserInstancePermission(entityId, userId, permission);
+        await setInstancePermission(entityId, referenceId, permission);
       } catch (error) {
-        erroneousRequestUserIds.push(userId);
+        erroneousRequestReferenceIds.push(referenceId);
         Logger.error(error);
       }
     }
 
-    if (erroneousRequestUserIds.length > 0) {
-      message.error(t('UserPermissionModal.saveErrorMsg', {
-        userIds: erroneousRequestUserIds.join(', ')
-      }));
+    if (erroneousRequestReferenceIds.length > 0) {
+      message.error(saveErrorMsg(erroneousRequestReferenceIds.join(', ')));
     }
 
     form.resetFields();
@@ -145,32 +154,10 @@ const UserPermissionModal: React.FC<UserPermissionModalProps> = ({
     onSave();
   };
 
-  const tagRender = (props: CustomTagProps) => {
-    const {
-      label,
-      ...passProps
-    } = props;
-
-    const onPreventMouseDown = (event: React.MouseEvent<HTMLSpanElement>) => {
-      event.preventDefault();
-      event.stopPropagation();
-    };
-
-    return (
-      <Tag
-        onMouseDown={onPreventMouseDown}
-        className="user-avatar-tag"
-        {...passProps}
-      >
-        {label}
-      </Tag>
-    );
-  };
-
   return (
     <>
       <Tooltip
-        title={t('UserPermissionModal.openModalButtonTooltipTitle')}
+        title={t('PermissionModal.openModalButtonTooltipTitle')}
       >
         <Button
           type="primary"
@@ -179,8 +166,8 @@ const UserPermissionModal: React.FC<UserPermissionModalProps> = ({
         />
       </Tooltip>
       <Modal
-        className="user-modal"
-        title={t('UserPermissionModal.title')}
+        className="permission-modal"
+        title={t('PermissionModal.title')}
         open={visible}
         onCancel={onCancel}
         onOk={onOk}
@@ -193,7 +180,7 @@ const UserPermissionModal: React.FC<UserPermissionModalProps> = ({
         <div
           className="description"
         >
-          {t('UserPermissionModal.description')}
+          {descriptionText}
         </div>
         <Form
           form={form}
@@ -201,9 +188,9 @@ const UserPermissionModal: React.FC<UserPermissionModalProps> = ({
           requiredMark={false}
         >
           <Form.Item
-            name="userIds"
-            label={t('UserPermissionModal.userSelectLabel')}
-            extra={t('UserPermissionModal.userSelectExtra')}
+            name="referenceIds"
+            label={referenceLabelText}
+            extra={referenceExtraText}
             rules={[{
               required: true
             }]}
@@ -213,16 +200,16 @@ const UserPermissionModal: React.FC<UserPermissionModalProps> = ({
               mode="multiple"
               allowClear
               optionFilterProp={'filterValues'}
-              placeholder={t('UserPermissionModal.userSelectPlaceholder')}
-              loading={usersLoading}
+              placeholder={referenceSelectPlaceholderText}
+              loading={loading}
               options={options}
-              tagRender={tagRender}
+              tagRender={tagRenderer}
             />
           </Form.Item>
           <Form.Item
             name="permission"
-            label={t('UserPermissionModal.permissionSelectLabel')}
-            extra={t('UserPermissionModal.permissionSelectExtra')}
+            label={permissionSelectLabel}
+            extra={permissionSelectExtra}
             rules={[{
               required: true
             }]}
@@ -235,4 +222,4 @@ const UserPermissionModal: React.FC<UserPermissionModalProps> = ({
   );
 };
 
-export default UserPermissionModal;
+export default PermissionModal;
