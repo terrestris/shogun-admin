@@ -1,3 +1,10 @@
+## [11.3.0](https://github.com/terrestris/shogun-admin/compare/v11.2.1...v11.3.0) (2023-03-08)
+
+
+### Features
+
+* init playwright ([#152](https://github.com/terrestris/shogun-admin/issues/152)) ([4534961](https://github.com/terrestris/shogun-admin/commit/45349613789780e89de2e33a8a956039307a4c9a))
+
 ## [11.2.1](https://github.com/terrestris/shogun-admin/compare/v11.2.0...v11.2.1) (2023-02-20)
 
 
