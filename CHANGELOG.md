@@ -1,3 +1,15 @@
+## [11.3.1](https://github.com/terrestris/shogun-admin/compare/v11.3.0...v11.3.1) (2023-04-12)
+
+
+### Dependencies
+
+* **deps-dev:** bump webpack from 5.75.0 to 5.76.0 ([c2fc360](https://github.com/terrestris/shogun-admin/commit/c2fc3602d35516140f697aa54ed3c96daec5246f))
+
+
+### Bugfixes
+
+* send attributes of the upload layer candidate and set correct nativeName ([8eecea4](https://github.com/terrestris/shogun-admin/commit/8eecea4b5bf7117a19be7caa7d676a9132329cd8))
+
 ## [11.3.0](https://github.com/terrestris/shogun-admin/compare/v11.2.1...v11.3.0) (2023-03-08)
 
 
