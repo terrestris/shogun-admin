@@ -23,9 +23,8 @@ module.exports = {
       '.css',
       '.less'
     ],
-    alias: {
-      // Uncomment if working with npm link
-      // ol: path.join(__dirname, 'node_modules', 'ol')
+    fallback: {
+      buffer: require.resolve('buffer/')
     }
   },
   module: {
@@ -98,6 +97,12 @@ module.exports = {
     }),
     new webpack.DefinePlugin({
       PROJECT_VERSION: JSON.stringify(require('./package.json').version),
+    }),
+    new webpack.ProvidePlugin({
+      Buffer: [
+        'buffer',
+        'Buffer'
+      ]
     })
   ]
 };

@@ -55,6 +55,10 @@ import {
 import i18next from 'i18next';
 
 import {
+  Shapefile
+} from 'shapefile.js';
+
+import {
   getBearerTokenHeader
 } from '@terrestris/shogun-util/dist/security/getBearerTokenHeader';
 import BaseEntity from '@terrestris/shogun-util/dist/model/BaseEntity';
@@ -313,11 +317,6 @@ export function GeneralEntityRoot<T extends BaseEntity>({
   };
 
   const onBeforeFileUpload = (file: RcFile) => {
-    // TODO: Complete quality check
-    // 1. Check for file size. What should the limit be? Format dependent?
-    // 2. Check if the selected file format is valid
-    // 3. Check if the file is not broken/corrupted
-    // 4. Other checks
     const maxSize = config.geoserver?.upload?.limit || '200000000';
     const fileType = file.type;
     const fileSize = file.size;
@@ -389,6 +388,44 @@ export function GeneralEntityRoot<T extends BaseEntity>({
       file
     } = options;
 
+    const shp = await Shapefile.load(file);
+
+    let featureTypeName = '';
+    let featureTypeAttributes = {
+      attribute: []
+    };
+
+    if (Object.entries(shp).length !== 1) {
+      throw new Error(t('GeneralEntityRoot.upload.error.descriptionZipContent'));
+    }
+
+    Object.entries(shp).forEach(([k, v]) => {
+      featureTypeName = k;
+
+      const dbfContent = v.parse('dbf', {
+        properties: false
+      });
+
+      featureTypeAttributes.attribute = dbfContent.fields.map(field => ({
+        name: field.name,
+        minOccurs: 0,
+        maxOccurs: 1,
+        nillable: true,
+        binding: getAttributeType(field.type),
+        length: field.length
+      }));
+
+      const shxContent = v.parse('shx');
+
+      featureTypeAttributes.attribute.push({
+        name: 'the_geom',
+        minOccurs: 0,
+        maxOccurs: 1,
+        nillable: true,
+        binding: getGeometryType(shxContent.header.type)
+      });
+    });
+
     const url = `${baseUrl}/rest/workspaces/${workspace}/datastores/` +
       `${storeName}/file.shp?configure=none`;
 
@@ -417,14 +454,55 @@ export function GeneralEntityRoot<T extends BaseEntity>({
         featureType: {
           enabled: true,
           name: layerName,
-          nativeName: file.name.split('.')[0],
-          title: layerName
+          nativeName: featureTypeName,
+          title: layerName,
+          attributes: featureTypeAttributes
         }
       })
     });
 
     if (!featureTypeResponse.ok) {
       throw new Error('No successful response while creating the featuretype');
+    }
+  };
+
+  const getGeometryType = (type: number) => {
+    const types = {
+      0: null, // Null
+      1: 'org.locationtech.jts.geom.Point', // Point
+      3: 'org.locationtech.jts.geom.LineString', // Polyline
+      5: 'org.locationtech.jts.geom.Polygon', // Polygon
+      8: 'org.locationtech.jts.geom.MultiPoint', // MultiPoint
+      11: 'org.locationtech.jts.geom.Point', // PointZ
+      13: 'org.locationtech.jts.geom.LineString', // PolylineZ
+      15: 'org.locationtech.jts.geom.Polygon', // PolygonZ
+      18: 'org.locationtech.jts.geom.MultiPoint', // MultiPointZ
+      21: 'org.locationtech.jts.geom.Point', // PointM
+      23: 'org.locationtech.jts.geom.LineString', // PolylineM
+      25: 'org.locationtech.jts.geom.Polygon', // PolygonM
+      28: 'org.locationtech.jts.geom.MultiPoint', // MultiPointM
+      31: null // MultiPatch
+    };
+
+    return types[type];
+  };
+
+  const getAttributeType = (dbfFieldType: string) => {
+    switch (dbfFieldType) {
+      case 'C': // Character
+        return 'java.lang.String';
+      case 'D': // Date
+        return 'java.util.Date';
+      case 'N': // Numeric
+        return 'java.lang.Long';
+      case 'F': // Floating point
+        return 'java.lang.Double';
+      case 'L': // Logical
+        return 'java.lang.Boolean';
+      case 'M': // Memo
+        return null;
+      default:
+        return null;
     }
   };
 

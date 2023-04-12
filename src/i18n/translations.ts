@@ -58,6 +58,7 @@ export default {
             description: 'Fehler beim Hochladen der Datei {{fileName}}',
             descriptionSize: 'Der Upload überschreitet das Limit von {{maxSize}} MB',
             descriptionFormat: 'Der Dateityp ist nicht unterstützt ({{supportedFormats}})',
+            descriptionZipContent: 'Mehrere Geodatensätze innerhalb eines Archivs sind nicht unterstützt'
           },
           button: '{{entity}} hochladen'
         },
@@ -248,6 +249,7 @@ export default {
             description: 'Error while uploading file {{fileName}}',
             descriptionSize: 'The file exceeds the upload limit of {{maxSize}} MB',
             descriptionFormat: 'The given file type does not match the supported ones ({{supportedFormats}})',
+            descriptionZipContent: 'Multiple geodatasets within one archive are not supported'
           },
           button: 'Upload {{entity}}'
         },
