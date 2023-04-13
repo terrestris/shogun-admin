@@ -1,3 +1,10 @@
+## [11.3.2](https://github.com/terrestris/shogun-admin/compare/v11.3.1...v11.3.2) (2023-04-13)
+
+
+### Bugfixes
+
+* disable checking login status in iframe ([0a18214](https://github.com/terrestris/shogun-admin/commit/0a1821475f78afcde0c9b9b8e17164d750576984))
+
 ## [11.3.1](https://github.com/terrestris/shogun-admin/compare/v11.3.0...v11.3.1) (2023-04-12)
 
 
