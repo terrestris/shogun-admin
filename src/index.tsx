@@ -71,7 +71,8 @@ const initKeycloak = async (): Promise<Keycloak | null> => {
   };
 
   await keycloak.init({
-    onLoad: 'login-required'
+    onLoad: 'login-required',
+    checkLoginIframe: false
   });
 
   return keycloak;
