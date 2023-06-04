@@ -7,7 +7,7 @@ import {
 
 import User from '@terrestris/shogun-util/dist/model/User';
 
-import UserUtil from '../../../../Util/UserUtil';
+import UserUtil from '../../Util/UserUtil';
 
 import './UserAvatar.less';
 
