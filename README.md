@@ -32,7 +32,7 @@ shogun-admin:
 ```
 
 # Semantic release
-Allowed Tags for semantic release:
+Allowed Tags for semantic release (see the [FAQs](https://github.com/semantic-release/semantic-release/blob/master/docs/support/FAQ.md) for more information about this):
 
 - Breaking changes: `breaking`
 - Features: `feat`
