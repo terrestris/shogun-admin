@@ -1,3 +1,21 @@
+## [11.4.0](https://github.com/terrestris/shogun-admin/compare/v11.3.2...v11.4.0) (2023-06-05)
+
+
+### Features
+
+* update readme and release shoguns layer editable function ([cff9ae5](https://github.com/terrestris/shogun-admin/commit/cff9ae54942b29e30ccf9f03e7089e8981f90d11))
+
+
+### Dependencies
+
+* updates sohgun-util to version 5.4.1 ([71466d6](https://github.com/terrestris/shogun-admin/commit/71466d6fe58748830fcea4868f99cff227e4299c))
+* use next shogun-util version ([667ad0e](https://github.com/terrestris/shogun-admin/commit/667ad0ed3ef5c9d74d2e1c8de7e89a09dbbdc680))
+
+
+### Changes in configuration
+
+* updates some gh actions ([cc7f96d](https://github.com/terrestris/shogun-admin/commit/cc7f96d1a4c843773360d3c84bc184c7f2020680))
+
 ## [11.3.2](https://github.com/terrestris/shogun-admin/compare/v11.3.1...v11.3.2) (2023-04-13)
 
 
