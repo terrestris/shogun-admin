@@ -37,10 +37,6 @@ import {
   Spin
 } from 'antd';
 
-import {
-  LoadingOutlined
-} from '@ant-design/icons';
-
 import Logger from 'js-logger';
 
 import _isEmpty from 'lodash/isEmpty';
@@ -59,6 +55,9 @@ import {
 import useSHOGunAPIClient from './Hooks/useSHOGunAPIClient';
 
 import config from 'shogunApplicationConfig';
+import ShogunSpinner from './Component/ShogunSpinner/ShogunSpinner';
+
+import './App.less';
 
 const App: React.FC = () => {
   const [, setUserInfo] = useRecoilState(userInfoAtom);
@@ -160,8 +159,8 @@ const App: React.FC = () => {
   if (loadingState === 'loading') {
     return (
       <Result
-        icon={<LoadingOutlined spin />}
-        title={t('App.loading')}
+        className="result-spin"
+        icon={<ShogunSpinner />}
       />
     );
   }
@@ -182,10 +181,7 @@ const App: React.FC = () => {
           <Spin
             className="suspense-spin"
             indicator={
-              <LoadingOutlined
-                className="suspense-spin-icon"
-                spin
-              />
+              <ShogunSpinner />
             }
           />
         }
