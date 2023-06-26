@@ -1,3 +1,11 @@
+## [11.4.1](https://github.com/terrestris/shogun-admin/compare/v11.4.0...v11.4.1) (2023-06-26)
+
+
+### Bugfixes
+
+* replace deprecated menu overlay prop by items ([4a9baed](https://github.com/terrestris/shogun-admin/commit/4a9baed687041ffd9d9b941ae108793c3345573f))
+* replace deprecated property visible by open ([e5c19d2](https://github.com/terrestris/shogun-admin/commit/e5c19d260ff9afeb777fa2ae69eea493e04ec09d))
+
 ## [11.4.0](https://github.com/terrestris/shogun-admin/compare/v11.3.2...v11.4.0) (2023-06-05)
 
 
