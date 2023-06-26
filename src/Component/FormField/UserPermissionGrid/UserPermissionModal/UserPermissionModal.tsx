@@ -185,7 +185,7 @@ const UserPermissionModal: React.FC<UserPermissionModalProps> = ({
       <Modal
         className="user-modal"
         title={t('UserPermissionModal.title')}
-        visible={visible}
+        open={visible}
         onCancel={onCancel}
         onOk={onOk}
         okButtonProps={{
