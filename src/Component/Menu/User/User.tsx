@@ -4,9 +4,9 @@ import {
 } from 'recoil';
 
 import {
-  Dropdown,
-  Menu
+  Dropdown
 } from 'antd';
+import { ItemType } from 'antd/lib/menu/hooks/useItems';
 
 import {
   InfoCircleOutlined,
@@ -80,66 +80,71 @@ export const User: React.FC<UserProps> = () => {
 
   const userName = userInfo?.providerDetails?.username || userInfo?.authProviderId;
 
+  let userMenuItems: ItemType[] = [];
+
+  if (userName) {
+    userMenuItems.push({
+      label: (
+        <div
+          className='user-name'
+        >
+          <span>
+            {userName}
+          </span>
+        </div>
+      ),
+      key: 'username'
+    }, {
+      type: 'divider'
+    });
+  }
+
+  if (client.getKeycloak()) {
+    userMenuItems.push({
+      label: t('User.settings'),
+      icon: <SettingOutlined />,
+      key: 'settings'
+    });
+  }
+
+  userMenuItems.push({
+    label: t('User.info'),
+    icon: <InfoCircleOutlined />,
+    key: 'info'
+  }, {
+    type: 'divider'
+  });
+
+
+  userMenuItems.push({
+    label: t('User.logout'),
+    icon: <LogoutOutlined />,
+    key: 'logout'
+  });
+
   return (
     <Dropdown
-      className="user-menu"
-      overlay={
-        <Menu
-          style={{ width: 256 }}
-          onClick={onMenuClick}
-          className="user-chip-menu"
-        >
-          {
-            userName &&
-            <div
-              className="user-name"
-            >
-              <span>
-                {userName}
-              </span>
-            </div>
-          }
-          {
-            userName &&
-            <Menu.Divider />
-          }
-          {client.getKeycloak() &&
-            <Menu.Item
-              key="settings"
-              icon={<SettingOutlined />}
-            >
-              {t('User.settings')}
-            </Menu.Item>
-          }
-          <Menu.Item
-            key="info"
-            icon={<InfoCircleOutlined />}
-          >
-            {t('User.info')}
-          </Menu.Item>
-          <Menu.Divider />
-          <Menu.Item
-            key="logout"
-            icon={<LogoutOutlined />}
-          >
-            {t('User.logout')}
-          </Menu.Item>
-        </Menu>
-      }
+      className='user-menu'
+      menu={{
+        style: { width: 256 },
+        className: 'user-chip-menu',
+        items: userMenuItems,
+        onClick: onMenuClick
+      }}
       trigger={['click']}
     >
       <div>
         <Avatar
           src={avatarSource}
-          size="large"
-          className="userimage"
+          size='large'
+          className='userimage'
         >
           {
             avatarSource ? '' : UserUtil.getInitials(userInfo)
           }
         </Avatar>
         <span
-          className="username"
+          className='username'
         >
           {userName}
         </span>
