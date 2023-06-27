@@ -1,3 +1,10 @@
+## [11.4.2](https://github.com/terrestris/shogun-admin/compare/v11.4.1...v11.4.2) (2023-06-27)
+
+
+### Bugfixes
+
+* fix layer preview via [@terrestris](https://github.com/terrestris) util packages update ([bcfd377](https://github.com/terrestris/shogun-admin/commit/bcfd377c3db1936b8f11eda95f053ca0fc2edac1))
+
 ## [11.4.1](https://github.com/terrestris/shogun-admin/compare/v11.4.0...v11.4.1) (2023-06-26)
 
 
