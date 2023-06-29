@@ -1,3 +1,10 @@
+## [11.4.4](https://github.com/terrestris/shogun-admin/compare/v11.4.3...v11.4.4) (2023-06-29)
+
+
+### Bugfixes
+
+* also check for the extra mime type before uploading ([25a1604](https://github.com/terrestris/shogun-admin/commit/25a1604185600b84a3ae0e6337e1ee5f86fadd59))
+
 ## [11.4.3](https://github.com/terrestris/shogun-admin/compare/v11.4.2...v11.4.3) (2023-06-29)
 
 
