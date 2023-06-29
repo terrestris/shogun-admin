@@ -532,7 +532,7 @@ export function GeneralEntityRoot<T extends BaseEntity>({
         await uploadGeoTiff(uploadData);
       }
 
-      if (fileType === 'application/zip') {
+      if (fileType === 'application/zip' || fileType === 'application/x-zip-compressed') {
         await uploadShapeZip(uploadData);
       }
 
