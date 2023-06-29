@@ -1,3 +1,10 @@
+## [11.4.3](https://github.com/terrestris/shogun-admin/compare/v11.4.2...v11.4.3) (2023-06-29)
+
+
+### Bugfixes
+
+* add x-zip-compressed mimetype ([8258b34](https://github.com/terrestris/shogun-admin/commit/8258b348d34f9894bf058b480c207a5548b45e4b))
+
 ## [11.4.2](https://github.com/terrestris/shogun-admin/compare/v11.4.1...v11.4.2) (2023-06-27)
 
 
