@@ -336,7 +336,7 @@ export function GeneralEntityRoot<T extends BaseEntity>({
     }
 
     // 2. Check file format
-    const supportedFormats = ['application/zip', 'image/tiff'];
+    const supportedFormats = ['application/zip', 'application/x-zip-compressed', 'image/tiff'];
     if (!supportedFormats.includes(fileType)) {
       notification.error({
         message: t('GeneralEntityRoot.upload.error.message', {
