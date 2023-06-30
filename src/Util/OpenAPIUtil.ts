@@ -11,6 +11,8 @@ import {
   ValidationResult
 } from 'json-schema';
 
+import _get from 'lodash/get';
+
 import cloneDeep from 'lodash/cloneDeep';
 
 export type JSONSchemaDefinition = {
@@ -92,7 +94,7 @@ export class OpenAPIUtil {
 
   getJSONSchemaFromDocument = (schemaName: string, entity: string, property: string): JSONSchema7 => {
     const schemaId = `http://shogun/shogun-schema-${schemaName.toLocaleLowerCase()}.json`;
-    const schemaDialect = 'http://json-schema.org/draft-07/schema#';
+    const schemaDialect = 'http://json-schema.org/2020-12/schema#';
     const definitions = this.createDefinitions();
     const type = this.getPropertyType(entity, property);
 
@@ -117,8 +119,8 @@ export class OpenAPIUtil {
       isValid = validate([], schema);
     }
 
-    if (!isValid.valid) {
-      Logger.error('Invalid JSON schema detected: ', isValid.errors);
+    if (!isValid?.valid) {
+      Logger.error('Invalid JSON schema detected: ', isValid?.errors);
     }
 
     return schema;
@@ -136,6 +138,7 @@ export class OpenAPIUtil {
       let definition = cloneDeep(this.document.components.schemas[schemaName]);
 
       this.replaceRefs(definition);
+      this.applyDiscriminator(definition);
 
       definitions[schemaName] = definition as JSONSchema7;
     }
@@ -150,49 +153,140 @@ export class OpenAPIUtil {
   };
 
   private replaceRefs = (definition: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject) => {
-    if (Object.hasOwn(definition, '$ref')) {
-      this.replaceRef(definition as OpenAPIV3.ReferenceObject);
-    } else {
-      const schemaObject = definition as OpenAPIV3.SchemaObject;
-      const type = schemaObject.type;
-
-      if (schemaObject.properties) {
-        Object.values(schemaObject.properties).forEach(property => {
-          this.replaceRefs(property);
-        });
+    const replace = (def: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject) => {
+      if (Object.hasOwn(def, '$ref')) {
+        this.replaceRef(def as OpenAPIV3.ReferenceObject);
       }
+    };
 
-      if (schemaObject.allOf) {
-        schemaObject.allOf.forEach(def => {
-          this.replaceRefs(def);
-        });
-      }
-
-      if (schemaObject.anyOf) {
-        schemaObject.anyOf.forEach(def => {
-          this.replaceRefs(def);
-        });
-      }
-
-      if (schemaObject.oneOf) {
-        schemaObject.oneOf.forEach(def => {
-          this.replaceRefs(def);
-        });
-      }
-
-      if (schemaObject.not) {
-        this.replaceRefs(schemaObject.not);
-      }
-
-      if (type === 'array') {
-        this.replaceRefs(schemaObject.items);
-      }
-    }
+    this.walkSchemaDefinition(definition, replace);
   };
 
   private replaceRef = (referenceObject: OpenAPIV3.ReferenceObject) => {
-    const splitParts = referenceObject.$ref.split('/');
-    referenceObject.$ref = `#/definitions/${splitParts[splitParts.length - 1]}`;
+    referenceObject.$ref = this.replaceRefString(referenceObject.$ref);
+  };
+
+  private replaceRefString = (reference: string) => {
+    const splitParts = reference.split('/');
+    return `#/definitions/${splitParts[splitParts.length - 1]}`;
+  };
+
+  private applyDiscriminator = (definition: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject) => {
+    let discriminator: OpenAPIV3.DiscriminatorObject | null;
+
+    const findDiscriminator = (def: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject) => {
+      if (Object.hasOwn(def, '$ref')) {
+        const referenceObject = def as OpenAPIV3.ReferenceObject;
+        const nextDef = this.getEntityDefinition(this.getRefName(referenceObject));
+
+        this.walkSchemaDefinition(nextDef, findDiscriminator);
+      } else {
+        const schemaObject = def as OpenAPIV3.SchemaObject;
+
+        if (schemaObject.discriminator) {
+          discriminator = schemaObject.discriminator;
+        }
+      }
+    };
+
+    const findOneOf = (def: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject) => {
+      if (Object.hasOwn(def, '$ref') || !Object.hasOwn(def, 'oneOf')) {
+        return;
+      }
+
+      let schemaObject = def as OpenAPIV3.SchemaObject;
+
+      const allOf: JSONSchema7Definition[] = [];
+
+      for (const d of schemaObject.oneOf) {
+        this.walkSchemaDefinition(d, findDiscriminator);
+
+        if (!discriminator) {
+          continue;
+        }
+
+        const discriminatorProperty = discriminator.propertyName;
+        const discriminatorMapping = discriminator.mapping;
+
+        if (!discriminatorMapping) {
+          continue;
+        }
+
+        for (const [value, schema] of Object.entries(discriminatorMapping)) {
+          const condition: JSONSchema7 = {
+            if: {
+              properties: {},
+              required: []
+            },
+            then: {
+              '$ref': null
+            }
+          };
+
+          ((condition.if as JSONSchema7).properties[discriminatorProperty] as JSONSchema7) = {};
+          ((condition.if as JSONSchema7).properties[discriminatorProperty] as JSONSchema7).const = value;
+          (condition.if as JSONSchema7).required.push(discriminatorProperty);
+          (condition.then as JSONSchema7).$ref = this.replaceRefString(schema);
+
+          allOf.push(condition);
+        }
+      }
+
+      if (allOf.length > 0) {
+        delete schemaObject.oneOf;
+        // @ts-ignore
+        schemaObject.allOf = allOf;
+      }
+    };
+
+    this.walkSchemaDefinition(definition, findOneOf);
+  };
+
+  private walkSchemaDefinition = (definition: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject,
+    callback?: (def: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject) => void) => {
+
+    if (callback) {
+      callback(definition);
+    }
+
+    if (Object.hasOwn(definition, '$ref')) {
+      return;
+    }
+
+    const schemaObject = definition as OpenAPIV3.SchemaObject;
+    const type = schemaObject.type;
+
+    if (schemaObject.properties) {
+      for (const property of Object.values(schemaObject.properties)) {
+        this.walkSchemaDefinition(property, callback);
+      }
+    }
+
+    if (schemaObject.allOf) {
+      for (const def of schemaObject.allOf) {
+        this.walkSchemaDefinition(def, callback);
+      }
+    }
+
+    if (schemaObject.anyOf) {
+      for (const def of schemaObject.anyOf) {
+        this.walkSchemaDefinition(def, callback);
+      }
+    }
+
+    if (schemaObject.oneOf) {
+      for (const def of schemaObject.oneOf) {
+        this.walkSchemaDefinition(def, callback);
+      }
+    }
+
+    if (schemaObject.not) {
+      this.walkSchemaDefinition(schemaObject.not, callback);
+    }
+
+    if (type === 'array') {
+      this.walkSchemaDefinition(schemaObject.items, callback);
+    }
   };
 }
 
