@@ -77,7 +77,15 @@ export default {
         columnId: 'ID',
         columnName: 'Name',
         tooltipReload: 'Neu laden',
-        tooltipDelete: 'Löschen'
+        tooltipDelete: 'Löschen',
+        paging: {
+          nextPage: 'Nächste Seite',
+          prevPage: 'Vorherige Seite',
+          itemsPerPage: 'Seite',
+          jumpTo: 'Springe zu',
+          page: 'Seite',
+          total: 'Total'
+        }
       },
       ImageFileRoot: {
         title: 'Bilddateien',
@@ -268,7 +276,15 @@ export default {
         columnId: 'ID',
         columnName: 'Name',
         tooltipReload: 'Reload',
-        tooltipDelete: 'Delete'
+        tooltipDelete: 'Delete',
+        paging: {
+          nextPage: 'Next page',
+          prevPage: 'Previous page',
+          itemsPerPage: 'page',
+          jumpTo: 'Go to',
+          page: 'Page',
+          total: 'Total'
+        }
       },
       ImageFileRoot: {
         title: 'Images',

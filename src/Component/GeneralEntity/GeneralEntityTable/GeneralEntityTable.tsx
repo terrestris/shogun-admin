@@ -250,7 +250,7 @@ export function GeneralEntityTable<T extends BaseEntity>({
         if (!_isEmpty(sortConfig) && sortConfig.isSortable) {
           columnDef = {
             ...columnDef,
-            sorter: TableUtil.getSorter(copyCfg.dataIndex.toString()),
+            sorter: true,
             defaultSortOrder: sortConfig.sortOrder || 'ascend'
           };
         }

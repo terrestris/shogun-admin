@@ -7,21 +7,21 @@ import {
 import Application from '@terrestris/shogun-util/dist/model/Application';
 import User from '@terrestris/shogun-util/dist/model/User';
 import Layer from '@terrestris/shogun-util/dist/model/Layer';
-import GenericService from '@terrestris/shogun-util/dist/service/GenericService';
+import GenericEntityService from '@terrestris/shogun-util/dist/service/GenericEntityService';
 
 import {
   useTranslation
 } from 'react-i18next';
 
+import './DashboardStatistics.less';
+
 type DashboardStatisticsProps = {
-  service: GenericService<Application | User | Layer>;
+  service: GenericEntityService<Application | User | Layer>;
   name: {
     singular: string;
     plural: string;
   };
 };
-
-import './DashboardStatistics.less';
 
 export const DashboardStatistics: React.FC<DashboardStatisticsProps> = ({
   service,
@@ -38,7 +38,7 @@ export const DashboardStatistics: React.FC<DashboardStatisticsProps> = ({
     setLoadingState('loading');
     try {
       const fetchedEntities = await service?.findAll();
-      const count = fetchedEntities.length || 0;
+      const count = fetchedEntities.content.length || 0;
       setEntitiesCount(count);
       setLoadingState('done');
     } catch (error) {

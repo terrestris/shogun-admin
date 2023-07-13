@@ -116,7 +116,7 @@ const App: React.FC = () => {
           try {
             const layers = await client.layer().findAll();
 
-            setLayerSuggestionList(layers);
+            setLayerSuggestionList(layers.content);
 
             if (disposableCompletionItemProviderRef.current) {
               disposableCompletionItemProviderRef.current.dispose();
