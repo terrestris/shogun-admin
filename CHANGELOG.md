@@ -1,3 +1,23 @@
+## [11.5.0](https://github.com/terrestris/shogun-admin/compare/v11.4.4...v11.5.0) (2023-07-14)
+
+
+### Features
+
+* make default page size configurable ([cd1c80e](https://github.com/terrestris/shogun-admin/commit/cd1c80e1ecb2aca9785e0a0583905cb1b925c11b))
+* make entity tables pageable ([4df31e6](https://github.com/terrestris/shogun-admin/commit/4df31e64f3ebe9240864aa0e7d29f249a63983da))
+
+
+### Dependencies
+
+* make use of totalElements field ([5ebd4b9](https://github.com/terrestris/shogun-admin/commit/5ebd4b9f9eef87d2a2bcb24de3b1e1485936a3a0))
+* update shogun-util ([741871f](https://github.com/terrestris/shogun-admin/commit/741871f111ae9f9715e049100811000bb316ba14))
+
+
+### Bugfixes
+
+* don't unnecessarily extend HTMLDiv type ([45255f0](https://github.com/terrestris/shogun-admin/commit/45255f00b6b813069c3609adaad56e293f98ff7d))
+* dont't request all entities to get the count ([f1a4f68](https://github.com/terrestris/shogun-admin/commit/f1a4f682c48327733e4b928077192e9f0432ce63))
+
 ## [11.4.4](https://github.com/terrestris/shogun-admin/compare/v11.4.3...v11.4.4) (2023-06-29)
 
 
