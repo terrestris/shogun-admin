@@ -4,7 +4,7 @@ import Keycloak from 'keycloak-js';
 
 import BaseEntity from '@terrestris/shogun-util/dist/model/BaseEntity';
 import Application from '@terrestris/shogun-util/dist/model/File';
-import GenericService from '@terrestris/shogun-util/dist/service/GenericService';
+import GenericEntityService from '@terrestris/shogun-util/dist/service/GenericEntityService';
 import ApplicationService from '@terrestris/shogun-util/dist/service/ApplicationService';
 
 import { GenericServiceImpl } from '../Service/GenericServiceImpl/GenericServiceImpl';
@@ -79,7 +79,7 @@ export class ControllerUtil {
       keycloak: controllerCfg.keycloak
     });
     const genericController: GenericEntityController<BaseEntity> = new GenericEntityController<BaseEntity>({
-      service: genericService as GenericService<BaseEntity>,
+      service: genericService as GenericEntityService<BaseEntity>,
       formUpdater: controllerCfg?.updateForm,
       formConfig: controllerCfg?.formConfig
     });

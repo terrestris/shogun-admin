@@ -7,13 +7,15 @@ import _omit from 'lodash/omit';
 
 import { ValidateStatus } from 'antd/lib/form/FormItem';
 
+import GenericEntityService from '@terrestris/shogun-util/dist/service/GenericEntityService';
 import BaseEntity from '@terrestris/shogun-util/dist/model/BaseEntity';
-import GenericService from '@terrestris/shogun-util/dist/service/GenericService';
 import Application from '@terrestris/shogun-util/dist/model/Application';
 
 import Logger from '@terrestris/base-util/dist/Logger';
 
 import { FieldConfig, FormConfig } from '../Component/GeneralEntity/GeneralEntityForm/GeneralEntityForm';
+import { Page } from '@terrestris/shogun-util/dist/model/Page';
+import { PageOpts } from '@terrestris/shogun-util/dist/service/GenericService';
 
 // TODO: add explicit value objects
 export type FieldValue = any;
@@ -29,7 +31,7 @@ export type FieldValidation = {
 };
 
 export type GenericEntityControllerArgs<T extends BaseEntity> = {
-  service: GenericService<T>;
+  service: GenericEntityService<T>;
   formUpdater?: (values: FormValues) => void; // maybe not required
   formConfig: FormConfig;
 };
@@ -37,7 +39,7 @@ export type GenericEntityControllerArgs<T extends BaseEntity> = {
 export class GenericEntityController<T extends BaseEntity> {
   protected entity: T;
   protected initialValues: FormValues;
-  protected service: GenericService<T>;
+  protected service: GenericEntityService<T>;
   private formConfig: FormConfig;
   private formUpdater?: (values: FormValues) => void; // maybe not required
   private nextUpdate: FormValues;
@@ -94,8 +96,8 @@ export class GenericEntityController<T extends BaseEntity> {
   /**
    * Fetch all entities
    */
-  public async findAll(): Promise<T[]> {
-    return await this.service?.findAll();
+  public async findAll(pageOpts?: PageOpts): Promise<Page<T>> {
+    return await this.service?.findAll(pageOpts);
   }
 
   /**

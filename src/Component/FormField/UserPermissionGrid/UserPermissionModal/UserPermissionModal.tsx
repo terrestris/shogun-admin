@@ -73,7 +73,7 @@ const UserPermissionModal: React.FC<UserPermissionModalProps> = ({
       setUsersLoading(true);
 
       try {
-        setUsers(await client.user().findAll());
+        setUsers((await client.user().findAll()).content);
       } catch (error) {
         message.error(t('UserPermissionModal.loadErrorMsg'));
         Logger.error(error);

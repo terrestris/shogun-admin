@@ -82,6 +82,12 @@ import TranslationUtil from '../../../Util/TranslationUtil';
 import config from 'shogunApplicationConfig';
 
 import './GeneralEntityRoot.less';
+import {
+  TableProps,
+} from 'antd/es/table';
+import {
+  SortOrder
+} from 'antd/es/table/interface';
 
 type LayerUploadOptions = {
   baseUrl: string;
@@ -142,6 +148,11 @@ export function GeneralEntityRoot<T extends BaseEntity>({
   const [isFormLoading, setFormLoading] = useState<boolean>(false);
   const [isSaving, setIsSaving] = useState<boolean>(false);
   const [isUploadingFile, setIsUploadingFile] = useState<boolean>(false);
+  const [pageTotal, setPageTotal] = useState<number>();
+  const [pageSize, setPageSize] = useState<number>(config.defaultPageSize || 10);
+  const [pageCurrent, setPageCurrent] = useState<number>(1);
+  const [sortField, setSortField] = useState<string>();
+  const [sortOrder, setSortOrder] = useState<SortOrder>();
 
   const [form] = Form.useForm();
 
@@ -206,15 +217,24 @@ export function GeneralEntityRoot<T extends BaseEntity>({
   const fetchEntities = useCallback(async () => {
     try {
       setGridLoading(true);
-      const allEntries: T[] = await entityController?.findAll();
-      setEntities(allEntries || []);
-      onEntitiesLoaded(allEntries, entityType);
+      const allEntries = await entityController?.findAll({
+        page: pageCurrent - 1,
+        size: pageSize,
+        sort: {
+          properties: [sortField],
+          order: sortOrder === 'ascend' ? 'asc' : undefined ||
+            sortOrder === 'descend' ? 'desc' : undefined
+        }
+      });
+      setPageTotal(allEntries.totalElements);
+      setEntities(allEntries.content || []);
+      onEntitiesLoaded(allEntries.content, entityType);
     } catch (error) {
       Logger.error(error);
     } finally {
       setGridLoading(false);
     }
-  }, [entityController, onEntitiesLoaded, entityType]);
+  }, [entityController, onEntitiesLoaded, entityType, pageCurrent, pageSize, sortField, sortOrder]);
 
   /**
    * Fetch entity or create new one
@@ -617,6 +637,20 @@ export function GeneralEntityRoot<T extends BaseEntity>({
   const initialValues = useMemo(() => entityController?.getInitialFormValues(), [entityController]);
   const saveReloadDisabled = useMemo(() => _isEmpty(editEntity) || !formIsDirty, [formIsDirty, editEntity]);
 
+  const onTableChange: TableProps<T>['onChange'] = (
+    pagination,
+    filters,
+    sorter
+  ) => {
+    if (!Array.isArray(sorter)) {
+      setSortOrder(sorter.order);
+      setSortField(sorter.field as string);
+    }
+
+    setPageCurrent(pagination.current);
+    setPageSize(pagination.pageSize);
+  };
+
   return (
     <div className="general-entity-root">
       <PageHeader
@@ -706,6 +740,26 @@ export function GeneralEntityRoot<T extends BaseEntity>({
           loading={isGridLoading}
           size="small"
           tableConfig={tableConfig}
+          onChange={onTableChange}
+          pagination={{
+            total: pageTotal,
+            current: pageCurrent,
+            pageSize: pageSize,
+            showTotal: total => `${t('GeneralEntityTable.paging.total')}: ${total}`,
+            showSizeChanger: true,
+            showQuickJumper: true,
+            locale: {
+              // eslint-disable-next-line camelcase
+              next_page: t('GeneralEntityTable.paging.nextPage'),
+              // eslint-disable-next-line camelcase
+              prev_page: t('GeneralEntityTable.paging.prevPage'),
+              // eslint-disable-next-line camelcase
+              items_per_page: `/ ${t('GeneralEntityTable.paging.itemsPerPage')}`,
+              // eslint-disable-next-line camelcase
+              jump_to: t('GeneralEntityTable.paging.jumpTo'),
+              page: t('GeneralEntityTable.paging.page'),
+            }
+          }}
         />
       </div>
       <div className="right-container">

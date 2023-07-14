@@ -11,8 +11,9 @@ import ImageFileTable from '../ImageFileTable/ImageFileTable';
 
 import config from 'shogunApplicationConfig';
 
-import './ImageFileRoot.less';
 import { useTranslation } from 'react-i18next';
+
+import './ImageFileRoot.less';
 
 interface OwnProps { }
 
@@ -87,7 +88,7 @@ export const ImageFileRoot: React.FC<ImageFileRootProps> = props => {
             }}
           >
             <Button type="primary">
-            {t('ImageFileRoot.button')}
+              {t('ImageFileRoot.button')}
             </Button>
           </Upload>
         </div>

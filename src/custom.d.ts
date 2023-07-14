@@ -16,6 +16,10 @@ declare module 'shogunApplicationConfig' {
      */
     appPrefix: string;
     /**
+     * The default page size in all entity tables, e.g. 20.
+     */
+    defaultPageSize?: number;
+    /**
      * Configuration of paths relevant for the admin client.
      */
     path: {
