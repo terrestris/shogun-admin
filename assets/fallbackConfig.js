@@ -1,5 +1,6 @@
 var shogunApplicationConfig = {
   appPrefix: '/admin',
+  defaultPageSize: 10,
   path: {
     modelConfigs: './formconfigs',
     shogunBase: '/',
@@ -21,7 +22,7 @@ var shogunApplicationConfig = {
     base: '/geoserver',
     upload: {
       workspace: 'SHOGUN',
-      limit: 200000000, // ~200MB
+      limit: 200000000 // ~200MB
     }
   },
   models: [

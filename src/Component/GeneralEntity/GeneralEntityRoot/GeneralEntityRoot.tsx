@@ -149,7 +149,7 @@ export function GeneralEntityRoot<T extends BaseEntity>({
   const [isSaving, setIsSaving] = useState<boolean>(false);
   const [isUploadingFile, setIsUploadingFile] = useState<boolean>(false);
   const [pageTotal, setPageTotal] = useState<number>();
-  const [pageSize, setPageSize] = useState<number>(10);
+  const [pageSize, setPageSize] = useState<number>(config.defaultPageSize || 10);
   const [pageCurrent, setPageCurrent] = useState<number>(1);
   const [sortField, setSortField] = useState<string>();
   const [sortOrder, setSortOrder] = useState<SortOrder>();
