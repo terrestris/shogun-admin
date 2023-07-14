@@ -38,7 +38,7 @@ export const DashboardStatistics: React.FC<DashboardStatisticsProps> = ({
     setLoadingState('loading');
     try {
       const fetchedEntities = await service?.findAll();
-      const count = fetchedEntities.content.length || 0;
+      const count = fetchedEntities.totalElements;
       setEntitiesCount(count);
       setLoadingState('done');
     } catch (error) {
