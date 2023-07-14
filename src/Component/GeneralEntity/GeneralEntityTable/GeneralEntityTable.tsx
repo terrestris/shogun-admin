@@ -93,7 +93,7 @@ type OwnProps<T extends BaseEntity> = {
   tableConfig: TableConfig<T>;
 };
 
-type GeneralEntityTableProps<T extends BaseEntity> = OwnProps<T> & TableProps<T> & React.HTMLAttributes<HTMLDivElement>;
+type GeneralEntityTableProps<T extends BaseEntity> = OwnProps<T> & TableProps<T>;
 
 export function GeneralEntityTable<T extends BaseEntity>({
   i18n,

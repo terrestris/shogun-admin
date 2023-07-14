@@ -740,7 +740,6 @@ export function GeneralEntityRoot<T extends BaseEntity>({
           loading={isGridLoading}
           size="small"
           tableConfig={tableConfig}
-          // @ts-ignore
           onChange={onTableChange}
           pagination={{
             total: pageTotal,

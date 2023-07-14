@@ -199,7 +199,6 @@ export const ImageFileTable: React.FC<ImageFileTableProps> = ({
       bordered
       size="small"
       loading={loadingState === 'loading'}
-      // @ts-ignore
       onChange={onTableChange}
       pagination={{
         total: pageTotal,
