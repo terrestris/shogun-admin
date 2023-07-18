@@ -1,3 +1,10 @@
+## [11.5.2](https://github.com/terrestris/shogun-admin/compare/v11.5.1...v11.5.2) (2023-07-18)
+
+
+### Bugfixes
+
+* replace loading animation with shogun spinner ([236ec39](https://github.com/terrestris/shogun-admin/commit/236ec3958b5287d593c5bf18125b863fa9c38c69))
+
 ## [11.5.1](https://github.com/terrestris/shogun-admin/compare/v11.5.0...v11.5.1) (2023-07-18)
 
 
