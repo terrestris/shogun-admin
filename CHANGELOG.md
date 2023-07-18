@@ -1,3 +1,10 @@
+## [11.5.1](https://github.com/terrestris/shogun-admin/compare/v11.5.0...v11.5.1) (2023-07-18)
+
+
+### Bugfixes
+
+* get layer types from shogun-util and make list of supported configurable ([fababec](https://github.com/terrestris/shogun-admin/commit/fababecaf29eebb65c899ac7696c16d7316fcd7d))
+
 ## [11.5.0](https://github.com/terrestris/shogun-admin/compare/v11.4.4...v11.5.0) (2023-07-14)
 
 
