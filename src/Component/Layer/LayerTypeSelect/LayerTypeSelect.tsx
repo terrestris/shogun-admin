@@ -8,25 +8,26 @@ import {
 } from 'antd';
 import { SelectProps } from 'antd/lib/select';
 
-// eslint-disable-next-line no-shadow
-export enum LayerType {
-  TILEWMS = 'TILEWMS',
-  VECTORTILE = 'VECTORTILE',
-  WFS = 'WFS',
-  WMS = 'WMS',
-  WMTS = 'WMTS',
-  XYZ = 'XYZ',
-  WMSTime = 'WMSTime',
-}
+import LayerType from '@terrestris/shogun-util/dist/model/enum/LayerType';
 
 type SelectPropsExcludes = 'defaultValue' | 'value' | 'options' | 'onChange';
 
 export interface LayerTypeSelectProps extends Omit<SelectProps<LayerType>, SelectPropsExcludes> {
+  supportedTypes?: LayerType[];
   value?: LayerType;
   onChange?: (value: string) => void;
 };
 
 export const LayerTypeSelect: React.FC<LayerTypeSelectProps> = ({
+  supportedTypes = [
+    'TILEWMS',
+    'VECTORTILE',
+    'WFS',
+    'WMS',
+    'WMSTIME',
+    'WMTS',
+    'XYZ'
+  ],
   value,
   onChange,
   ...passThroughProps
@@ -41,10 +42,10 @@ export const LayerTypeSelect: React.FC<LayerTypeSelectProps> = ({
   const getOptions = (): any[] => {
     const options = [];
 
-    for (const value in LayerType) {
+    for (const supportedType of supportedTypes) {
       options.push({
-        label: value,
-        value: value
+        label: supportedType,
+        value: supportedType
       });
     }
 
