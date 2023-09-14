@@ -2,6 +2,7 @@ import React from 'react';
 import { FullscreenExitOutlined, FullscreenOutlined } from '@ant-design/icons';
 import { Button, Tooltip } from 'antd';
 import { useTranslation } from 'react-i18next';
+import { useHotkeys } from 'react-hotkeys-hook';
 
 import './FullscreenWrapper.less';
 
@@ -17,6 +18,14 @@ export const FullscreenWrapper: React.FC<React.HTMLAttributes<HTMLDivElement>> =
   const toggleFullscreen = () => {
     setFullscreen(!fullscreen);
   };
+
+  /**
+   * Exit fullscreen when Esc is pressed.
+   */
+  useHotkeys('esc', toggleFullscreen, {
+    enableOnTags: ['INPUT', 'TEXTAREA', 'SELECT'],
+    filter: () => fullscreen
+  });
 
   const wrapperCls = `fs-wrapper${fullscreen ? ' fullscreen' : ''}`;
 
