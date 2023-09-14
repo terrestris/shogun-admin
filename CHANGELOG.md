@@ -1,3 +1,15 @@
+## [11.5.3](https://github.com/terrestris/shogun-admin/compare/v11.5.2...v11.5.3) (2023-09-14)
+
+
+### Bugfixes
+
+* determine discriminator values ([3926138](https://github.com/terrestris/shogun-admin/commit/39261380d31d6f76f11c2d2c53525dc81dd85258))
+
+
+### Dependencies
+
+* **deps-dev:** bump word-wrap from 1.2.3 to 1.2.4 ([8c71d42](https://github.com/terrestris/shogun-admin/commit/8c71d427c4c68e8ae7322c56674d85835e54b4fa))
+
 ## [11.5.2](https://github.com/terrestris/shogun-admin/compare/v11.5.1...v11.5.2) (2023-07-18)
 
 
