@@ -40,6 +40,7 @@ export default {
         status: 'Status',
         metrics: 'Metriken',
         logs: 'Logs',
+        logLevels: 'Logging-Level',
         configuration: 'Einstellungen',
         global: 'Global',
         image: 'Bilddateien'
@@ -118,7 +119,8 @@ export default {
         logs: 'Einstellungen',
         logsInfo: '… die die Welt lenken',
         tableName: 'Name',
-        tableLevel: 'Level'
+        tableLevel: 'Level',
+        searchPlaceholder: 'Suchen…'
       },
       EvictCache: {
         clear: 'Clear cache'
@@ -239,6 +241,7 @@ export default {
         status: 'Status',
         metrics: 'Metrics',
         logs: 'Logs',
+        logLevels: 'Logging level',
         configuration: 'Configuration',
         global: 'Global',
         image: 'Images'
@@ -319,7 +322,8 @@ export default {
         logs: 'Configuration',
         logsInfo: '… that guide the world',
         tableName: 'Name',
-        tableLevel: 'Level'
+        tableLevel: 'Level',
+        searchPlaceholder: 'Search by…'
       },
       EvictCache: {
         clear: 'Clear cache'
