@@ -32,23 +32,6 @@ interface OwnProps { }
 
 type ImageFileTableProps = OwnProps & Partial<TableProps<ImageFile>>;
 
-const columns: any = [{
-  title: 'UUID',
-  key: 'fileUuid',
-  dataIndex: 'fileUuid',
-  sorter: TableUtil.getSorter('fileUuid'),
-  editable: true,
-  ...TableUtil.getColumnSearchProps('fileUuid')
-}, {
-  title: 'Name',
-  key: 'fileName',
-  dataIndex: 'fileName',
-  sorter: TableUtil.getSorter('fileName'),
-  defaultSortOrder: 'ascend',
-  editable: true,
-  ...TableUtil.getColumnSearchProps('fileName')
-}];
-
 export const ImageFileTable: React.FC<ImageFileTableProps> = ({
   ...passThroughProps
 }) => {
@@ -64,10 +47,36 @@ export const ImageFileTable: React.FC<ImageFileTableProps> = ({
   const navigate = useNavigate();
   const client = useSHOGunAPIClient();
   const service = client.imagefile();
-
   const {
-    t
+    t,
+    i18n
   } = useTranslation();
+
+  const columns: any = [{
+    title: 'UUID',
+    key: 'fileUuid',
+    dataIndex: 'fileUuid',
+    sorter: TableUtil.getSorter('fileUuid'),
+    editable: true,
+    ...TableUtil.getColumnSearchProps('fileUuid')
+  }, {
+    title: 'Name',
+    key: 'fileName',
+    dataIndex: 'fileName',
+    sorter: TableUtil.getSorter('fileName'),
+    defaultSortOrder: 'ascend',
+    editable: true,
+    ...TableUtil.getColumnSearchProps('fileName')
+  }, {
+    title: 'Created',
+    key: 'created',
+    dataIndex: 'created',
+    sorter: TableUtil.getSorter('created'),
+    defaultSortOrder: 'descend',
+    editable: true,
+    render: (val: string) => new Date(val).toLocaleString(i18n.language),
+    ...TableUtil.getColumnSearchProps('created')
+  }];
 
   const onRowClick = (imageFile: ImageFile) => {
     navigate(`${config.appPrefix}/portal/imagefile/${imageFile.fileUuid}`);
