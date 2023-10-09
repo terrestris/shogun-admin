@@ -241,7 +241,7 @@ export default {
         status: 'Status',
         metrics: 'Metrics',
         logs: 'Logs',
-        logLevels: 'Logging level',
+        logLevels: 'Logging levels',
         configuration: 'Configuration',
         global: 'Global',
         image: 'Images'
