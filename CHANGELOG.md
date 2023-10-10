@@ -1,3 +1,24 @@
+## [11.6.0](https://github.com/terrestris/shogun-admin/compare/v11.5.3...v11.6.0) (2023-10-10)
+
+
+### Features
+
+* add date column to image file table ([d578a9d](https://github.com/terrestris/shogun-admin/commit/d578a9dad0d0a5a4011afa55a2e10838c2d8bfe4))
+* add search to log level table ([8bd5261](https://github.com/terrestris/shogun-admin/commit/8bd526100f273a13609dd75d8043b86d1633b5fd))
+* close editor on esc hotkey ([a69b5f3](https://github.com/terrestris/shogun-admin/commit/a69b5f390cf70a4cbe3f884f32d6ddc5e45b7146))
+
+
+### Dependencies
+
+* **deps-dev:** bump postcss from 8.4.24 to 8.4.31 ([a14aaaf](https://github.com/terrestris/shogun-admin/commit/a14aaaf631c26a500b180d549c8ab86e9b5861f5))
+
+
+### Bugfixes
+
+* add missing translations ([05cc0d7](https://github.com/terrestris/shogun-admin/commit/05cc0d7a675957d26dedb3fcf5227f84aa76dcbf))
+* formatting ([d459c44](https://github.com/terrestris/shogun-admin/commit/d459c4450aa30e376be3d3007d77c990f4c981a1))
+* translation ([e30a8ad](https://github.com/terrestris/shogun-admin/commit/e30a8adb7b3a33c6aaa5f0e7ce969a41edd1d58b))
+
 ## [11.5.3](https://github.com/terrestris/shogun-admin/compare/v11.5.2...v11.5.3) (2023-09-14)
 
 
