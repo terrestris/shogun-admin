@@ -120,7 +120,7 @@ export const Navigation: React.FC<NavigationProps> = ({
       label: (
         <>
           <FileTextOutlined />
-          <span>{t('Navigation.logs')}</span>
+          <span>{t('Navigation.logLevels')}</span>
         </>
       )
     });

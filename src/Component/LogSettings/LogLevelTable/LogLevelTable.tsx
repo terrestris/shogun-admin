@@ -4,6 +4,7 @@ import React, {
 } from 'react';
 
 import {
+  Input,
   message,
   Table
 } from 'antd';
@@ -28,37 +29,39 @@ export const LogLevelTable: React.FC<LogLevelTableProps> = props => {
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [data, setData] = useState<TableData[]>([]);
+  const [filteredData, setFilteredData] = useState<TableData[]>(null);
 
   const client = useSHOGunAPIClient();
 
   const {
     t
-  } = useTranslation()
+  } = useTranslation();
 
   useEffect(() => {
+    const fetchLoggers = async () => {
+      setIsLoading(true);
+
+      const logService = new LogService({
+        keycloak: client.getKeycloak()
+      });
+      const loggers = await logService.getLoggers();
+
+      const tableData = Object.keys(loggers)
+        .filter(l => l.split('.').length === 2 || l === 'org.springframework.security')
+        .filter(l => !l.startsWith('_'))
+        .map((loggerName, i) => ({
+          key: i,
+          name: loggerName,
+          level: loggers[loggerName].effectiveLevel
+        }));
+
+      setData(tableData);
+
+      setIsLoading(false);
+    };
+
     fetchLoggers();
-  }, []);
-
-  const fetchLoggers = async () => {
-    setIsLoading(true);
-
-    const logService = new LogService({
-      keycloak: client.getKeycloak()
-    });
-    const loggers = await logService.getLoggers();
-
-    const tableData = Object.keys(loggers)
-      .filter(l => l.split('.').length === 2)
-      .map((loggerName, i) => ({
-        key: i,
-        name: loggerName,
-        level: loggers[loggerName].effectiveLevel
-      }));
-
-    setData(tableData);
-
-    setIsLoading(false);
-  };
+  }, [client]);
 
   const columns = [{
     title: t('LogSettings.tableName'),
@@ -94,13 +97,32 @@ export const LogLevelTable: React.FC<LogLevelTableProps> = props => {
     }
   };
 
+  const search = (searchValue: string) => {
+    const filtered = data.filter(o =>
+      Object.keys(o).some(k =>
+        String(o[k])
+          .toLowerCase()
+          .includes(searchValue.toLowerCase())
+      )
+    );
+    setFilteredData(filtered);
+  };
+
   return (
-    <Table
-      loading={isLoading}
-      columns={columns}
-      dataSource={data}
-      {...props}
-    />
+    <>
+      <Input.Search
+        style={{ margin: '0 0 10px 0' }}
+        placeholder={t('LogSettings.searchPlaceholder')}
+        enterButton
+        onSearch={search}
+      />
+      <Table
+        loading={isLoading}
+        columns={columns}
+        dataSource={filteredData === null ? data : filteredData}
+        {...props}
+      />
+    </>
   );
 };
 

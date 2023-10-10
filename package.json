@@ -9,7 +9,7 @@
     "test": "jest --coverage",
     "test:watch": "jest --watch",
     "eslint": "eslint -c .eslintrc.js --ext .js,.ts,.tsx",
-    "lint": "npm run typecheck && npm run eslint ",
+    "lint": "npm run typecheck && npm run eslint",
     "build": "webpack --config webpack.production.config.js",
     "start": "webpack serve --config webpack.dev.config.js",
     "husky": "husky install",
