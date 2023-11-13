@@ -27,7 +27,10 @@ devConfig.devServer = {
   server: 'https',
   compress: true,
   port: 9090,
-  historyApiFallback: true
+  historyApiFallback: true,
+  allowedHosts: [
+    '.intranet.terrestris.de'
+  ]
 };
 
 module.exports = devConfig;
