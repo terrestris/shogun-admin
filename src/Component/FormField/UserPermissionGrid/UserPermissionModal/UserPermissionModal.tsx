@@ -1,45 +1,38 @@
-import React, {
-  useEffect,
-  useState
-} from 'react';
-
-import {
-  useTranslation
-} from 'react-i18next';
-
-import {
-  Button,
-  ModalProps,
-  Modal,
-  Select,
-  Form,
-  Tag,
-  message,
-  Tooltip
-} from 'antd';
-
-import {
-  DefaultOptionType
-} from 'antd/lib/select';
+import './UserPermissionModal.less';
 
 import {
   PlusOutlined
 } from '@ant-design/icons';
-
+import PermissionCollectionType from '@terrestris/shogun-util/dist/model/enum/PermissionCollectionType';
+import User from '@terrestris/shogun-util/dist/model/User';
+import {
+  Button,
+  Form,
+  message,
+  Modal,
+  ModalProps,
+  Select,
+  Tag,
+  Tooltip
+} from 'antd';
+import {
+  DefaultOptionType
+} from 'antd/lib/select';
+import Logger from 'js-logger';
 import {
   CustomTagProps
 } from 'rc-select/lib/BaseSelect';
-
-import Logger from 'js-logger';
-
-import User from '@terrestris/shogun-util/dist/model/User';
-import PermissionCollectionType from '@terrestris/shogun-util/dist/model/enum/PermissionCollectionType';
+import React, {
+  useEffect,
+  useState
+} from 'react';
+import {
+  useTranslation
+} from 'react-i18next';
 
 import useSHOGunAPIClient from '../../../../Hooks/useSHOGunAPIClient';
-import UserAvatar from '../UserAvatar/UserAvatar';
 import PermissionSelect from '../PermissionSelect/PermissionSelect';
-
-import './UserPermissionModal.less';
+import UserAvatar from '../UserAvatar/UserAvatar';
 
 type FormData = {
   userIds: number[];
@@ -50,7 +43,7 @@ export interface UserPermissionModalProps extends ModalProps {
   entityId: number;
   entityType: string;
   onSave?: () => void;
-};
+}
 
 const UserPermissionModal: React.FC<UserPermissionModalProps> = ({
   entityId,
@@ -73,7 +66,7 @@ const UserPermissionModal: React.FC<UserPermissionModalProps> = ({
       setUsersLoading(true);
 
       try {
-        setUsers((await client.user().findAll()).content);
+        setUsers((await (client as any).user().findAll()).content);
       } catch (error) {
         message.error(t('UserPermissionModal.loadErrorMsg'));
         Logger.error(error);
@@ -130,7 +123,7 @@ const UserPermissionModal: React.FC<UserPermissionModalProps> = ({
 
     for (const userId of userIds) {
       try {
-        await client[entityType]().setUserInstancePermission(entityId, userId, permission);
+        await (client as any)[entityType]().setUserInstancePermission(entityId, userId, permission);
       } catch (error) {
         erroneousRequestUserIds.push(userId);
         Logger.error(error);

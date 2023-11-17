@@ -1,32 +1,28 @@
-import React, {
-  useEffect,
-  useState,
-  useMemo,
-  useCallback
-} from 'react';
+import './JSONEditor.less';
 
 import Editor, {
   EditorProps,
+  OnChange,
   useMonaco
 } from '@monaco-editor/react';
-
 import Logger from 'js-logger';
-
+import { uniqueId } from 'lodash';
 import cloneDeep from 'lodash/cloneDeep';
-
-import FullscreenWrapper from '../../FullscreenWrapper/FullscreenWrapper';
-
-import OpenAPIUtil from '../../../Util/OpenAPIUtil';
+import _isNil from 'lodash/isNil';
+import React, {useCallback,
+  useEffect,
+  useMemo,
+  useState} from 'react';
 
 import {
   swaggerDocs
 } from '../../../State/static';
-
-import './JSONEditor.less';
+import OpenAPIUtil from '../../../Util/OpenAPIUtil';
+import FullscreenWrapper from '../../FullscreenWrapper/FullscreenWrapper';
 
 export type JSONEditorProps = {
   value?: string;
-  onChange?: (value: string) => void;
+  onChange?: (value?: string) => void;
   editorProps?: EditorProps;
   entityType: string;
   dataField: string;
@@ -34,7 +30,7 @@ export type JSONEditorProps = {
 
 export const JSONEditor: React.FC<JSONEditorProps> = ({
   value,
-  onChange,
+  onChange = () => undefined,
   editorProps,
   entityType,
   dataField
@@ -53,12 +49,19 @@ export const JSONEditor: React.FC<JSONEditorProps> = ({
     }
 
     const propertyRefName = openApiUtil.getPropertyRefName(entityType, dataField);
+    if (_isNil(propertyRefName)) {
+      return undefined;
+    }
     const schema = openApiUtil.getJSONSchemaFromDocument(propertyRefName, entityType, dataField);
+
+    if (_isNil(monaco.languages.json.jsonDefaults.diagnosticsOptions.schemas)) {
+      return undefined;
+    }
 
     const schemas = [
       ...cloneDeep(monaco.languages.json.jsonDefaults.diagnosticsOptions.schemas),
       {
-        uri: schema.$id,
+        uri: schema.$id ?? uniqueId('json-schema-id'),
         fileMatch: [`${propertyRefName}.json`],
         schema: schema
       }
@@ -93,13 +96,17 @@ export const JSONEditor: React.FC<JSONEditorProps> = ({
     }
   }, [value]);
 
-  const changeHandler = (val: string) => {
+  const changeHandler: OnChange = (val?: string) => {
+    if (_isNil(val)) {
+      onChange();
+      return;
+    }
     try {
       const jsonObject = JSON.parse(val);
       onChange(jsonObject);
     } catch (error) {
       if (val.length === 0) {
-        onChange(null);
+        onChange();
       }
       Logger.trace('JSON-Editor:', error);
     }

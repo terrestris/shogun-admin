@@ -1,7 +1,6 @@
-import React from 'react';
-
 import { Select } from 'antd';
 import { SelectProps } from 'antd/lib/select';
+import React from 'react';
 
 import { LogLevel } from '../../../Service/LogService/LogService';
 

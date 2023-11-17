@@ -1,19 +1,15 @@
 import Logger from 'js-logger';
-
-import {
-  OpenAPIV3
-} from 'openapi-types';
-
 import {
   JSONSchema7,
   JSONSchema7Definition,
   validate,
   ValidationResult
 } from 'json-schema';
-
-import _get from 'lodash/get';
-
 import cloneDeep from 'lodash/cloneDeep';
+import _isNil from 'lodash/isNil';
+import {
+  OpenAPIV3
+} from 'openapi-types';
 
 export type JSONSchemaDefinition = {
   [key: string]: JSONSchema7Definition;
@@ -32,7 +28,10 @@ export class OpenAPIUtil {
   };
 
   getEntityDefinition = (entity: string) => {
-    const entry = Object.entries(this.document.components.schemas)
+    if (_isNil(this.document?.components?.schemas)) {
+      return undefined;
+    }
+    const entry = Object.entries(this.document?.components?.schemas ?? {})
       .find(([definitionKey]) => definitionKey.toLowerCase() === entity.toLowerCase());
 
     if (!entry) {
@@ -67,6 +66,10 @@ export class OpenAPIUtil {
   getPropertyRefName = (entity: string, property: string) => {
     const propertyDefinition = this.getPropertyDefinition(entity, property);
 
+    if (_isNil(propertyDefinition)) {
+      return;
+    }
+
     if (Object.hasOwn(propertyDefinition, '$ref')) {
       return this.getRefName(propertyDefinition as OpenAPIV3.ReferenceObject);
     }
@@ -82,8 +85,12 @@ export class OpenAPIUtil {
     return property;
   };
 
-  getPropertyType = (entity: string, property: string): string => {
+  getPropertyType = (entity: string, property: string): string | undefined => {
     const propertyDefinition = this.getPropertyDefinition(entity, property);
+
+    if (_isNil(propertyDefinition)) {
+      return;
+    }
 
     if (Object.hasOwn(propertyDefinition, 'type')) {
       return (propertyDefinition as OpenAPIV3.SchemaObject).type;
@@ -103,9 +110,9 @@ export class OpenAPIUtil {
       $schema: schemaDialect,
       definitions: definitions
     };
-    let isValid: ValidationResult;
+    let isValid: ValidationResult | undefined = undefined;
 
-    if (type === 'object') {
+    if (type === 'object' && !_isNil(definitions)) {
       schema = {
         ...schema,
         ...definitions[schemaName] as {}
@@ -113,23 +120,26 @@ export class OpenAPIUtil {
       isValid = validate({}, schema);
     }
 
-    if (type === 'array') {
+    if (type === 'array' && !_isNil(definitions)) {
       schema.items = definitions[schemaName] as {};
       schema.type = 'array';
       isValid = validate([], schema);
     }
 
-    if (!isValid?.valid) {
+    if (_isNil(isValid) || !isValid?.valid) {
       Logger.error('Invalid JSON schema detected: ', isValid?.errors);
     }
 
     return schema;
   };
 
-  private createDefinitions = (): JSONSchemaDefinition => {
+  private createDefinitions = (): JSONSchemaDefinition | undefined => {
     const definitions: JSONSchemaDefinition = {};
+    if (_isNil(this.document?.components?.schemas)) {
+      return undefined;
+    }
 
-    for (const schemaName in this.document.components.schemas) {
+    for (const schemaName in this.document?.components?.schemas) {
       // Ignore the revision types, e.g. Revisions«int,Application»
       if (schemaName.match(/^(.+)«(.+)»$/)) {
         continue;
@@ -178,8 +188,11 @@ export class OpenAPIUtil {
       if (Object.hasOwn(def, '$ref')) {
         const referenceObject = def as OpenAPIV3.ReferenceObject;
         const nextDef = this.getEntityDefinition(this.getRefName(referenceObject));
-
-        this.walkSchemaDefinition(nextDef, findDiscriminator);
+        if (!_isNil(nextDef)) {
+          this.walkSchemaDefinition(nextDef, findDiscriminator);
+        } else {
+          Logger.warn(`Schema definition of ${def} is not defined.`);
+        }
       } else {
         const schemaObject = def as OpenAPIV3.SchemaObject;
 
@@ -195,6 +208,9 @@ export class OpenAPIUtil {
       }
 
       let schemaObject = def as OpenAPIV3.SchemaObject;
+      if (_isNil(schemaObject?.oneOf)) {
+        return;
+      }
 
       const allOf: JSONSchema7Definition[] = [];
 
@@ -213,19 +229,21 @@ export class OpenAPIUtil {
         }
 
         for (const [value, schema] of Object.entries(discriminatorMapping)) {
-          const condition: JSONSchema7 = {
+          const condition: any = {
             if: {
               properties: {},
               required: []
             },
             then: {
-              '$ref': null
+              '$ref': undefined
             }
           };
 
-          ((condition.if as JSONSchema7).properties[discriminatorProperty] as JSONSchema7) = {};
-          ((condition.if as JSONSchema7).properties[discriminatorProperty] as JSONSchema7).const = value;
-          (condition.if as JSONSchema7).required.push(discriminatorProperty);
+          (condition.if.properties[discriminatorProperty] as JSONSchema7) = {};
+          (condition.if.properties[discriminatorProperty] as JSONSchema7).const = value;
+          if (!_isNil(condition?.if?.required)) {
+            condition.if.required.push(discriminatorProperty);
+          }
           (condition.then as JSONSchema7).$ref = this.replaceRefString(schema);
 
           allOf.push(condition);

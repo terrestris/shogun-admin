@@ -1,10 +1,10 @@
-import React from 'react';
+import './FullscreenWrapper.less';
+
 import { FullscreenExitOutlined, FullscreenOutlined } from '@ant-design/icons';
 import { Button, Tooltip } from 'antd';
-import { useTranslation } from 'react-i18next';
+import React from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
-
-import './FullscreenWrapper.less';
+import { useTranslation } from 'react-i18next';
 
 export const FullscreenWrapper: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
   children
@@ -23,8 +23,8 @@ export const FullscreenWrapper: React.FC<React.HTMLAttributes<HTMLDivElement>> =
    * Exit fullscreen when Esc is pressed.
    */
   useHotkeys('esc', toggleFullscreen, {
-    enableOnTags: ['INPUT', 'TEXTAREA', 'SELECT'],
-    filter: () => fullscreen
+    enabled: () => fullscreen,
+    enableOnFormTags: ['INPUT', 'TEXTAREA', 'SELECT']
   });
 
   const wrapperCls = `fs-wrapper${fullscreen ? ' fullscreen' : ''}`;

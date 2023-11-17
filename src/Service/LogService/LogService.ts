@@ -1,11 +1,9 @@
-import Logger from '../../Logger';
-
-import Keycloak from 'keycloak-js';
-
 import { getBearerTokenHeader } from '@terrestris/shogun-util/dist/security/getBearerTokenHeader';
 import { getCsrfTokenHeader } from '@terrestris/shogun-util/dist/security/getCsrfTokenHeader';
-
+import Keycloak from 'keycloak-js';
 import config from 'shogunApplicationConfig';
+
+import Logger from '../../Logger';
 
 export type LogLevel = 'OFF' | 'FATAL' | 'ERROR' | 'WARN' | 'INFO' | 'DEBUG' | 'TRACE';
 
@@ -20,10 +18,10 @@ export type LogServiceOpts = {
 
 class LogService {
 
-  private keycloak?: Keycloak;
+  private readonly keycloak?: Keycloak;
 
   constructor(opts?: LogServiceOpts) {
-    this.keycloak = opts.keycloak;
+    this.keycloak = opts?.keycloak;
   }
 
   async getLoggers(): Promise<any> {
@@ -50,13 +48,10 @@ class LogService {
           ...getBearerTokenHeader(this.keycloak)
         }
       });
-      const loggerJson = await loggerResponse.json();
-
-      return loggerJson;
+      return await loggerResponse.json();
     } catch (error) {
       Logger.error(`Error while reading the logger: ${error}`);
-
-      return null;
+      return Promise.reject();
     }
   }
 
@@ -89,13 +84,10 @@ class LogService {
           ...getBearerTokenHeader(this.keycloak)
         }
       });
-      const logText = await logResponse.text();
-
-      return logText;
+      return await logResponse.text();
     } catch (error) {
       Logger.error(`Error while reading the logs: ${error}`);
-
-      return null;
+      return Promise.reject();
     }
   };
 

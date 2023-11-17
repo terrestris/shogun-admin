@@ -1,9 +1,4 @@
-import React, {
-  ReactNode,
-  useEffect,
-  useState
-} from 'react';
-
+import { ReloadOutlined } from '@ant-design/icons';
 import {
   Button,
   Card,
@@ -11,23 +6,25 @@ import {
   Tooltip
 } from 'antd';
 import { StatisticProps } from 'antd/lib/statistic/Statistic';
-
-import { ReloadOutlined } from '@ant-design/icons';
-
 import isFunction from 'lodash/isFunction';
+import React, {
+  ReactNode, useCallback,
+  useEffect,
+  useState
+} from 'react';
 
-import MetricService, { Metric } from '../../../Service/MetricService/MetricService';
 import useSHOGunAPIClient from '../../../Hooks/useSHOGunAPIClient';
+import MetricService, { Metric } from '../../../Service/MetricService/MetricService';
 
 type StatisticPropExcludes = 'value' | 'prefix' | 'suffix' | 'title' | 'formatter';
 
 export interface MetricEntryProps extends Omit<StatisticProps, StatisticPropExcludes> {
   type: string;
-  prefixRenderer?: (metric: Metric) => ReactNode;
-  suffixRenderer?: (metric: Metric) => ReactNode;
-  titleRenderer?: (metric: Metric) => ReactNode;
-  valueRenderer?: (value: number | string, metric: Metric) => ReactNode;
-};
+  prefixRenderer?: (metric?: Metric) => ReactNode;
+  suffixRenderer?: (metric?: Metric) => ReactNode;
+  titleRenderer?: (metric?: Metric) => ReactNode;
+  valueRenderer?: (value: number | string, metric?: Metric) => ReactNode;
+}
 
 export const MetricEntry: React.FC<MetricEntryProps> = ({
   type,
@@ -43,22 +40,18 @@ export const MetricEntry: React.FC<MetricEntryProps> = ({
 
   const client = useSHOGunAPIClient();
 
-  useEffect(() => {
-    fetchMetric();
-  }, []);
-
-  const fetchMetric = async () => {
+  const fetchMetric = useCallback(async () => {
     setIsLoading(true);
 
     const metricService = new MetricService({
-      keycloak: client.getKeycloak()
+      keycloak: client?.getKeycloak()
     });
     const metricResponse = await metricService.getMetric(type);
 
     setMetric(metricResponse);
 
     setIsLoading(false);
-  };
+  }, [client, type]);
 
   const getPrefix = (): ReactNode => {
     if (isFunction(prefixRenderer)) {
@@ -97,6 +90,10 @@ export const MetricEntry: React.FC<MetricEntryProps> = ({
 
     return value;
   };
+
+  useEffect(() => {
+    fetchMetric();
+  }, [fetchMetric]);
 
   return (
     <Card

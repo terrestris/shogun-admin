@@ -1,18 +1,18 @@
+import { AppInfo } from '@terrestris/shogun-util/dist/model/AppInfo';
+import Layer from '@terrestris/shogun-util/dist/model/Layer';
+import User from '@terrestris/shogun-util/dist/model/User';
 import {
   atom
 } from 'recoil';
-import { AppInfo } from '@terrestris/shogun-util/dist/model/AppInfo';
-import User from '@terrestris/shogun-util/dist/model/User';
-import Layer from '@terrestris/shogun-util/dist/model/Layer';
 
 export const appInfoAtom = atom<AppInfo>({
   key: 'appInfo',
   default: {
-    commitHash: undefined,
-    version: undefined,
-    buildTime: undefined,
-    userId: undefined,
-    authorities: undefined
+    commitHash: '',
+    version: '',
+    buildTime: '',
+    userId: -1,
+    authorities: []
   }
 });
 
@@ -30,5 +30,5 @@ export const shogunInfoModalVisibleAtom = atom<boolean>({
 
 export const layerSuggestionListAtom = atom<Layer[]>({
   key: 'layerSuggestionList',
-  default: null
+  default: []
 });

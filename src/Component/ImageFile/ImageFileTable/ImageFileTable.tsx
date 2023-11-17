@@ -1,32 +1,26 @@
-import React, { useCallback, useEffect, useState } from 'react';
-
-import { useNavigate } from 'react-router-dom';
-
-import {
-  Modal,
-  notification,
-  Tooltip,
-  Table,
-  TableProps
-} from 'antd';
+import './ImageFileTable.less';
 
 import {
   DeleteOutlined,
   SyncOutlined
 } from '@ant-design/icons';
-
 import ImageFile from '@terrestris/shogun-util/dist/model/ImageFile';
-
-import TableUtil from '../../../Util/TableUtil';
-import useSHOGunAPIClient from '../../../Hooks/useSHOGunAPIClient';
-
+import {
+  Modal,
+  notification,
+  Table,
+  TableProps,
+  Tooltip
+} from 'antd';
+import { SortOrder } from 'antd/es/table/interface';
+import _isNil from 'lodash/isNil';
+import React, { useCallback, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 import config from 'shogunApplicationConfig';
 
-import { useTranslation } from 'react-i18next';
-
-import { SortOrder } from 'antd/es/table/interface';
-
-import './ImageFileTable.less';
+import useSHOGunAPIClient from '../../../Hooks/useSHOGunAPIClient';
+import TableUtil from '../../../Util/TableUtil';
 
 interface OwnProps { }
 
@@ -46,7 +40,7 @@ export const ImageFileTable: React.FC<ImageFileTableProps> = ({
 
   const navigate = useNavigate();
   const client = useSHOGunAPIClient();
-  const service = client.imagefile();
+  const service = client?.imagefile();
   const {
     t,
     i18n
@@ -94,13 +88,12 @@ export const ImageFileTable: React.FC<ImageFileTableProps> = ({
         page: pageCurrent - 1,
         size: pageSize,
         sort: {
-          properties: [sortField],
-          order: sortOrder === 'ascend' ? 'asc' : undefined ||
-            sortOrder === 'descend' ? 'desc' : undefined
+          properties: _isNil(sortField) ? [] : [sortField],
+          order: sortOrder === 'ascend' ? 'asc' : sortOrder === 'descend' ? 'desc' : undefined
         }
       });
-      setPageTotal(fetchedEntities.totalElements);
-      setEntities(fetchedEntities.content);
+      setPageTotal(fetchedEntities?.totalElements);
+      setEntities(fetchedEntities?.content);
       setLoadingState('done');
     } catch (error) {
       setLoadingState('failed');
@@ -113,7 +106,7 @@ export const ImageFileTable: React.FC<ImageFileTableProps> = ({
 
   const onDeleteClick = (record: ImageFile) => {
     if (!record.id) {
-      setEntities(entities.filter(r => r !== record));
+      setEntities(entities?.filter(r => r !== record));
       return;
     }
 
@@ -129,19 +122,20 @@ export const ImageFileTable: React.FC<ImageFileTableProps> = ({
       ),
       onOk: async () => {
         try {
-          await service?.delete(record.fileUuid);
+          if (!_isNil(record.fileUuid)) {
+            await service?.delete(record.fileUuid);
 
-          notification.info({
-            message: t('ImageFileTable.deletionInfo', { entity: name.singular }),
-            description: t('ImageFileTable.deletionInfo', {
-              entity: name.singular,
-              record: record.fileName
-            })
-          });
+            notification.info({
+              message: t('ImageFileTable.deletionInfo', { entity: name.singular }),
+              description: t('ImageFileTable.deletionInfo', {
+                entity: name.singular,
+                record: record.fileName
+              })
+            });
 
-          fetchEntities();
-
-          navigate(`${config.appPrefix}/portal/imagefile`);
+            await fetchEntities();
+            navigate(`${config.appPrefix}/portal/imagefile`);
+          }
         } catch (error) {
           notification.error({
             message: t('ImageFileTable.deleteFail'),
@@ -185,8 +179,12 @@ export const ImageFileTable: React.FC<ImageFileTableProps> = ({
       setSortField(sorter.field as string);
     }
 
-    setPageCurrent(pagination.current);
-    setPageSize(pagination.pageSize);
+    if (!_isNil(pagination.current)) {
+      setPageCurrent(pagination.current);
+    }
+    if (!_isNil(pagination.pageSize)) {
+      setPageSize(pagination.pageSize);
+    }
   };
 
   if (!entities) {
@@ -197,7 +195,7 @@ export const ImageFileTable: React.FC<ImageFileTableProps> = ({
     <Table
       className="imagefile-table"
       columns={tableColumns}
-      rowKey={(record)=> record.id.toString()}
+      rowKey={(record) => `${record?.id}`}
       rowClassName={() => 'editable-row'}
       dataSource={entities}
       onRow={(record) => {

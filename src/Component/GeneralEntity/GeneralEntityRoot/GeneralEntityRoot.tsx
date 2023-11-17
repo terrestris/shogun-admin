@@ -1,28 +1,4 @@
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useState
-} from 'react';
-
-import {
-  useNavigate,
-  useLocation,
-  matchPath,
-  Link
-} from 'react-router-dom';
-
-import {
-  useHotkeys
-} from 'react-hotkeys-hook';
-
-import {
-  Button,
-  PageHeader,
-  Form,
-  notification,
-  Upload
-} from 'antd';
+import './GeneralEntityRoot.less';
 
 import {
   FormOutlined,
@@ -30,7 +6,24 @@ import {
   UndoOutlined,
   UploadOutlined
 } from '@ant-design/icons';
-
+import Logger from '@terrestris/base-util/dist/Logger';
+import BaseEntity from '@terrestris/shogun-util/dist/model/BaseEntity';
+import {
+  getBearerTokenHeader
+} from '@terrestris/shogun-util/dist/security/getBearerTokenHeader';
+import {
+  Button,
+  Form,
+  notification,
+  PageHeader,
+  Upload
+} from 'antd';
+import {
+  TableProps,
+} from 'antd/es/table';
+import {
+  SortOrder
+} from 'antd/es/table/interface';
 import {
   RcFile,
   UploadChangeParam
@@ -38,31 +31,35 @@ import {
 import {
   UploadFile
 } from 'antd/lib/upload/interface';
-
-import {
-  UploadRequestOption
-} from 'rc-upload/lib/interface';
-
+import i18next from 'i18next';
+import _isEmpty from 'lodash/isEmpty';
+import _isNil from 'lodash/isNil';
 import {
   NamePath
 } from 'rc-field-form/lib/interface';
-
-import _isEmpty from 'lodash/isEmpty';
-
+import {
+  UploadRequestOption
+} from 'rc-upload/lib/interface';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useState
+} from 'react';
+import {
+  useHotkeys
+} from 'react-hotkeys-hook';
 import {
   useTranslation
 } from 'react-i18next';
-import i18next from 'i18next';
-
+import {Link,
+  matchPath,
+  useLocation,
+  useNavigate} from 'react-router-dom';
 import {
   Shapefile
 } from 'shapefile.js';
-
-import {
-  getBearerTokenHeader
-} from '@terrestris/shogun-util/dist/security/getBearerTokenHeader';
-import BaseEntity from '@terrestris/shogun-util/dist/model/BaseEntity';
-import Logger from '@terrestris/base-util/dist/Logger';
+import config from 'shogunApplicationConfig';
 
 import {
   ControllerUtil
@@ -70,24 +67,14 @@ import {
 import {
   GenericEntityController
 } from '../../../Controller/GenericEntityController';
+import useSHOGunAPIClient from '../../../Hooks/useSHOGunAPIClient';
+import TranslationUtil from '../../../Util/TranslationUtil';
 import GeneralEntityForm, {
   FormConfig
 } from '../GeneralEntityForm/GeneralEntityForm';
 import GeneralEntityTable, {
   TableConfig
 } from '../GeneralEntityTable/GeneralEntityTable';
-import useSHOGunAPIClient from '../../../Hooks/useSHOGunAPIClient';
-import TranslationUtil from '../../../Util/TranslationUtil';
-
-import config from 'shogunApplicationConfig';
-
-import './GeneralEntityRoot.less';
-import {
-  TableProps,
-} from 'antd/es/table';
-import {
-  SortOrder
-} from 'antd/es/table/interface';
 
 type LayerUploadOptions = {
   baseUrl: string;
@@ -101,6 +88,17 @@ type LayerUploadResponse = {
   layerName: string;
   workspace: string;
   baseUrl: string;
+};
+
+type FeatureTypeAttributes = {
+  attribute: {
+    name: string;
+    minOccurs: number;
+    maxOccurs: number;
+    nillable: boolean;
+    binding?: string;
+    length?: number;
+  }[];
 };
 
 export type GeneralEntityConfigType<T extends BaseEntity> = {
@@ -171,7 +169,7 @@ export function GeneralEntityRoot<T extends BaseEntity>({
       // TODO: check validation of JSON (and MarkDownEditor) if used for field
       await form.validateFields(nameList || []);
       valid = true;
-    } catch (e) {
+    } catch (e: any) {
       if ('errorFields' in e) {
         valid = false;
       } else {
@@ -188,7 +186,7 @@ export function GeneralEntityRoot<T extends BaseEntity>({
 
   const entityController: GenericEntityController<T> = useMemo(() => ControllerUtil.createController({
     endpoint,
-    keycloak: client.getKeycloak(),
+    keycloak: client?.getKeycloak(),
     entityType,
     formConfig,
     updateForm
@@ -221,9 +219,8 @@ export function GeneralEntityRoot<T extends BaseEntity>({
         page: pageCurrent - 1,
         size: pageSize,
         sort: {
-          properties: [sortField],
-          order: sortOrder === 'ascend' ? 'asc' : undefined ||
-            sortOrder === 'descend' ? 'desc' : undefined
+          properties: _isNil(sortField) ? [] : [sortField],
+          order: sortOrder === 'ascend' ? 'asc' : sortOrder === 'descend' ? 'desc' : undefined
         }
       });
       setPageTotal(allEntries.totalElements);
@@ -302,7 +299,7 @@ export function GeneralEntityRoot<T extends BaseEntity>({
   };
 
   const onResetForm = () => {
-    const oldValues = allEntities.find((entity) => entity.id === id);
+    const oldValues = allEntities?.find((entity) => entity.id === id);
     if (!oldValues) {
       return;
     }
@@ -411,7 +408,7 @@ export function GeneralEntityRoot<T extends BaseEntity>({
     const shp = await Shapefile.load(file);
 
     let featureTypeName = '';
-    let featureTypeAttributes = {
+    let featureTypeAttributes: FeatureTypeAttributes = {
       attribute: []
     };
 
@@ -486,9 +483,11 @@ export function GeneralEntityRoot<T extends BaseEntity>({
     }
   };
 
-  const getGeometryType = (type: number) => {
-    const types = {
-      0: null, // Null
+  const getGeometryType = (geometryTypeNumber: number): string | undefined => {
+    const allTypes: {
+      [key: number]: string | undefined;
+    } = {
+      0: undefined, // Null
       1: 'org.locationtech.jts.geom.Point', // Point
       3: 'org.locationtech.jts.geom.LineString', // Polyline
       5: 'org.locationtech.jts.geom.Polygon', // Polygon
@@ -501,10 +500,10 @@ export function GeneralEntityRoot<T extends BaseEntity>({
       23: 'org.locationtech.jts.geom.LineString', // PolylineM
       25: 'org.locationtech.jts.geom.Polygon', // PolygonM
       28: 'org.locationtech.jts.geom.MultiPoint', // MultiPointM
-      31: null // MultiPatch
+      31: undefined // MultiPatch
     };
 
-    return types[type];
+    return allTypes[geometryTypeNumber];
   };
 
   const getAttributeType = (dbfFieldType: string) => {
@@ -520,16 +519,16 @@ export function GeneralEntityRoot<T extends BaseEntity>({
       case 'L': // Logical
         return 'java.lang.Boolean';
       case 'M': // Memo
-        return null;
+        return undefined;
       default:
-        return null;
+        return undefined;
     }
   };
 
   const onFileUploadAction = async (options: UploadRequestOption<LayerUploadResponse>) => {
     const {
-      onError,
-      onSuccess,
+      onError = () => undefined,
+      onSuccess = () => undefined,
       file
     } = options;
 
@@ -564,7 +563,7 @@ export function GeneralEntityRoot<T extends BaseEntity>({
     } catch (error) {
       onError({
         name: 'UploadError',
-        message: error.message
+        message: (error as Error)?.message
       });
     }
   };
@@ -577,15 +576,15 @@ export function GeneralEntityRoot<T extends BaseEntity>({
     }
 
     if (file.status === 'done') {
-      await client.layer().add({
-        name: file.response.layerName,
+      await client?.layer().add({
+        name: file.response?.layerName ?? 'LAYER-DEFAULT-NAME',
         type: 'TILEWMS',
         clientConfig: {
           hoverable: false
         },
         sourceConfig: {
-          url: `${file.response.baseUrl}/ows?`,
-          layerNames: `${file.response.workspace}:${file.response.layerName}`,
+          url: `${file.response?.baseUrl}/ows?`,
+          layerNames: `${file.response?.workspace}:${file.response?.layerName}`,
           useBearerToken: true
         }
       });
@@ -602,7 +601,7 @@ export function GeneralEntityRoot<T extends BaseEntity>({
         }),
         description: t('GeneralEntityRoot.upload.success.description', {
           fileName: file.fileName,
-          layerName: file.response.layerName
+          layerName: file.response?.layerName
         }),
       });
     } else if (file.status === 'error') {
@@ -630,8 +629,8 @@ export function GeneralEntityRoot<T extends BaseEntity>({
   };
 
   useHotkeys('ctrl+s', handleKeyboardSave, {
-    enableOnTags: ['INPUT', 'TEXTAREA', 'SELECT'],
-    filter: () => !saveReloadDisabled && formValid
+    enableOnFormTags: ['INPUT', 'TEXTAREA', 'SELECT'],
+    enabled: () => !saveReloadDisabled && formValid
   });
 
   const initialValues = useMemo(() => entityController?.getInitialFormValues(), [entityController]);
@@ -647,8 +646,12 @@ export function GeneralEntityRoot<T extends BaseEntity>({
       setSortField(sorter.field as string);
     }
 
-    setPageCurrent(pagination.current);
-    setPageSize(pagination.pageSize);
+    if (!_isNil(pagination.current)) {
+      setPageCurrent(pagination.current);
+    }
+    if (!_isNil(pagination.pageSize)) {
+      setPageCurrent(pagination.pageSize);
+    }
   };
 
   return (
@@ -734,7 +737,7 @@ export function GeneralEntityRoot<T extends BaseEntity>({
           i18n={i18n}
           bordered
           controller={entityController}
-          entities={allEntities}
+          entities={allEntities ?? []}
           entityType={entityType}
           fetchEntities={fetchEntities}
           loading={isGridLoading}
@@ -764,7 +767,7 @@ export function GeneralEntityRoot<T extends BaseEntity>({
       </div>
       <div className="right-container">
         {
-          id && (
+          id && !_isNil(entityId) && (
             <GeneralEntityForm
               loading={isFormLoading}
               i18n={i18n}

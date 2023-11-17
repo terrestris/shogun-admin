@@ -1,37 +1,20 @@
-import React, {
-  Suspense
-} from 'react';
+import './index.less';
 
-import {
-  createRoot
-} from 'react-dom/client';
-
-import {
-  RecoilRoot
-} from 'recoil';
-
-import {
-  Button,
-  Result
-} from 'antd';
-
-import Keycloak from 'keycloak-js';
-
-import {
-  loader
-} from '@monaco-editor/react';
-
-import Logger from './Logger';
-
+import { loader } from '@monaco-editor/react';
 import SHOGunAPIClient from '@terrestris/shogun-util/dist/service/SHOGunAPIClient';
-
-import i18n from './i18n';
-import { SHOGunAPIClientProvider } from './Context/SHOGunAPIClientContext';
-const App = React.lazy(() => import('./App'));
-
+import { Button, Result } from 'antd';
+import Keycloak from 'keycloak-js';
+import _isNil from 'lodash/isNil';
+import React, { Suspense } from 'react';
+import { createRoot } from 'react-dom/client';
+import { RecoilRoot } from 'recoil';
 import config from 'shogunApplicationConfig';
 
-import './index.less';
+import { SHOGunAPIClientProvider } from './Context/SHOGunAPIClientContext';
+import i18n from './i18n';
+import Logger from './Logger';
+
+const App = React.lazy(() => import('./App'));
 
 const initKeycloak = async (): Promise<Keycloak | null> => {
   const keycloakEnabled = config.security.keycloak.enabled;
@@ -79,31 +62,33 @@ const initKeycloak = async (): Promise<Keycloak | null> => {
 };
 
 const initSHOGunAPIClient = (keycloak?: Keycloak) => {
-  const client = new SHOGunAPIClient({
+  return new SHOGunAPIClient({
     url: config.path.shogunBase || '/',
     keycloak: keycloak
   });
-
-  return client;
 };
 
 const renderApp = async () => {
-  const root = createRoot(document.getElementById('app'));
-  let keycloak: Keycloak | null;
+  const rootElement = document.getElementById('app');
+  if (_isNil(rootElement)) {
+    return Promise.reject();
+  }
+  const root = createRoot(rootElement);
+  let keycloak: Keycloak | undefined;
 
   try {
-    keycloak = await initKeycloak();
+    keycloak = await initKeycloak() ?? undefined;
 
     // Only check for roles if keycloak is enabled.
-    if (keycloak) {
+    if (!_isNil(keycloak)) {
       const authorizedRoles: string[] = config.security.keycloak.authorizedRoles || [];
-      const keycloakClientId: string = config.security.keycloak.clientId;
+      const keycloakClientId: string | undefined = config.security.keycloak.clientId;
 
-      const isAuthorized = authorizedRoles.some(role => keycloak.hasResourceRole(role, keycloakClientId));
+      const isAuthorized = authorizedRoles.some(role => keycloak!.hasResourceRole(role, keycloakClientId));
 
       if (!isAuthorized) {
         throw new Error('UNAUTHORIZED');
-      };
+      }
     }
 
     const client = initSHOGunAPIClient(keycloak);
@@ -126,25 +111,24 @@ const renderApp = async () => {
   } catch (error) {
     Logger.error(error);
 
-    if (error.message === 'UNAUTHORIZED') {
-      root.render(
-        <Result
-          status={'403'}
-          title={i18n.t('Index.unauthorizedTitle') as string}
-          extra={
-            <Button
-              onClick={async () => {
-                if (keycloak) {
-                  await keycloak.logout();
-                  await keycloak.login();
-                }
-              }}
-            >
-              {i18n.t('Index.backToLoginButtonText') as string}
-            </Button>
-          }
-        />
-      );
+    if ((error as Error).message === 'UNAUTHORIZED') {      root.render(
+      <Result
+        status={'403'}
+        title={i18n.t('Index.unauthorizedTitle') as string}
+        extra={
+          <Button
+            onClick={async () => {
+              if (keycloak) {
+                await keycloak.logout();
+                await keycloak.login();
+              }
+            }}
+          >
+            {i18n.t('Index.backToLoginButtonText') as string}
+          </Button>
+        }
+      />
+    );
     } else {
       root.render(
         <Result

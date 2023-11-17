@@ -1,36 +1,35 @@
-import React, {
-  useCallback,
-  useEffect,
-  useState
-} from 'react';
-
-import { useNavigate } from 'react-router-dom';
-
 import {
   Button,
   Input,
   PageHeader,
   Switch
 } from 'antd';
+import React, {
+  useCallback,
+  useEffect,
+  useState
+} from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const { TextArea } = Input;
 
-import LogService from '../../Service/LogService/LogService';
-import useSHOGunAPIClient from '../../Hooks/useSHOGunAPIClient';
+import './Logs.less';
 
+import _isNil from 'lodash/isNil';
 import { useTranslation } from 'react-i18next';
 
-import './Logs.less';
+import useSHOGunAPIClient from '../../Hooks/useSHOGunAPIClient';
+import LogService from '../../Service/LogService/LogService';
 
 type LogsProps = {};
 
-export const Logs: React.FC<LogsProps> = (props) => {
+export const Logs: React.FC<LogsProps> = () => {
 
   const [logs, setLogs] = useState<string>('');
 
   const client = useSHOGunAPIClient();
 
-  let intervalTimer: NodeJS.Timer;
+  let intervalTimer: NodeJS.Timeout | undefined;
 
   const navigate = useNavigate();
 
@@ -51,7 +50,7 @@ export const Logs: React.FC<LogsProps> = (props) => {
 
   const fetchLogs = useCallback(async () => {
     const logService = new LogService({
-      keycloak: client.getKeycloak()
+      keycloak: client?.getKeycloak()
     });
     const fetchedLogs = await logService.getLogs();
     setLogs(fetchedLogs);
@@ -60,6 +59,10 @@ export const Logs: React.FC<LogsProps> = (props) => {
   useEffect(() => {
     fetchLogs();
   }, [fetchLogs]);
+
+  if (_isNil(client)) {
+    return null;
+  }
 
   return (
     <div

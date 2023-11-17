@@ -1,22 +1,20 @@
-import React, {
-  useEffect,
-  useState
-} from 'react';
-
+import LayerType from '@terrestris/shogun-util/dist/model/enum/LayerType';
 import {
   Select
 } from 'antd';
 import { SelectProps } from 'antd/lib/select';
-
-import LayerType from '@terrestris/shogun-util/dist/model/enum/LayerType';
+import React, {
+  useEffect,
+  useState
+} from 'react';
 
 type SelectPropsExcludes = 'defaultValue' | 'value' | 'options' | 'onChange';
 
 export interface LayerTypeSelectProps extends Omit<SelectProps<LayerType>, SelectPropsExcludes> {
   supportedTypes?: LayerType[];
   value?: LayerType;
-  onChange?: (value: string) => void;
-};
+  onChange?: (value?: LayerType) => void;
+}
 
 export const LayerTypeSelect: React.FC<LayerTypeSelectProps> = ({
   supportedTypes = [
@@ -29,11 +27,11 @@ export const LayerTypeSelect: React.FC<LayerTypeSelectProps> = ({
     'XYZ'
   ],
   value,
-  onChange,
+  onChange = () => undefined,
   ...passThroughProps
 }) => {
 
-  const [currentValue, setCurrentValue] = useState<LayerType>(value);
+  const [currentValue, setCurrentValue] = useState<LayerType | undefined>(value);
 
   useEffect(() => {
     setCurrentValue(value);
@@ -54,7 +52,6 @@ export const LayerTypeSelect: React.FC<LayerTypeSelectProps> = ({
 
   const changeHandler = (val: LayerType) => {
     setCurrentValue(val);
-
     onChange(val);
   };
 

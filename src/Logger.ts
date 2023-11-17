@@ -1,6 +1,6 @@
 import jsLogger from 'js-logger';
 
-let loglevel;
+let loglevel: string;
 switch (process.env.NODE_ENV) {
   case 'development':
     loglevel = 'DEBUG';
@@ -17,10 +17,10 @@ switch (process.env.NODE_ENV) {
   default:
     loglevel = 'INFO';
     break;
-};
+}
 
 jsLogger.useDefaults({
-  defaultLevel: jsLogger[loglevel]
+  defaultLevel: jsLogger.get(loglevel).getLevel()
 });
 
 export default jsLogger;

@@ -1,63 +1,27 @@
-import React, {
-  useCallback,
-  useEffect,
-  useRef,
-  useState
-} from 'react';
+import './App.less';
 
-import {
-  useRecoilState
-} from 'recoil';
-
-import {
-  BrowserRouter as Router,
-  Navigate,
-  Route,
-  Routes
-} from 'react-router-dom';
-
-import {
-  useTranslation
-} from 'react-i18next';
-
-import {
-  OpenAPIV3
-} from 'openapi-types';
-
-import {
-  useMonaco
-} from '@monaco-editor/react';
-
-import {
-  IDisposable
-} from 'monaco-editor';
-
-import {
-  Result,
-  Spin
-} from 'antd';
-
+import { useMonaco } from '@monaco-editor/react';
+import { Result, Spin } from 'antd';
 import Logger from 'js-logger';
-
-import _isEmpty from 'lodash/isEmpty';
+import { IDisposable, languages } from 'monaco-editor';
+import { OpenAPIV3 } from 'openapi-types';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { BrowserRouter as Router, Navigate, Route, Routes } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
+import config from 'shogunApplicationConfig';
 
 import Header from './Component/Header/Header';
-import Portal from './Page/Portal/Portal';
-import {
-  appInfoAtom,
-  userInfoAtom,
-  layerSuggestionListAtom
-} from './State/atoms';
-import {
-  setSwaggerDocs
-} from './State/static';
-
-import useSHOGunAPIClient from './Hooks/useSHOGunAPIClient';
-
-import config from 'shogunApplicationConfig';
 import ShogunSpinner from './Component/ShogunSpinner/ShogunSpinner';
+import useSHOGunAPIClient from './Hooks/useSHOGunAPIClient';
+import Portal from './Page/Portal/Portal';
+import { appInfoAtom, layerSuggestionListAtom, userInfoAtom } from './State/atoms';
+import ProviderResult = languages.ProviderResult;
+import CompletionList = languages.CompletionList;
+import CompletionItem = languages.CompletionItem;
+import _isNil from 'lodash/isNil';
 
-import './App.less';
+import { setSwaggerDocs } from './State/static';
 
 const App: React.FC = () => {
   const [, setUserInfo] = useRecoilState(userInfoAtom);
@@ -82,13 +46,17 @@ const App: React.FC = () => {
   const getInitialData = useCallback(async () => {
     try {
       setLoadingState('loading');
-      const swaggerDoc = await client.openapi().getApiDocs('v3') as OpenAPIV3.Document;
+      const swaggerDoc = await client?.openapi().getApiDocs('v3') as OpenAPIV3.Document;
       setSwaggerDocs(swaggerDoc);
-      const appInfo = await client.info().getAppInfo();
-      setAppInfo(appInfo);
+      const appInfo = await client?.info().getAppInfo();
+      if (!_isNil(appInfo)) {
+        setAppInfo(appInfo);
+      }
       if (appInfo?.userId) {
-        const userInfo = await client.user().findOne(appInfo.userId);
-        setUserInfo(userInfo);
+        const userInfo = await client?.user().findOne(appInfo.userId);
+        if (!_isNil(userInfo)) {
+          setUserInfo(userInfo);
+        }
       }
       setLoadingState('done');
     } catch (error) {
@@ -102,7 +70,7 @@ const App: React.FC = () => {
       return undefined;
     }
 
-    const disposableCompletionItemProvider = monaco.languages.registerCompletionItemProvider('json', {
+    disposableCompletionItemProviderRef.current = monaco.languages.registerCompletionItemProvider('json', {
       triggerCharacters: ['.'],
       provideCompletionItems: async (model, position) => {
         const lineContent = model.getLineContent(position.lineNumber).trim();
@@ -113,33 +81,40 @@ const App: React.FC = () => {
 
         if (!layerSuggestionList) {
           try {
-            const layers = await client.layer().findAll();
-
-            setLayerSuggestionList(layers.content);
+            const layers = await client?.layer().findAll();
+            if (!_isNil(layers)) {
+              setLayerSuggestionList(layers.content);
+            }
 
             if (disposableCompletionItemProviderRef.current) {
               disposableCompletionItemProviderRef.current.dispose();
             }
           } catch (error) {
             Logger.error(error);
-          } finally {
-            return null;
           }
+          return undefined;
         }
 
-        return {
-          suggestions: layerSuggestionList.map(layer => ({
-            insertText: layer.id.toString(),
-            label: `${layer.name} (${layer.id})`,
-            kind: monaco.languages.CompletionItemKind.Value,
-            documentation: `${JSON.stringify(layer, null, '  ')}`,
-            range: null
-          }))
+        const providerResult: ProviderResult<CompletionList> = {
+          suggestions: layerSuggestionList.map((layer): CompletionItem => {
+            return {
+              insertText: layer?.id?.toString() ?? '',
+              label: `${layer.name} (${layer.id})`,
+              kind: monaco.languages.CompletionItemKind.Value,
+              documentation: `${JSON.stringify(layer, null, '  ')}`,
+              range: {
+                startColumn: 0,
+                startLineNumber: 0,
+                endLineNumber: Number.MAX_SAFE_INTEGER,
+                endColumn: Number.MAX_SAFE_INTEGER
+              }
+            };
+          })
         };
+
+        return providerResult;
       }
     });
-
-    disposableCompletionItemProviderRef.current = disposableCompletionItemProvider;
   }, [monaco, client, setLayerSuggestionList, layerSuggestionList]);
 
   useEffect(() => {
