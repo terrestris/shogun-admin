@@ -1,25 +1,23 @@
-import React from 'react';
-
-import { useNavigate } from 'react-router-dom';
+import './MetricsRoot.less';
 
 import {
   Col,
   PageHeader,
   Row
 } from 'antd';
+import React from 'react';
+import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 
-import ProcessUptime from '../ProcessUptime/ProcessUptime';
 import JdbcConnectionsActive from '../JdbcConnectionsActive/JdbcConnectionsActive';
 import JvmMemoryUsed from '../JvmMemoryUsed/JvmMemoryUsed';
 import JvmThreadsLive from '../JvmThreadsLive/JvmThreadsLive';
 import ProcessCpuUsage from '../ProcessCpuUsage/ProcessCpuUsage';
+import ProcessStartTime from '../ProcessStartTime/ProcessStartTime';
+import ProcessUptime from '../ProcessUptime/ProcessUptime';
 import SystemCpuCount from '../SystemCpuCount/SystemCpuCount';
 import SystemCpuUsage from '../SystemCpuUsage/SystemCpuUsage';
-import ProcessStartTime from '../ProcessStartTime/ProcessStartTime';
 import SystemLoadAverage from '../SystemLoadAverage/SystemLoadAverage';
-import { useTranslation } from 'react-i18next';
-
-import './MetricsRoot.less';
 
 type MetricsRootProps = {};
 

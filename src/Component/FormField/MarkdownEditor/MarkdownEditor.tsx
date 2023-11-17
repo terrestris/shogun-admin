@@ -1,12 +1,13 @@
-import React, { useEffect } from 'react';
-import MDEditor, { ICommand } from '@uiw/react-md-editor';
-import FullscreenWrapper from '../../FullscreenWrapper/FullscreenWrapper';
-
 import './MarkdownEditor.less';
+
+import MDEditor, { ICommand } from '@uiw/react-md-editor';
+import React, { useEffect } from 'react';
+
+import FullscreenWrapper from '../../FullscreenWrapper/FullscreenWrapper';
 
 export type MarkdownEditorProps = {
   value?: string;
-  onChange?: (value: string) => void;
+  onChange?: (value?: string) => void;
 };
 
 export const commandsFilter = (command: ICommand) => {
@@ -18,7 +19,7 @@ export const commandsFilter = (command: ICommand) => {
 
 export const MarkdownEditor: React.FC<MarkdownEditorProps> = ({
   value,
-  onChange
+  onChange = () => undefined
 }) => {
   const [markdown, setMarkdown] = React.useState<string>();
 
@@ -26,7 +27,7 @@ export const MarkdownEditor: React.FC<MarkdownEditorProps> = ({
     setMarkdown(value);
   }, [value]);
 
-  const onMarkdownChange = (val: string) => {
+  const onMarkdownChange = (val?: string) => {
     setMarkdown(val);
     onChange(val);
   };

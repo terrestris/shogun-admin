@@ -1,8 +1,7 @@
+import moment from 'moment';
 import React, {
   ReactNode,
 } from 'react';
-
-import moment from 'moment';
 
 import MetricEntry, { MetricEntryProps } from '../MetricEntry/MetricEntry';
 
@@ -16,7 +15,7 @@ export const ProcessStartTime: React.FC<ProcessStartTimeProps> = ({
     let val = moment(Number(value) * 1000).format('llll');
 
     return <span>{val}</span>;
-  }
+  };
 
   return (
     <MetricEntry

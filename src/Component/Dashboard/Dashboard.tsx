@@ -1,6 +1,6 @@
-import React, { ReactNode } from 'react';
-
 import './Dashboard.less';
+
+import React, { ReactNode } from 'react';
 
 interface OwnProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'title'> {
   actions?: ReactNode;
@@ -35,7 +35,7 @@ export const Dashboard: React.FC<DashoardProps> = (props) => {
       <div className="header">
         {
           icon &&
-          <img className="icon" src={icon} alt={`${title} icon`}/>
+          <img className="icon" src={icon} alt={`${title} icon`} />
         }
         <div className="title">
           {title}

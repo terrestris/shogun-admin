@@ -1,15 +1,12 @@
-import React from 'react';
-
-import {
-  screen,
+import Layer from '@terrestris/shogun-util/dist/model/Layer';
+import {fireEvent,
   render,
-  fireEvent
-} from '@testing-library/react';
+  screen} from '@testing-library/react';
+import React from 'react';
 
 import {
   LayerPreview
 } from './LayerPreview';
-import Layer from '@terrestris/shogun-util/dist/model/Layer';
 
 describe('LayerPreview', () => {
 

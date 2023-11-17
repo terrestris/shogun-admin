@@ -1,17 +1,13 @@
-import React from 'react';
-
-import { Link } from 'react-router-dom';
+import './Header.less';
 
 import { PageHeader } from 'antd';
-
-import User from '../Menu/User/User';
-
-import defaultLogo from '../../../assets/img/shogun_logo.png';
-
+import React from 'react';
+import { Link } from 'react-router-dom';
 import config from 'shogunApplicationConfig';
 
-import './Header.less';
+import defaultLogo from '../../../assets/img/shogun_logo.png';
 import LanguageSelect from '../LanguageSelector';
+import User from '../Menu/User/User';
 
 interface OwnProps {
   onContactClick?: (event: React.MouseEvent<HTMLElement>) => void;

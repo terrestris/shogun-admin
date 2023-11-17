@@ -1,51 +1,41 @@
-import React, {
-  useCallback,
-  useState
-} from 'react';
-
-import {
-  Button,
-  message
-} from 'antd';
-
-import {
-  Routes,
-  Route
-} from 'react-router-dom';
-
-import _isEqual from 'lodash/isEqual';
-
-import {
-  useSetRecoilState
-} from 'recoil';
+import './Portal.less';
 
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined
 } from '@ant-design/icons';
-
 import BaseEntity from '@terrestris/shogun-util/dist/model/BaseEntity';
 import Layer from '@terrestris/shogun-util/dist/model/Layer';
+import {
+  Button,
+  message
+} from 'antd';
+import _isEqual from 'lodash/isEqual';
+import React, {
+  useCallback,
+  useState
+} from 'react';
+import {Route,
+  Routes} from 'react-router-dom';
+import {
+  useSetRecoilState
+} from 'recoil';
+import config from 'shogunApplicationConfig';
 
-import Navigation from '../../Component/Menu/Navigation/Navigation';
-import WelcomeDashboard from '../../Component/WelcomeDashboard/WelcomeDashboard';
-import ApplicationInfo from '../../Component/Modal/ApplicationInfo/ApplicationInfo';
-import ImageFileRoot from '../../Component/ImageFile/ImageFileRoot/ImageFileRoot';
-import Logs from '../../Component/Logs/Logs';
-import GlobalSettingsRoot from '../../Component/GlobalSettings/GlobalSettingsRoot/GlobalSettingsRoot';
-import LogSettingsRoot from '../../Component/LogSettings/LogSettingsRoot/LogSettingsRoot';
-import MetricsRoot from '../../Component/Metrics/MetricsRoot/MetricsRoot';
 import GeneralEntityRoot, {
   GeneralEntityConfigType
 } from '../../Component/GeneralEntity/GeneralEntityRoot/GeneralEntityRoot';
-
+import GlobalSettingsRoot from '../../Component/GlobalSettings/GlobalSettingsRoot/GlobalSettingsRoot';
+import ImageFileRoot from '../../Component/ImageFile/ImageFileRoot/ImageFileRoot';
+import Logs from '../../Component/Logs/Logs';
+import LogSettingsRoot from '../../Component/LogSettings/LogSettingsRoot/LogSettingsRoot';
+import Navigation from '../../Component/Menu/Navigation/Navigation';
+import MetricsRoot from '../../Component/Metrics/MetricsRoot/MetricsRoot';
+import ApplicationInfo from '../../Component/Modal/ApplicationInfo/ApplicationInfo';
+import WelcomeDashboard from '../../Component/WelcomeDashboard/WelcomeDashboard';
 import {
   layerSuggestionListAtom
 } from '../../State/atoms';
-
-import config from 'shogunApplicationConfig';
-
-import './Portal.less';
 
 interface OwnProps { }
 
@@ -71,7 +61,7 @@ export const Portal: React.FC<PortalProps> = () => {
     if (response.ok) {
       if (response.status === 204) {
         // No Data
-        return null;
+        return Promise.reject();
       }
       return await response.json() as GeneralEntityConfigType<BaseEntity>;
     } else {

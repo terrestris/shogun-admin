@@ -1,10 +1,9 @@
-import React from 'react';
-
 import './index.less';
 
 import {
   Select
 } from 'antd';
+import React from 'react';
 
 const {
   Option

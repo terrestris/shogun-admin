@@ -1,10 +1,8 @@
-import Logger from '../../Logger';
-
-import Keycloak from 'keycloak-js';
-
 import { getBearerTokenHeader } from '@terrestris/shogun-util/dist/security/getBearerTokenHeader';
-
+import Keycloak from 'keycloak-js';
 import config from 'shogunApplicationConfig';
+
+import Logger from '../../Logger';
 
 export type Statistic = {
   statistic: string;
@@ -35,7 +33,7 @@ class MetricService {
   private keycloak?: Keycloak;
 
   constructor(opts?: MetricServiceOpts) {
-    this.keycloak = opts.keycloak;
+    this.keycloak = opts?.keycloak;
   }
 
   async getMetric(type: string): Promise<Metric> {
@@ -45,13 +43,10 @@ class MetricService {
           ...getBearerTokenHeader(this.keycloak)
         }
       });
-      const responseJson: Metric = await response.json();
-
-      return responseJson;
+      return await response.json();
     } catch (error) {
       Logger.error(`Error while reading the metric: ${error}`);
-
-      return null;
+      return Promise.reject();
     }
   };
 

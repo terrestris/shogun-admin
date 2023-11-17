@@ -1,19 +1,16 @@
-import React, { useState } from 'react';
+import './DashboardStatistics.less';
 
+import Application from '@terrestris/shogun-util/dist/model/Application';
+import Layer from '@terrestris/shogun-util/dist/model/Layer';
+import User from '@terrestris/shogun-util/dist/model/User';
+import GenericEntityService from '@terrestris/shogun-util/dist/service/GenericEntityService';
 import {
   Statistic
 } from 'antd';
-
-import Application from '@terrestris/shogun-util/dist/model/Application';
-import User from '@terrestris/shogun-util/dist/model/User';
-import Layer from '@terrestris/shogun-util/dist/model/Layer';
-import GenericEntityService from '@terrestris/shogun-util/dist/service/GenericEntityService';
-
+import React, { useState } from 'react';
 import {
   useTranslation
 } from 'react-i18next';
-
-import './DashboardStatistics.less';
 
 type DashboardStatisticsProps = {
   service: GenericEntityService<Application | User | Layer>;

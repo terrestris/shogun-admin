@@ -1,10 +1,12 @@
 // test-utils.js
+import { render,RenderOptions } from '@testing-library/react';
 import * as React from 'react';
-import { render } from '@testing-library/react';
-import { RecoilRoot } from 'recoil';
+import { MutableSnapshot, RecoilRoot } from 'recoil';
 
-const customRender = (ui, recoilInitializer?, options?) => {
-  const AllTheProviders = ({ children }) => {
+const customRender = (ui: React.ReactElement<any, string | React.JSXElementConstructor<any>>,
+  recoilInitializer?: ((mutableSnapshot: MutableSnapshot) => void) | undefined,
+  options?: RenderOptions<typeof import('@testing-library/dom/types/queries'), HTMLElement, HTMLElement>) => {
+  const AllTheProviders = ({ children }: any) => {
     return (
       <RecoilRoot initializeState={recoilInitializer}>
         {children}

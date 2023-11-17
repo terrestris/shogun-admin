@@ -1,8 +1,7 @@
+import moment from 'moment';
 import React, {
   ReactNode,
 } from 'react';
-
-import moment from 'moment';
 
 import MetricEntry, { MetricEntryProps } from '../MetricEntry/MetricEntry';
 
@@ -16,7 +15,7 @@ export const ProcessUptime: React.FC<ProcessUptimeProps> = ({
     let val = moment.utc(Number(value) * 1000).format('HH:mm:ss');
 
     return <span>{val}</span>;
-  }
+  };
 
   const suffixRenderer = () => {
     return <span>HH:mm:ss</span>;
