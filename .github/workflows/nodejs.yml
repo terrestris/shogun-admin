@@ -6,21 +6,17 @@ jobs:
 
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node: [14.x, 16.x]
-
     steps:
-      - name: Checkout sources
-        uses: actions/checkout@v3
+      - name: Checkout sources 🔰
+        uses: actions/checkout@v4
 
-      - name: Setup node
-        uses: actions/setup-node@v3
+      - name: Setup Node.js 18 🧮
+        uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node }}
+          node-version: 18
 
       - name: Cache Node.js modules 💾
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ~/.npm
           key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
