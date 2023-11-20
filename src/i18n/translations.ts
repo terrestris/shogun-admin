@@ -79,6 +79,9 @@ export default {
         columnName: 'Name',
         tooltipReload: 'Neu laden',
         tooltipDelete: 'Löschen',
+        popupSearch: 'Suche',
+        popupFilter: 'Filter',
+        popupReset: 'Zurücksetzen',
         paging: {
           nextPage: 'Nächste Seite',
           prevPage: 'Vorherige Seite',
@@ -280,6 +283,9 @@ export default {
         columnName: 'Name',
         tooltipReload: 'Reload',
         tooltipDelete: 'Delete',
+        popupSearch: 'Search',
+        popupFilter: 'Filter',
+        popupReset: 'Reset',
         paging: {
           nextPage: 'Next page',
           prevPage: 'Previous page',
