@@ -79,6 +79,9 @@ export default {
         columnName: 'Name',
         tooltipReload: 'Neu laden',
         tooltipDelete: 'Löschen',
+        popupSearch: 'Suche',
+        popupFilter: 'Filter',
+        popupReset: 'Zurücksetzen',
         paging: {
           nextPage: 'Nächste Seite',
           prevPage: 'Vorherige Seite',
@@ -102,7 +105,10 @@ export default {
         logsInfo: '… die die Welt erklären',
         refresh: 'Aktualisieren',
         reloadChecked: 'Automatisches Nachladen',
-        reloadUnChecked: 'Kein Nachladen'
+        reloadUnChecked: 'Kein Nachladen',
+        warningMessage: 'Logs können nicht angezeigt werden',
+        warningDescribtion: 'Hinweis: Um die Logs anzeigen zu können ist es notwendig, dass die ' +
+          'Logs in eine Datei geschrieben werden. Bitte die SHOGun API Konfiguration entsprechend überprüfen.'
       },
       LinkField: {
         title: 'Öffne Link'
@@ -280,6 +286,9 @@ export default {
         columnName: 'Name',
         tooltipReload: 'Reload',
         tooltipDelete: 'Delete',
+        popupSearch: 'Search',
+        popupFilter: 'Filter',
+        popupReset: 'Reset',
         paging: {
           nextPage: 'Next page',
           prevPage: 'Previous page',
@@ -305,7 +314,10 @@ export default {
         logsInfo: '… that explain the world',
         refresh: 'Refresh',
         reloadChecked: 'Live reload',
-        reloadUnChecked: 'No reload'
+        reloadUnChecked: 'No reload',
+        warningMessage: 'Error while displaying the logs',
+        warningDescribtion: 'Note: In order to be able to display the logs, it is necessary that the logs ' +
+          'are written to a file. Please check the SHOGun API configuration accordingly.'
       },
       LinkField: {
         title: 'Open link'

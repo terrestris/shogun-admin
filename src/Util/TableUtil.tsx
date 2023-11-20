@@ -9,6 +9,8 @@ import { FilterConfirmProps } from 'antd/lib/table/interface';
 import _get from 'lodash/get';
 import _isFunction from 'lodash/isFunction';
 
+import i18n from '../i18n';
+
 export default class TableUtil {
 
   public static getColumnSearchProps<T>(
@@ -20,34 +22,42 @@ export default class TableUtil {
 
     return {
       filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }: FilterDropdownProps) => (
-        <div style={{ padding: 8 }}>
+        <div
+          style={{
+            padding: '8px',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'stretch'
+          }}
+        >
           <Input
             ref={node => { searchInput = node; }}
-            placeholder={`Search ${dataIndex}`}
+            placeholder={`${i18n.t('GeneralEntityTable.popupSearch')} ${dataIndex}`}
             value={`${selectedKeys[0]}`}
             onChange={e => setSelectedKeys(e.target.value ? [e.target.value] : [])}
             onPressEnter={() => handleSearch(selectedKeys, confirm)}
             style={{
-              width: 188,
+              flex: 1,
               marginBottom: 8,
-              display: 'block'
             }}
           />
-          <Button
-            type="primary"
-            onClick={() => handleSearch(selectedKeys, confirm)}
-            icon={<SearchOutlined />}
-            size="small"
-            style={{
-              width: 90,
-              marginRight: 8
-            }}
-          >
-            Filter
-          </Button>
-          <Button onClick={() => handleReset(clearFilters)} size="small" style={{ width: 90 }}>
-            Reset
-          </Button>
+          <div style={{display: 'flex'}}>
+            <Button
+              type="primary"
+              onClick={() => handleSearch(selectedKeys, confirm)}
+              icon={<SearchOutlined />}
+              size="small"
+              style={{
+                flex: 1,
+                marginRight: 8
+              }}
+            >
+              {`${i18n.t('GeneralEntityTable.popupFilter')}`}
+            </Button>
+            <Button onClick={() => handleReset(clearFilters)} size="small" style={{ flex: 1 }}>
+              {`${i18n.t('GeneralEntityTable.popupReset')}`}
+            </Button>
+          </div>
         </div>
       ),
       filterIcon: (filtered: boolean) => <SearchOutlined style={{ color: filtered ? '#1890ff' : undefined }} />,

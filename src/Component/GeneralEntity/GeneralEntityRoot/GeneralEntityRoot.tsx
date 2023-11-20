@@ -163,6 +163,15 @@ export function GeneralEntityRoot<T extends BaseEntity>({
     t
   } = useTranslation();
 
+  useEffect(() => {
+    setPageCurrent(1);
+    setSortOrder('ascend');
+    if (!_isNil(config?.defaultPageSize)) {
+      setPageSize(config.defaultPageSize);
+    }
+    setSortField(undefined);
+  }, [entityType]);
+
   /**
    * Validate form fields
    */
@@ -789,6 +798,6 @@ export function GeneralEntityRoot<T extends BaseEntity>({
       </div>
     </div>
   );
-};
+}
 
 export default GeneralEntityRoot;
