@@ -1,3 +1,15 @@
+## [11.6.1](https://github.com/terrestris/shogun-admin/compare/v11.6.0...v11.6.1) (2023-11-20)
+
+
+### Dependencies
+
+* **deps-dev:** bump @babel/traverse from 7.22.5 to 7.23.2 ([15759f1](https://github.com/terrestris/shogun-admin/commit/15759f1de1189079e023d9f2dc9987a3ad7e1d60))
+
+
+### Bugfixes
+
+* fixed multiple bugs in GeneralEntityRoot and in the translation ([711a8a8](https://github.com/terrestris/shogun-admin/commit/711a8a8e917b2d9f69fca1b8c3a5a5a873561f3e))
+
 ## [11.6.0](https://github.com/terrestris/shogun-admin/compare/v11.5.3...v11.6.0) (2023-10-10)
 
 
