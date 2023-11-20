@@ -1,11 +1,12 @@
 import './GeneralEntityTable.less';
 
+import React, { useMemo } from 'react';
+
 import {
   DeleteOutlined,
   SyncOutlined
 } from '@ant-design/icons';
-import BaseEntity from '@terrestris/shogun-util/dist/model/BaseEntity';
-import Layer from '@terrestris/shogun-util/dist/model/Layer';
+
 import {
   Input,
   Modal,
@@ -23,12 +24,14 @@ import Logger from 'js-logger';
 import _cloneDeep from 'lodash/cloneDeep';
 import _isEmpty from 'lodash/isEmpty';
 import _isNil from 'lodash/isNil';
-import React, { useMemo } from 'react';
 import {
   useTranslation
 } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import config from 'shogunApplicationConfig';
+
+import BaseEntity from '@terrestris/shogun-util/dist/model/BaseEntity';
+import Layer from '@terrestris/shogun-util/dist/model/Layer';
 
 import { GenericEntityController } from '../../../Controller/GenericEntityController';
 import TableUtil from '../../../Util/TableUtil';

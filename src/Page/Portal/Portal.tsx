@@ -1,26 +1,29 @@
 import './Portal.less';
 
+import React, {
+  useCallback,
+  useState
+} from 'react';
+
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined
 } from '@ant-design/icons';
-import BaseEntity from '@terrestris/shogun-util/dist/model/BaseEntity';
-import Layer from '@terrestris/shogun-util/dist/model/Layer';
+
 import {
   Button,
   message
 } from 'antd';
 import _isEqual from 'lodash/isEqual';
-import React, {
-  useCallback,
-  useState
-} from 'react';
 import {Route,
   Routes} from 'react-router-dom';
 import {
   useSetRecoilState
 } from 'recoil';
 import config from 'shogunApplicationConfig';
+
+import BaseEntity from '@terrestris/shogun-util/dist/model/BaseEntity';
+import Layer from '@terrestris/shogun-util/dist/model/Layer';
 
 import GeneralEntityRoot, {
   GeneralEntityConfigType

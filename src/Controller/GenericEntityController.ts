@@ -1,9 +1,3 @@
-import Logger from '@terrestris/base-util/dist/Logger';
-import Application from '@terrestris/shogun-util/dist/model/Application';
-import BaseEntity from '@terrestris/shogun-util/dist/model/BaseEntity';
-import { Page } from '@terrestris/shogun-util/dist/model/Page';
-import GenericEntityService from '@terrestris/shogun-util/dist/service/GenericEntityService';
-import { PageOpts } from '@terrestris/shogun-util/dist/service/GenericService';
 import { ValidateStatus } from 'antd/lib/form/FormItem';
 import _get from 'lodash/get';
 import _intersects from 'lodash/intersection';
@@ -11,6 +5,13 @@ import _isNil from 'lodash/isNil';
 import _isNumber from 'lodash/isNumber';
 import _omit from 'lodash/omit';
 import _set from 'lodash/set';
+
+import Logger from '@terrestris/base-util/dist/Logger';
+import Application from '@terrestris/shogun-util/dist/model/Application';
+import BaseEntity from '@terrestris/shogun-util/dist/model/BaseEntity';
+import { Page } from '@terrestris/shogun-util/dist/model/Page';
+import GenericEntityService from '@terrestris/shogun-util/dist/service/GenericEntityService';
+import { PageOpts } from '@terrestris/shogun-util/dist/service/GenericService';
 
 import { FieldConfig, FormConfig } from '../Component/GeneralEntity/GeneralEntityForm/GeneralEntityForm';
 

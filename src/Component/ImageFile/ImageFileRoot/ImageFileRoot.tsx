@@ -1,8 +1,9 @@
 import './ImageFileRoot.less';
 
+import React, { useEffect, useState } from 'react';
+
 import { Button, notification, PageHeader, Upload } from 'antd';
 import _isNil from 'lodash/isNil';
-import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {matchPath,
   useLocation,

@@ -1,3 +1,5 @@
+import React from 'react';
+
 import {
   BankOutlined,
   BarChartOutlined,
@@ -5,19 +7,20 @@ import {
   FileImageOutlined,
   FileTextOutlined
 } from '@ant-design/icons';
-import BaseEntity from '@terrestris/shogun-util/dist/model/BaseEntity';
+
 import {
   Menu
 } from 'antd';
 import { ItemType } from 'antd/lib/menu/hooks/useItems';
 import _isNil from 'lodash/isNil';
 import { SelectInfo } from 'rc-menu/lib/interface';
-import React from 'react';
 import {
   useTranslation
 } from 'react-i18next';
 import { matchPath, useLocation,useNavigate } from 'react-router-dom';
 import config from 'shogunApplicationConfig';
+
+import BaseEntity from '@terrestris/shogun-util/dist/model/BaseEntity';
 
 import TranslationUtil from '../../../Util/TranslationUtil';
 import { GeneralEntityConfigType } from '../../GeneralEntity/GeneralEntityRoot/GeneralEntityRoot';

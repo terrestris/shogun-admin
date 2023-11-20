@@ -1,7 +1,8 @@
 import './Header.less';
 
-import { PageHeader } from 'antd';
 import React from 'react';
+
+import { PageHeader } from 'antd';
 import { Link } from 'react-router-dom';
 import config from 'shogunApplicationConfig';
 

@@ -1,15 +1,16 @@
 import './index.less';
 
+import React from 'react';
+
 import {
   Select
 } from 'antd';
-import React from 'react';
+
+import i18n from '../../i18n';
 
 const {
   Option
 } = Select;
-
-import i18n from '../../i18n';
 
 export const LanguageSelect = () => {
   const supportedLanguages = Object.keys(i18n.services.resourceStore.data);

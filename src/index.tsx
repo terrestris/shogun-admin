@@ -1,14 +1,17 @@
 import './index.less';
 
+import React, { Suspense } from 'react';
+
 import { loader } from '@monaco-editor/react';
-import SHOGunAPIClient from '@terrestris/shogun-util/dist/service/SHOGunAPIClient';
+
 import { Button, Result } from 'antd';
 import Keycloak from 'keycloak-js';
 import _isNil from 'lodash/isNil';
-import React, { Suspense } from 'react';
 import { createRoot } from 'react-dom/client';
 import { RecoilRoot } from 'recoil';
 import config from 'shogunApplicationConfig';
+
+import SHOGunAPIClient from '@terrestris/shogun-util/dist/service/SHOGunAPIClient';
 
 import { SHOGunAPIClientProvider } from './Context/SHOGunAPIClientContext';
 import i18n from './i18n';

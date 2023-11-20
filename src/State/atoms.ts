@@ -1,9 +1,10 @@
-import { AppInfo } from '@terrestris/shogun-util/dist/model/AppInfo';
-import Layer from '@terrestris/shogun-util/dist/model/Layer';
-import User from '@terrestris/shogun-util/dist/model/User';
 import {
   atom
 } from 'recoil';
+
+import { AppInfo } from '@terrestris/shogun-util/dist/model/AppInfo';
+import Layer from '@terrestris/shogun-util/dist/model/Layer';
+import User from '@terrestris/shogun-util/dist/model/User';
 
 export const appInfoAtom = atom<AppInfo>({
   key: 'appInfo',

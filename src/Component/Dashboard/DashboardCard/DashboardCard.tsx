@@ -1,8 +1,9 @@
 import './DashboardCard.less';
 
+import React, { ReactNode } from 'react';
+
 import { Card } from 'antd';
 import { CardProps } from 'antd/lib/card';
-import React, { ReactNode } from 'react';
 
 interface OwnProps extends CardProps {
   actions?: ReactNode[];

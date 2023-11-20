@@ -1,8 +1,9 @@
 import './FullscreenWrapper.less';
 
+import React from 'react';
+
 import { FullscreenExitOutlined, FullscreenOutlined } from '@ant-design/icons';
 import { Button, Tooltip } from 'antd';
-import React from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { useTranslation } from 'react-i18next';
 

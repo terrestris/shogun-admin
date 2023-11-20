@@ -1,5 +1,10 @@
 import './JSONEditor.less';
 
+import React, {useCallback,
+  useEffect,
+  useMemo,
+  useState} from 'react';
+
 import Editor, {
   EditorProps,
   OnChange,
@@ -9,10 +14,6 @@ import Logger from 'js-logger';
 import { uniqueId } from 'lodash';
 import cloneDeep from 'lodash/cloneDeep';
 import _isNil from 'lodash/isNil';
-import React, {useCallback,
-  useEffect,
-  useMemo,
-  useState} from 'react';
 
 import {
   swaggerDocs

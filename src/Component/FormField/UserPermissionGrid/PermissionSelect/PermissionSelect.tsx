@@ -1,8 +1,9 @@
+import React from 'react';
+
 import {
   Select,
   SelectProps
 } from 'antd';
-import React from 'react';
 import {
   useTranslation
 } from 'react-i18next';

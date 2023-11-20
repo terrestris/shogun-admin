@@ -1,3 +1,5 @@
+import React from 'react';
+
 import {DatePicker,
   Form,
   Input,
@@ -7,8 +9,6 @@ import {DatePicker,
   Spin,
   Statistic,
   Switch} from 'antd';
-import React from 'react';
-const { TextArea } = Input;
 import './GeneralEntityForm.less';
 
 import {
@@ -26,6 +26,8 @@ import MarkdownEditor from '../../FormField/MarkdownEditor/MarkdownEditor';
 import UserPermissionGrid from '../../FormField/UserPermissionGrid/UserPermissionGrid';
 import YesOrNoField from '../../FormField/YesOrNoField/YesOrNoField';
 import LayerTypeSelect from '../../Layer/LayerTypeSelect/LayerTypeSelect';
+
+const { TextArea } = Input;
 
 export type FieldConfig = {
   component?: string;

@@ -1,3 +1,5 @@
+import React, { useState } from 'react';
+
 import {
   ClearOutlined
 } from '@ant-design/icons';
@@ -7,7 +9,6 @@ import {
 } from 'antd';
 import { ButtonProps } from 'antd/lib/button';
 import _isNil from 'lodash/isNil';
-import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import useSHOGunAPIClient from '../../Hooks/useSHOGunAPIClient';

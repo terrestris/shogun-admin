@@ -1,11 +1,13 @@
 import './App.less';
 
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+
 import { useMonaco } from '@monaco-editor/react';
 import { Result, Spin } from 'antd';
 import Logger from 'js-logger';
+import _isNil from 'lodash/isNil';
 import { IDisposable, languages } from 'monaco-editor';
 import { OpenAPIV3 } from 'openapi-types';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { BrowserRouter as Router, Navigate, Route, Routes } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
@@ -16,12 +18,11 @@ import ShogunSpinner from './Component/ShogunSpinner/ShogunSpinner';
 import useSHOGunAPIClient from './Hooks/useSHOGunAPIClient';
 import Portal from './Page/Portal/Portal';
 import { appInfoAtom, layerSuggestionListAtom, userInfoAtom } from './State/atoms';
+import { setSwaggerDocs } from './State/static';
+
 import ProviderResult = languages.ProviderResult;
 import CompletionList = languages.CompletionList;
 import CompletionItem = languages.CompletionItem;
-import _isNil from 'lodash/isNil';
-
-import { setSwaggerDocs } from './State/static';
 
 const App: React.FC = () => {
   const [, setUserInfo] = useRecoilState(userInfoAtom);

@@ -1,16 +1,19 @@
 import './GeneralEntityRoot.less';
 
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useState
+} from 'react';
+
 import {
   FormOutlined,
   SaveOutlined,
   UndoOutlined,
   UploadOutlined
 } from '@ant-design/icons';
-import Logger from '@terrestris/base-util/dist/Logger';
-import BaseEntity from '@terrestris/shogun-util/dist/model/BaseEntity';
-import {
-  getBearerTokenHeader
-} from '@terrestris/shogun-util/dist/security/getBearerTokenHeader';
+
 import {
   Button,
   Form,
@@ -40,12 +43,6 @@ import {
 import {
   UploadRequestOption
 } from 'rc-upload/lib/interface';
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useState
-} from 'react';
 import {
   useHotkeys
 } from 'react-hotkeys-hook';
@@ -60,6 +57,12 @@ import {
   Shapefile
 } from 'shapefile.js';
 import config from 'shogunApplicationConfig';
+
+import Logger from '@terrestris/base-util/dist/Logger';
+import BaseEntity from '@terrestris/shogun-util/dist/model/BaseEntity';
+import {
+  getBearerTokenHeader
+} from '@terrestris/shogun-util/dist/security/getBearerTokenHeader';
 
 import {
   ControllerUtil

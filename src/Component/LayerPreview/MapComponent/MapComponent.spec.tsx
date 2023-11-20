@@ -1,7 +1,8 @@
+import React from 'react';
+
 import {render,
   screen} from '@testing-library/react';
 import OlMap from 'ol/Map';
-import React from 'react';
 
 import {
   MapComponent

@@ -1,3 +1,9 @@
+import React, {
+  ReactNode, useCallback,
+  useEffect,
+  useState
+} from 'react';
+
 import { ReloadOutlined } from '@ant-design/icons';
 import {
   Button,
@@ -7,11 +13,6 @@ import {
 } from 'antd';
 import { StatisticProps } from 'antd/lib/statistic/Statistic';
 import isFunction from 'lodash/isFunction';
-import React, {
-  ReactNode, useCallback,
-  useEffect,
-  useState
-} from 'react';
 
 import useSHOGunAPIClient from '../../../Hooks/useSHOGunAPIClient';
 import MetricService, { Metric } from '../../../Service/MetricService/MetricService';

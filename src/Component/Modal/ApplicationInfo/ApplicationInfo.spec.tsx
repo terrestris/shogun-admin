@@ -2,6 +2,7 @@ import * as React from 'react';
 
 import { shogunInfoModalVisibleAtom } from '../../../State/atoms';
 import { render, screen } from '../../../test-util';
+
 import ApplicationInfo from './ApplicationInfo';
 
 const recoilInitializer = (snap) => snap.set(shogunInfoModalVisibleAtom, true);

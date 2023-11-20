@@ -1,10 +1,14 @@
 import './UserPermissionModal.less';
 
+import React, {
+  useEffect,
+  useState
+} from 'react';
+
 import {
   PlusOutlined
 } from '@ant-design/icons';
-import PermissionCollectionType from '@terrestris/shogun-util/dist/model/enum/PermissionCollectionType';
-import User from '@terrestris/shogun-util/dist/model/User';
+
 import {
   Button,
   Form,
@@ -22,13 +26,12 @@ import Logger from 'js-logger';
 import {
   CustomTagProps
 } from 'rc-select/lib/BaseSelect';
-import React, {
-  useEffect,
-  useState
-} from 'react';
 import {
   useTranslation
 } from 'react-i18next';
+
+import PermissionCollectionType from '@terrestris/shogun-util/dist/model/enum/PermissionCollectionType';
+import User from '@terrestris/shogun-util/dist/model/User';
 
 import useSHOGunAPIClient from '../../../../Hooks/useSHOGunAPIClient';
 import PermissionSelect from '../PermissionSelect/PermissionSelect';

@@ -1,7 +1,8 @@
-import moment from 'moment';
 import React, {
   ReactNode,
 } from 'react';
+
+import moment from 'moment';
 
 import MetricEntry, { MetricEntryProps } from '../MetricEntry/MetricEntry';
 

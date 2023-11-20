@@ -1,25 +1,24 @@
+import React, {
+  useCallback,
+  useEffect,
+  useState
+} from 'react';
+
 import {
   Button,
   Input,
   PageHeader,
   Switch
 } from 'antd';
-import React, {
-  useCallback,
-  useEffect,
-  useState
-} from 'react';
-import { useNavigate } from 'react-router-dom';
-
-const { TextArea } = Input;
-
-import './Logs.less';
-
 import _isNil from 'lodash/isNil';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 
 import useSHOGunAPIClient from '../../Hooks/useSHOGunAPIClient';
 import LogService from '../../Service/LogService/LogService';
+import './Logs.less';
+
+const { TextArea } = Input;
 
 type LogsProps = {};
 

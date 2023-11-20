@@ -1,8 +1,10 @@
-import Layer from '@terrestris/shogun-util/dist/model/Layer';
+import React from 'react';
+
 import {fireEvent,
   render,
   screen} from '@testing-library/react';
-import React from 'react';
+
+import Layer from '@terrestris/shogun-util/dist/model/Layer';
 
 import {
   LayerPreview

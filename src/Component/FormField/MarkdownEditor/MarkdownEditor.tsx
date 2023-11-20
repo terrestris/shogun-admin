@@ -1,7 +1,8 @@
 import './MarkdownEditor.less';
 
-import MDEditor, { ICommand } from '@uiw/react-md-editor';
 import React, { useEffect } from 'react';
+
+import MDEditor, { ICommand } from '@uiw/react-md-editor';
 
 import FullscreenWrapper from '../../FullscreenWrapper/FullscreenWrapper';
 

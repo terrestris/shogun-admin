@@ -1,5 +1,7 @@
 import './User.less';
 
+import React from 'react';
+
 import {
   InfoCircleOutlined,
   LogoutOutlined,
@@ -11,7 +13,6 @@ import {
 import Avatar from 'antd/lib/avatar/avatar';
 import { ItemType } from 'antd/lib/menu/hooks/useItems';
 import _isNil from 'lodash/isNil';
-import React from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   useRecoilState

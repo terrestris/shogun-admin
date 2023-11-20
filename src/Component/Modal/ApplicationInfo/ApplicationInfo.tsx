@@ -1,11 +1,12 @@
 import './ApplicationInfo.less';
 
+import React from 'react';
+
 import {
   Modal,
   Statistic
 } from 'antd';
 import { ModalProps } from 'antd/lib/modal';
-import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useRecoilState } from 'recoil';
 

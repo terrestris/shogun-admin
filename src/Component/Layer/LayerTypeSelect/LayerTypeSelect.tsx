@@ -1,12 +1,14 @@
-import LayerType from '@terrestris/shogun-util/dist/model/enum/LayerType';
-import {
-  Select
-} from 'antd';
-import { SelectProps } from 'antd/lib/select';
 import React, {
   useEffect,
   useState
 } from 'react';
+
+import {
+  Select
+} from 'antd';
+import { SelectProps } from 'antd/lib/select';
+
+import LayerType from '@terrestris/shogun-util/dist/model/enum/LayerType';
 
 type SelectPropsExcludes = 'defaultValue' | 'value' | 'options' | 'onChange';
 

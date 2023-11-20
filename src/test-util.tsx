@@ -1,6 +1,7 @@
 // test-utils.js
-import { render,RenderOptions } from '@testing-library/react';
 import * as React from 'react';
+
+import { render,RenderOptions } from '@testing-library/react';
 import { MutableSnapshot, RecoilRoot } from 'recoil';
 
 const customRender = (ui: React.ReactElement<any, string | React.JSXElementConstructor<any>>,

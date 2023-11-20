@@ -1,12 +1,15 @@
+import Keycloak from 'keycloak-js';
+
+import _lowerCase from 'lodash/lowerCase';
+
 import BaseEntity from '@terrestris/shogun-util/dist/model/BaseEntity';
 import Application from '@terrestris/shogun-util/dist/model/File';
 import ApplicationService from '@terrestris/shogun-util/dist/service/ApplicationService';
 import GenericEntityService from '@terrestris/shogun-util/dist/service/GenericEntityService';
-import Keycloak from 'keycloak-js';
-import _lowerCase from 'lodash/lowerCase';
 
 import { FormConfig } from '../Component/GeneralEntity/GeneralEntityForm/GeneralEntityForm';
 import { GenericServiceImpl } from '../Service/GenericServiceImpl/GenericServiceImpl';
+
 import { FormValues, GenericEntityController } from './GenericEntityController';
 
 export type ControllerCfg = {

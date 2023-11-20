@@ -1,11 +1,12 @@
 import './MetricsRoot.less';
 
+import React from 'react';
+
 import {
   Col,
   PageHeader,
   Row
 } from 'antd';
-import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 

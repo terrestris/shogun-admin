@@ -1,7 +1,9 @@
+import Keycloak from 'keycloak-js';
+
+import config from 'shogunApplicationConfig';
+
 import { getBearerTokenHeader } from '@terrestris/shogun-util/dist/security/getBearerTokenHeader';
 import { getCsrfTokenHeader } from '@terrestris/shogun-util/dist/security/getCsrfTokenHeader';
-import Keycloak from 'keycloak-js';
-import config from 'shogunApplicationConfig';
 
 import Logger from '../../Logger';
 

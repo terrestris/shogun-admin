@@ -1,10 +1,9 @@
 import './LayerPreview.less';
 
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+
 import { GlobalOutlined } from '@ant-design/icons';
-import LayerUtil from '@terrestris/ol-util/dist/LayerUtil/LayerUtil';
-import Layer from '@terrestris/shogun-util/dist/model/Layer';
-import SHOGunApplicationUtil from '@terrestris/shogun-util/dist/parser/SHOGunApplicationUtil';
-import { getBearerTokenHeader } from '@terrestris/shogun-util/dist/security/getBearerTokenHeader';
+
 import { Alert, Modal, ModalProps, Spin, Tooltip } from 'antd';
 import Logger from 'js-logger';
 import _isNil from 'lodash/isNil';
@@ -20,10 +19,15 @@ import OlSourceTileImage from 'ol/source/TileImage';
 import OlSourceTileWMS from 'ol/source/TileWMS';
 import OlSourceVector from 'ol/source/Vector';
 import OlView from 'ol/View';
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import LayerUtil from '@terrestris/ol-util/dist/LayerUtil/LayerUtil';
+import Layer from '@terrestris/shogun-util/dist/model/Layer';
+import SHOGunApplicationUtil from '@terrestris/shogun-util/dist/parser/SHOGunApplicationUtil';
+import { getBearerTokenHeader } from '@terrestris/shogun-util/dist/security/getBearerTokenHeader';
+
 import useSHOGunAPIClient from '../../Hooks/useSHOGunAPIClient';
+
 import MapComponent from './MapComponent/MapComponent';
 
 function isWmsLayer(layer?: OlLayer): layer is OlLayerImage<OlSourceImageWMS> | OlLayerTile<OlSourceTileWMS> {

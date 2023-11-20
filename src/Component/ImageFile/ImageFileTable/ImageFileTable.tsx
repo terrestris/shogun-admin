@@ -1,10 +1,12 @@
 import './ImageFileTable.less';
 
+import React, { useCallback, useEffect, useState } from 'react';
+
 import {
   DeleteOutlined,
   SyncOutlined
 } from '@ant-design/icons';
-import ImageFile from '@terrestris/shogun-util/dist/model/ImageFile';
+
 import {
   Modal,
   notification,
@@ -14,10 +16,11 @@ import {
 } from 'antd';
 import { SortOrder } from 'antd/es/table/interface';
 import _isNil from 'lodash/isNil';
-import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import config from 'shogunApplicationConfig';
+
+import ImageFile from '@terrestris/shogun-util/dist/model/ImageFile';
 
 import useSHOGunAPIClient from '../../../Hooks/useSHOGunAPIClient';
 import TableUtil from '../../../Util/TableUtil';

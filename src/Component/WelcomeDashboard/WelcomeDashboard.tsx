@@ -1,5 +1,7 @@
 import './WelcomeDashboard.less';
 
+import React from 'react';
+
 import {
   AppstoreOutlined,
   BankOutlined,
@@ -13,7 +15,6 @@ import {
   Statistic
 } from 'antd';
 import _isNil from 'lodash/isNil';
-import React from 'react';
 import {
   useTranslation
 } from 'react-i18next';

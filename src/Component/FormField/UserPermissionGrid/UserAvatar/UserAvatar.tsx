@@ -1,11 +1,13 @@
 import './UserAvatar.less';
 
-import User from '@terrestris/shogun-util/dist/model/User';
+import React from 'react';
+
 import {
   Avatar,
   AvatarProps
 } from 'antd';
-import React from 'react';
+
+import User from '@terrestris/shogun-util/dist/model/User';
 
 import UserUtil from '../../../../Util/UserUtil';
 

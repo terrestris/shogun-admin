@@ -1,11 +1,12 @@
 import './LinkField.less';
 
+import React from 'react';
+
 import { LinkOutlined } from '@ant-design/icons';
 import {
   Tooltip,
   TooltipProps
 } from 'antd';
-import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 import TranslationUtil from '../../../Util/TranslationUtil';

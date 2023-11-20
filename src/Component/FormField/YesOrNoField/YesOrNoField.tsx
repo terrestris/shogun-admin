@@ -1,8 +1,9 @@
 import './YesOrNoField.less';
 
+import React from 'react';
+
 import CheckOutlined from '@ant-design/icons/lib/icons/CheckOutlined';
 import CloseOutlined from '@ant-design/icons/lib/icons/CloseOutlined';
-import React from 'react';
 import {
   useTranslation
 } from 'react-i18next';

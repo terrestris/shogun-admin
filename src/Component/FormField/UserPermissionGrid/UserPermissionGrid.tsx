@@ -1,12 +1,14 @@
 import './UserPermissionGrid.less';
 
+import React, {useEffect,
+  useRef,
+  useState} from 'react';
+
 import {
   DeleteOutlined,
   SearchOutlined
 } from '@ant-design/icons';
-import PermissionCollectionType from '@terrestris/shogun-util/dist/model/enum/PermissionCollectionType';
-import UserInstancePermission from '@terrestris/shogun-util/dist/model/security/UserInstancePermission';
-import User from '@terrestris/shogun-util/dist/model/User';
+
 import {
   Button,
   Input,
@@ -24,14 +26,16 @@ import _cloneDeep from 'lodash/cloneDeep';
 import _get from 'lodash/get';
 import _isFunction from 'lodash/isFunction';
 import _isNil from 'lodash/isNil';
-import React, {useEffect,
-  useRef,
-  useState} from 'react';
 import {
   useTranslation
 } from 'react-i18next';
 
+import PermissionCollectionType from '@terrestris/shogun-util/dist/model/enum/PermissionCollectionType';
+import UserInstancePermission from '@terrestris/shogun-util/dist/model/security/UserInstancePermission';
+import User from '@terrestris/shogun-util/dist/model/User';
+
 import useSHOGunAPIClient from '../../../Hooks/useSHOGunAPIClient';
+
 import PermissionSelect from './PermissionSelect/PermissionSelect';
 import UserAvatar from './UserAvatar/UserAvatar';
 import UserPermissionModal from './UserPermissionModal/UserPermissionModal';
