@@ -1,16 +1,6 @@
+import './WelcomeDashboard.less';
+
 import React from 'react';
-
-import { Link } from 'react-router-dom';
-
-import {
-  Col,
-  Row,
-  Statistic
-} from 'antd';
-
-import {
-  useTranslation
-} from 'react-i18next';
 
 import {
   AppstoreOutlined,
@@ -19,16 +9,22 @@ import {
   LikeOutlined,
   UserOutlined
 } from '@ant-design/icons';
-
-import { Dashboard } from '../Dashboard/Dashboard';
-import { DashboardCard } from '../Dashboard/DashboardCard/DashboardCard';
-
+import {
+  Col,
+  Row,
+  Statistic
+} from 'antd';
+import _isNil from 'lodash/isNil';
+import {
+  useTranslation
+} from 'react-i18next';
+import { Link } from 'react-router-dom';
 import config from 'shogunApplicationConfig';
 
-import DashboardStatistics from '../Dashboard/DashboardStatistics/DashboardStatistics';
-
-import './WelcomeDashboard.less';
 import useSHOGunAPIClient from '../../Hooks/useSHOGunAPIClient';
+import { Dashboard } from '../Dashboard/Dashboard';
+import { DashboardCard } from '../Dashboard/DashboardCard/DashboardCard';
+import DashboardStatistics from '../Dashboard/DashboardStatistics/DashboardStatistics';
 
 type WelcomeDashboardProps = {};
 
@@ -40,6 +36,10 @@ export const WelcomeDashboard: React.FC<WelcomeDashboardProps> = () => {
   const dashboardConf = config.dashboard;
 
   const client = useSHOGunAPIClient();
+
+  if (_isNil(client)) {
+    return null;
+  }
 
   return (
     <Dashboard

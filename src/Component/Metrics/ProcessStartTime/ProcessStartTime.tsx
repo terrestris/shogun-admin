@@ -16,7 +16,7 @@ export const ProcessStartTime: React.FC<ProcessStartTimeProps> = ({
     let val = moment(Number(value) * 1000).format('llll');
 
     return <span>{val}</span>;
-  }
+  };
 
   return (
     <MetricEntry

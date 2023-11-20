@@ -1,13 +1,12 @@
 import React from 'react';
 
 import {
-  useTranslation
-} from 'react-i18next';
-
-import {
   Select,
   SelectProps
 } from 'antd';
+import {
+  useTranslation
+} from 'react-i18next';
 
 export interface PermissionSelectProps extends SelectProps {};
 

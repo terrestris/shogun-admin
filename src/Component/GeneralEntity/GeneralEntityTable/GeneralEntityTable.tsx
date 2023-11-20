@@ -1,20 +1,6 @@
+import './GeneralEntityTable.less';
+
 import React, { useMemo } from 'react';
-
-import { useNavigate } from 'react-router-dom';
-
-import {
-  Table,
-  Input,
-  Modal,
-  notification,
-  Tooltip
-} from 'antd';
-import {
-  ColumnType,
-  TableProps,
-  TablePaginationConfig
-} from 'antd/lib/table';
-import { SortOrder } from 'antd/lib/table/interface';
 
 import {
   DeleteOutlined,
@@ -22,30 +8,37 @@ import {
 } from '@ant-design/icons';
 
 import {
+  Input,
+  Modal,
+  notification,
+  Table,
+  Tooltip
+} from 'antd';
+import {
+  ColumnType,
+  TablePaginationConfig,
+  TableProps
+} from 'antd/lib/table';
+import { SortOrder } from 'antd/lib/table/interface';
+import Logger from 'js-logger';
+import _cloneDeep from 'lodash/cloneDeep';
+import _isEmpty from 'lodash/isEmpty';
+import _isNil from 'lodash/isNil';
+import {
   useTranslation
 } from 'react-i18next';
-
-import _isEmpty from 'lodash/isEmpty';
-import _cloneDeep from 'lodash/cloneDeep';
-
-import Logger from 'js-logger';
+import { useNavigate } from 'react-router-dom';
+import config from 'shogunApplicationConfig';
 
 import BaseEntity from '@terrestris/shogun-util/dist/model/BaseEntity';
 import Layer from '@terrestris/shogun-util/dist/model/Layer';
 
 import { GenericEntityController } from '../../../Controller/GenericEntityController';
-
-import DisplayField from '../../FormField/DisplayField/DisplayField';
-import LinkField from '../../FormField/LinkField/LinkField';
-
-import LayerPreview from '../../LayerPreview/LayerPreview';
-
 import TableUtil from '../../../Util/TableUtil';
 import TranslationUtil from '../../../Util/TranslationUtil';
-
-import config from 'shogunApplicationConfig';
-
-import './GeneralEntityTable.less';
+import DisplayField from '../../FormField/DisplayField/DisplayField';
+import LinkField from '../../FormField/LinkField/LinkField';
+import LayerPreview from '../../LayerPreview/LayerPreview';
 
 export type TableConfig<T extends BaseEntity> = {
   columnDefinition?: GeneralEntityTableColumn<T>[];
@@ -217,7 +210,7 @@ export function GeneralEntityTable<T extends BaseEntity>({
   };
 
   const getTableColumns = (): ColumnType<T>[] => {
-    let cols: GeneralEntityTableColumn<T>[];
+    let cols: ColumnType<T>[] | undefined;
 
     if (_isEmpty(tableConfig?.columnDefinition)) {
       cols = [{
@@ -236,7 +229,7 @@ export function GeneralEntityTable<T extends BaseEntity>({
       } as any];
     } else {
       // check for preconfigured sorters, filters and custom components (TODO)
-      cols = tableConfig?.columnDefinition.map(cfg => {
+      cols = tableConfig?.columnDefinition?.map(cfg => {
         let copyCfg = _cloneDeep(cfg);
         copyCfg.title = TranslationUtil.getTranslationFromConfig(cfg.title as string, i18n);
         const {
@@ -254,17 +247,18 @@ export function GeneralEntityTable<T extends BaseEntity>({
             defaultSortOrder: sortConfig.sortOrder || 'ascend'
           };
         }
+        let dataIndex = copyCfg?.dataIndex?.toString();
         if (!_isEmpty(filterConfig) && filterConfig.isFilterable) {
           columnDef = {
             ...columnDef,
-            ...TableUtil.getColumnSearchProps(copyCfg.dataIndex.toString())
+            ...TableUtil.getColumnSearchProps(dataIndex!)
           } as any;
         }
-        const mapping = tableConfig.dataMapping?.[copyCfg.dataIndex.toString()];
-        if (!_isEmpty(cellRenderComponentName) || !_isEmpty(mapping)) {
+        const mapping = tableConfig.dataMapping?.[dataIndex!];
+        if (!_isEmpty(cellRenderComponentName) && !_isEmpty(mapping) && !_isNil(cellRenderComponentProps)) {
           columnDef = {
             ...columnDef,
-            render: getRenderer(cellRenderComponentName, cellRenderComponentProps, mapping)
+            render: getRenderer(cellRenderComponentName!, cellRenderComponentProps, mapping)
           };
         }
 
@@ -272,34 +266,37 @@ export function GeneralEntityTable<T extends BaseEntity>({
       });
     }
 
-    return [
-      ...cols,
-      {
-        title: (
-          <Tooltip title={t('GeneralEntityTable.tooltipReload')}>
-            <SyncOutlined
-              onClick={fetchEntities}
-            />
-          </Tooltip>
-        ),
-        className: 'operation-column',
-        width: 100,
-        dataIndex: 'operation',
-        key: 'operation',
-        render: (_: any, record: T) => {
-          return (
-            <div className="actions">
-              {
-                actions.includes('delete') &&
-                <Tooltip title={t('GeneralEntityTable.tooltipDelete')}>
-                  <DeleteOutlined onClick={() => onDeleteClick(record)} />
-                </Tooltip>
-              }
-            </div>
-          );
-        }
+    let retArray = [];
+    if (!_isNil(cols)) {
+      retArray.push(...cols);
+    }
+    retArray.push({
+      title: (
+        <Tooltip title={t('GeneralEntityTable.tooltipReload')}>
+          <SyncOutlined
+            onClick={fetchEntities}
+          />
+        </Tooltip>
+      ),
+      className: 'operation-column',
+      width: 100,
+      dataIndex: 'operation',
+      key: 'operation',
+      render: (_: any, record: T) => {
+        return (
+          <div className="actions">
+            {
+              actions.includes('delete') &&
+              <Tooltip title={t('GeneralEntityTable.tooltipDelete')}>
+                <DeleteOutlined onClick={() => onDeleteClick(record)} />
+              </Tooltip>
+            }
+          </div>
+        );
       }
-    ];
+    });
+
+    return retArray;
   };
 
   return (
@@ -336,6 +333,6 @@ export function GeneralEntityTable<T extends BaseEntity>({
       {...tablePassThroughProps}
     />
   );
-};
+}
 
 export default GeneralEntityTable;

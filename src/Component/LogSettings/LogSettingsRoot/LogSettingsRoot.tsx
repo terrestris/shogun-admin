@@ -1,10 +1,8 @@
 import React from 'react';
 
-import { useTranslation } from 'react-i18next';
-
-import { useNavigate } from 'react-router-dom';
-
 import { PageHeader } from 'antd';
+import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 
 import LogLevelTable from '../LogLevelTable/LogLevelTable';
 

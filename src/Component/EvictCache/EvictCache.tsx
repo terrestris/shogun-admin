@@ -1,21 +1,19 @@
 import React, { useState } from 'react';
 
 import {
+  ClearOutlined
+} from '@ant-design/icons';
+import {
   Button,
   message
 } from 'antd';
-
 import { ButtonProps } from 'antd/lib/button';
-
-import {
-  ClearOutlined
-} from '@ant-design/icons';
+import _isNil from 'lodash/isNil';
+import { useTranslation } from 'react-i18next';
 
 import useSHOGunAPIClient from '../../Hooks/useSHOGunAPIClient';
 
-import { useTranslation } from 'react-i18next';
-
-export interface EvictCacheProps extends Omit<ButtonProps, 'onClick' | 'loading'> { };
+export interface EvictCacheProps extends Omit<ButtonProps, 'onClick' | 'loading'> { }
 
 export const EvictCache: React.FC<EvictCacheProps> = ({
   ...passThroughProps
@@ -30,11 +28,10 @@ export const EvictCache: React.FC<EvictCacheProps> = ({
   } = useTranslation();
 
   const onClearCacheClick = async () => {
-
     setIsLoading(true);
 
     try {
-      await client.cache().evictCache();
+      await client?.cache().evictCache();
 
       message.success('Successfully cleared the cache');
     } catch (error) {
@@ -43,6 +40,10 @@ export const EvictCache: React.FC<EvictCacheProps> = ({
 
     setIsLoading(false);
   };
+
+  if (_isNil(client)) {
+    return null;
+  }
 
   return (
     <Button

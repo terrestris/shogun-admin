@@ -1,68 +1,46 @@
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useState
-} from 'react';
+import './LayerPreview.less';
 
-import {
-  useTranslation
-} from 'react-i18next';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
-import OlMap from 'ol/Map';
+import { GlobalOutlined } from '@ant-design/icons';
+
+import { Alert, Modal, ModalProps, Spin, Tooltip } from 'antd';
+import Logger from 'js-logger';
+import _isNil from 'lodash/isNil';
+import OlLayerImage from 'ol/layer/Image';
 import OlLayer from 'ol/layer/Layer';
 import OlLayerTile from 'ol/layer/Tile';
-import OlLayerImage from 'ol/layer/Image';
-import OlSourceOSM from 'ol/source/OSM';
-import OlSourceTileWMS from 'ol/source/TileWMS';
-import OlSourceImageWMS from 'ol/source/ImageWMS';
+import OlMap from 'ol/Map';
+import { transformExtent } from 'ol/proj';
 import OlSourceImage from 'ol/source/Image';
+import OlSourceImageWMS from 'ol/source/ImageWMS';
+import OlSourceOSM from 'ol/source/OSM';
 import OlSourceTileImage from 'ol/source/TileImage';
+import OlSourceTileWMS from 'ol/source/TileWMS';
 import OlSourceVector from 'ol/source/Vector';
 import OlView from 'ol/View';
-import {
-  transformExtent
-} from 'ol/proj';
-
-import SHOGunApplicationUtil from '@terrestris/shogun-util/dist/parser/SHOGunApplicationUtil';
-import Layer from '@terrestris/shogun-util/dist/model/Layer';
-import {
-  getBearerTokenHeader
-} from '@terrestris/shogun-util/dist/security/getBearerTokenHeader';
+import { useTranslation } from 'react-i18next';
 
 import LayerUtil from '@terrestris/ol-util/dist/LayerUtil/LayerUtil';
-
-import Logger from 'js-logger';
-
-import {
-  Alert,
-  Modal,
-  ModalProps,
-  Spin,
-  Tooltip
-} from 'antd';
-
-import {
-  GlobalOutlined
-} from '@ant-design/icons';
+import Layer from '@terrestris/shogun-util/dist/model/Layer';
+import SHOGunApplicationUtil from '@terrestris/shogun-util/dist/parser/SHOGunApplicationUtil';
+import { getBearerTokenHeader } from '@terrestris/shogun-util/dist/security/getBearerTokenHeader';
 
 import useSHOGunAPIClient from '../../Hooks/useSHOGunAPIClient';
 
 import MapComponent from './MapComponent/MapComponent';
 
-import './LayerPreview.less';
-
-function isWmsLayer(layer: OlLayer): layer is OlLayerImage<OlSourceImageWMS> | OlLayerTile<OlSourceTileWMS> {
-  if (layer instanceof OlLayer) {
-    const source = layer.getSource();
-    return source instanceof OlSourceImageWMS || source instanceof OlSourceTileWMS;
+function isWmsLayer(layer?: OlLayer): layer is OlLayerImage<OlSourceImageWMS> | OlLayerTile<OlSourceTileWMS> {
+  if (_isNil(layer)) {
+    return false;
   }
-  return false;
+  const source = layer.getSource();
+  return source instanceof OlSourceImageWMS || source instanceof OlSourceTileWMS;
 }
 
 export interface LayerPreviewProps extends ModalProps {
   layer: Layer;
-};
+}
 
 export const LayerPreview: React.FC<LayerPreviewProps> = ({
   layer,
@@ -72,7 +50,7 @@ export const LayerPreview: React.FC<LayerPreviewProps> = ({
   const [addLayerError, setAddLayerError] = useState<string>();
   const [extentError, setExtentError] = useState<string>();
   const [loadLayerError, setLoadLayerError] = useState<string>();
-  const [open, setOpen] = useState(false);
+  const [visible, setVisible] = useState(false);
 
   const { t } = useTranslation();
 
@@ -111,38 +89,42 @@ export const LayerPreview: React.FC<LayerPreviewProps> = ({
         .filter(l => l.get('shogunId') === layer.id)
         .forEach(l => map.removeLayer(l));
 
+      if (_isNil(olLayer)) {
+        return;
+      }
       const source = olLayer.getSource();
 
+      if (_isNil(source)) {
+        return;
+      }
+
       if (source instanceof OlSourceImage) {
-        source.on('imageloaderror', (a) => {
+        const imageSource = source as OlSourceImage;
+        imageSource.on('imageloaderror', () => {
           setLoadLayerError(t('LayerPreview.loadLayerErrorMsg'));
         });
 
-        source.on('imageloadend', (a) => {
-          setLoadLayerError(null);
-        });
+        imageSource.on('imageloadend', () => setLoadLayerError(undefined));
       }
 
       if (source instanceof OlSourceTileImage) {
-        source.on('tileloaderror', (a) => {
+        const tileImageSource = source as OlSourceTileImage;
+        tileImageSource.on('tileloaderror', () => {
           setLoadLayerError(t('LayerPreview.loadLayerErrorMsg'));
         });
 
-        source.on('tileloadend', (a) => {
-          setLoadLayerError(null);
-        });
+        tileImageSource.on('tileloadend', () => setLoadLayerError(undefined));
       }
 
       if (source instanceof OlSourceVector) {
-        source.on('featuresloaderror', (a) => {
+        const vectorSource = source as OlSourceVector;
+        vectorSource.on('featuresloaderror', () => {
           setLoadLayerError(t('LayerPreview.loadLayerErrorMsg'));
         });
 
-        source.on('featuresloadend', (a) => {
-          setLoadLayerError(null);
-        });
+        vectorSource.on('featuresloadend', () => setLoadLayerError(undefined));
       }
-
+      // @ts-ignore
       map.addLayer(olLayer);
     } catch (e) {
       Logger.error(e);
@@ -165,7 +147,7 @@ export const LayerPreview: React.FC<LayerPreviewProps> = ({
         });
         extent = transformExtent(extent, 'EPSG:4326', map.getView().getProjection());
         map.getView().fit(extent);
-      } else if (olLayer.getSource() instanceof OlSourceVector) {
+      } else if (olLayer?.getSource() instanceof OlSourceVector) {
         const source = olLayer.getSource() as OlSourceVector;
         source.on('addfeature', () => {
           map.getView().fit(source.getExtent());
@@ -182,8 +164,8 @@ export const LayerPreview: React.FC<LayerPreviewProps> = ({
   }, [map, layer, client, t]);
 
   useEffect(() => {
-    setAddLayerError(null);
-    setExtentError(null);
+    setAddLayerError(undefined);
+    setExtentError(undefined);
   }, [layer]);
 
   useEffect(() => {
@@ -191,11 +173,11 @@ export const LayerPreview: React.FC<LayerPreviewProps> = ({
   }, [addLayer]);
 
   const onClick = () => {
-    setOpen(true);
+    setVisible(true);
   };
 
   const onCancel = () => {
-    setOpen(false);
+    setVisible(false);
   };
 
   return (
@@ -213,7 +195,7 @@ export const LayerPreview: React.FC<LayerPreviewProps> = ({
         title={t('LayerPreview.title', {
           layerName: layer.name
         })}
-        open={open}
+        visible={visible}
         onCancel={onCancel}
         footer={false}
         {...passThroughProps}

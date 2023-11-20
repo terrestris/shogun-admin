@@ -1,5 +1,4 @@
 import Logger from 'js-logger';
-
 import {
   OpenAPIV3
 } from 'openapi-types';

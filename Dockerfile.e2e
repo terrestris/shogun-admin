@@ -1,5 +1,4 @@
-
-FROM mcr.microsoft.com/playwright:v1.30.0-focal@sha256:9e6eddb08b8566076ef778007859096bc90f8984236061c086eaede2fb60430b
+FROM mcr.microsoft.com/playwright:v1.39.0-jammy
 
 WORKDIR /app
 

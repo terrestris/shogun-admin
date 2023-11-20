@@ -1,25 +1,23 @@
-import { Button, notification, PageHeader, Upload } from 'antd';
+import './ImageFileRoot.less';
+
 import React, { useEffect, useState } from 'react';
-import {
-  useNavigate,
+
+import { Button, notification, PageHeader, Upload } from 'antd';
+import _isNil from 'lodash/isNil';
+import { useTranslation } from 'react-i18next';
+import {matchPath,
   useLocation,
-  matchPath
-} from 'react-router-dom';
+  useNavigate} from 'react-router-dom';
+import config from 'shogunApplicationConfig';
 
 import useSHOGunAPIClient from '../../../Hooks/useSHOGunAPIClient';
 import ImageFileTable from '../ImageFileTable/ImageFileTable';
-
-import config from 'shogunApplicationConfig';
-
-import { useTranslation } from 'react-i18next';
-
-import './ImageFileRoot.less';
 
 interface OwnProps { }
 
 type ImageFileRootProps = OwnProps;
 
-export const ImageFileRoot: React.FC<ImageFileRootProps> = props => {
+export const ImageFileRoot: React.FC<ImageFileRootProps> = () => {
 
   const [fileBlob, setFileBlob] = useState<Blob>();
 
@@ -37,12 +35,12 @@ export const ImageFileRoot: React.FC<ImageFileRootProps> = props => {
 
   useEffect(() => {
     if (!imageFileUuid) {
-      setFileBlob(null);
+      setFileBlob(undefined);
       return;
     }
 
     const fetchImage = async () => {
-      const file = await client.imagefile().findOne(imageFileUuid);
+      const file = await client?.imagefile().findOne(imageFileUuid);
 
       setFileBlob(file);
     };
@@ -71,14 +69,14 @@ export const ImageFileRoot: React.FC<ImageFileRootProps> = props => {
               }
 
               try {
-                const uploadedFile = await client.imagefile().upload(file);
-
-                notification.info({
-                  message: t('ImageFileRoot.success'),
-                  description: t('ImageFileRoot.uploadSuccess', { entityName: file.name })
-                });
-
-                navigate(`${config.appPrefix}/portal/imagefile/${uploadedFile.fileUuid}`);
+                const uploadedFile = await client?.imagefile().upload(file);
+                if (!_isNil(uploadedFile)) {
+                  notification.info({
+                    message: t('ImageFileRoot.success'),
+                    description: t('ImageFileRoot.uploadSuccess', { entityName: file.name })
+                  });
+                  navigate(`${config.appPrefix}/portal/imagefile/${uploadedFile.fileUuid}`);
+                }
               } catch (error) {
                 notification.error({
                   message: t('ImageFileRoot.failure'),

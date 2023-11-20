@@ -1,15 +1,11 @@
-import {
-  useContext
-} from 'react';
+import { useContext } from 'react';
 
 import SHOGunAPIClient from '@terrestris/shogun-util/dist/service/SHOGunAPIClient';
 
 import SHOGunAPIClientContext from '../Context/SHOGunAPIClientContext';
 
-export const useSHOGunAPIClient = (): SHOGunAPIClient => {
-  const context = useContext(SHOGunAPIClientContext);
-
-  return context;
+export const useSHOGunAPIClient = (): SHOGunAPIClient | undefined => {
+  return useContext(SHOGunAPIClientContext);
 };
 
 export default useSHOGunAPIClient;

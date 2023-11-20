@@ -9,27 +9,27 @@ import {
   Table
 } from 'antd';
 import { TableProps } from 'antd/lib/table';
-
+import _get from 'lodash/get';
+import _isNil from 'lodash/isNil';
 import { useTranslation } from 'react-i18next';
 
-import LogLevelSelect from '../LogLevelSelect/LogLevelSelect';
-
-import LogService, { LogLevel } from '../../../Service/LogService/LogService';
 import useSHOGunAPIClient from '../../../Hooks/useSHOGunAPIClient';
+import LogService, { LogLevel } from '../../../Service/LogService/LogService';
+import LogLevelSelect from '../LogLevelSelect/LogLevelSelect';
 
 interface TableData {
   key: number;
   name: string;
   level: LogLevel;
-};
+}
 
-interface LogLevelTableProps extends Omit<TableProps<TableData>, 'loading' | 'columns' | 'dataSource'> { };
+interface LogLevelTableProps extends Omit<TableProps<TableData>, 'loading' | 'columns' | 'dataSource'> { }
 
 export const LogLevelTable: React.FC<LogLevelTableProps> = props => {
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [data, setData] = useState<TableData[]>([]);
-  const [filteredData, setFilteredData] = useState<TableData[]>(null);
+  const [filteredData, setFilteredData] = useState<TableData[]>([]);
 
   const client = useSHOGunAPIClient();
 
@@ -42,7 +42,7 @@ export const LogLevelTable: React.FC<LogLevelTableProps> = props => {
       setIsLoading(true);
 
       const logService = new LogService({
-        keycloak: client.getKeycloak()
+        keycloak: client?.getKeycloak()
       });
       const loggers = await logService.getLoggers();
 
@@ -84,12 +84,11 @@ export const LogLevelTable: React.FC<LogLevelTableProps> = props => {
     )
   }];
 
-  const onLoggerChange = (level: LogLevel, record: TableData) => {
+  const onLoggerChange = async (level: LogLevel, record: TableData) => {
     const logService = new LogService({
-      keycloak: client.getKeycloak()
+      keycloak: client?.getKeycloak()
     });
-    const success = logService.setLogger(record.name, level);
-
+    const success = await logService.setLogger(record.name, level);
     if (success) {
       message.success('Successfully set log level');
     } else {
@@ -100,13 +99,17 @@ export const LogLevelTable: React.FC<LogLevelTableProps> = props => {
   const search = (searchValue: string) => {
     const filtered = data.filter(o =>
       Object.keys(o).some(k =>
-        String(o[k])
+        String(_get(o, k))
           .toLowerCase()
           .includes(searchValue.toLowerCase())
       )
     );
     setFilteredData(filtered);
   };
+
+  if (_isNil(client)) {
+    return null;
+  }
 
   return (
     <>

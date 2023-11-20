@@ -1,3 +1,5 @@
+import './UserAvatar.less';
+
 import React from 'react';
 
 import {
@@ -8,8 +10,6 @@ import {
 import User from '@terrestris/shogun-util/dist/model/User';
 
 import UserUtil from '../../../../Util/UserUtil';
-
-import './UserAvatar.less';
 
 export interface UserAvatarProps extends AvatarProps {
   user: User;

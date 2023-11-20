@@ -1,31 +1,27 @@
-import React from 'react';
-import {
-  useRecoilState
-} from 'recoil';
+import './User.less';
 
-import {
-  Dropdown
-} from 'antd';
-import { ItemType } from 'antd/lib/menu/hooks/useItems';
+import React from 'react';
 
 import {
   InfoCircleOutlined,
   LogoutOutlined,
   SettingOutlined
 } from '@ant-design/icons';
-
-import _isNil from 'lodash/isNil';
-
-import { shogunInfoModalVisibleAtom, userInfoAtom } from '../../../State/atoms';
-
-import './User.less';
+import {
+  Dropdown
+} from 'antd';
 import Avatar from 'antd/lib/avatar/avatar';
-import UserUtil from '../../../Util/UserUtil';
-import useSHOGunAPIClient from '../../../Hooks/useSHOGunAPIClient';
-
+import { ItemType } from 'antd/lib/menu/hooks/useItems';
+import _isNil from 'lodash/isNil';
 import { useTranslation } from 'react-i18next';
-
+import {
+  useRecoilState
+} from 'recoil';
 import config from 'shogunApplicationConfig';
+
+import useSHOGunAPIClient from '../../../Hooks/useSHOGunAPIClient';
+import { shogunInfoModalVisibleAtom, userInfoAtom } from '../../../State/atoms';
+import UserUtil from '../../../Util/UserUtil';
 
 interface OwnProps { }
 
@@ -42,6 +38,10 @@ export const User: React.FC<UserProps> = () => {
 
   const client = useSHOGunAPIClient();
 
+  if (_isNil(client)) {
+    return null;
+  }
+
   const avatarSource = !_isNil(userInfo.providerDetails?.email) ? UserUtil.getGravatarUrl({
     email: userInfo.providerDetails?.email || '',
     size: 28
@@ -55,7 +55,7 @@ export const User: React.FC<UserProps> = () => {
         break;
       case 'settings':
         // TODO: Fix settings for non keycloak setups
-        client.getKeycloak()?.accountManagement();
+        client?.getKeycloak()?.accountManagement();
         break;
       case 'logout':
         const keycloak = client.getKeycloak();
@@ -66,7 +66,7 @@ export const User: React.FC<UserProps> = () => {
             method: 'POST',
             credentials: 'same-origin'
           }).then(response => {
-            if (response.status === 200) {
+            if (response.status === 200 && !_isNil(config?.security?.tokenName)) {
               localStorage.removeItem(config?.security?.tokenName);
               window.location.href = '/';
             }
@@ -114,7 +114,6 @@ export const User: React.FC<UserProps> = () => {
   }, {
     type: 'divider'
   });
-
 
   userMenuItems.push({
     label: t('User.logout'),

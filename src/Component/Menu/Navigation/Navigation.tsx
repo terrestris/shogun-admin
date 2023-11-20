@@ -1,28 +1,29 @@
 import React from 'react';
-import { matchPath, useNavigate, useLocation } from 'react-router-dom';
 
 import {
   BankOutlined,
-  FileImageOutlined,
-  FileTextOutlined,
+  BarChartOutlined,
   ControlOutlined,
-  BarChartOutlined
+  FileImageOutlined,
+  FileTextOutlined
 } from '@ant-design/icons';
 
 import {
   Menu
 } from 'antd';
 import { ItemType } from 'antd/lib/menu/hooks/useItems';
-
-import config from 'shogunApplicationConfig';
-import { GeneralEntityConfigType } from '../../GeneralEntity/GeneralEntityRoot/GeneralEntityRoot';
-import BaseEntity from '@terrestris/shogun-util/dist/model/BaseEntity';
-
+import _isNil from 'lodash/isNil';
+import { SelectInfo } from 'rc-menu/lib/interface';
 import {
   useTranslation
 } from 'react-i18next';
+import { matchPath, useLocation,useNavigate } from 'react-router-dom';
+import config from 'shogunApplicationConfig';
+
+import BaseEntity from '@terrestris/shogun-util/dist/model/BaseEntity';
 
 import TranslationUtil from '../../../Util/TranslationUtil';
+import { GeneralEntityConfigType } from '../../GeneralEntity/GeneralEntityRoot/GeneralEntityRoot';
 
 interface OwnProps {
   collapsed?: boolean;
@@ -42,7 +43,7 @@ export const Navigation: React.FC<NavigationProps> = ({
   const navigate = useNavigate();
   const location = useLocation();
 
-  const onSelect = ({ key }) => {
+  const onSelect = ({ key }: SelectInfo) => {
     navigate(`${config.appPrefix}/portal/${key}`);
   };
 
@@ -157,7 +158,7 @@ export const Navigation: React.FC<NavigationProps> = ({
       theme="dark"
       inlineCollapsed={collapsed}
       onSelect={onSelect}
-      selectedKeys={[activeKey]}
+      selectedKeys={!_isNil(activeKey) ? [activeKey] : []}
       defaultOpenKeys={['general']}
       items={items}
     >

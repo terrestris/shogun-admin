@@ -1,11 +1,12 @@
 import React from 'react';
+
 import { Typography } from 'antd';
-import moment from 'moment';
-import _isNil from 'lodash/isNil';
-import _isFunction from 'lodash/isFunction';
-import _isFinite from 'lodash/isFinite';
 import _get from 'lodash/get';
 import _isEmpty from 'lodash/isEmpty';
+import _isFinite from 'lodash/isFinite';
+import _isFunction from 'lodash/isFunction';
+import _isNil from 'lodash/isNil';
+import moment from 'moment';
 
 export type DisplayFieldProps = {
   dateFormat?: string;

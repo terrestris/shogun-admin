@@ -1,18 +1,16 @@
+import './GlobalSettingsRoot.less';
+
 import React, {
   useEffect
 } from 'react';
 
-import { useNavigate } from 'react-router-dom';
-
 import {
   PageHeader
 } from 'antd';
+import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 
 import EvictCache from '../../../Component/EvictCache/EvictCache';
-
-import { useTranslation } from 'react-i18next';
-
-import './GlobalSettingsRoot.less';
 
 type LogsProps = {};
 

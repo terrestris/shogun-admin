@@ -1,24 +1,20 @@
+import './ApplicationInfo.less';
+
 import React from 'react';
 
 import {
   Modal,
   Statistic
 } from 'antd';
-
 import { ModalProps } from 'antd/lib/modal';
-
+import { useTranslation } from 'react-i18next';
 import { useRecoilState } from 'recoil';
 
-import { appInfoAtom, shogunInfoModalVisibleAtom } from '../../../State/atoms';
-
+import defaultLogo from '../../../../assets/img/shogun_logo.png';
 import {
   useClientVersion
 } from '../../../Hooks/useClientVersion';
-
-import defaultLogo from '../../../../assets/img/shogun_logo.png';
-
-import './ApplicationInfo.less';
-import { useTranslation } from 'react-i18next';
+import { appInfoAtom, shogunInfoModalVisibleAtom } from '../../../State/atoms';
 
 export interface ApplicationInfoProps extends ModalProps { }
 

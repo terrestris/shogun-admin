@@ -1,18 +1,15 @@
 import React, { ReactNode } from 'react';
 
-import { Metric } from '../../../Service/MetricService/MetricService';
-
 import MetricEntry, { MetricEntryProps } from '../MetricEntry/MetricEntry';
 
-interface JvmMemoryUsedProps extends Omit<MetricEntryProps, 'type'> { };
+interface JvmMemoryUsedProps extends Omit<MetricEntryProps, 'type'> { }
 
 export const JvmMemoryUsed: React.FC<JvmMemoryUsedProps> = ({
   ...passThroughProps
 }) => {
 
-  const valueRenderer = (value: number | string, metric: Metric): ReactNode => {
-    let val = Number(value) * (9.537 * Math.pow(10, -7));
-
+  const valueRenderer = (value: number | string): ReactNode => {
+    const val = Number(value) * (9.537 * Math.pow(10, -7));
     return <span>{val.toFixed(2)}</span>;
   };
 

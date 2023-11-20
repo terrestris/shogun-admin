@@ -1,37 +1,36 @@
+import './MapComponent.less';
+
 import React, {
-  useEffect,
-  useRef
+  useCallback
 } from 'react';
 
 import OlMap from 'ol/Map';
 
-import './MapComponent.less';
-
 export interface MapComponentProps extends React.ComponentProps<'div'> {
-  map?: OlMap;
+  map: OlMap;
+  mapDivId?: string;
   onRender?: () => void;
-};
+}
 
 export const MapComponent: React.FC<MapComponentProps> = ({
-  onRender = () => {},
   map,
+  mapDivId = 'map',
+  onRender = () => {},
   ...passThroughProps
 }): JSX.Element => {
 
-  const mapDiv = useRef();
-
-  useEffect(() => {
+  const refCallback = useCallback((ref: HTMLDivElement) => {
     if (!map) {
-      return undefined;
+      return;
     }
-
-    map.setTarget(mapDiv.current);
+    if (ref === null) {
+      map.setTarget(undefined);
+    } else {
+      map.setTarget(ref);
+    }
 
     onRender();
 
-    return () => {
-      map.setTarget(undefined);
-    };
   }, [map, onRender]);
 
   if (!map) {
@@ -40,7 +39,8 @@ export const MapComponent: React.FC<MapComponentProps> = ({
 
   return (
     <div
-      ref={mapDiv}
+      id={mapDivId}
+      ref={refCallback}
       className="map"
       role="presentation"
       {...passThroughProps}

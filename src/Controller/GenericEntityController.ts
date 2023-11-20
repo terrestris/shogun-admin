@@ -1,21 +1,19 @@
-import _debounce from 'lodash/debounce';
+import { ValidateStatus } from 'antd/lib/form/FormItem';
+import _get from 'lodash/get';
 import _intersects from 'lodash/intersection';
-import _isEmpty from 'lodash/isEmpty';
 import _isNil from 'lodash/isNil';
 import _isNumber from 'lodash/isNumber';
 import _omit from 'lodash/omit';
-
-import { ValidateStatus } from 'antd/lib/form/FormItem';
-
-import GenericEntityService from '@terrestris/shogun-util/dist/service/GenericEntityService';
-import BaseEntity from '@terrestris/shogun-util/dist/model/BaseEntity';
-import Application from '@terrestris/shogun-util/dist/model/Application';
+import _set from 'lodash/set';
 
 import Logger from '@terrestris/base-util/dist/Logger';
+import Application from '@terrestris/shogun-util/dist/model/Application';
+import BaseEntity from '@terrestris/shogun-util/dist/model/BaseEntity';
+import { Page } from '@terrestris/shogun-util/dist/model/Page';
+import GenericEntityService from '@terrestris/shogun-util/dist/service/GenericEntityService';
+import { PageOpts } from '@terrestris/shogun-util/dist/service/GenericService';
 
 import { FieldConfig, FormConfig } from '../Component/GeneralEntity/GeneralEntityForm/GeneralEntityForm';
-import { Page } from '@terrestris/shogun-util/dist/model/Page';
-import { PageOpts } from '@terrestris/shogun-util/dist/service/GenericService';
 
 // TODO: add explicit value objects
 export type FieldValue = any;
@@ -31,20 +29,25 @@ export type FieldValidation = {
 };
 
 export type GenericEntityControllerArgs<T extends BaseEntity> = {
-  service: GenericEntityService<T>;
-  formUpdater?: (values: FormValues) => void; // maybe not required
+  entity?: T;
   formConfig: FormConfig;
+  formUpdater?: (values: FormValues) => void; // maybe not required
+  initialValues?: FormValues;
+  nextUpdate?: FormValues;
+  service: GenericEntityService<T>;
 };
 
 export class GenericEntityController<T extends BaseEntity> {
-  protected entity: T;
-  protected initialValues: FormValues;
+  protected entity: T | undefined;
+  protected initialValues?: FormValues;
   protected service: GenericEntityService<T>;
-  private formConfig: FormConfig;
+  private readonly formConfig: FormConfig;
   private formUpdater?: (values: FormValues) => void; // maybe not required
-  private nextUpdate: FormValues;
+  private nextUpdate?: FormValues;
 
   public constructor({
+    entity,
+    initialValues,
     service,
     formConfig,
     formUpdater
@@ -52,9 +55,13 @@ export class GenericEntityController<T extends BaseEntity> {
     this.formUpdater = formUpdater;
     this.service = service;
     this.formConfig = formConfig;
+    if (!_isNil(entity)) {
+      this.entity = entity;
+    }
+    this.initialValues = initialValues;
   }
 
-  public getEntity(): T {
+  public getEntity(): T | undefined {
     return this.entity;
   }
 
@@ -90,7 +97,10 @@ export class GenericEntityController<T extends BaseEntity> {
   };
 
   public async delete(entity: T): Promise<void> {
-    await this.service.delete(entity?.id);
+    if (!_isNil(entity?.id)) {
+      await this.service.delete(entity?.id);
+    }
+    return Promise.reject();
   }
 
   /**
@@ -117,7 +127,7 @@ export class GenericEntityController<T extends BaseEntity> {
       } else {
         Logger.warn('No formUpdater set for EntityController');
       }
-      this.nextUpdate = null;
+      this.nextUpdate = undefined;
     }
   }
 
@@ -157,7 +167,7 @@ export class GenericEntityController<T extends BaseEntity> {
   /**
    * Return the initial form values
    */
-  public getInitialFormValues(): FormValues {
+  public getInitialFormValues(): FormValues | undefined {
     return this.initialValues;
   }
 
@@ -195,14 +205,14 @@ export class GenericEntityController<T extends BaseEntity> {
     for (const fieldConfig of this.formConfig.fields) {
       if (!Array.isArray(fieldConfig.dataField)) {
         if (dataFields.includes(fieldConfig.dataField)) {
-          this.addFormChange(fieldConfig.dataField, this.entity[fieldConfig.dataField]);
+          this.addFormChange(fieldConfig.dataField, _get(this.entity, fieldConfig.dataField));
         }
       } else {
         if (_intersects(fieldConfig.dataField, dataFields)) {
           const values = {};
           for (const dataField of fieldConfig.dataField) {
             if (dataFields.includes(dataField)) {
-              values[dataField] = this.entity[dataField];
+              _set(values, dataField, _get(this.entity, dataField));
             }
           }
           this.addFormChange(fieldConfig.dataField, values);
@@ -222,7 +232,7 @@ export class GenericEntityController<T extends BaseEntity> {
    */
   protected updateFormForComponents(components: string[], values: FieldValue) {
     for (const fieldConfig of this.formConfig.fields) {
-      if (components.includes(fieldConfig.component)) {
+      if (!_isNil(fieldConfig.component) && components.includes(fieldConfig.component)) {
         this.addFormChange(fieldConfig.dataField, values);
       }
     }
@@ -236,11 +246,14 @@ export class GenericEntityController<T extends BaseEntity> {
    * @protected
    */
   protected setEntityValueByFieldConfig(fieldConfig: FieldConfig, value: FieldValue) {
+    if (_isNil(this.entity)) {
+      return;
+    }
     if (!Array.isArray(fieldConfig.dataField)) {
-      this.entity[fieldConfig.dataField] = value;
+      _set(this.entity, fieldConfig.dataField, value);
     } else {
       for (const dataField of fieldConfig.dataField) {
-        this.entity[dataField] = value[dataField];
+        _set(this.entity, dataField, _get(value, dataField));
       }
     }
   }
@@ -252,11 +265,11 @@ export class GenericEntityController<T extends BaseEntity> {
    */
   protected getFormValueByFieldConfig(fieldConfig: FieldConfig): FieldValue {
     if (!Array.isArray(fieldConfig.dataField)) {
-      return this.entity[fieldConfig.dataField];
+      return _get(this.entity, fieldConfig.dataField);
     } else {
       const result = {};
       for (const dataField of fieldConfig.dataField) {
-        result[dataField] = this.entity[dataField];
+        _set(result, dataField, _get(this.entity, dataField));
       }
       return result;
     }
@@ -326,14 +339,14 @@ export class GenericEntityController<T extends BaseEntity> {
     for (const fieldConfig of this.formConfig.fields) {
       if (!Array.isArray(fieldConfig.dataField)) {
         if (dataFields.includes(fieldConfig.dataField)) {
-          this.addFormChange(fieldConfig.dataField, this.entity[fieldConfig.dataField]);
+          this.addFormChange(fieldConfig.dataField, _get(this.entity, fieldConfig.dataField));
         }
       } else {
         if (_intersects(fieldConfig.dataField, dataFields)) {
           const values = {};
           for (const dataField of fieldConfig.dataField) {
             if (dataFields.includes(dataField)) {
-              values[dataField] = this.entity[dataField];
+              _set(values, dataField, _get(this.entity, dataField));
             }
           }
           this.addFormChange(fieldConfig.dataField, values);

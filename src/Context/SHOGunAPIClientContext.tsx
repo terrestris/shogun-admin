@@ -7,7 +7,7 @@ export type SHOGunAPIClientProviderProps = {
   children: JSX.Element;
 };
 
-export const SHOGunAPIClientContext = React.createContext<(SHOGunAPIClient)>(null);
+export const SHOGunAPIClientContext = React.createContext<(SHOGunAPIClient | undefined)>(undefined);
 
 export const SHOGunAPIClientProvider: React.FC<SHOGunAPIClientProviderProps> = ({
   client,

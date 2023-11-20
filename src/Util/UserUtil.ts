@@ -1,7 +1,7 @@
-import User from '@terrestris/shogun-util/dist/model/User';
-
-import md5 from 'js-md5';
+import { md5 } from 'js-md5';
 import _isNil from 'lodash/isNil';
+
+import User from '@terrestris/shogun-util/dist/model/User';
 
 export interface GravatarProps {
   email: string;

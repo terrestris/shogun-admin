@@ -1,21 +1,22 @@
-import _lowerCase from 'lodash/lowerCase';
-
 import Keycloak from 'keycloak-js';
+
+import _lowerCase from 'lodash/lowerCase';
 
 import BaseEntity from '@terrestris/shogun-util/dist/model/BaseEntity';
 import Application from '@terrestris/shogun-util/dist/model/File';
-import GenericEntityService from '@terrestris/shogun-util/dist/service/GenericEntityService';
 import ApplicationService from '@terrestris/shogun-util/dist/service/ApplicationService';
+import GenericEntityService from '@terrestris/shogun-util/dist/service/GenericEntityService';
 
-import { GenericServiceImpl } from '../Service/GenericServiceImpl/GenericServiceImpl';
-import { FormValues, GenericEntityController } from './GenericEntityController';
 import { FormConfig } from '../Component/GeneralEntity/GeneralEntityForm/GeneralEntityForm';
+import { GenericServiceImpl } from '../Service/GenericServiceImpl/GenericServiceImpl';
+
+import { FormValues, GenericEntityController } from './GenericEntityController';
 
 export type ControllerCfg = {
   endpoint: string;
-  keycloak?: Keycloak;
   entityType: string;
   formConfig: FormConfig;
+  keycloak?: Keycloak;
   updateForm?: (values: FormValues) => void;
 };
 
@@ -60,12 +61,11 @@ export class ControllerUtil {
       basePath: controllerCfg?.endpoint,
       keycloak: controllerCfg.keycloak
     });
-    const appController = new GenericEntityController<Application>({
+    return new GenericEntityController<Application>({
       service: appService,
       formUpdater: controllerCfg?.updateForm,
       formConfig: controllerCfg?.formConfig
     });
-    return appController;
   }
 
   /**
@@ -78,12 +78,11 @@ export class ControllerUtil {
       basePath: controllerCfg?.endpoint,
       keycloak: controllerCfg.keycloak
     });
-    const genericController: GenericEntityController<BaseEntity> = new GenericEntityController<BaseEntity>({
+    return new GenericEntityController<BaseEntity>({
       service: genericService as GenericEntityService<BaseEntity>,
       formUpdater: controllerCfg?.updateForm,
       formConfig: controllerCfg?.formConfig
     });
-    return genericController;
   }
 
 }

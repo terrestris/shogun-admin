@@ -1,38 +1,33 @@
 import React from 'react';
 
-import {
-  DatePicker,
+import {DatePicker,
   Form,
   Input,
+  InputNumber,
   PageHeader,
   Select,
   Spin,
   Statistic,
-  Switch,
-  InputNumber
-} from 'antd';
-const { TextArea } = Input;
+  Switch} from 'antd';
+import './GeneralEntityForm.less';
+
 import {
   FormInstance,
   FormItemProps,
   FormProps
 } from 'antd/lib/form';
-
 import Logger from 'js-logger';
-
 import _cloneDeep from 'lodash/cloneDeep';
 
+import TranslationUtil from '../../../Util/TranslationUtil';
 import DisplayField from '../../FormField/DisplayField/DisplayField';
-import YesOrNoField from '../../FormField/YesOrNoField/YesOrNoField';
 import JSONEditor from '../../FormField/JSONEditor/JSONEditor';
 import MarkdownEditor from '../../FormField/MarkdownEditor/MarkdownEditor';
 import UserPermissionGrid from '../../FormField/UserPermissionGrid/UserPermissionGrid';
-
+import YesOrNoField from '../../FormField/YesOrNoField/YesOrNoField';
 import LayerTypeSelect from '../../Layer/LayerTypeSelect/LayerTypeSelect';
 
-import TranslationUtil from '../../../Util/TranslationUtil';
-
-import './GeneralEntityForm.less';
+const { TextArea } = Input;
 
 export type FieldConfig = {
   component?: string;
@@ -72,7 +67,7 @@ interface OwnProps {
   formConfig: FormConfig;
   formProps?: Partial<FormProps>;
   form: FormInstance;
-};
+}
 
 const DEFAULT_DATE_FORMAT = 'DD.MM.YYYY';
 
@@ -116,7 +111,7 @@ export const GeneralEntityForm: React.FC<GeneralEntityFormProps> = ({
 
   /**
    * Return a component given the "component" property in passed field configuration
-   * @param fieldConfig The field configuration
+   * @param fieldCfg
    */
   const createFieldComponent = (fieldCfg: FieldConfig): React.ReactNode => {
     switch (fieldCfg?.component) {
@@ -222,9 +217,9 @@ export const GeneralEntityForm: React.FC<GeneralEntityFormProps> = ({
   /**
    * Generates an antd normalize function with the specified "no"-value.
    */
-  const getNormalizeFn = (name: string) => {
+  const getNormalizeFn = () => {
     let noValue: string = '';
-    return (value, prevValue = []) => {
+    return (value: any, prevValue: any = []) => {
       if (
         Array.isArray(value) &&
         Array.isArray(prevValue) &&
@@ -284,7 +279,7 @@ export const GeneralEntityForm: React.FC<GeneralEntityFormProps> = ({
         key={`${entityType}-${form.getFieldValue('id')}-${dataField}`}
         name={dataField}
         className={`cls-${dataField}`}
-        normalize={copyFieldCfg.component ? getNormalizeFn(dataField) : undefined}
+        normalize={copyFieldCfg.component ? getNormalizeFn() : undefined}
         label={copyFieldCfg.label || `Field: ${copyFieldCfg.dataField}`}
         {...formItemProps}
         {...copyFieldCfg.formItemProps}
