@@ -4,6 +4,7 @@ import {
   SearchOutlined
 } from '@ant-design/icons';
 
+import i18n from '../i18n';
 import { Input, Button } from 'antd';
 
 export default class TableUtil {
@@ -14,37 +15,44 @@ export default class TableUtil {
     handleReset =  TableUtil.handleReset
   ) => {
     let searchInput;
-
     return {
       filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
-        <div style={{ padding: 8 }}>
+        <div
+          style={{
+            padding: '8px',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'stretch'
+          }}
+        >
           <Input
             ref={node => { searchInput = node; }}
-            placeholder={`Search ${dataIndex}`}
+            placeholder={`${i18n.t('GeneralEntityTable.popupSearch')} ${dataIndex}`}
             value={selectedKeys[0]}
             onChange={e => setSelectedKeys(e.target.value ? [e.target.value] : [])}
             onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
             style={{
-              width: 188,
+              flex: 1,
               marginBottom: 8,
-              display: 'block'
             }}
           />
-          <Button
-            type="primary"
-            onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
-            icon={<SearchOutlined />}
-            size="small"
-            style={{
-              width: 90,
-              marginRight: 8
-            }}
-          >
-            Filter
-          </Button>
-          <Button onClick={() => handleReset(clearFilters)} size="small" style={{ width: 90 }}>
-            Reset
-          </Button>
+          <div style={{display: 'flex'}}>
+            <Button
+              type="primary"
+              onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
+              icon={<SearchOutlined />}
+              size="small"
+              style={{
+                flex: 1,
+                marginRight: 8
+              }}
+            >
+              {`${i18n.t('GeneralEntityTable.popupFilter')}`}
+            </Button>
+            <Button onClick={() => handleReset(clearFilters)} size="small" style={{ flex: 1 }}>
+              {`${i18n.t('GeneralEntityTable.popupReset')}`}
+            </Button>
+          </div>
         </div>
       ),
       filterIcon: filtered => <SearchOutlined style={{ color: filtered ? '#1890ff' : undefined }} />,
@@ -58,7 +66,7 @@ export default class TableUtil {
           recVal = record[dataIndex];
         }
         return recVal
-          .toString()
+          ?.toString()
           .toLowerCase()
           .includes(value.toLowerCase());
       },
