@@ -1,3 +1,26 @@
+## [12.0.0](https://github.com/terrestris/shogun-admin/compare/v11.6.2...v12.0.0) (2023-11-20)
+
+
+### ⚠ BREAKING CHANGES
+
+* changes in props
+
+### Dependencies
+
+* bump dependencies ([e69a008](https://github.com/terrestris/shogun-admin/commit/e69a0085a96d0d67e0c8437cd3ca1111342209df))
+* **deps:** enable dependabot ([4800af6](https://github.com/terrestris/shogun-admin/commit/4800af6fb7e36f7ab0a02ce9fa125524962c3cc7))
+* **eslint:** adds simple sort plugin ([191cfae](https://github.com/terrestris/shogun-admin/commit/191cfae5628ea29d661af3dfabcbf68c7a23f3dd))
+* **gh-actions:** bump versions of gh actions ([f7773d8](https://github.com/terrestris/shogun-admin/commit/f7773d865c8d01e89288e53b4def62db584ff8b3))
+* **lint:** replace eslint-simple-sort-plugin by esling-plugin-import ([4e287fb](https://github.com/terrestris/shogun-admin/commit/4e287fb43ac7b15d3839bb92a5689c40b044fd66))
+* **npm:** bump antd, adds further required deps and refactor build / cleanup ([aa02737](https://github.com/terrestris/shogun-admin/commit/aa02737b8238122ca34f0ea481282d563f8aaa15))
+* **npm:** upgrade to node 18 ([b3a1aed](https://github.com/terrestris/shogun-admin/commit/b3a1aede33c6b71fff72351729ab7680b25269e6))
+* **webpack:** adapt webpack config to v5 ([e8ae431](https://github.com/terrestris/shogun-admin/commit/e8ae43147911b4f2da5c1c64e1756b92396ed32c))
+
+
+### Bugfixes
+
+* improve / adapt typings according to updated libraries ([10b2c17](https://github.com/terrestris/shogun-admin/commit/10b2c179a0881f06548b4e088afa1fee2ee59fd4))
+
 ## [11.6.2](https://github.com/terrestris/shogun-admin/compare/v11.6.1...v11.6.2) (2023-11-20)
 
 
