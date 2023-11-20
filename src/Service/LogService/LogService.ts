@@ -82,13 +82,18 @@ class LogService {
     }
   };
 
-  async getLogs(): Promise<string> {
+  async getLogs() {
     try {
       const logResponse = await fetch(`${config.path.shogunBase}actuator/logfile`, {
         headers: {
           ...getBearerTokenHeader(this.keycloak)
         }
       });
+
+      if (!logResponse.ok) {
+        throw new Error('No successful response while getting the logs');
+      }
+
       const logText = await logResponse.text();
 
       return logText;

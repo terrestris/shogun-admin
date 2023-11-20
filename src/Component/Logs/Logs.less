@@ -1,8 +1,16 @@
 .log-root {
-  height: 100%;
-  overflow: auto;
+  .log-container {
+    padding: 0 0 0 24px;
 
-  textarea.ant-input.logs {
-    flex: 1;
+    .ant-alert {
+      margin-right: 24px;
+    }
+
+    pre {
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      overflow: auto;
+      max-height: calc(100vh - 142px);
+    }
   }
 }
