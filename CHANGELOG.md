@@ -1,3 +1,10 @@
+## [11.6.2](https://github.com/terrestris/shogun-admin/compare/v11.6.1...v11.6.2) (2023-11-20)
+
+
+### Bugfixes
+
+* show hint if logs can't be displayed ([74cb82b](https://github.com/terrestris/shogun-admin/commit/74cb82bce0ffeb16f1804a97da6a2cc947ff22c3))
+
 ## [11.6.1](https://github.com/terrestris/shogun-admin/compare/v11.6.0...v11.6.1) (2023-11-20)
 
 
