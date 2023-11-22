@@ -1,3 +1,24 @@
+## [12.0.1](https://github.com/terrestris/shogun-admin/compare/v12.0.0...v12.0.1) (2023-11-22)
+
+
+### Dependencies
+
+* **deps-dev:** bump @commitlint/cli from 18.4.1 to 18.4.2 ([da9c5d0](https://github.com/terrestris/shogun-admin/commit/da9c5d0634beef37a0cfbf36a535cbc6fbade3c7))
+* **deps-dev:** bump @commitlint/config-conventional ([4514e77](https://github.com/terrestris/shogun-admin/commit/4514e77e100bfc6589f173f7000f65a687cb81ce))
+* **deps-dev:** bump @commitlint/config-conventional ([cfe8ed4](https://github.com/terrestris/shogun-admin/commit/cfe8ed43f46cbd1e6b7d29adfba16d7c3302ce3f))
+* **deps-dev:** bump @playwright/test from 1.39.0 to 1.40.0 ([9c0ae32](https://github.com/terrestris/shogun-admin/commit/9c0ae3289ea8aa389ee1a2fee9be4f9d9f2504ed))
+* **deps-dev:** bump @testing-library/react from 14.1.0 to 14.1.2 ([fecbd09](https://github.com/terrestris/shogun-admin/commit/fecbd091c092142fcf980ec7ba87bf7b99366be5))
+* **deps-dev:** bump @types/jest from 29.5.8 to 29.5.10 ([9225ae6](https://github.com/terrestris/shogun-admin/commit/9225ae671104a7d6fe00455bb2f758b7241be9a3))
+* **deps-dev:** bump @typescript-eslint/parser from 6.11.0 to 6.12.0 ([8b476c7](https://github.com/terrestris/shogun-admin/commit/8b476c7338756e446d57f037b37973e702fc2efb))
+* **deps-dev:** bump eslint from 8.53.0 to 8.54.0 ([6c0bb2e](https://github.com/terrestris/shogun-admin/commit/6c0bb2e14443590a51c5aa36d135a3613c147e3f))
+* **deps-dev:** bump semantic-release from 22.0.7 to 22.0.8 ([d32fc06](https://github.com/terrestris/shogun-admin/commit/d32fc063995bd4b7031a417cc84b5f56e707595e))
+* **deps:** bump react-router-dom from 6.18.0 to 6.19.0 ([462dd57](https://github.com/terrestris/shogun-admin/commit/462dd57f1be5c18443bd4527352b9d2c678ce3ac))
+
+
+### Bugfixes
+
+* **build:** adds missing rimraf dependency ([a60ef59](https://github.com/terrestris/shogun-admin/commit/a60ef59a16f143245f696e7e19c8f71c5f90e3d0))
+
 ## [12.0.0](https://github.com/terrestris/shogun-admin/compare/v11.6.2...v12.0.0) (2023-11-20)
 
 
