@@ -1,3 +1,30 @@
+## [12.1.0](https://github.com/terrestris/shogun-admin/compare/v12.0.1...v12.1.0) (2023-11-24)
+
+
+### Dependencies
+
+* **deps-dev:** bump @commitlint/cli from 18.4.2 to 18.4.3 ([6c8b68f](https://github.com/terrestris/shogun-admin/commit/6c8b68f31af046863f5e87cd746c1a0a1b598259))
+* **deps-dev:** bump @types/react from 18.2.37 to 18.2.38 ([fee5c15](https://github.com/terrestris/shogun-admin/commit/fee5c154fe927da231f5b931d3969f48870fe8e7))
+* **deps-dev:** bump @types/react-dom from 18.2.15 to 18.2.17 ([198239d](https://github.com/terrestris/shogun-admin/commit/198239d6405c6f9ab8b6c9d1985c83e47ab179df))
+* **deps-dev:** bump @types/react-redux from 7.1.30 to 7.1.31 ([7c75e81](https://github.com/terrestris/shogun-admin/commit/7c75e81a48a29179da3ca62cea5b119b2f38832a))
+* **deps-dev:** bump @typescript-eslint/eslint-plugin ([88a5fc9](https://github.com/terrestris/shogun-admin/commit/88a5fc94c53d1fed800a87e8b7d784922c3e507a))
+* **deps-dev:** bump @typescript-eslint/eslint-plugin-tslint ([75c2500](https://github.com/terrestris/shogun-admin/commit/75c25008dccaffeeabddfadb22f94c69f9475189))
+* **deps-dev:** bump typescript from 5.2.2 to 5.3.2 ([e3777f5](https://github.com/terrestris/shogun-admin/commit/e3777f5aef4d69908ebae4b1ed952aa4115140c7))
+* **deps:** bump ol from 8.1.0 to 8.2.0 ([6c6ad88](https://github.com/terrestris/shogun-admin/commit/6c6ad88933d97ba97a9462c2ce5b6d36b73639b5))
+* **deps:** bump react-i18next from 13.4.1 to 13.5.0 ([75392f4](https://github.com/terrestris/shogun-admin/commit/75392f4ddffe57b97111e6ade5474e6ebda158ba))
+* **deps:** bump react-router-dom from 6.19.0 to 6.20.0 ([0ad2c16](https://github.com/terrestris/shogun-admin/commit/0ad2c16160b8f7a57038fc39fda67f3d191694f9))
+* fix default user/group links to Keycloak ([49ed31f](https://github.com/terrestris/shogun-admin/commit/49ed31f1770fe3cd4307eae44c798abfc0f7af63))
+
+
+### Features
+
+* changed the design of applicationInfo. ([9a52cb5](https://github.com/terrestris/shogun-admin/commit/9a52cb51997d62617e0f3205f4e82f71ae5422c7))
+
+
+### Bugfixes
+
+* implemented suggestions by Lukas Lohoff and fixed faulty tests ([689913e](https://github.com/terrestris/shogun-admin/commit/689913e8a8aa99239e8df91dee524dd998cb7b53))
+
 ## [12.0.1](https://github.com/terrestris/shogun-admin/compare/v12.0.0...v12.0.1) (2023-11-22)
 
 
