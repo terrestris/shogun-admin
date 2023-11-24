@@ -772,7 +772,7 @@ export function GeneralEntityRoot<T extends BaseEntity>({
               items_per_page: `/ ${t('GeneralEntityTable.paging.itemsPerPage')}`,
               // eslint-disable-next-line camelcase
               jump_to: t('GeneralEntityTable.paging.jumpTo'),
-              page: t('GeneralEntityTable.paging.page'),
+              page: t('GeneralEntityTable.paging.page')
             }
           }}
         />
