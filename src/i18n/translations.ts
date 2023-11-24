@@ -429,7 +429,7 @@ export default {
         extentNotSupportedErrorMsg: 'Zoom to layer is not supported for this type.'
       },
       VerifyProviderDetailsField: {
-        title: 'No authentication provider informations available'
+        title: 'No authentication provider information available'
       }
     }
   }
