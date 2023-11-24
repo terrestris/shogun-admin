@@ -93,7 +93,7 @@
         "cellRenderComponentName": "LinkCell",
         "cellRenderComponentProps": {
           "title": "#i18n.titleGroup",
-          "template": "/auth/admin/master/console/#/realms/SpringBootKeycloak/groups/{}"
+          "template": "/auth/admin/master/console/#/SHOGun/groups/{}/settings"
         }
       }
     ]
