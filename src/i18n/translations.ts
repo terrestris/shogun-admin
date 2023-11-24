@@ -206,7 +206,7 @@ export default {
       }
     },
     VerifyProviderDetailsField: {
-      title: 'Keine Authentication Provider Informationen verfügbar'
+      title: 'Keine Informationen des Authentication-Providers verfügbar'
     }
   },
   en: {
