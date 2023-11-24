@@ -1,3 +1,16 @@
+## [12.2.0](https://github.com/terrestris/shogun-admin/compare/v12.1.0...v12.2.0) (2023-11-24)
+
+
+### Features
+
+* init VerifyProviderDetailsField cell renderer ([fba1308](https://github.com/terrestris/shogun-admin/commit/fba13081c1ce7d4b569cc9e93134738d54b66ae7))
+
+
+### Bugfixes
+
+* update locale ([c3eec64](https://github.com/terrestris/shogun-admin/commit/c3eec640aaecba2581237c4729901d08f4a33513))
+* update locale ([2373f58](https://github.com/terrestris/shogun-admin/commit/2373f58e2d125df96fb04f29d4626faa5e5578e1))
+
 ## [12.1.0](https://github.com/terrestris/shogun-admin/compare/v12.0.1...v12.1.0) (2023-11-24)
 
 
