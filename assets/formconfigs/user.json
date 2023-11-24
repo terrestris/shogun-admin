@@ -12,6 +12,7 @@
       "labelSource": "Datenquelle",
       "titleId": "ID",
       "titleKeyId": "Keycloak ID",
+      "userDoesNotExistTitle": "Der Nutzer existiert nicht in Keycloak",
       "titleLink": "Link zum Benutzer",
       "titleOpen": "Öffne User in Keycloak"
     },
@@ -27,6 +28,7 @@
       "labelSource": "Datasource",
       "titleId": "ID",
       "titleKeyId": "Keycloak ID",
+      "userDoesNotExistTitle": "User does not exist in Keycloak",
       "titleLink": "Link to user",
       "titleOpen": "Open user in Keycloak"
     }
@@ -103,6 +105,10 @@
         "title": "#i18n.titleKeyId",
         "dataIndex": "authProviderId",
         "key": "authProviderId",
+        "cellRenderComponentName": "VerifyProviderDetailsCell",
+        "cellRenderComponentProps": {
+          "title": "#i18n.userDoesNotExistTitle"
+        },
         "sortConfig": {
           "isSortable": true
         },

@@ -204,6 +204,9 @@ export default {
         loadLayerErrorMsg: 'Fehler beim Laden des Layers.',
         extentNotSupportedErrorMsg: 'Zoomen auf Gesamtansicht wird für diesen Typ nicht unterstützt.'
       }
+    },
+    VerifyProviderDetailsField: {
+      title: 'Keine Authentication Provider Informationen verfügbar'
     }
   },
   en: {
@@ -424,6 +427,9 @@ export default {
         addLayerErrorMsg: 'Could not add the layer to the map.',
         loadLayerErrorMsg: 'Error while loading the layer.',
         extentNotSupportedErrorMsg: 'Zoom to layer is not supported for this type.'
+      },
+      VerifyProviderDetailsField: {
+        title: 'No authentication provider informations available'
       }
     }
   }

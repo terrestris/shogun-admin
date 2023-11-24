@@ -38,6 +38,8 @@ import TableUtil from '../../../Util/TableUtil';
 import TranslationUtil from '../../../Util/TranslationUtil';
 import DisplayField from '../../FormField/DisplayField/DisplayField';
 import LinkField from '../../FormField/LinkField/LinkField';
+import VerifyProviderDetailsField from '../../FormField/VerifyProviderDetailsField/VerifyProviderDetailsField';
+
 import LayerPreview from '../../LayerPreview/LayerPreview';
 
 export type TableConfig<T extends BaseEntity> = {
@@ -156,7 +158,7 @@ export function GeneralEntityTable<T extends BaseEntity>({
     });
   };
 
-  const getRenderer = (cellRendererName: string, cellRenderComponentProps: {[key: string]: any},
+  const getRenderer = (cellRendererName: string, cellRenderComponentProps?: {[key: string]: any},
     mapping?: {[key: string]: string}) => (value: any, record: T) => {
     const displayValue = mapping ? mapping[value] : value;
 
@@ -197,6 +199,17 @@ export function GeneralEntityTable<T extends BaseEntity>({
       return (
         <LayerPreview
           layer={record}
+          {...cellRenderComponentProps}
+        />
+      );
+    }
+
+    if (cellRendererName === 'VerifyProviderDetailsCell') {
+      return (
+        <VerifyProviderDetailsField
+          i18n={i18n}
+          value={displayValue}
+          record={record}
           {...cellRenderComponentProps}
         />
       );
@@ -255,7 +268,7 @@ export function GeneralEntityTable<T extends BaseEntity>({
           } as any;
         }
         const mapping = tableConfig.dataMapping?.[dataIndex!];
-        if (!_isEmpty(cellRenderComponentName) && !_isEmpty(mapping) && !_isNil(cellRenderComponentProps)) {
+        if (!_isEmpty(cellRenderComponentName)) {
           columnDef = {
             ...columnDef,
             render: getRenderer(cellRenderComponentName!, cellRenderComponentProps, mapping)
