@@ -191,9 +191,11 @@ export default {
         permissionSelectExtra: 'Wählen Sie die Berechtigung aus, die die Nutzer erhalten sollen.'
       },
       ApplicationInfoModal: {
-        clientVersion: 'Admin-Version',
-        backendVersion: 'SHOGun-Version',
+        clientAbout: 'Über',
+        clientVersion: 'Admin Version',
+        backendVersion: 'Backend Version',
         buildTime: 'Build Zeit',
+        applicationInfo: 'Die Standardanwendung',
         title: 'SHOGun-Admin Information'
       },
       LayerPreview: {
@@ -412,9 +414,11 @@ export default {
         permissionSelectExtra: 'Select the permission the users should be granted.'
       },
       ApplicationInfoModal: {
+        clientAbout: 'About',
         clientVersion: 'Admin version',
-        backendVersion: 'SHOGun version',
+        backendVersion: 'Backend version',
         buildTime: 'Build time',
+        applicationInfo: 'The default application',
         title: 'SHOGun Admin info'
       },
       LayerPreview: {

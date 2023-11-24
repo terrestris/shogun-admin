@@ -24,13 +24,13 @@ describe('<ApplicationInfo />', () => {
 
   test('Modal has a title', async () => {
     render(<ApplicationInfo />, recoilInitializer);
-    const modalTitle = await screen.getByText('ApplicationInfoModal.title');
+    const modalTitle = await screen.getByText('ApplicationInfoModal.clientAbout');
     expect(modalTitle).toBeDefined();
   });
 
   test('Modal contains Build-Info', async () => {
     render(<ApplicationInfo />, recoilInitializer);
-    const buildInfo = await screen.getByText('ApplicationInfoModal.buildTime');
+    const buildInfo = await screen.getByText('ApplicationInfoModal.backendVersion');
     expect(buildInfo).toBeDefined();
   });
 

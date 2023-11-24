@@ -36,7 +36,7 @@ export const ApplicationInfo: React.FC<ApplicationInfoProps> = ({
   return (
     <Modal
       className="application-info-modal"
-      title={t('ApplicationInfoModal.title')}
+      title={t('ApplicationInfoModal.clientAbout')}
       centered={true}
       open={isVisible}
       onOk={toggleVisibility}
@@ -54,11 +54,7 @@ export const ApplicationInfo: React.FC<ApplicationInfoProps> = ({
       />
       <Statistic
         title={t('ApplicationInfoModal.backendVersion')}
-        value={appInfo.version}
-      />
-      <Statistic
-        title={t('ApplicationInfoModal.buildTime')}
-        value={appInfo.buildTime}
+        value={`${appInfo.version} (${appInfo.buildTime})`}
       />
     </Modal>
   );
