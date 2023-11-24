@@ -117,7 +117,7 @@
         "cellRenderComponentName": "LinkCell",
         "cellRenderComponentProps": {
           "title": "#i18n.titleOpen",
-          "template": "/auth/admin/master/console/#/realms/SpringBootKeycloak/users/{}"
+          "template": "/auth/admin/master/console/#/SHOGun/users/{}/settings"
         }
       }
     ]
