@@ -40,7 +40,7 @@ export const ApplicationInfo: React.FC<ApplicationInfoProps> = ({
   return (
     <Modal
       className="application-info-modal"
-      title={<div className="application-title">{t('ApplicationInfoModal.clientAbout')}</div>}
+      title={t('ApplicationInfoModal.clientAbout')}
       centered={true}
       open={isVisible}
       onOk={toggleVisibility}
