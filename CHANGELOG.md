@@ -1,3 +1,21 @@
+## [12.3.0](https://github.com/terrestris/shogun-admin/compare/v12.2.0...v12.3.0) (2023-12-01)
+
+
+### Dependencies
+
+* **deps-dev:** bump @playwright/test from 1.40.0 to 1.40.1 ([729fc42](https://github.com/terrestris/shogun-admin/commit/729fc42f41a96cf3cb51f2c318e46038d842fb21))
+* **deps-dev:** bump @types/react from 18.2.38 to 18.2.39 ([e3cd544](https://github.com/terrestris/shogun-admin/commit/e3cd54459104b5767d04030b1434e92524044596))
+* **deps-dev:** bump @typescript-eslint/eslint-plugin ([05606de](https://github.com/terrestris/shogun-admin/commit/05606de07ca39af7f23386dab0741514e61ae506))
+* **deps-dev:** bump @typescript-eslint/eslint-plugin-tslint ([9597eac](https://github.com/terrestris/shogun-admin/commit/9597eacba4e675e951563b32a05211d1d8fd34c6))
+* **deps-dev:** bump @typescript-eslint/parser from 6.12.0 to 6.13.1 ([93fdeeb](https://github.com/terrestris/shogun-admin/commit/93fdeeb92cc9f286d7d6ed4e6a94941def0ed60b))
+* **deps:** bump @uiw/react-md-editor from 3.25.6 to 4.0.1 ([8186b61](https://github.com/terrestris/shogun-admin/commit/8186b610fcd7d8cb29035319fd26124f818418ed))
+* **deps:** bump i18next from 23.7.6 to 23.7.7 ([01f059b](https://github.com/terrestris/shogun-admin/commit/01f059b5745a7f7f80c412e85f5b218986020264))
+
+
+### Features
+
+* changed Subject/Thema and Subjects/Themen to Layer/Layer and Layers/Layers. ([d9f602c](https://github.com/terrestris/shogun-admin/commit/d9f602c4d3a44fcc7065aa367fef36aa6e30a4cd))
+
 ## [12.2.0](https://github.com/terrestris/shogun-admin/compare/v12.1.0...v12.2.0) (2023-11-24)
 
 
