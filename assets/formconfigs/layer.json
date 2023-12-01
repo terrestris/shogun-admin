@@ -1,8 +1,8 @@
 {
   "i18n": {
     "de": {
-      "entityName": "Thema",
-      "navigationTitle": "Themen",
+      "entityName": "Layer",
+      "navigationTitle": "Layer",
       "labelId": "ID",
       "labelEstabl": "Erstellt am",
       "labelEdit": "Zuletzt editiert am",
@@ -17,8 +17,8 @@
       "titlePrev": "Layervorschau"
     },
     "en": {
-      "entityName": "Subject",
-      "navigationTitle": "Subjects",
+      "entityName": "Layer",
+      "navigationTitle": "Layers",
       "labelId": "ID",
       "labelEstabl": "Created at",
       "labelEdit": "Last edited on",
