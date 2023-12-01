@@ -79,7 +79,7 @@
     "@semantic-release/release-notes-generator": "12.1.0",
     "@terrestris/eslint-config-typescript": "4.0.0",
     "@terrestris/eslint-config-typescript-react": "2.0.0",
-    "@testing-library/jest-dom": "6.1.4",
+    "@testing-library/jest-dom": "6.1.5",
     "@testing-library/react": "14.1.2",
     "@types/jest": "29.5.10",
     "@types/react": "18.2.39",
