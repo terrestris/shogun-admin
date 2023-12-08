@@ -166,9 +166,6 @@ export function GeneralEntityRoot<T extends BaseEntity>({
   useEffect(() => {
     setPageCurrent(1);
     setSortOrder('ascend');
-    // if (!_isNil(config?.defaultPageSize)) {
-    //   setPageSize(config.defaultPageSize);
-    // }
     setSortField(undefined);
   }, [entityType]);
 
