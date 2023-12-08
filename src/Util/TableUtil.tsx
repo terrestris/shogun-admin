@@ -33,7 +33,7 @@ export default class TableUtil {
           <Input
             ref={node => { searchInput = node; }}
             placeholder={`${i18n.t('GeneralEntityTable.popupSearch')} ${dataIndex}`}
-            value={`${selectedKeys[0]}`}
+            value={selectedKeys[0]}
             onChange={e => setSelectedKeys(e.target.value ? [e.target.value] : [])}
             onPressEnter={() => handleSearch(selectedKeys, confirm)}
             style={{

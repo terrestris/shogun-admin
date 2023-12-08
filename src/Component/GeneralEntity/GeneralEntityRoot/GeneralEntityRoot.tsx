@@ -166,9 +166,9 @@ export function GeneralEntityRoot<T extends BaseEntity>({
   useEffect(() => {
     setPageCurrent(1);
     setSortOrder('ascend');
-    if (!_isNil(config?.defaultPageSize)) {
-      setPageSize(config.defaultPageSize);
-    }
+    // if (!_isNil(config?.defaultPageSize)) {
+    //   setPageSize(config.defaultPageSize);
+    // }
     setSortField(undefined);
   }, [entityType]);
 
@@ -657,13 +657,8 @@ export function GeneralEntityRoot<T extends BaseEntity>({
       setSortOrder(sorter.order);
       setSortField(sorter.field as string);
     }
-
-    if (!_isNil(pagination.current)) {
-      setPageCurrent(pagination.current);
-    }
-    if (!_isNil(pagination.pageSize)) {
-      setPageCurrent(pagination.pageSize);
-    }
+    setPageCurrent(pagination.current!);
+    setPageSize(pagination.pageSize!);
   };
 
   return (

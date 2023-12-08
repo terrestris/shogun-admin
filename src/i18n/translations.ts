@@ -80,7 +80,7 @@ export default {
         tooltipReload: 'Neu laden',
         tooltipDelete: 'Löschen',
         popupSearch: 'Suche',
-        popupFilter: 'Filter',
+        popupFilter: 'Filtern',
         popupReset: 'Zurücksetzen',
         paging: {
           nextPage: 'Nächste Seite',
