@@ -122,7 +122,7 @@ export const LogLevelTable: React.FC<LogLevelTableProps> = props => {
       <Table
         loading={isLoading}
         columns={columns}
-        dataSource={filteredData === null ? data : filteredData}
+        dataSource={filteredData.length === 0 ? data : filteredData}
         {...props}
       />
     </>
