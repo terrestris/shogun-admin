@@ -1,3 +1,22 @@
+## [12.3.1](https://github.com/terrestris/shogun-admin/compare/v12.3.0...v12.3.1) (2023-12-08)
+
+
+### Dependencies
+
+* **deps-dev:** bump @adobe/css-tools from 4.3.1 to 4.3.2 ([4b7613c](https://github.com/terrestris/shogun-admin/commit/4b7613c62f9d1f6fdc6440c35e45cf08b7d1299d))
+* **deps-dev:** bump @babel/core from 7.23.3 to 7.23.5 ([33e597a](https://github.com/terrestris/shogun-admin/commit/33e597a3c9254c400af25d9d7e264da08995cc17))
+* **deps-dev:** bump @babel/preset-env from 7.23.3 to 7.23.5 ([999ef45](https://github.com/terrestris/shogun-admin/commit/999ef45753285fcc0d556f168d3e0e35205c2315))
+* **deps-dev:** bump @semantic-release/github from 9.2.3 to 9.2.4 ([9dc9338](https://github.com/terrestris/shogun-admin/commit/9dc9338efbf1b260d1c0fa5eba5a2ddcb54992b9))
+* **deps-dev:** bump @testing-library/jest-dom from 6.1.4 to 6.1.5 ([b471f66](https://github.com/terrestris/shogun-admin/commit/b471f669f2f925f5a759ca1f88fbf9ea7b93f5bd))
+* **deps-dev:** bump eslint from 8.54.0 to 8.55.0 ([2a66611](https://github.com/terrestris/shogun-admin/commit/2a666113c8101670ac56ad6c17eafe69ce98fc3d))
+* **deps:** bump keycloak-js from 22.0.5 to 23.0.1 ([2bf4736](https://github.com/terrestris/shogun-admin/commit/2bf47368cba7f7e861abc9b57e6aee703431699a))
+* **deps:** bump react-router-dom from 6.20.0 to 6.20.1 ([cc14aa2](https://github.com/terrestris/shogun-admin/commit/cc14aa28ce2099c89971322992c9d36af2366847))
+
+
+### Bugfixes
+
+* fixed a bug where Logging-Level Table would not show its values when called ([c49d52d](https://github.com/terrestris/shogun-admin/commit/c49d52d42c3de2006bb9bf12c558e39f544afcdc))
+
 ## [12.3.0](https://github.com/terrestris/shogun-admin/compare/v12.2.0...v12.3.0) (2023-12-01)
 
 
