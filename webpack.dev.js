@@ -18,7 +18,7 @@ module.exports = merge(common, {
     static: [
       path.join(__dirname, 'assets')
     ],
-    allowedHosts: ['.intranet.terrestris.de']
+    historyApiFallback: true
   },
   plugins: [
     new ReactRefreshWebpackPlugin()
