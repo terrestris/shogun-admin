@@ -1,7 +1,7 @@
 {
   "name": "@terrestris/shogun-admin",
   "private": true,
-  "version": "12.3.1",
+  "version": "12.3.2",
   "description": "The admin UI for the SHOGun Web-mapping backend.",
   "main": "index.js",
   "scripts": {

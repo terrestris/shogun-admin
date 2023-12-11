@@ -1,3 +1,22 @@
+## [12.3.2](https://github.com/terrestris/shogun-admin/compare/v12.3.1...v12.3.2) (2023-12-11)
+
+
+### Dependencies
+
+* **deps-dev:** bump @types/jest from 29.5.10 to 29.5.11 ([abc6e27](https://github.com/terrestris/shogun-admin/commit/abc6e27619a9dd4ee934faf47a0f4c61ab5bb009))
+* **deps-dev:** bump @types/react from 18.2.39 to 18.2.43 ([4280037](https://github.com/terrestris/shogun-admin/commit/4280037ca85812f4ddef47bf0a3d51520f46d511))
+* **deps-dev:** bump @types/react-redux from 7.1.31 to 7.1.32 ([8f79e0c](https://github.com/terrestris/shogun-admin/commit/8f79e0ccc855ffad17a46799504139839e6074d9))
+* **deps-dev:** bump @typescript-eslint/eslint-plugin ([0130f04](https://github.com/terrestris/shogun-admin/commit/0130f0451af0836bf14484e5ba3268e326d226b8))
+* **deps-dev:** bump @typescript-eslint/eslint-plugin-tslint ([122f8e2](https://github.com/terrestris/shogun-admin/commit/122f8e27e6292514c49d36a0bbdd270909581a73))
+* **deps-dev:** bump @typescript-eslint/parser from 6.13.1 to 6.13.2 ([335d7e2](https://github.com/terrestris/shogun-admin/commit/335d7e2f0ae4f5dcfbc3f8048a5db7cc7523bb84))
+* **deps-dev:** bump html-webpack-plugin from 5.5.3 to 5.5.4 ([3424402](https://github.com/terrestris/shogun-admin/commit/342440238d62762ef6e0d99aacfa69f098323980))
+* **deps-dev:** bump semantic-release from 22.0.8 to 22.0.10 ([ca013ef](https://github.com/terrestris/shogun-admin/commit/ca013ef3498db74098624ff98cceb6522ffb9746))
+
+
+### Changes in configuration
+
+* remove internal domain config and readd historyApiFallback ([2f422f1](https://github.com/terrestris/shogun-admin/commit/2f422f147d8675c9100d5e41b42ffbe8ed067cc8))
+
 ## [12.3.1](https://github.com/terrestris/shogun-admin/compare/v12.3.0...v12.3.1) (2023-12-08)
 
 
