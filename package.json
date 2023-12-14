@@ -120,7 +120,7 @@
     "webpack-cli": "5.1.4",
     "webpack-dev-server": "4.15.1",
     "webpack-merge": "5.10.0",
-    "whatwg-fetch": "3.6.19"
+    "whatwg-fetch": "3.6.20"
   },
   "@casualbot/jest-sonar-reporter": {
     "suiteName": "jest tests",
