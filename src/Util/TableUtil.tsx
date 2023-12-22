@@ -8,9 +8,9 @@ import { FilterDropdownProps } from 'antd/es/table/interface';
 import { FilterConfirmProps } from 'antd/lib/table/interface';
 import _get from 'lodash/get';
 import _isFunction from 'lodash/isFunction';
+import _isNil from 'lodash/isNil';
 
 import i18n from '../i18n';
-import _isNil from 'lodash/isNil';
 
 export default class TableUtil {
 

@@ -154,6 +154,7 @@ export function GeneralEntityRoot<T extends BaseEntity>({
   const [pageCurrent, setPageCurrent] = useState<number>(1);
   const [sortField, setSortField] = useState<string>();
   const [sortOrder, setSortOrder] = useState<SortOrder>();
+  const [isFiltered, setFiltered] = useState<boolean>(false);
 
   const [form] = Form.useForm();
 
@@ -656,6 +657,7 @@ export function GeneralEntityRoot<T extends BaseEntity>({
     }
     setPageCurrent(pagination.current!);
     setPageSize(pagination.pageSize!);
+    setFiltered(!_isNil(filters));
   };
 
   return (
@@ -738,17 +740,15 @@ export function GeneralEntityRoot<T extends BaseEntity>({
           )}
         </div>
         <GeneralEntityTable
-          i18n={i18n}
           bordered
           controller={entityController}
           entities={allEntities ?? []}
           entityType={entityType}
           fetchEntities={fetchEntities}
+          i18n={i18n}
           loading={isGridLoading}
-          size="small"
-          tableConfig={tableConfig}
           onChange={onTableChange}
-          pagination={{
+          pagination={isFiltered ? false : {
             total: pageTotal,
             current: pageCurrent,
             pageSize: pageSize,
@@ -767,6 +767,8 @@ export function GeneralEntityRoot<T extends BaseEntity>({
               page: t('GeneralEntityTable.paging.page')
             }
           }}
+          size="small"
+          tableConfig={tableConfig}
         />
       </div>
       <div className="right-container">

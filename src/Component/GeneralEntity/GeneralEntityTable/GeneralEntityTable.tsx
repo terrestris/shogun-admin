@@ -2,31 +2,16 @@ import './GeneralEntityTable.less';
 
 import React, { useMemo } from 'react';
 
-import {
-  DeleteOutlined,
-  SyncOutlined
-} from '@ant-design/icons';
+import { DeleteOutlined, SyncOutlined } from '@ant-design/icons';
 
-import {
-  Input,
-  Modal,
-  notification,
-  Table,
-  Tooltip
-} from 'antd';
-import {
-  ColumnType,
-  TablePaginationConfig,
-  TableProps
-} from 'antd/lib/table';
+import { Input, Modal, notification, Table, Tooltip } from 'antd';
+import { ColumnType, TableProps } from 'antd/lib/table';
 import { SortOrder } from 'antd/lib/table/interface';
 import Logger from 'js-logger';
 import _cloneDeep from 'lodash/cloneDeep';
 import _isEmpty from 'lodash/isEmpty';
 import _isNil from 'lodash/isNil';
-import {
-  useTranslation
-} from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import config from 'shogunApplicationConfig';
 
@@ -45,7 +30,6 @@ import LayerPreview from '../../LayerPreview/LayerPreview';
 export type TableConfig<T extends BaseEntity> = {
   columnDefinition?: GeneralEntityTableColumn<T>[];
   dataMapping?: DataMapping;
-  pagination?: TablePaginationConfig;
 };
 
 type DataMapping = {
@@ -78,12 +62,12 @@ type GeneralEntityTableColumnType = {
 export type GeneralEntityTableColumn<T extends BaseEntity> = ColumnType<T> & GeneralEntityTableColumnType;
 
 type OwnProps<T extends BaseEntity> = {
-  i18n: FormTranslations;
+  actions?: EntityTableAction[];
   controller: GenericEntityController<T>;
   entities: T[];
-  actions?: EntityTableAction[];
   entityType: string;
   fetchEntities?: () => void;
+  i18n: FormTranslations;
   onRowClick?: (record: T, event: React.MouseEvent<HTMLElement, MouseEvent>) => void;
   tableConfig: TableConfig<T>;
 };
@@ -91,12 +75,12 @@ type OwnProps<T extends BaseEntity> = {
 type GeneralEntityTableProps<T extends BaseEntity> = OwnProps<T> & TableProps<T>;
 
 export function GeneralEntityTable<T extends BaseEntity>({
-  i18n,
+  actions = ['delete'],
   controller,
   entities,
   entityType,
   fetchEntities = () => undefined,
-  actions = ['delete'],
+  i18n,
   tableConfig,
   ...tablePassThroughProps
 }: GeneralEntityTableProps<T>) {
@@ -104,7 +88,6 @@ export function GeneralEntityTable<T extends BaseEntity>({
   const routePath = useMemo(() => `${config.appPrefix}/portal/${entityType}`, [entityType]);
   const navigate = useNavigate();
   const { t } = useTranslation();
-
   const onRowClick = (record: T) => navigate(`${routePath}/${record.id}`);
 
   const onDeleteClick = async (record: T) => {
@@ -342,7 +325,6 @@ export function GeneralEntityTable<T extends BaseEntity>({
         };
       }}
       rowKey={'id'}
-      pagination={tableConfig.pagination ?? false}
       {...tablePassThroughProps}
     />
   );
