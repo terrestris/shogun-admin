@@ -31,5 +31,5 @@ export const shogunInfoModalVisibleAtom = atom<boolean>({
 
 export const layerSuggestionListAtom = atom<Layer[]>({
   key: 'layerSuggestionList',
-  default: []
+  default: undefined
 });
