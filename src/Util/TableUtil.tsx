@@ -10,6 +10,7 @@ import _get from 'lodash/get';
 import _isFunction from 'lodash/isFunction';
 
 import i18n from '../i18n';
+import _isNil from 'lodash/isNil';
 
 export default class TableUtil {
 
@@ -33,7 +34,7 @@ export default class TableUtil {
           <Input
             ref={node => { searchInput = node; }}
             placeholder={`${i18n.t('GeneralEntityTable.popupSearch')} ${dataIndex}`}
-            value={selectedKeys[0] as string}
+            value={(selectedKeys.length === 0 || _isNil(selectedKeys[0])) ? '' : `${selectedKeys[0]}`}
             onChange={e => setSelectedKeys(e.target.value ? [e.target.value] : [])}
             onPressEnter={() => handleSearch(selectedKeys, confirm)}
             style={{
