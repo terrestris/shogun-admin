@@ -96,6 +96,7 @@ const App: React.FC = () => {
           return undefined;
         }
 
+        const currentWord = model.getWordAtPosition(position);
         const providerResult: ProviderResult<CompletionList> = {
           suggestions: layerSuggestionList.map((layer): CompletionItem => {
             return {
@@ -104,10 +105,11 @@ const App: React.FC = () => {
               kind: monaco.languages.CompletionItemKind.Value,
               documentation: `${JSON.stringify(layer, null, '  ')}`,
               range: {
-                startColumn: 0,
-                startLineNumber: 0,
-                endLineNumber: Number.MAX_SAFE_INTEGER,
-                endColumn: Number.MAX_SAFE_INTEGER
+                // replace the current word, if applicable
+                startColumn: currentWord ? currentWord.startColumn : position.column,
+                endColumn: currentWord ? currentWord.endColumn : position.column,
+                startLineNumber: position.lineNumber,
+                endLineNumber: position.lineNumber,
               }
             };
           })
