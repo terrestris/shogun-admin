@@ -1,3 +1,36 @@
+## [12.3.3](https://github.com/terrestris/shogun-admin/compare/v12.3.2...v12.3.3) (2023-12-22)
+
+
+### Dependencies
+
+* **deps-dev:** bump @babel/core from 7.23.5 to 7.23.6 ([01e34bd](https://github.com/terrestris/shogun-admin/commit/01e34bd9d3fbdeab2e3eabbe9de515f36158773e))
+* **deps-dev:** bump @babel/preset-env from 7.23.5 to 7.23.6 ([b6f7a58](https://github.com/terrestris/shogun-admin/commit/b6f7a583efd6f0c8204579b0a6f47dae07a5ae4c))
+* **deps-dev:** bump @semantic-release/github from 9.2.4 to 9.2.5 ([cf37a30](https://github.com/terrestris/shogun-admin/commit/cf37a30a02266f2121cae6234389a9d5368a2ca3))
+* **deps-dev:** bump @semantic-release/npm from 11.0.1 to 11.0.2 ([3ff3606](https://github.com/terrestris/shogun-admin/commit/3ff36061cf832dfec56007c22d17bd867d352038))
+* **deps-dev:** bump @types/react from 18.2.43 to 18.2.45 ([8f551e6](https://github.com/terrestris/shogun-admin/commit/8f551e610f06aa28812e77a00ddad9c78c7275f0))
+* **deps-dev:** bump @types/react-dom from 18.2.17 to 18.2.18 ([60a9563](https://github.com/terrestris/shogun-admin/commit/60a9563e3f2e92da0b1dae526d6ae9308d657cb9))
+* **deps-dev:** bump @types/react-redux from 7.1.32 to 7.1.33 ([c1f3b72](https://github.com/terrestris/shogun-admin/commit/c1f3b72cbbe5c145defd93dee86dc292af16ea0e))
+* **deps-dev:** bump @typescript-eslint/eslint-plugin ([c8fef90](https://github.com/terrestris/shogun-admin/commit/c8fef904ee53fc0737d1f114b813a095d14d2fc5))
+* **deps-dev:** bump @typescript-eslint/eslint-plugin-tslint ([1d307dc](https://github.com/terrestris/shogun-admin/commit/1d307dc12a84bf67ad1fedb3f476ea82be2bc347))
+* **deps-dev:** bump @typescript-eslint/eslint-plugin-tslint ([80be3fc](https://github.com/terrestris/shogun-admin/commit/80be3fcb1ee3a5a4970e63fa10c5d0a4e5116682))
+* **deps-dev:** bump @typescript-eslint/parser from 6.13.2 to 6.14.0 ([21d54fb](https://github.com/terrestris/shogun-admin/commit/21d54fb44d7e24fe8c6b8c1a6a75c2d0df0a3d74))
+* **deps-dev:** bump eslint from 8.55.0 to 8.56.0 ([99c71d0](https://github.com/terrestris/shogun-admin/commit/99c71d0065578c4e781690e827c98a8acfdaa3a1))
+* **deps-dev:** bump semantic-release from 22.0.10 to 22.0.12 ([3216851](https://github.com/terrestris/shogun-admin/commit/321685120f9e5013cd19e7a4ab71667aa5ac2d50))
+* **deps-dev:** bump typescript from 5.3.2 to 5.3.3 ([53c4cd1](https://github.com/terrestris/shogun-admin/commit/53c4cd1c8f24bd73484fac25827cfabab0b625ef))
+* **deps-dev:** bump whatwg-fetch from 3.6.19 to 3.6.20 ([ed8df0d](https://github.com/terrestris/shogun-admin/commit/ed8df0d1a0ba3c7c532d9fa560f68981c60f016d))
+* **deps:** bump i18next from 23.7.7 to 23.7.8 ([b4b74a4](https://github.com/terrestris/shogun-admin/commit/b4b74a47ed3bb106f050196144ba5d2b3ea3791e))
+* **deps:** bump i18next from 23.7.8 to 23.7.11 ([9220360](https://github.com/terrestris/shogun-admin/commit/92203608e1192fbcd6fbaa12adca2b3a2173b5ab))
+* **deps:** bump keycloak-js from 23.0.1 to 23.0.3 ([0a2d5e4](https://github.com/terrestris/shogun-admin/commit/0a2d5e4b1f65accb2d05447332cdf461e57627ba))
+* **deps:** bump monaco-editor from 0.44.0 to 0.45.0 ([9dd8c6e](https://github.com/terrestris/shogun-admin/commit/9dd8c6e648663d30afd8aec911b7fc54ef02f532))
+* **deps:** bump react-router-dom from 6.20.1 to 6.21.0 ([4f2cbe1](https://github.com/terrestris/shogun-admin/commit/4f2cbe197a699bd600ac31c5a9925048ec24fad5))
+
+
+### Bugfixes
+
+* fixed a type bug ([41cea01](https://github.com/terrestris/shogun-admin/commit/41cea015a01ad51fbc76e8e1cf48cd78651452bb))
+* fixed multiple bugs in paging, filtering and sorting ([1e3329f](https://github.com/terrestris/shogun-admin/commit/1e3329f4d04985372b63391b559417f6a00d65e7))
+* fixes the value for the search bar ([5b7c173](https://github.com/terrestris/shogun-admin/commit/5b7c173cbf253ed9ead86232df37c2b21a652631))
+
 ## [12.3.2](https://github.com/terrestris/shogun-admin/compare/v12.3.1...v12.3.2) (2023-12-11)
 
 
