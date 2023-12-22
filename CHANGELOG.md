@@ -1,3 +1,10 @@
+## [12.3.4](https://github.com/terrestris/shogun-admin/compare/v12.3.3...v12.3.4) (2023-12-22)
+
+
+### Bugfixes
+
+* fix setting range for layerId suggestions ([77d95d8](https://github.com/terrestris/shogun-admin/commit/77d95d830b7accb2f5cb464d3c057018e4709017))
+
 ## [12.3.3](https://github.com/terrestris/shogun-admin/compare/v12.3.2...v12.3.3) (2023-12-22)
 
 
