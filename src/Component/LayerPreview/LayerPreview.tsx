@@ -195,7 +195,7 @@ export const LayerPreview: React.FC<LayerPreviewProps> = ({
         title={t('LayerPreview.title', {
           layerName: layer.name
         })}
-        visible={visible}
+        open={visible}
         onCancel={onCancel}
         footer={false}
         {...passThroughProps}
