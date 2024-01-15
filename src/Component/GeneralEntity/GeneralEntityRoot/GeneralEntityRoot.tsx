@@ -657,7 +657,30 @@ export function GeneralEntityRoot<T extends BaseEntity>({
     }
     setPageCurrent(pagination.current!);
     setPageSize(pagination.pageSize!);
-    setFiltered(!_isNil(filters));
+
+    const anyColumnIsFiltered = Object.keys(filters)
+      .some(attribute => !_isNil(filters[attribute]) || !_isEmpty(filters[attribute]));
+    setFiltered(anyColumnIsFiltered);
+  };
+
+  const paginationConfig = {
+    total: pageTotal,
+    current: pageCurrent,
+    pageSize: pageSize,
+    showTotal: (total: number) => `${t('GeneralEntityTable.paging.total')}: ${total}`,
+    showSizeChanger: true,
+    showQuickJumper: true,
+    locale: {
+      // eslint-disable-next-line camelcase
+      next_page: t('GeneralEntityTable.paging.nextPage'),
+      // eslint-disable-next-line camelcase
+      prev_page: t('GeneralEntityTable.paging.prevPage'),
+      // eslint-disable-next-line camelcase
+      items_per_page: `/ ${t('GeneralEntityTable.paging.itemsPerPage')}`,
+      // eslint-disable-next-line camelcase
+      jump_to: t('GeneralEntityTable.paging.jumpTo'),
+      page: t('GeneralEntityTable.paging.page')
+    }
   };
 
   return (
@@ -748,25 +771,7 @@ export function GeneralEntityRoot<T extends BaseEntity>({
           i18n={i18n}
           loading={isGridLoading}
           onChange={onTableChange}
-          pagination={isFiltered ? false : {
-            total: pageTotal,
-            current: pageCurrent,
-            pageSize: pageSize,
-            showTotal: total => `${t('GeneralEntityTable.paging.total')}: ${total}`,
-            showSizeChanger: true,
-            showQuickJumper: true,
-            locale: {
-              // eslint-disable-next-line camelcase
-              next_page: t('GeneralEntityTable.paging.nextPage'),
-              // eslint-disable-next-line camelcase
-              prev_page: t('GeneralEntityTable.paging.prevPage'),
-              // eslint-disable-next-line camelcase
-              items_per_page: `/ ${t('GeneralEntityTable.paging.itemsPerPage')}`,
-              // eslint-disable-next-line camelcase
-              jump_to: t('GeneralEntityTable.paging.jumpTo'),
-              page: t('GeneralEntityTable.paging.page')
-            }
-          }}
+          pagination={isFiltered ? false : paginationConfig}
           size="small"
           tableConfig={tableConfig}
         />
