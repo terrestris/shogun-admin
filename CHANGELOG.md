@@ -1,3 +1,27 @@
+## [13.0.0](https://github.com/terrestris/shogun-admin/compare/v12.3.4...v13.0.0) (2024-01-15)
+
+
+### ⚠ BREAKING CHANGES
+
+* Remove pagination from TableConfig type
+
+### Dependencies
+
+* **deps-dev:** bump @semantic-release/github from 9.2.5 to 9.2.6 ([11fac7e](https://github.com/terrestris/shogun-admin/commit/11fac7ec8f77677a96fb841041eeb017d67a93e6))
+* **deps-dev:** bump @typescript-eslint/parser from 6.14.0 to 6.18.1 ([aec4bf1](https://github.com/terrestris/shogun-admin/commit/aec4bf127f5123867ac1e964f71dd93ed3780ffd))
+* **deps-dev:** bump eslint-plugin-import from 2.29.0 to 2.29.1 ([8714498](https://github.com/terrestris/shogun-admin/commit/8714498d23d0d2b0b03be37a5a7c6fd7f0ace9f3))
+* **deps-dev:** bump follow-redirects from 1.15.3 to 1.15.4 ([750e990](https://github.com/terrestris/shogun-admin/commit/750e990a80216a84a79a80bafe29a44c03ea2767))
+* **deps-dev:** bump html-webpack-plugin from 5.5.4 to 5.6.0 ([b28f5c2](https://github.com/terrestris/shogun-admin/commit/b28f5c2ccd28189a46f9e34596ebde7e837eae91))
+* **deps-dev:** bump regenerator-runtime from 0.14.0 to 0.14.1 ([409336e](https://github.com/terrestris/shogun-admin/commit/409336e49a447523c6709d550537599a4c02c43f))
+* **deps:** bump @terrestris/shogun-util from 7.3.0 to 7.3.1 ([eb23b95](https://github.com/terrestris/shogun-admin/commit/eb23b954f04a2b4cc8d0bcb704167b5fde1f891f))
+* **deps:** bump react-router-dom from 6.21.0 to 6.21.2 ([e59bd7f](https://github.com/terrestris/shogun-admin/commit/e59bd7f4603661ff15313baac18d178abece8b9d))
+
+
+### Bugfixes
+
+* disable pagination when table is filtered ([22ca6d3](https://github.com/terrestris/shogun-admin/commit/22ca6d31ecfb26056119805af7e9e1e430d85972))
+* typing issue ([e72d299](https://github.com/terrestris/shogun-admin/commit/e72d2994a22c660653c134ad2de6cf78f429a66c))
+
 ## [12.3.4](https://github.com/terrestris/shogun-admin/compare/v12.3.3...v12.3.4) (2023-12-22)
 
 
