@@ -1,3 +1,11 @@
+## [13.0.1](https://github.com/terrestris/shogun-admin/compare/v13.0.0...v13.0.1) (2024-01-15)
+
+
+### Bugfixes
+
+* deprecated prop name ([cd82062](https://github.com/terrestris/shogun-admin/commit/cd82062de7460ee022ab98be00ca80dc0e08597d))
+* pagination for filtered columns ([31a3d73](https://github.com/terrestris/shogun-admin/commit/31a3d73617a8a94a0bc42a7b2fe99238b4e50dd7))
+
 ## [13.0.0](https://github.com/terrestris/shogun-admin/compare/v12.3.4...v13.0.0) (2024-01-15)
 
 
