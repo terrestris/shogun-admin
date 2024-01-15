@@ -117,7 +117,7 @@ export const LayerPreview: React.FC<LayerPreviewProps> = ({
       }
 
       if (source instanceof OlSourceVector) {
-        const vectorSource = source as OlSourceVector;
+        const vectorSource = source as OlSourceVector<any>;
         vectorSource.on('featuresloaderror', () => {
           setLoadLayerError(t('LayerPreview.loadLayerErrorMsg'));
         });
