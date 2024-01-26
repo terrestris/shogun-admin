@@ -113,7 +113,7 @@
     "regenerator-runtime": "0.14.1",
     "rimraf": "5.0.5",
     "semantic-release": "22.0.12",
-    "source-map-loader": "4.0.1",
+    "source-map-loader": "5.0.0",
     "style-loader": "3.3.3",
     "typescript": "5.3.3",
     "webpack": "5.89.0",
