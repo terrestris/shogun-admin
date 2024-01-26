@@ -99,6 +99,7 @@ export class GenericEntityController<T extends BaseEntity> {
   public async delete(entity: T): Promise<void> {
     if (!_isNil(entity?.id)) {
       await this.service.delete(entity?.id);
+      return Promise.resolve();
     }
     return Promise.reject();
   }
