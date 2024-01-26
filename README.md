@@ -25,13 +25,12 @@ shogun-admin:
   build:
     context: ../shogun-admin
     dockerfile: Dockerfile.dev
-  ports:
-    - 9090:9090
   volumes:
     - ../shogun-admin:/app
 ```
 
 # Semantic release
+
 Allowed Tags for semantic release (see the [FAQs](https://github.com/semantic-release/semantic-release/blob/master/docs/support/FAQ.md) for more information about this):
 
 - Breaking changes: `breaking`

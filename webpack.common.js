@@ -1,6 +1,8 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
 const webpack = require('webpack');
+
 const CustomAntThemeModifyVars = require('./theme.js');
 
 module.exports = {
