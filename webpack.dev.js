@@ -12,8 +12,11 @@ module.exports = merge(common, {
   mode: 'development',
   devtool: 'inline-source-map',
   devServer: {
-    server: 'https',
-    port: 9090,
+    server: 'http',
+    port: 8080,
+    client: {
+      webSocketURL: 'http://0.0.0.0:0/admin/ws'
+    },
     hot: true,
     static: [
       path.join(__dirname, 'assets')
