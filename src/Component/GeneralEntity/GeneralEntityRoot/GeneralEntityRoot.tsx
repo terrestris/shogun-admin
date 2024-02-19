@@ -114,6 +114,7 @@ export type GeneralEntityConfigType<T extends BaseEntity> = {
   formConfig: FormConfig;
   tableConfig: TableConfig<T>;
   onEntitiesLoaded?: (entities: T[], entityType: string) => void;
+  defaultEntity?: T;
 };
 
 type OwnProps<T extends BaseEntity> = GeneralEntityConfigType<T>;
@@ -129,7 +130,8 @@ export function GeneralEntityRoot<T extends BaseEntity>({
   subTitle = '… mit denen man Dinge tun kann (aus Gründen bspw.)',
   formConfig,
   tableConfig = {},
-  onEntitiesLoaded = () => {}
+  defaultEntity,
+  onEntitiesLoaded = () => { }
 }: GeneralEntityRootProps<T>) {
 
   const location = useLocation();
@@ -271,11 +273,12 @@ export function GeneralEntityRoot<T extends BaseEntity>({
       setEditEntity(undefined);
       setId(entityId);
       form.resetFields();
+      form.setFieldsValue(defaultEntity);
     } else {
       setId(parseInt(entityId, 10));
       setFormIsDirty(false);
     }
-  }, [entityId, form]);
+  }, [entityId, form, defaultEntity]);
 
   // Once the controller is known we need to set the formUpdater so we can update
   // a given form when the entity is updated via controller
@@ -303,7 +306,11 @@ export function GeneralEntityRoot<T extends BaseEntity>({
     }
   }, [entityType, fetchEntities]);
 
-  const onValuesChange = async (changedValues: any) => {
+  const onValuesChange = async (changedValues: any, defaultValues: any) => {
+    if (id === 'create' ) {
+      defaultValues = defaultEntity;
+      await entityController.updateEntity(defaultValues);
+    };
     setFormIsDirty(true);
     await entityController.updateEntity(changedValues);
   };
