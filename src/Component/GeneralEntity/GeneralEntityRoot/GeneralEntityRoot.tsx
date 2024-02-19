@@ -68,6 +68,7 @@ import {
   ControllerUtil
 } from '../../../Controller/ControllerUtil';
 import {
+  FormValues,
   GenericEntityController
 } from '../../../Controller/GenericEntityController';
 import useSHOGunAPIClient from '../../../Hooks/useSHOGunAPIClient';
@@ -306,13 +307,16 @@ export function GeneralEntityRoot<T extends BaseEntity>({
     }
   }, [entityType, fetchEntities]);
 
-  const onValuesChange = async (changedValues: any, defaultValues: any) => {
-    if (id === 'create' ) {
-      defaultValues = defaultEntity;
-      await entityController.updateEntity(defaultValues);
-    };
+  const onValuesChange = async (changedValues: FormValues) => {
     setFormIsDirty(true);
-    await entityController.updateEntity(changedValues);
+    if (id === 'create') {
+      await entityController.updateEntity({
+        ...defaultEntity,
+        ...changedValues
+      } as FormValues);
+    } else {
+      await entityController.updateEntity(changedValues);
+    }
   };
 
   const onResetForm = () => {
