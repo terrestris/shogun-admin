@@ -262,6 +262,7 @@ export function GeneralEntityRoot<T extends BaseEntity>({
    */
   useEffect(() => {
     if (!entityId) {
+      setId(undefined);
       setEditEntity(undefined);
       setFormIsDirty(false);
       return;
