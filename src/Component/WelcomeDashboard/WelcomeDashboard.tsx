@@ -89,15 +89,15 @@ export const WelcomeDashboard: React.FC<WelcomeDashboardProps> = () => {
         <Link to={`${config.appPrefix}/portal/layer`}>
           <DashboardCard
             className="layer-dashboard-card"
-            title={t('WelcomeDashboard.subject')}
-            description={t('WelcomeDashboard.subjectInfo')}
+            title={t('WelcomeDashboard.layer')}
+            description={t('WelcomeDashboard.layerInfo')}
             avatar={<AppstoreOutlined />}
           >
             <DashboardStatistics
               service={client.layer()}
               name={{
-                singular: t('WelcomeDashboard.subjectSingluar'),
-                plural: t('WelcomeDashboard.subjectPlural')
+                singular: t('WelcomeDashboard.layerSingluar'),
+                plural: t('WelcomeDashboard.layerPlural')
               }}
             />
           </DashboardCard>
