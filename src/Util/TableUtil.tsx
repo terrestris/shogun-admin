@@ -56,7 +56,10 @@ export default class TableUtil {
               {`${i18n.t('GeneralEntityTable.popupFilter')}`}
             </Button>
             <Button
-              onClick={() => {handleReset(clearFilters); handleSearch(selectedKeys, confirm);}}
+              onClick={() => {
+                handleReset(clearFilters);
+                handleSearch(selectedKeys, confirm);
+              }}
               size="small"
               style={{ flex: 1 }}>
               {`${i18n.t('GeneralEntityTable.popupReset')}`}
