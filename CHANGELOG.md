@@ -1,3 +1,24 @@
+## [13.2.0](https://github.com/terrestris/shogun-admin/compare/v13.1.0...v13.2.0) (2024-03-05)
+
+
+### Dependencies
+
+* **deps-dev:** bump @types/react from 18.2.55 to 18.2.62 ([75bad0b](https://github.com/terrestris/shogun-admin/commit/75bad0b8d1e17e7857038711c4511d7980f83570))
+* **deps-dev:** bump @typescript-eslint/eslint-plugin-tslint ([025543d](https://github.com/terrestris/shogun-admin/commit/025543d4346c0024a8e60f0f686ff4e020903dfb))
+* **deps:** bump @ant-design/icons from 5.3.0 to 5.3.1 ([6fd46a8](https://github.com/terrestris/shogun-admin/commit/6fd46a89b72388b2e835364604016773c9a1612a))
+* **deps:** bump @terrestris/ol-util from 15.0.0 to 15.0.1 ([7be3668](https://github.com/terrestris/shogun-admin/commit/7be366845e46e0bcd0ecc85ce5be8dc0003da9e8))
+
+
+### Features
+
+* reset button actually resets search field ([499f74f](https://github.com/terrestris/shogun-admin/commit/499f74f95eb3510d27d77ef482dfe13aa60be7a6))
+
+
+### Bugfixes
+
+* fixes a bug where the default layer would be set to undefined ([436f991](https://github.com/terrestris/shogun-admin/commit/436f9910c9eaf5991c686a0940ab8525af459ba5))
+* revertes a change in line 265  ([4efd11b](https://github.com/terrestris/shogun-admin/commit/4efd11be3f1cbc200d2fec202c04febe4d277fe3))
+
 ## [13.1.0](https://github.com/terrestris/shogun-admin/compare/v13.0.2...v13.1.0) (2024-03-04)
 
 
