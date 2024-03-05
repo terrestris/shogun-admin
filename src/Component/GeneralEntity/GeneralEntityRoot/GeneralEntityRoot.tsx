@@ -271,7 +271,6 @@ export function GeneralEntityRoot<T extends BaseEntity>({
       return;
     }
     if (entityId === 'create') {
-      setEditEntity(undefined);
       setId(entityId);
       form.resetFields();
       form.setFieldsValue(defaultEntity);
