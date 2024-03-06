@@ -41,7 +41,7 @@
     "@terrestris/shogun-util": "7.3.1",
     "@uiw/react-md-editor": "4.0.3",
     "antd": "4.24.14",
-    "i18next": "23.8.2",
+    "i18next": "23.10.0",
     "i18next-browser-languagedetector": "7.2.0",
     "js-logger": "1.6.1",
     "js-md5": "0.8.3",
