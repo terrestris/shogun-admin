@@ -39,11 +39,12 @@ const FilterDropdown = ({
   };
 
   useEffect(() => {
+    if (selectedKeys.length === 0){
+      return;
+    }
     resetAndSet();
     /*
      with further dependecies searching was not possilbe.
-     known side effects: when oppening the search bar for the first time it will
-     close. this does not happen any other time during the usage of the application
      */
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [entityType]);
