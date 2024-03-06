@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import {
   SearchOutlined
@@ -12,54 +12,125 @@ import _isNil from 'lodash/isNil';
 
 import i18n from '../i18n';
 
+type MyFilterDropdownProps = {
+  selectedKeys: any;
+  setSelectedKeys: any;
+  dataIndex: any;
+  confirm: any;
+  clearFilters: any;
+  entityType: string;
+};
+
+const FilterDropdown = ({
+  selectedKeys,
+  setSelectedKeys,
+  dataIndex,
+  confirm,
+  clearFilters,
+  entityType
+}: MyFilterDropdownProps) => {
+  let searchInput: InputRef | null;
+
+  const [filterValue, setFilterValue] = useState<string>();
+
+  const resetAndSet = () => {
+    handleReset(clearFilters);
+    handleSearch(selectedKeys, confirm);
+  };
+
+  useEffect(() => {
+    resetAndSet();
+    /*
+     with further dependecies searching was not possilbe.
+     known side effects: when oppening the search bar for the first time it will
+     close. this does not happen any other time during the usage of the application
+     */
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [entityType]);
+
+  const handleSearch = (
+    _selectedKeys: React.Key[],
+    _confirm?: (param?: FilterConfirmProps | undefined) => void
+  ) => {
+    if (_isFunction(confirm)) {
+      confirm();
+    }
+  };
+
+  const handleReset = (_clearFilters?: () => void) => {
+    if (_isFunction(clearFilters)) {
+      setFilterValue('');
+      clearFilters();
+    }
+  };
+
+  const onChange = (e: any) => {
+    setFilterValue(e.target.value);
+    setSelectedKeys(e.target.value ? [e.target.value] : []);
+  };
+
+  return (
+    <div
+      style={{
+        padding: '8px',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'stretch'
+      }}
+    >
+      <Input
+        ref={node => { searchInput = node; }}
+        placeholder={`${i18n.t('GeneralEntityTable.popupSearch')} ${dataIndex}`}
+        value={filterValue}
+        onChange={onChange}
+        onPressEnter={() => handleSearch(selectedKeys, confirm)}
+        style={{
+          flex: 1,
+          marginBottom: 8,
+        }}
+      />
+      <div style={{ display: 'flex' }}>
+        <Button
+          type="primary"
+          onClick={() => handleSearch(selectedKeys, confirm)}
+          icon={<SearchOutlined />}
+          size="small"
+          style={{
+            flex: 1,
+            marginRight: 8
+          }}
+        >
+          {`${i18n.t('GeneralEntityTable.popupFilter')}`}
+        </Button>
+        <Button
+          onClick={() => {resetAndSet();}}
+          size="small"
+          style={{ flex: 1 }}>
+          {`${i18n.t('GeneralEntityTable.popupReset')}`}
+        </Button>
+      </div>
+    </div>
+  );
+};
+
 export default class TableUtil {
 
   public static getColumnSearchProps<T>(
     dataIndex: string | string[],
-    handleSearch = TableUtil.handleSearch,
-    handleReset =  TableUtil.handleReset
-  ){
+    entityType: string
+  ) {
     let searchInput: InputRef | null;
 
     return {
       filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }: FilterDropdownProps) => (
-        <div
-          style={{
-            padding: '8px',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'stretch'
-          }}
-        >
-          <Input
-            ref={node => { searchInput = node; }}
-            placeholder={`${i18n.t('GeneralEntityTable.popupSearch')} ${dataIndex}`}
-            value={(selectedKeys.length === 0 || _isNil(selectedKeys[0])) ? '' : `${selectedKeys[0]}`}
-            onChange={e => setSelectedKeys(e.target.value ? [e.target.value] : [])}
-            onPressEnter={() => handleSearch(selectedKeys, confirm)}
-            style={{
-              flex: 1,
-              marginBottom: 8,
-            }}
-          />
-          <div style={{display: 'flex'}}>
-            <Button
-              type="primary"
-              onClick={() => handleSearch(selectedKeys, confirm)}
-              icon={<SearchOutlined />}
-              size="small"
-              style={{
-                flex: 1,
-                marginRight: 8
-              }}
-            >
-              {`${i18n.t('GeneralEntityTable.popupFilter')}`}
-            </Button>
-            <Button onClick={() => handleReset(clearFilters)} size="small" style={{ flex: 1 }}>
-              {`${i18n.t('GeneralEntityTable.popupReset')}`}
-            </Button>
-          </div>
-        </div>
+        <FilterDropdown
+          selectedKeys={selectedKeys}
+          setSelectedKeys={setSelectedKeys}
+          confirm={confirm}
+          clearFilters={clearFilters}
+          dataIndex={dataIndex}
+          entityType={entityType}
+        />
       ),
       filterIcon: (filtered: boolean) => <SearchOutlined style={{ color: filtered ? '#1890ff' : undefined }} />,
       onFilter: (value: string | number | boolean, record: T) => {
@@ -93,20 +164,4 @@ export default class TableUtil {
       });
     };
   };
-
-  public static handleSearch = (
-    selectedKeys: React.Key[],
-    confirm?: (param?: FilterConfirmProps | undefined) => void
-  ) => {
-    if (_isFunction(confirm)) {
-      confirm();
-    }
-  };
-
-  public static handleReset = (clearFilters?: () => void) => {
-    if (_isFunction(clearFilters)) {
-      clearFilters();
-    }
-  };
-
 }

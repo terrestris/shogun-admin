@@ -167,7 +167,6 @@ export function GeneralEntityRoot<T extends BaseEntity>({
   useEffect(() => {
     setPageCurrent(1);
     setSortOrder('ascend');
-    setSortField(undefined);
   }, [entityType]);
 
   /**

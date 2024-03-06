@@ -221,7 +221,7 @@ export function GeneralEntityTable<T extends BaseEntity>({
         key: 'name',
         sorter: TableUtil.getSorter('name'),
         defaultSortOrder: 'ascend',
-        ...TableUtil.getColumnSearchProps('name')
+        ...TableUtil.getColumnSearchProps('name', entityType)
       } as any];
     } else {
       // check for preconfigured sorters, filters and custom components (TODO)
@@ -247,7 +247,7 @@ export function GeneralEntityTable<T extends BaseEntity>({
         if (!_isEmpty(filterConfig) && filterConfig.isFilterable) {
           columnDef = {
             ...columnDef,
-            ...TableUtil.getColumnSearchProps(dataIndex!)
+            ...TableUtil.getColumnSearchProps(dataIndex!, entityType)
           } as any;
         }
         const mapping = tableConfig.dataMapping?.[dataIndex!];
