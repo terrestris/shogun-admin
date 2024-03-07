@@ -54,7 +54,7 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-hotkeys-hook": "4.5.0",
-    "react-i18next": "14.0.5",
+    "react-i18next": "14.0.8",
     "react-router-dom": "6.22.2",
     "recoil": "0.7.7",
     "shapefile.js": "1.1.3"
