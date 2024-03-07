@@ -64,6 +64,8 @@ import {
   getBearerTokenHeader
 } from '@terrestris/shogun-util/dist/security/getBearerTokenHeader';
 
+import { PageOpts } from '@terrestris/shogun-util/dist/service/GenericService';
+
 import {
   ControllerUtil
 } from '../../../Controller/ControllerUtil';
@@ -228,14 +230,15 @@ export function GeneralEntityRoot<T extends BaseEntity>({
   const fetchEntities = useCallback(async () => {
     try {
       setGridLoading(true);
-      const allEntries = await entityController?.findAll({
+      const pageOpts: PageOpts | undefined = isFiltered ? undefined : {
         page: pageCurrent - 1,
         size: pageSize,
         sort: {
           properties: _isNil(sortField) ? [] : [sortField],
           order: sortOrder === 'ascend' ? 'asc' : sortOrder === 'descend' ? 'desc' : undefined
         }
-      });
+      };
+      const allEntries = await entityController?.findAll(pageOpts);
       setPageTotal(allEntries.totalElements);
       setEntities(allEntries.content || []);
       onEntitiesLoaded(allEntries.content, entityType);
@@ -244,7 +247,7 @@ export function GeneralEntityRoot<T extends BaseEntity>({
     } finally {
       setGridLoading(false);
     }
-  }, [entityController, onEntitiesLoaded, entityType, pageCurrent, pageSize, sortField, sortOrder]);
+  }, [entityController, onEntitiesLoaded, entityType, pageCurrent, pageSize, sortField, sortOrder, isFiltered]);
 
   /**
    * Fetch entity or create new one
@@ -665,12 +668,12 @@ export function GeneralEntityRoot<T extends BaseEntity>({
       setSortOrder(sorter.order);
       setSortField(sorter.field as string);
     }
-    setPageCurrent(pagination.current!);
-    setPageSize(pagination.pageSize!);
 
     const anyColumnIsFiltered = Object.keys(filters)
       .some(attribute => !_isNil(filters[attribute]) || !_isEmpty(filters[attribute]));
     setFiltered(anyColumnIsFiltered);
+    setPageCurrent(pagination.current!);
+    setPageSize(pagination.pageSize!);
   };
 
   const paginationConfig = {
