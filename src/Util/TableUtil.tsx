@@ -19,6 +19,7 @@ type MyFilterDropdownProps = {
   confirm: any;
   clearFilters: any;
   entityType: string;
+  entities: any;
 };
 
 const FilterDropdown = ({
@@ -27,7 +28,8 @@ const FilterDropdown = ({
   dataIndex,
   confirm,
   clearFilters,
-  entityType
+  entityType,
+  entities
 }: MyFilterDropdownProps) => {
   let searchInput: InputRef | null;
 
@@ -47,7 +49,7 @@ const FilterDropdown = ({
      with further dependecies searching was not possilbe.
      */
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [entityType]);
+  }, [entityType, entities.length]);
 
   const handleSearch = (
     _selectedKeys: React.Key[],
@@ -118,7 +120,8 @@ export default class TableUtil {
 
   public static getColumnSearchProps<T>(
     dataIndex: string | string[],
-    entityType: string
+    entityType: string,
+    entities: any
   ) {
     let searchInput: InputRef | null;
 
@@ -131,6 +134,7 @@ export default class TableUtil {
           clearFilters={clearFilters}
           dataIndex={dataIndex}
           entityType={entityType}
+          entities={entities}
         />
       ),
       filterIcon: (filtered: boolean) => <SearchOutlined style={{ color: filtered ? '#1890ff' : undefined }} />,
