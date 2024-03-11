@@ -16,10 +16,10 @@ jobs:
       - name: Checkout sources 🔰
         uses: actions/checkout@v4
 
-      - name: Setup Node.js 18 🧮
+      - name: Setup Node.js 20 🧮
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 20
 
       - name: Install dependencies ⏬
         run: npm ci
@@ -31,7 +31,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         with:
-          semantic_version: 19
+          semantic_version: 23
 
       - name: Login to Nexus
         uses: docker/login-action@v3
@@ -104,13 +104,13 @@ jobs:
           # Disabling shallow clone is recommended for improving relevancy of reporting
           fetch-depth: 0
 
-      - name: Setup Node.js 18 🧮
+      - name: Setup Node.js 20 🧮
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 20
 
       - name: Cache Node.js modules 💾
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ~/.npm
           key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
