@@ -1,3 +1,33 @@
+## [14.0.0](https://github.com/terrestris/shogun-admin/compare/v13.2.0...v14.0.0) (2024-03-11)
+
+
+### ⚠ BREAKING CHANGES
+
+* required node engine is v20 now
+
+### Dependencies
+
+* **deps-dev:** bump @commitlint/cli from 19.0.1 to 19.0.3 ([507eaac](https://github.com/terrestris/shogun-admin/commit/507eaace5cd8f95d7c34102a1eb454936d84036f))
+* **deps-dev:** bump @commitlint/config-conventional ([35fc370](https://github.com/terrestris/shogun-admin/commit/35fc370ebd4e06d7bce0abfacc3afa9ce059025f))
+* **deps-dev:** bump @playwright/test from 1.42.0 to 1.42.1 ([2e792a7](https://github.com/terrestris/shogun-admin/commit/2e792a7b33dbff9bcf4982b41d7a70c7d1f80023))
+* **deps-dev:** bump @semantic-release/npm from 11.0.2 to 11.0.3 ([807b43d](https://github.com/terrestris/shogun-admin/commit/807b43df8b6c2f330860d2c51d50f9671fc7af07))
+* **deps-dev:** bump @types/react from 18.2.62 to 18.2.63 ([28c3089](https://github.com/terrestris/shogun-admin/commit/28c3089a9e108d3b58c43b2561e24c65cd037664))
+* **deps-dev:** bump @types/react from 18.2.63 to 18.2.64 ([e2e2bd7](https://github.com/terrestris/shogun-admin/commit/e2e2bd7226bab228eb1425f34369c200827f2d19))
+* **deps-dev:** bump @types/react-dom from 18.2.19 to 18.2.21 ([322c948](https://github.com/terrestris/shogun-admin/commit/322c948c2ebb52d3d00fd6fbed94c93ed93557e8))
+* **deps-dev:** bump @typescript-eslint/eslint-plugin ([72de6bd](https://github.com/terrestris/shogun-admin/commit/72de6bd9a909e0fd932fe0821e513d910487e72f))
+* **deps-dev:** bump @typescript-eslint/parser from 7.1.0 to 7.1.1 ([d0f27bf](https://github.com/terrestris/shogun-admin/commit/d0f27bf46e7029b24df2d7b393510df7ee8aa842))
+* **deps-dev:** bump eslint from 8.56.0 to 8.57.0 ([3c63e21](https://github.com/terrestris/shogun-admin/commit/3c63e21fcb40049219d836de78975bd52c84fdaa))
+* **deps:** bump i18next from 23.8.2 to 23.10.0 ([2672312](https://github.com/terrestris/shogun-admin/commit/2672312ca0b02f2251c3b1ca16fe396998c35df0))
+* **deps:** bump monaco-editor from 0.45.0 to 0.46.0 ([d4b6f8c](https://github.com/terrestris/shogun-admin/commit/d4b6f8c19c30ce28b177b3e5fa47ca10d9012161))
+* **deps:** bump ol from 8.2.0 to 9.0.0 ([708a4c4](https://github.com/terrestris/shogun-admin/commit/708a4c482e4c657d4822943b7cca8cb00c6dd33d))
+* **deps:** bump react-router-dom from 6.22.2 to 6.22.3 ([1e06b03](https://github.com/terrestris/shogun-admin/commit/1e06b03b1a8565b2d06d8497e037dfeb567cfb12))
+* use node v20 ([d7cab25](https://github.com/terrestris/shogun-admin/commit/d7cab25ccccb57a45c0ef009387089fa0d65d9cc))
+
+
+### Bugfixes
+
+* husky command ([68c886a](https://github.com/terrestris/shogun-admin/commit/68c886a5e7a145414619b0bafe169df66f4eb957))
+
 ## [13.2.0](https://github.com/terrestris/shogun-admin/compare/v13.1.0...v13.2.0) (2024-03-05)
 
 
