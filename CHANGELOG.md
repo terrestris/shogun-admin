@@ -1,3 +1,20 @@
+## [14.0.1](https://github.com/terrestris/shogun-admin/compare/v14.0.0...v14.0.1) (2024-03-12)
+
+
+### Dependencies
+
+* **deps-dev:** bump @typescript-eslint/eslint-plugin ([cd123ec](https://github.com/terrestris/shogun-admin/commit/cd123ec29b5bc4d5c64cfbd1deca100cf70de2ba))
+* **deps-dev:** bump @typescript-eslint/parser from 7.1.1 to 7.2.0 ([24e4143](https://github.com/terrestris/shogun-admin/commit/24e41434892811b16b37a54ad2dba510b1d06c09))
+* **deps-dev:** bump typescript from 5.3.3 to 5.4.2 ([4b3443c](https://github.com/terrestris/shogun-admin/commit/4b3443cdb8b610b0c2dddd6ba4c5df6ab7bb378a))
+* **deps:** bump @terrestris/ol-util from 15.0.1 to 16.0.0 ([70ae410](https://github.com/terrestris/shogun-admin/commit/70ae410d146fc621b070b20725da7ac44524d59b))
+* **deps:** bump monaco-editor from 0.46.0 to 0.47.0 ([597143a](https://github.com/terrestris/shogun-admin/commit/597143afd64f3b30f0a6a609660e310dad8b6008))
+* **deps:** bump react-i18next from 14.0.5 to 14.1.0 ([11ba011](https://github.com/terrestris/shogun-admin/commit/11ba011e2847f7e6bd77186ebdd49b6f805ca2a1))
+
+
+### Bugfixes
+
+* remove pagination from query when table is filtered ([9f7fe8f](https://github.com/terrestris/shogun-admin/commit/9f7fe8ffc1a67c3cd459f5b712f0b4491f1798ed))
+
 ## [14.0.0](https://github.com/terrestris/shogun-admin/compare/v13.2.0...v14.0.0) (2024-03-11)
 
 
