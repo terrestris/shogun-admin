@@ -1,3 +1,10 @@
+## [14.0.2](https://github.com/terrestris/shogun-admin/compare/v14.0.1...v14.0.2) (2024-03-12)
+
+
+### Bugfixes
+
+* set sonarcube project base directory ([a0a1064](https://github.com/terrestris/shogun-admin/commit/a0a10645c9fdb6d69da7fc450d13043705f449cc))
+
 ## [14.0.1](https://github.com/terrestris/shogun-admin/compare/v14.0.0...v14.0.1) (2024-03-12)
 
 
