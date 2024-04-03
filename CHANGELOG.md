@@ -1,3 +1,38 @@
+## [14.0.3](https://github.com/terrestris/shogun-admin/compare/v14.0.2...v14.0.3) (2024-04-03)
+
+
+### Dependencies
+
+* **deps-dev:** bump @babel/core from 7.24.0 to 7.24.3 ([d0dae02](https://github.com/terrestris/shogun-admin/commit/d0dae02ecce72ca8614f4657c0e0b0f11305598a))
+* **deps-dev:** bump @babel/preset-env from 7.24.0 to 7.24.3 ([b8f5c24](https://github.com/terrestris/shogun-admin/commit/b8f5c246212a73fac7859d942b6c1ecb43ae7754))
+* **deps-dev:** bump @babel/preset-react from 7.23.3 to 7.24.1 ([9a5366b](https://github.com/terrestris/shogun-admin/commit/9a5366b5d7005a45bc61cf0bddb1ee7a00b37ef2))
+* **deps-dev:** bump @commitlint/cli from 19.0.3 to 19.1.0 ([246ec21](https://github.com/terrestris/shogun-admin/commit/246ec217ba740169306d5ffbd7bb5f12a66bff72))
+* **deps-dev:** bump @commitlint/cli from 19.1.0 to 19.2.0 ([35fb413](https://github.com/terrestris/shogun-admin/commit/35fb413961ed55c2593db9f3966d8f9d9de3022b))
+* **deps-dev:** bump @commitlint/cli from 19.2.0 to 19.2.1 ([5df380d](https://github.com/terrestris/shogun-admin/commit/5df380d7b01bbe49fa1d8a134cea162e6266fd30))
+* **deps-dev:** bump @commitlint/config-conventional ([92cf027](https://github.com/terrestris/shogun-admin/commit/92cf027f42543b6eb1b32b367d94ca87eef6bc36))
+* **deps-dev:** bump @semantic-release/github from 9.2.6 to 10.0.2 ([93e00b1](https://github.com/terrestris/shogun-admin/commit/93e00b11cf094726bd65e3452bf381320219345b))
+* **deps-dev:** bump @semantic-release/npm from 11.0.3 to 12.0.0 ([f9d62a8](https://github.com/terrestris/shogun-admin/commit/f9d62a8d3ffc095bc5783539dc27b8e1156f7ca7))
+* **deps-dev:** bump @testing-library/react from 14.2.1 to 14.2.2 ([d5caafd](https://github.com/terrestris/shogun-admin/commit/d5caafdf71251b5410a599b041faa1ce91237612))
+* **deps-dev:** bump @types/react from 18.2.64 to 18.2.65 ([0ae0633](https://github.com/terrestris/shogun-admin/commit/0ae06333f160e33c9fab1d26c64d618dd411241f))
+* **deps-dev:** bump @types/react from 18.2.65 to 18.2.67 ([5012ee5](https://github.com/terrestris/shogun-admin/commit/5012ee5452295d1d14c4587a244a05cdb82acf23))
+* **deps-dev:** bump @types/react-dom from 18.2.21 to 18.2.22 ([60f17c3](https://github.com/terrestris/shogun-admin/commit/60f17c3e610ce3095a6721bf9991bf851d7e9f25))
+* **deps-dev:** bump @typescript-eslint/eslint-plugin ([c08c3a7](https://github.com/terrestris/shogun-admin/commit/c08c3a7e26fadc4a8758bd19e26004254caffc15))
+* **deps-dev:** bump @typescript-eslint/parser from 7.2.0 to 7.3.1 ([2d22da4](https://github.com/terrestris/shogun-admin/commit/2d22da4eb444855ce923ecf55714bd1f37e39828))
+* **deps-dev:** bump follow-redirects from 1.15.5 to 1.15.6 ([afad824](https://github.com/terrestris/shogun-admin/commit/afad82446bbd37c1e7f1ccf1f0685f2406da3ca7))
+* **deps-dev:** bump semantic-release from 23.0.2 to 23.0.4 ([3235bc2](https://github.com/terrestris/shogun-admin/commit/3235bc252ff526a544b811a3ba96cd5d4e308024))
+* **deps-dev:** bump semantic-release from 23.0.4 to 23.0.5 ([f7e2857](https://github.com/terrestris/shogun-admin/commit/f7e2857a6ad2fd07e7648ee335b2b8d64fc32a91))
+* **deps-dev:** bump typescript from 5.4.2 to 5.4.3 ([6ced18f](https://github.com/terrestris/shogun-admin/commit/6ced18f65766bf049977da80f75b79dcb17f76c3))
+* **deps-dev:** bump webpack from 5.90.3 to 5.91.0 ([e831006](https://github.com/terrestris/shogun-admin/commit/e83100614ab44a37ca72ea4f58fc21252878dddb))
+* **deps-dev:** bump webpack-dev-middleware from 5.3.3 to 5.3.4 ([47fee01](https://github.com/terrestris/shogun-admin/commit/47fee0182c4911b724e68bdc4254e43c671ffd25))
+* **deps:** bump @ant-design/icons from 5.3.1 to 5.3.4 ([75632f8](https://github.com/terrestris/shogun-admin/commit/75632f842299af0167affccdd3488da69296f84f))
+* **deps:** bump @uiw/react-md-editor from 4.0.3 to 4.0.4 ([9f8794f](https://github.com/terrestris/shogun-admin/commit/9f8794fb15edcb5253fb6aa82b7b9c2a9bf32e02))
+* **deps:** bump i18next from 23.10.0 to 23.10.1 ([146752b](https://github.com/terrestris/shogun-admin/commit/146752b463f101fb28ab9f3323537645bd83c15e))
+
+
+### Bugfixes
+
+* do not overwrite existing entity ([c5024f3](https://github.com/terrestris/shogun-admin/commit/c5024f3facde2fb3c4964fab5a46ba102511b46c))
+
 ## [14.0.2](https://github.com/terrestris/shogun-admin/compare/v14.0.1...v14.0.2) (2024-03-12)
 
 
