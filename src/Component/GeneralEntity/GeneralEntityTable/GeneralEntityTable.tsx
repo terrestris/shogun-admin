@@ -84,7 +84,7 @@ export function GeneralEntityTable<T extends BaseEntity>({
   tableConfig,
   ...tablePassThroughProps
 }: GeneralEntityTableProps<T>) {
-
+  console.log(entityType);
   const routePath = useMemo(() => `${config.appPrefix}/portal/${entityType}`, [entityType]);
   const navigate = useNavigate();
   const { t } = useTranslation();
@@ -208,6 +208,9 @@ export function GeneralEntityTable<T extends BaseEntity>({
   const getTableColumns = (): ColumnType<T>[] => {
     let cols: ColumnType<T>[] | undefined;
 
+    const keyName = entityType === 'user' ? 'username' : 'name';
+    console.log(TableUtil.getSorter(keyName));
+    console.log(tableConfig?.columnDefinition);
     if (_isEmpty(tableConfig?.columnDefinition)) {
       cols = [{
         title: t('GeneralEntityTable.columnId'),
@@ -216,12 +219,13 @@ export function GeneralEntityTable<T extends BaseEntity>({
         sorter: TableUtil.getSorter('id'),
         defaultSortOrder: 'ascend'
       }, {
+        //differentiat user or other entity
         title: t('GeneralEntityTable.columnName'),
-        dataIndex: 'name',
-        key: 'name',
-        sorter: TableUtil.getSorter('name'),
+        dataIndex: keyName,
+        key: keyName,
+        sorter: TableUtil.getSorter(keyName),
         defaultSortOrder: 'ascend',
-        ...TableUtil.getColumnSearchProps('name', entityType)
+        ...TableUtil.getColumnSearchProps(keyName, entityType)
       } as any];
     } else {
       // check for preconfigured sorters, filters and custom components (TODO)
@@ -257,7 +261,6 @@ export function GeneralEntityTable<T extends BaseEntity>({
             render: getRenderer(cellRenderComponentName!, cellRenderComponentProps, mapping)
           };
         }
-
         return columnDef;
       });
     }
@@ -324,7 +327,7 @@ export function GeneralEntityTable<T extends BaseEntity>({
           onClick: () => onRowClick(record)
         };
       }}
-      rowKey={'id'}
+      rowKey={entityType}
       {...tablePassThroughProps}
     />
   );

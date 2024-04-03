@@ -27,24 +27,25 @@ const FilterDropdown = ({
   dataIndex,
   confirm,
   clearFilters,
-  entityType
+  entityType,
 }: MyFilterDropdownProps) => {
   let searchInput: InputRef | null;
 
-  const [filterValue, setFilterValue] = useState<string>();
+  const [filterValue, setFilterValue] = useState<string | undefined>();
 
   const resetAndSet = () => {
-    handleReset(clearFilters);
+    handleReset(clearFilters({confirm: true}));
     handleSearch(selectedKeys, confirm);
   };
 
   useEffect(() => {
+    //console.log('entityType: ',entityType, ' dataIndex: ',dataIndex);
     if (selectedKeys.length === 0){
       return;
     }
     resetAndSet();
     /*
-     with further dependecies searching was not possilbe.
+     with further dependecies searching was not possible.
      */
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [entityType]);
@@ -60,7 +61,7 @@ const FilterDropdown = ({
 
   const handleReset = (_clearFilters?: () => void) => {
     if (_isFunction(clearFilters)) {
-      setFilterValue('');
+      setFilterValue(undefined);
       clearFilters();
     }
   };
@@ -118,7 +119,7 @@ export default class TableUtil {
 
   public static getColumnSearchProps<T>(
     dataIndex: string | string[],
-    entityType: string
+    entityType: string,
   ) {
     let searchInput: InputRef | null;
 
@@ -141,7 +142,7 @@ export default class TableUtil {
           dataIndex.forEach((key, i) => i === 0 ? a = _get(record, key) : a = _get(a, key));
           recVal = a;
         } else {
-          recVal = _get(record, dataIndex);
+          recVal = _get(record, dataIndex.split(','));
         }
         return `${recVal}`
           .toLowerCase()
