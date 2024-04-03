@@ -332,6 +332,11 @@ export function GeneralEntityRoot<T extends BaseEntity>({
     setFormIsDirty(false);
   };
 
+  const onCreateForm = () => {
+    setEditEntity(undefined);
+    setId('create');
+  };
+
   const onSaveClick = async () => {
     setIsSaving(true);
     try {
@@ -737,7 +742,7 @@ export function GeneralEntityRoot<T extends BaseEntity>({
           <Link
             key="create"
             to={`${config.appPrefix}/portal/${entityType}/create`}
-            onClick={onResetForm}
+            onClick={onCreateForm}
           >
             <Button
               type="primary"
