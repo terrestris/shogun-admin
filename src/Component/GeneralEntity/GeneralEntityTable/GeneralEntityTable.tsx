@@ -239,7 +239,7 @@ export function GeneralEntityTable<T extends BaseEntity>({
         if (!_isEmpty(sortConfig) && sortConfig.isSortable) {
           columnDef = {
             ...columnDef,
-            sorter: columnDef.dataIndex === 'name' ? TableUtil.getSorter('name'): true,
+            sorter: columnDef.dataIndex === 'name' ? TableUtil.getSorter('name') : true,
             defaultSortOrder: columnDef.dataIndex === 'name' ? 'ascend' : sortConfig.sortOrder
           };
         }
