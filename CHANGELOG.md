@@ -1,3 +1,11 @@
+## [14.0.4](https://github.com/terrestris/shogun-admin/compare/v14.0.3...v14.0.4) (2024-04-04)
+
+
+### Bugfixes
+
+* initial sorting for name is now in alphabetic order ([17f7e4a](https://github.com/terrestris/shogun-admin/commit/17f7e4a527a7473efd6751308efd5f3db727493c))
+* lint ([5667bab](https://github.com/terrestris/shogun-admin/commit/5667baba86e786adffbd581b746eaf94c1d3bd0c))
+
 ## [14.0.3](https://github.com/terrestris/shogun-admin/compare/v14.0.2...v14.0.3) (2024-04-03)
 
 
