@@ -243,7 +243,6 @@ export function GeneralEntityTable<T extends BaseEntity>({
             defaultSortOrder: columnDef.dataIndex === 'name' ? 'ascend' : sortConfig.sortOrder
           };
         }
-
         let dataIndex = copyCfg?.dataIndex?.toString();
         if (!_isEmpty(filterConfig) && filterConfig.isFilterable) {
           columnDef = {
