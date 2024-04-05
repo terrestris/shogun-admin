@@ -75,7 +75,7 @@ export default class TableUtil {
           dataIndex.forEach((key, i) => i === 0 ? a = _get(record, key) : a = _get(a, key));
           recVal = a;
         } else {
-          recVal = _get(record, dataIndex);
+          recVal = _get(record, dataIndex.split(','));
         }
         return `${recVal}`
           .toLowerCase()
