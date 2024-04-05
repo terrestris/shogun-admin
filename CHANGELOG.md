@@ -1,3 +1,10 @@
+## [14.0.5](https://github.com/terrestris/shogun-admin/compare/v14.0.4...v14.0.5) (2024-04-05)
+
+
+### Bugfixes
+
+* fixes searching for a user in admin client ([b4049b5](https://github.com/terrestris/shogun-admin/commit/b4049b5e9c9b77cd7fe024f8592a9a9e34cbc892))
+
 ## [14.0.4](https://github.com/terrestris/shogun-admin/compare/v14.0.3...v14.0.4) (2024-04-04)
 
 
