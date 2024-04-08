@@ -1,3 +1,10 @@
+## [14.0.6](https://github.com/terrestris/shogun-admin/compare/v14.0.5...v14.0.6) (2024-04-08)
+
+
+### Bugfixes
+
+* sort and filter for every entity and pagination ([8b130ec](https://github.com/terrestris/shogun-admin/commit/8b130ecd48fc34d921d6f0383f9b6cf81ecc14ff))
+
 ## [14.0.5](https://github.com/terrestris/shogun-admin/compare/v14.0.4...v14.0.5) (2024-04-05)
 
 
