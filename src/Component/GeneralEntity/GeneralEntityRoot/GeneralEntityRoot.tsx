@@ -173,6 +173,7 @@ export function GeneralEntityRoot<T extends BaseEntity>({
     setPageCurrent(1);
     setSortOrder('ascend');
     setSortField(undefined);
+    setFiltered(false); // to always obtain pagination when changing the entity
   }, [entityType]);
 
   /**
