@@ -12,9 +12,11 @@ import {
   notification,
   Table,
   TableProps,
-  Tooltip
+  Tooltip,
+  Switch
 } from 'antd';
 import { SortOrder } from 'antd/es/table/interface';
+import { ColumnsType } from 'antd/lib/table';
 import _isNil from 'lodash/isNil';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
@@ -49,12 +51,29 @@ export const ImageFileTable: React.FC<ImageFileTableProps> = ({
     i18n
   } = useTranslation();
 
-  const columns: any = [{
+  const onPublicChange = async (checked: boolean, record: ImageFile) => {
+    try {
+      // await service?.update(record.fileUuid, {
+      //   publicAccess: checked
+      // });
+      notification.success({
+        message: t('ImageFileTable.updateSuccess'),
+        description: t('ImageFileTable.updateSuccessDescript', { record: record.fileName })
+      });
+      await fetchEntities();
+    } catch (error) {
+      notification.error({
+        message: t('ImageFileTable.updateFail'),
+        description: t('ImageFileTable.updateFailDescript', { record: record.fileName })
+      });
+    }
+  };
+
+  const columns: ColumnsType<ImageFile> = [{
     title: 'UUID',
     key: 'fileUuid',
     dataIndex: 'fileUuid',
     sorter: TableUtil.getSorter('fileUuid'),
-    editable: true,
     ...TableUtil.getColumnSearchProps('fileUuid')
   }, {
     title: 'Name',
@@ -62,7 +81,6 @@ export const ImageFileTable: React.FC<ImageFileTableProps> = ({
     dataIndex: 'fileName',
     sorter: TableUtil.getSorter('fileName'),
     defaultSortOrder: 'ascend',
-    editable: true,
     ...TableUtil.getColumnSearchProps('fileName')
   }, {
     title: 'Created',
@@ -70,9 +88,23 @@ export const ImageFileTable: React.FC<ImageFileTableProps> = ({
     dataIndex: 'created',
     sorter: TableUtil.getSorter('created'),
     defaultSortOrder: 'descend',
-    editable: true,
     render: (val: string) => new Date(val).toLocaleString(i18n.language),
     ...TableUtil.getColumnSearchProps('created')
+  }, {
+    title: 'Public',
+    key: 'public',
+    dataIndex: 'publicAccess',
+    sorter: TableUtil.getSorter('publicAccess'),
+    defaultSortOrder: 'descend',
+    render: (val: boolean, record: ImageFile) => {
+      return (
+        <Switch
+          checked={val}
+          onChange={(newValue: boolean) => onPublicChange(newValue, record)}
+        />
+      );
+    },
+    ...TableUtil.getColumnSearchProps('publicAccess')
   }];
 
   const onRowClick = (imageFile: ImageFile) => {
