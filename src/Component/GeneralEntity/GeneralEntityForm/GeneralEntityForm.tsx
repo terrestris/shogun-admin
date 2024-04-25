@@ -55,6 +55,7 @@ export type FormMode = 'EDIT' | 'VIEW';
 
 export type FormConfig = {
   name: string;
+  publicKey?: string;
   fields: FieldConfig[];
 };
 
