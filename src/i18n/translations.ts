@@ -11,8 +11,8 @@ export default {
         loadFail: 'Die Daten konnten nicht geladen werden. Überprüfen Sie Ihre Konsole.'
       },
       FullscreenWrapper: {
-        fullscreen: 'Vollbild',
-        leaveFullscreen: 'Vollbild verlassen'
+        fullscreen: 'Vergrößern',
+        leaveFullscreen: 'Verkleinern'
       },
       WelcomeDashboard: {
         applications: 'Applikationen',
@@ -223,8 +223,8 @@ export default {
         loadFail: 'Failed to load the initial data. Check your console.'
       },
       FullscreenWrapper: {
-        fullscreen: 'Fullscreen',
-        leaveFullscreen: 'Leave fullscreen'
+        fullscreen: 'Maximize',
+        leaveFullscreen: 'Minimize'
       },
       WelcomeDashboard: {
         applications: 'Applications',
