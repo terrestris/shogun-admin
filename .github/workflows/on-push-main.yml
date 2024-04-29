@@ -3,7 +3,7 @@ name: On push main
 on:
   push:
     branches:
-      - main
+      - test-rocket-chat-hook
 
 jobs:
   sonarqube:
