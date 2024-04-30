@@ -1,3 +1,10 @@
+## [14.1.1](https://github.com/terrestris/shogun-admin/compare/v14.1.0...v14.1.1) (2024-04-30)
+
+
+### Bugfixes
+
+* adds project version ([#542](https://github.com/terrestris/shogun-admin/issues/542)) ([6c4cb13](https://github.com/terrestris/shogun-admin/commit/6c4cb13097dc1d1f6a2017ae253842041c381b84))
+
 ## [14.1.0](https://github.com/terrestris/shogun-admin/compare/v14.0.6...v14.1.0) (2024-04-30)
 
 
