@@ -1,6 +1,7 @@
 import React from 'react';
 
-import {DatePicker,
+import {
+  DatePicker,
   Form,
   Input,
   InputNumber,
@@ -8,7 +9,8 @@ import {DatePicker,
   Select,
   Spin,
   Statistic,
-  Switch} from 'antd';
+  Switch
+} from 'antd';
 import './GeneralEntityForm.less';
 
 import {
