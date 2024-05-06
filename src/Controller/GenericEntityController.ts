@@ -79,8 +79,9 @@ export class GenericEntityController<T extends BaseEntity> {
     this.entity = await this.service?.findOne(id);
 
     if (_isString(this.formConfig?.publicKey)) {
-      const isPublic = await this.service.isPublic(this.entity?.id!) as any;
-      this.entity[this.formConfig.publicKey as keyof T] = isPublic;
+      const isPublic = await this.service.isPublic(this.entity?.id!);
+      const pubKey = this.formConfig.publicKey;
+      (this.entity as Record<string, any>)[pubKey] = isPublic;
     }
 
     // initialize form value
@@ -150,7 +151,7 @@ export class GenericEntityController<T extends BaseEntity> {
       'created',
       'modified',
       ...this.formConfig?.fields
-        .filter(field => field.dataField === this.formConfig.publicKey ||field.readOnly)
+        .filter(field => field.dataField === this.formConfig.publicKey || field.readOnly)
         .map(field => field.dataField)
     ]);
 
