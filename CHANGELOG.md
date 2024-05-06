@@ -1,3 +1,40 @@
+## [14.2.0](https://github.com/terrestris/shogun-admin/compare/v14.1.1...v14.2.0) (2024-05-06)
+
+
+### Dependencies
+
+* **deps-dev:** bump @babel/core from 7.24.4 to 7.24.5 ([56e9389](https://github.com/terrestris/shogun-admin/commit/56e9389e191f9e12167579ee2e2111ce0d2491a9))
+* **deps-dev:** bump @babel/preset-env from 7.24.4 to 7.24.5 ([00581a7](https://github.com/terrestris/shogun-admin/commit/00581a7c879f3def5eb10fa2019475ebfa7ecfc6))
+* **deps-dev:** bump @pmmmwh/react-refresh-webpack-plugin ([d190c7a](https://github.com/terrestris/shogun-admin/commit/d190c7a8d1ee7396b68c6aeddbc3f84a602e275a))
+* **deps-dev:** bump @testing-library/jest-dom from 6.4.2 to 6.4.5 ([cafce81](https://github.com/terrestris/shogun-admin/commit/cafce81607798fbe9a8a35c61181dfde57d30128))
+* **deps-dev:** bump @testing-library/react from 15.0.4 to 15.0.6 ([1cf1573](https://github.com/terrestris/shogun-admin/commit/1cf1573f066933714541c7e6abd576d345e48d93))
+* **deps-dev:** bump @typescript-eslint/eslint-plugin ([5d6ce3e](https://github.com/terrestris/shogun-admin/commit/5d6ce3efec84d36f0215c4530922a4ff9a0abdaf))
+* **deps-dev:** bump @typescript-eslint/parser from 7.7.1 to 7.8.0 ([6735a98](https://github.com/terrestris/shogun-admin/commit/6735a9800de9b764a6b2f1a1b97769ad216a39a9))
+* **deps-dev:** bump eslint-plugin-react-hooks from 4.6.0 to 4.6.2 ([2e9f881](https://github.com/terrestris/shogun-admin/commit/2e9f881fc665187dfe74d338be7c94a39da07f1a))
+* **deps:** bump @ant-design/icons from 5.3.6 to 5.3.7 ([26f5405](https://github.com/terrestris/shogun-admin/commit/26f540548438fbdb01ee11f3209eaceb6889d3e3))
+* **deps:** bump @terrestris/shogun-util from 8.1.0 to 8.2.0 ([c81da0f](https://github.com/terrestris/shogun-admin/commit/c81da0f072b7df04c77991bb04a4bd681a6c5dfb))
+* **deps:** bump i18next from 23.11.2 to 23.11.3 ([74ede3b](https://github.com/terrestris/shogun-admin/commit/74ede3b7e195e15e401185011653e5ccf545938c))
+* **deps:** bump kitabisa/sonarqube-action from 1.2.0 to 1.2.1 ([c6b4727](https://github.com/terrestris/shogun-admin/commit/c6b4727deaf21b463dd0125712850e7a23581873))
+* **deps:** bump react and @types/react ([deed9ef](https://github.com/terrestris/shogun-admin/commit/deed9ef7de9230b2c2f5e645c66c2ba97e09c3bb))
+* **deps:** bump react-dom and @types/react-dom ([8bd7ac0](https://github.com/terrestris/shogun-admin/commit/8bd7ac0d99b33d9dfae8507ce569b7fecb1d7010))
+* **deps:** update ol- and shogun-util ([32bf865](https://github.com/terrestris/shogun-admin/commit/32bf8657171fc3224e7f4ca2870d367575adb132))
+
+
+### Changes in configuration
+
+* make use of sonar-project-version ([#543](https://github.com/terrestris/shogun-admin/issues/543)) ([0be24f5](https://github.com/terrestris/shogun-admin/commit/0be24f5adc9c0dbab11d3b4d0fc1e389747e08bd))
+
+
+### Features
+
+* add handling for publicEntity ([70a6b90](https://github.com/terrestris/shogun-admin/commit/70a6b90c0390a3d057892409646e03b6267e77d6))
+
+
+### Bugfixes
+
+* improve typing ([3c9af46](https://github.com/terrestris/shogun-admin/commit/3c9af46ffe4c4109aca1c0570fa50dc59d2ea3f3))
+* upadte GenericEntityController ([a92a0b7](https://github.com/terrestris/shogun-admin/commit/a92a0b780727c202a4c7eb81dff0dc9b0a25ea6e))
+
 ## [14.1.1](https://github.com/terrestris/shogun-admin/compare/v14.1.0...v14.1.1) (2024-04-30)
 
 
