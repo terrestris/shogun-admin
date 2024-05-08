@@ -108,16 +108,17 @@ type FeatureTypeAttributes = {
 };
 
 export type GeneralEntityConfigType<T extends BaseEntity> = {
-  i18n: FormTranslations;
-  endpoint: string;
-  entityType: string;
-  entityName?: string;
-  navigationTitle?: string;
-  subTitle?: string;
-  formConfig: FormConfig;
-  tableConfig: TableConfig<T>;
-  onEntitiesLoaded?: (entities: T[], entityType: string) => void;
   defaultEntity?: T;
+  endpoint: string;
+  entityName?: string;
+  entityType: string;
+  formConfig: FormConfig;
+  i18n: FormTranslations;
+  importEnabled?: boolean;
+  navigationTitle?: string;
+  onEntitiesLoaded?: (entities: T[], entityType: string) => void;
+  subTitle?: string;
+  tableConfig: TableConfig<T>;
 };
 
 type OwnProps<T extends BaseEntity> = GeneralEntityConfigType<T>;
@@ -125,16 +126,17 @@ type OwnProps<T extends BaseEntity> = GeneralEntityConfigType<T>;
 export type GeneralEntityRootProps<T extends BaseEntity> = OwnProps<T> & React.HTMLAttributes<HTMLDivElement>;
 
 export function GeneralEntityRoot<T extends BaseEntity>({
-  i18n,
-  endpoint,
-  entityType,
-  entityName = 'Entität',
-  navigationTitle = 'Entitäten',
-  subTitle = '… mit denen man Dinge tun kann (aus Gründen bspw.)',
-  formConfig,
-  tableConfig = {},
+  importEnabled = true,
   defaultEntity,
-  onEntitiesLoaded = () => { }
+  endpoint,
+  entityName = 'Entität',
+  entityType,
+  formConfig,
+  i18n,
+  navigationTitle = 'Entitäten',
+  onEntitiesLoaded = () => { },
+  subTitle = '… mit denen man Dinge tun kann (aus Gründen bspw.)',
+  tableConfig = {}
 }: GeneralEntityRootProps<T>) {
 
   const location = useLocation();
@@ -757,7 +759,7 @@ export function GeneralEntityRoot<T extends BaseEntity>({
             </Button>
           </Link>
           {/* Upload only available for layer entities */}
-          {entityType === 'layer' && (
+          {entityType === 'layer' && importEnabled && (
             <Upload
               customRequest={onFileUploadAction}
               accept='image/tiff,application/zip'
