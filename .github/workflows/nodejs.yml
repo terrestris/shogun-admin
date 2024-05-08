@@ -33,7 +33,19 @@ jobs:
       - name: Typecheck code 👓
         run: npm run typecheck
 
-      - name: Test code ✅
-        run: npm run test
-        env:
-          CI: true
+      - name: Test code and build artifacts ✅
+        run: npm run build
+
+      - name: Run tests related to current changes
+        run: |
+          npx jest --collectCoverageFrom='["**/*.{ts,tsx,js,jsx}"]' --coverage --coverageReporters json-summary --onlyChanged --coverageDirectory ./coverage/changed
+
+      - name: Jest Coverage Comment
+        uses: MishaKav/jest-coverage-comment@main
+        with:
+          hide-comment: false
+          create-new-comment: false
+          hide-summary: false
+          multiple-files: |
+            All, ./coverage/all/coverage-summary.json
+            only changed, ./coverage/changed/coverage-summary.json
