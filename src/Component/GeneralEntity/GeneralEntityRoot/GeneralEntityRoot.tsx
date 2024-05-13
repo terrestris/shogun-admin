@@ -111,6 +111,7 @@ export type GeneralEntityConfigType<T extends BaseEntity> = {
   i18n: FormTranslations;
   endpoint: string;
   entityType: string;
+  defaultSortField?: string;
   entityName?: string;
   navigationTitle?: string;
   subTitle?: string;
@@ -128,6 +129,7 @@ export function GeneralEntityRoot<T extends BaseEntity>({
   i18n,
   endpoint,
   entityType,
+  defaultSortField,
   entityName = 'Entität',
   navigationTitle = 'Entitäten',
   subTitle = '… mit denen man Dinge tun kann (aus Gründen bspw.)',
@@ -170,10 +172,10 @@ export function GeneralEntityRoot<T extends BaseEntity>({
   } = useTranslation();
 
   useEffect(() => {
-    setPageCurrent(1);
+    setSortField(defaultSortField? defaultSortField : undefined);
     setSortOrder('ascend');
-    setSortField(undefined);
-  }, [entityType]);
+    setPageCurrent(1);
+  }, [entityType, defaultSortField]);
 
   /**
    * Validate form fields
