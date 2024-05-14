@@ -100,6 +100,13 @@ export default {
         uploadSuccess: 'Die Datei {{entityName}} wurde erfolgreich hochgeladen',
         uploadFailure: 'Die Datei {{entityName}} konnte nicht hochgeladen werden'
       },
+      ImageFileForm: {
+        title: 'Bilddatei',
+        name: 'Dateiname',
+        uuid: 'UUID',
+        public: 'Öffentlich',
+        preview: 'Vorschau'
+      },
       Logs: {
         logs: 'Logs',
         logsInfo: '… die die Welt erklären',
@@ -311,6 +318,13 @@ export default {
         failure: 'Error during upload',
         uploadSuccess: 'The {{entityName}} file was successfully uploaded',
         uploadFailure: 'The file {{entityName}} could not be uploaded'
+      },
+      ImageFileForm: {
+        title: 'Image',
+        name: 'Filename',
+        uuid: 'UUID',
+        public: 'Public',
+        preview: 'Preview'
       },
       Logs: {
         metric: 'Metrics',
