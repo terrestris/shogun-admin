@@ -1,3 +1,33 @@
+## [15.0.0](https://github.com/terrestris/shogun-admin/compare/v14.2.0...v15.0.0) (2024-05-14)
+
+
+### ⚠ BREAKING CHANGES
+
+* imagefile route gets id as url param
+
+### Dependencies
+
+* **deps-dev:** bump @playwright/test from 1.43.1 to 1.44.0 ([46bbabe](https://github.com/terrestris/shogun-admin/commit/46bbabe9f7c76c3189e955922317052ed2854419))
+* **deps-dev:** bump @semantic-release/npm from 12.0.0 to 12.0.1 ([517e66d](https://github.com/terrestris/shogun-admin/commit/517e66dab7208cf0b6e9a7346498649b4c5deab2))
+* **deps-dev:** bump @testing-library/react from 15.0.6 to 15.0.7 ([ad29ccd](https://github.com/terrestris/shogun-admin/commit/ad29ccd50e04e6468ee58321d6d09d6b50228488))
+* **deps-dev:** bump @types/react from 18.3.1 to 18.3.2 ([040d132](https://github.com/terrestris/shogun-admin/commit/040d1322ffc016d0402657e04be2264c4665b65d))
+* **deps-dev:** bump @typescript-eslint/eslint-plugin ([72e02ba](https://github.com/terrestris/shogun-admin/commit/72e02baf1d13f72005cfef8598b4c99182908a31))
+* **deps-dev:** bump @typescript-eslint/parser from 7.8.0 to 7.9.0 ([3e3e502](https://github.com/terrestris/shogun-admin/commit/3e3e502479c24a79f4ead5d7291c6f7548026c7c))
+* **deps-dev:** bump css-minimizer-webpack-plugin from 6.0.0 to 7.0.0 ([e8f1077](https://github.com/terrestris/shogun-admin/commit/e8f10776a0aae3802db80213de237d513224230c))
+* **deps-dev:** bump rimraf from 5.0.5 to 5.0.7 ([55c2475](https://github.com/terrestris/shogun-admin/commit/55c24755636f75ad4eae39167e35f8f1a9efb145))
+* **deps-dev:** bump semantic-release from 23.0.8 to 23.1.1 ([6084b6c](https://github.com/terrestris/shogun-admin/commit/6084b6c04bea355efd0b76d2085fd270e6137f17))
+* **deps:** bump @terrestris/base-util from 1.1.0 to 1.1.1 ([71a9b39](https://github.com/terrestris/shogun-admin/commit/71a9b39a575537616c4f9d1016ec1d70db33b734))
+* **deps:** bump @terrestris/ol-util from 17.0.0 to 17.0.1 ([636dba1](https://github.com/terrestris/shogun-admin/commit/636dba110779614b830f8d384b6e4b62215d7615))
+* **deps:** bump i18next from 23.11.3 to 23.11.4 ([2681a6c](https://github.com/terrestris/shogun-admin/commit/2681a6c2f06d68d6f7bd18fd886d107e768835b2))
+* **deps:** bump i18next-browser-languagedetector from 7.2.1 to 8.0.0 ([eeb629d](https://github.com/terrestris/shogun-admin/commit/eeb629d6a6b7cbc392b5debdf8dcd79576ddef0d))
+* **deps:** bump keycloak-js from 24.0.3 to 24.0.4 ([7202c1f](https://github.com/terrestris/shogun-admin/commit/7202c1faa5764075727cc237d16f807356591423))
+* **deps:** bump react-router-dom from 6.23.0 to 6.23.1 ([78a03ea](https://github.com/terrestris/shogun-admin/commit/78a03eabb86393f06f84464e7d100bc461017e7e))
+
+
+### Features
+
+* introduce ImageFileForm ([2486eb3](https://github.com/terrestris/shogun-admin/commit/2486eb39267adc93dc12ac84b932c60ef28786a8))
+
 ## [14.2.0](https://github.com/terrestris/shogun-admin/compare/v14.1.1...v14.2.0) (2024-05-06)
 
 
