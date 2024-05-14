@@ -54,7 +54,6 @@ export const ImageFileTable: React.FC<ImageFileTableProps> = ({
     key: 'fileUuid',
     dataIndex: 'fileUuid',
     sorter: TableUtil.getSorter('fileUuid'),
-    editable: true,
     ...TableUtil.getColumnSearchProps('fileUuid')
   }, {
     title: 'Name',
@@ -62,7 +61,6 @@ export const ImageFileTable: React.FC<ImageFileTableProps> = ({
     dataIndex: 'fileName',
     sorter: TableUtil.getSorter('fileName'),
     defaultSortOrder: 'ascend',
-    editable: true,
     ...TableUtil.getColumnSearchProps('fileName')
   }, {
     title: 'Created',
@@ -70,13 +68,12 @@ export const ImageFileTable: React.FC<ImageFileTableProps> = ({
     dataIndex: 'created',
     sorter: TableUtil.getSorter('created'),
     defaultSortOrder: 'descend',
-    editable: true,
     render: (val: string) => new Date(val).toLocaleString(i18n.language),
     ...TableUtil.getColumnSearchProps('created')
   }];
 
   const onRowClick = (imageFile: ImageFile) => {
-    navigate(`${config.appPrefix}/portal/imagefile/${imageFile.fileUuid}`);
+    navigate(`${config.appPrefix}/portal/imagefile/${imageFile.id}`);
   };
 
   const name = {
