@@ -2,7 +2,8 @@ import './ImageFileRoot.less';
 
 import React from 'react';
 
-import { Button, notification, PageHeader, Upload } from 'antd';
+import { PageHeader } from '@ant-design/pro-components';
+import { Button, notification, Upload } from 'antd';
 import _isNil from 'lodash/isNil';
 import { useTranslation } from 'react-i18next';
 import {
@@ -42,8 +43,7 @@ export const ImageFileRoot: React.FC<ImageFileRootProps> = () => {
         onBack={() => navigate(-1)}
         title={t('ImageFileRoot.title')}
         subTitle={t('ImageFileRoot.subTitle')}
-      >
-      </PageHeader>
+      />
       <div className="left-container">
         <div className="left-toolbar">
           <Upload

@@ -5,7 +5,6 @@ import {
   Form,
   Input,
   InputNumber,
-  PageHeader,
   Select,
   Spin,
   Statistic,
@@ -28,6 +27,8 @@ import MarkdownEditor from '../../FormField/MarkdownEditor/MarkdownEditor';
 import UserPermissionGrid from '../../FormField/UserPermissionGrid/UserPermissionGrid';
 import YesOrNoField from '../../FormField/YesOrNoField/YesOrNoField';
 import LayerTypeSelect from '../../Layer/LayerTypeSelect/LayerTypeSelect';
+
+import { PageHeader } from '@ant-design/pro-components';
 
 const { TextArea } = Input;
 

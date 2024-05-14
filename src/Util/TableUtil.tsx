@@ -81,7 +81,7 @@ export default class TableUtil {
           .toLowerCase()
           .includes(`${value}`.toLowerCase());
       },
-      onFilterDropdownVisibleChange: (visible: boolean) => {
+      onFilterDropdownOpenChange: (visible: boolean) => {
         if (visible) {
           setTimeout(() => searchInput?.select());
         }
