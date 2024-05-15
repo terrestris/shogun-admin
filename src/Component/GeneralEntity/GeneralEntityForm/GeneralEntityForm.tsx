@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { PageHeader } from '@ant-design/pro-components';
+
 import {
   DatePicker,
   Form,
@@ -27,8 +29,6 @@ import MarkdownEditor from '../../FormField/MarkdownEditor/MarkdownEditor';
 import UserPermissionGrid from '../../FormField/UserPermissionGrid/UserPermissionGrid';
 import YesOrNoField from '../../FormField/YesOrNoField/YesOrNoField';
 import LayerTypeSelect from '../../Layer/LayerTypeSelect/LayerTypeSelect';
-
-import { PageHeader } from '@ant-design/pro-components';
 
 const { TextArea } = Input;
 
@@ -314,7 +314,7 @@ export const GeneralEntityForm: React.FC<GeneralEntityFormProps> = ({
           name={formConfig?.name}
           {...formProps}
         >
-          { formConfig.fields?.map(createFormItem) }
+          {formConfig.fields?.map(createFormItem)}
         </Form>
       </Spin>
     </>
