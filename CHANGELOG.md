@@ -1,3 +1,20 @@
+## [15.1.0](https://github.com/terrestris/shogun-admin/compare/v15.0.0...v15.1.0) (2024-05-15)
+
+
+### Dependencies
+
+* **deps:** update to antd 5 ([01ff6ce](https://github.com/terrestris/shogun-admin/commit/01ff6ceae9b35ac3399e854bf1e819d77b70eed8))
+
+
+### Changes in configuration
+
+* rename build job to "test" ([ffa1a9d](https://github.com/terrestris/shogun-admin/commit/ffa1a9df7905e221ffdb80558628c985117cac99))
+
+
+### Features
+
+* adapt components to antd5 ([213583c](https://github.com/terrestris/shogun-admin/commit/213583c25ad7cafd4c75e36cc189118e146d08c3))
+
 ## [15.0.0](https://github.com/terrestris/shogun-admin/compare/v14.2.0...v15.0.0) (2024-05-14)
 
 
