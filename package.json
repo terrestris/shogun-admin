@@ -13,7 +13,7 @@
     "prepare": "husky",
     "semantic-release": "npm run clean; npm run build; npx semantic-release",
     "start": "webpack serve --config webpack.dev.js",
-    "test": "jest --coverage",
+    "test": "jest --coverage --maxWorkers=50%",
     "test:watch": "jest --watch",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
