@@ -5,10 +5,12 @@ import React, {
   useState
 } from 'react';
 
+import { PageHeader } from '@ant-design/pro-components';
+
 import {
   Alert,
   Button,
-  PageHeader,
+  Form,
   Switch
 } from 'antd';
 import _isNil from 'lodash/isNil';
@@ -90,12 +92,15 @@ export const Logs: React.FC<LogsProps> = () => {
         title={t('Logs.logs')}
         subTitle={t('Logs.logsInfo')}
         extra={[
-          <Switch
+          <Form.Item
             key="reload"
-            checkedChildren={t('Logs.reloadChecked')}
-            unCheckedChildren={t('Logs.reloadUnChecked')}
-            onChange={onChange}
-          />,
+            label={t('Logs.autoReload')}
+            className='auto-reload-switch'
+          >
+            <Switch
+              onChange={onChange}
+            />
+          </Form.Item>,
           <Button
             key="fetch-logs"
             type="primary"

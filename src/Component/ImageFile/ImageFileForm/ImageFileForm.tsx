@@ -2,7 +2,8 @@ import './ImageFileForm.less';
 
 import React, { useCallback, useEffect, useState } from 'react';
 
-import { Form, PageHeader, Spin, Switch } from 'antd';
+import { PageHeader } from '@ant-design/pro-components';
+import { Form, Spin, Switch } from 'antd';
 import { SwitchChangeEventHandler } from 'antd/lib/switch';
 import _isNil from 'lodash/isNil';
 import { useTranslation } from 'react-i18next';

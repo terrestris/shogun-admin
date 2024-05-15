@@ -2,7 +2,7 @@ import './Header.less';
 
 import React from 'react';
 
-import { PageHeader } from 'antd';
+import { PageHeader } from '@ant-design/pro-components';
 import { Link } from 'react-router-dom';
 import config from 'shogunApplicationConfig';
 
@@ -27,10 +27,10 @@ export const Header: React.FC<HeaderProps> = () => {
         title={
           <Link
             to={`${config.appPrefix}/portal`}
-            className="header-logo-a"
+            className="header-link"
           >
             <img
-              className="header-logo-img"
+              className="header-logo"
               src={logo}
             />
             SHOGun Admin

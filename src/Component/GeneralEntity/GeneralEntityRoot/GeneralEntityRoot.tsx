@@ -14,11 +14,11 @@ import {
   UploadOutlined
 } from '@ant-design/icons';
 
+import { PageHeader } from '@ant-design/pro-components';
 import {
   Button,
   Form,
   notification,
-  PageHeader,
   Upload
 } from 'antd';
 import {

@@ -111,8 +111,7 @@ export default {
         logs: 'Logs',
         logsInfo: '… die die Welt erklären',
         refresh: 'Aktualisieren',
-        reloadChecked: 'Automatisches Nachladen',
-        reloadUnChecked: 'Kein Nachladen',
+        autoReload: 'Automatisches Nachladen',
         warningMessage: 'Logs können nicht angezeigt werden',
         warningDescribtion: 'Hinweis: Um die Logs anzeigen zu können ist es notwendig, dass die ' +
           'Logs in eine Datei geschrieben werden. Bitte die SHOGun API Konfiguration entsprechend überprüfen.'
@@ -332,8 +331,7 @@ export default {
         logs: 'Logs',
         logsInfo: '… that explain the world',
         refresh: 'Refresh',
-        reloadChecked: 'Live reload',
-        reloadUnChecked: 'No reload',
+        autoReload: 'Hot reload',
         warningMessage: 'Error while displaying the logs',
         warningDescribtion: 'Note: In order to be able to display the logs, it is necessary that the logs ' +
           'are written to a file. Please check the SHOGun API configuration accordingly.'

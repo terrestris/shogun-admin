@@ -1,11 +1,12 @@
 import React from 'react';
 
+import { PageHeader } from '@ant-design/pro-components';
+
 import {
   DatePicker,
   Form,
   Input,
   InputNumber,
-  PageHeader,
   Select,
   Spin,
   Statistic,
@@ -313,7 +314,7 @@ export const GeneralEntityForm: React.FC<GeneralEntityFormProps> = ({
           name={formConfig?.name}
           {...formProps}
         >
-          { formConfig.fields?.map(createFormItem) }
+          {formConfig.fields?.map(createFormItem)}
         </Form>
       </Spin>
     </>
