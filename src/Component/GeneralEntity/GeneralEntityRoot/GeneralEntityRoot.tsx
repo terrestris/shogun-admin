@@ -343,6 +343,7 @@ export function GeneralEntityRoot<T extends BaseEntity>({
     try {
       const updatedEntity: T = await entityController?.saveOrUpdate() as T;
       await fetchEntities();
+      await fetchEntity(updatedEntity.id!);
       navigate(`${config.appPrefix}/portal/${entityType}/${updatedEntity.id}`);
       notification.success({
         message: t('GeneralEntityRoot.saveSuccess', {
