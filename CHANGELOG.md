@@ -1,3 +1,16 @@
+## [15.1.1](https://github.com/terrestris/shogun-admin/compare/v15.1.0...v15.1.1) (2024-05-16)
+
+
+### Dependencies
+
+* **deps-dev:** bump @semantic-release/github from 10.0.3 to 10.0.4 ([22b1fbd](https://github.com/terrestris/shogun-admin/commit/22b1fbd17bafe440fa4990c9970e317e18bda26a))
+* **deps:** bump ol from 9.1.0 to 9.2.0 ([9fcdc8e](https://github.com/terrestris/shogun-admin/commit/9fcdc8e9fb778060bc6035ed7a8fc7c0bcf5bb7c))
+
+
+### Bugfixes
+
+* always fetch entity on save/update ([893b616](https://github.com/terrestris/shogun-admin/commit/893b616c1040344851a6942781ff3027269b7114))
+
 ## [15.1.0](https://github.com/terrestris/shogun-admin/compare/v15.0.0...v15.1.0) (2024-05-15)
 
 
