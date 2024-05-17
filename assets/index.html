@@ -15,7 +15,7 @@
     <noscript>
       You need to enable JavaScript to run this app.
     </noscript>
-    <div id="app" class="app" style="height:100%;width:100%"></div>
+    <div id="root" class="root"></div>
     <% if (htmlWebpackPlugin.options.files && htmlWebpackPlugin.options.files.js) { %>
       <% for (key in htmlWebpackPlugin.options.files.js) { %>
         <script src="<%= htmlWebpackPlugin.options.files.js[key] %>" rel="stylesheet"></script>
