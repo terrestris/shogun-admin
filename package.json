@@ -33,7 +33,7 @@
   "homepage": "https://github.com/terrestris/shogun-admin#readme",
   "dependencies": {
     "@ant-design/icons": "5.3.7",
-    "@ant-design/pro-components": "^2.7.1",
+    "@ant-design/pro-components": "^2.7.9",
     "@casualbot/jest-sonar-reporter": "2.3.1",
     "@monaco-editor/react": "4.6.0",
     "@terrestris/base-util": "1.1.1",
