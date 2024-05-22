@@ -153,30 +153,32 @@ const App: React.FC = () => {
 
   return (
     <AntdApp>
-      <Router>
-        <Header />
-        <React.Suspense
-          fallback={
-            <Spin
-              className="suspense-spin"
-              indicator={
-                <ShogunSpinner />
-              }
-            />
-          }
-        >
-          <Routes>
-            <Route
-              path={`${config.appPrefix}/portal/*`}
-              element={<Portal />}
-            />
-            <Route
-              path={`${config.appPrefix}/`}
-              element={<Navigate to={`${config.appPrefix}/portal`} />}
-            />
-          </Routes>
-        </React.Suspense>
-      </Router>
+      <div className='app'>
+        <Router>
+          <Header />
+          <React.Suspense
+            fallback={
+              <Spin
+                className="suspense-spin"
+                indicator={
+                  <ShogunSpinner />
+                }
+              />
+            }
+          >
+            <Routes>
+              <Route
+                path={`${config.appPrefix}/portal/*`}
+                element={<Portal />}
+              />
+              <Route
+                path={`${config.appPrefix}/`}
+                element={<Navigate to={`${config.appPrefix}/portal`} />}
+              />
+            </Routes>
+          </React.Suspense>
+        </Router>
+      </div>
     </AntdApp>
   );
 };
