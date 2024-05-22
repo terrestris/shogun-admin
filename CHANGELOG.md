@@ -1,3 +1,17 @@
+## [15.1.2](https://github.com/terrestris/shogun-admin/compare/v15.1.1...v15.1.2) (2024-05-22)
+
+
+### Dependencies
+
+* **deps:** bump @terrestris/ol-util from 17.0.1 to 18.0.0 ([3f96f19](https://github.com/terrestris/shogun-admin/commit/3f96f1993d91c4fa67a3336450bb0c4763ba9d89))
+* **deps:** bump @terrestris/ol-util from 18.0.0 to 18.0.1 ([f2cc192](https://github.com/terrestris/shogun-admin/commit/f2cc19232561dd514cd050c7734faf4c822a97c7))
+* **deps:** bump ol from 9.2.0 to 9.2.1 ([8408dcf](https://github.com/terrestris/shogun-admin/commit/8408dcf4ecece253f3c6924d97e413525a2c5e99))
+
+
+### Bugfixes
+
+* updates basic styling to bring back scrollbars ([4eaec8e](https://github.com/terrestris/shogun-admin/commit/4eaec8e1a43cd264f0903b752e2fcf2c03cf39ce))
+
 ## [15.1.1](https://github.com/terrestris/shogun-admin/compare/v15.1.0...v15.1.1) (2024-05-16)
 
 
