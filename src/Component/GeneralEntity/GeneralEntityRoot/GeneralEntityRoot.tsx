@@ -710,7 +710,7 @@ export function GeneralEntityRoot<T extends BaseEntity>({
   let oldStatus = useRef(false);
 
   useEffect(() => {
-    console.log('old', oldStatus.current, 'new', formIsDirty);
+    //console.log('old', oldStatus.current, 'new', formIsDirty);
     if (oldStatus.current) {
       modal.confirm({
         title: t('GeneralEntityRoot.reminderModal.title'),
@@ -724,6 +724,7 @@ export function GeneralEntityRoot<T extends BaseEntity>({
     }
     oldStatus.current = formIsDirty;
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formIsDirty, modal]);
 
   return (
