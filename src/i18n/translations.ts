@@ -1,3 +1,5 @@
+import { title } from "@uiw/react-md-editor";
+
 export default {
   de: {
     translation: {
@@ -62,6 +64,13 @@ export default {
             descriptionZipContent: 'Mehrere Geodatensätze innerhalb eines Archivs sind nicht unterstützt'
           },
           button: '{{entity}} hochladen'
+        },
+        reminderModal:{
+          title: 'Die Änderungen wurden noch nicht gespeichert.',
+          description: 'Die vorherrige Änderungen sind noch nich gespeichert.' +
+          'Sollen die Änderungen gespeichert werden?',
+          accept: 'Speichern',
+          decline: 'Rückgängig'
         },
         saveSuccess: '{{entity}} erfolgreich gespeichert',
         saveFail: 'Konnte {{entity}} nicht speichern'
@@ -274,6 +283,12 @@ export default {
             descriptionZipContent: 'Multiple geodatasets within one archive are not supported'
           },
           button: 'Upload {{entity}}'
+        },
+        reminderModal:{
+          title: 'Changes have not been saved.',
+          description: 'The changes you made were not saved yet. Do you wish to save them?',
+          accept: 'Save',
+          decline: 'Undo'
         },
         saveSuccess: '{{entity}} successfully saved',
         saveFail: 'Could not save {{entity}}'
