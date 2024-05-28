@@ -70,7 +70,7 @@
     "@babel/preset-typescript": "7.24.1",
     "@commitlint/cli": "19.3.0",
     "@commitlint/config-conventional": "19.2.2",
-    "@playwright/test": "1.44.0",
+    "@playwright/test": "1.44.1",
     "@pmmmwh/react-refresh-webpack-plugin": "0.5.13",
     "@semantic-release/changelog": "6.0.3",
     "@semantic-release/git": "10.0.1",
