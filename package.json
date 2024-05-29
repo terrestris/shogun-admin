@@ -36,7 +36,7 @@
     "@ant-design/pro-components": "^2.7.9",
     "@casualbot/jest-sonar-reporter": "2.3.1",
     "@monaco-editor/react": "4.6.0",
-    "@terrestris/base-util": "1.1.1",
+    "@terrestris/base-util": "2.0.0",
     "@terrestris/ol-util": "18.0.1",
     "@terrestris/shogun-util": "8.3.1",
     "@uiw/react-md-editor": "4.0.4",
