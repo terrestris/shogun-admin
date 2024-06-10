@@ -1,5 +1,3 @@
-import './UserPermissionModal.less';
-
 import React, {
   useEffect,
   useState
@@ -16,7 +14,9 @@ import {
   Select,
   Form,
   message,
-  Tooltip
+  Tooltip,
+  Divider,
+  Pagination
 } from 'antd';
 
 import {
@@ -35,7 +35,10 @@ import {
 
 import PermissionCollectionType from '@terrestris/shogun-util/dist/model/enum/PermissionCollectionType';
 import Group from '@terrestris/shogun-util/dist/model/Group';
+import { Page } from '@terrestris/shogun-util/dist/model/Page';
+import Role from '@terrestris/shogun-util/dist/model/Role';
 import User from '@terrestris/shogun-util/dist/model/User';
+import { PageOpts } from '@terrestris/shogun-util/dist/service/GenericService';
 
 import PermissionSelect from '../PermissionSelect/PermissionSelect';
 
@@ -48,10 +51,9 @@ type FormData = {
 
 export interface PermissionModalProps extends ModalProps {
   entityId: number;
-  entityType: string;
   setInstancePermission: (entityId: number, referenceId: number, permission: PermissionCollectionType) => Promise<void>;
-  getReferences: () => Promise<(User | Group)[]>;
-  toTag: (reference: User | Group) => DefaultOptionType;
+  getReferences?: (pageOpts?: PageOpts) => Promise<Page<(User | Group | Role)> | undefined>;
+  toTag: (reference: User | Group | Role) => DefaultOptionType;
   tagRenderer?: (props: CustomTagProps) => JSX.Element;
   onSave?: () => void;
   descriptionText?: string;
@@ -65,7 +67,6 @@ export interface PermissionModalProps extends ModalProps {
 
 const PermissionModal: React.FC<PermissionModalProps> = ({
   entityId,
-  entityType,
   setInstancePermission,
   getReferences,
   toTag,
@@ -77,24 +78,44 @@ const PermissionModal: React.FC<PermissionModalProps> = ({
   referenceSelectPlaceholderText = '',
   permissionSelectLabel = '',
   permissionSelectExtra = '',
-  saveErrorMsg,
+  saveErrorMsg = () => '',
   ...passThroughProps
 }) => {
   const [loading, setLoading] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
-  const [references, setReferences] = useState<(User | Group)[]>([]);
+  const [references, setReferences] = useState<(User | Group | Role)[]>([]);
   const [options, setOptions] = useState<DefaultOptionType[]>();
   const [visible, setVisible] = useState(false);
+
+  const [referencePage, setReferencePage] = useState<number>(1);
+  const [referenceTotal, setReferenceTotal] = useState<number>();
 
   const { t } = useTranslation();
   const [form] = Form.useForm<FormData>();
 
+  const referencePageSize = 20;
+
   useEffect(() => {
+    if (!getReferences) {
+      return;
+    }
+
     (async () => {
       setLoading(true);
 
       try {
-        setReferences(await getReferences());
+        const refs = await getReferences({
+          page: referencePage - 1,
+          size: referencePageSize
+        });
+
+        if (!refs) {
+          throw new Error('Failed to load references');
+        }
+
+        setReferenceTotal(refs.totalElements);
+        setReferencePage(refs.number + 1);
+        setReferences(refs.content);
       } catch (error) {
         message.error(t('PermissionModal.loadErrorMsg'));
         Logger.error(error);
@@ -102,7 +123,7 @@ const PermissionModal: React.FC<PermissionModalProps> = ({
         setLoading(false);
       }
     })();
-  }, [getReferences, t]);
+  }, [getReferences, t, referencePage]);
 
   useEffect(() => {
     if (Array.isArray(references)) {
@@ -152,6 +173,10 @@ const PermissionModal: React.FC<PermissionModalProps> = ({
     setIsSaving(false);
     setVisible(false);
     onSave();
+  };
+
+  const onPaginationChange = (page: number) => {
+    setReferencePage(page);
   };
 
   return (
@@ -204,6 +229,28 @@ const PermissionModal: React.FC<PermissionModalProps> = ({
               loading={loading}
               options={options}
               tagRender={tagRenderer}
+              dropdownRender={menu => (
+                <div
+                  className="permission-modal-reference-dropdown"
+                >
+                  {menu}
+                  <Divider />
+                  <Pagination
+                    total={referenceTotal}
+                    showTotal={total => `${t('PermissionModal.paginationTotal')}: ${total}`}
+                    locale={{
+                      // eslint-disable-next-line camelcase
+                      next_page: t('PermissionModal.paginationNextPage'),
+                      // eslint-disable-next-line camelcase
+                      prev_page: t('PermissionModal.paginationPrevPage')
+                    }}
+                    onChange={onPaginationChange}
+                    current={referencePage}
+                    pageSize={referencePageSize}
+                    size='small'
+                  />
+                </div>
+              )}
             />
           </Form.Item>
           <Form.Item

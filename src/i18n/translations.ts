@@ -186,7 +186,10 @@ export default {
       PermissionModal: {
         loadErrorMsg: 'Fehler beim Laden der Berechtigungen',
         openModalButtonTooltipTitle: 'Berechtigung hinzufügen',
-        title: 'Berechtigung hinzufügen'
+        title: 'Berechtigung hinzufügen',
+        paginationTotal: 'Total',
+        paginationNextPage: 'Nächste Seite',
+        paginationPrevPage: 'Vorherige Seite'
       },
       GroupPermissionGrid: {
         modal: {
@@ -210,6 +213,18 @@ export default {
           permissionSelectLabel: 'Berechtigung',
           permissionSelectExtra: 'Wählen Sie die Berechtigung aus, die die Nutzer erhalten sollen.',
           saveErrorMsg: 'Fehler beim Speichern der Berechtigung für die Nutzer mit den IDs: {{referenceIds}}'
+        }
+      },
+      RolePermissionGrid: {
+        modal: {
+          description: 'Wählen Sie einen oder mehrere Rolle sowie die zugehörige Berechtigung aus.',
+          referenceSelectLabel: 'Rollenname',
+          referenceSelectExtra: 'Wählen Sie die Rolle aus der Liste aus oder geben Sie einen ' +
+            'Suchbegriff (Rollenname) ein',
+          referenceSelectPlaceholder: 'Rolle auswählen…',
+          permissionSelectLabel: 'Berechtigung',
+          permissionSelectExtra: 'Wählen Sie die Berechtigung aus, die die Rolle erhalten sollen.',
+          saveErrorMsg: 'Fehler beim Speichern der Berechtigung für die Rollen mit den IDs: {{referenceIds}}'
         }
       },
       ApplicationInfoModal: {
@@ -436,7 +451,10 @@ export default {
       PermissionModal: {
         loadErrorMsg: 'Error while loading the permissions',
         openModalButtonTooltipTitle: 'Add permission',
-        title: 'Add permission'
+        title: 'Add permission',
+        paginationTotal: 'Total',
+        paginationNextPage: 'Next page',
+        paginationPrevPage: 'Previous page'
       },
       GroupPermissionGrid: {
         modal: {
@@ -458,6 +476,17 @@ export default {
           permissionSelectLabel: 'Permission',
           permissionSelectExtra: 'Select the permission the users should be granted.',
           saveErrorMsg: 'Error while setting the permission for users with IDs: {{referenceIds}}'
+        }
+      },
+      RolePermissionGrid: {
+        modal: {
+          description: 'Select one or more roles and the respective permission.',
+          referenceSelectLabel: 'Role name',
+          referenceSelectExtra: 'Select roles from the list or search via role name.',
+          referenceSelectPlaceholder: 'Select role(s)…',
+          permissionSelectLabel: 'Permission',
+          permissionSelectExtra: 'Select the permission the roles should be granted.',
+          saveErrorMsg: 'Error while setting the permission for roles with IDs: {{referenceIds}}'
         }
       },
       ApplicationInfoModal: {

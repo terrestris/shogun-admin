@@ -44,7 +44,7 @@ export const User: React.FC<UserProps> = () => {
 
   const avatarSource = !_isNil(userInfo.providerDetails?.email) ? UserUtil.getGravatarUrl({
     email: userInfo.providerDetails?.email || '',
-    size: 28
+    size: 38
   }) : '';
 
   const onMenuClick = (evt: any) => {

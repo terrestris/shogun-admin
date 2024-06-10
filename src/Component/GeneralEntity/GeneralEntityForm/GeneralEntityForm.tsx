@@ -27,6 +27,8 @@ import DisplayField from '../../FormField/DisplayField/DisplayField';
 import JSONEditor from '../../FormField/JSONEditor/JSONEditor';
 import MarkdownEditor from '../../FormField/MarkdownEditor/MarkdownEditor';
 import GroupPermissionGrid from '../../FormField/Permission/GroupPermissionGrid/GroupPermissionGrid';
+import { EntityType } from '../../FormField/Permission/InstancePermissionGrid/InstancePermissionGrid';
+import RolePermissionGrid from '../../FormField/Permission/RolePermissionGrid/RolePermissionGrid';
 import UserPermissionGrid from '../../FormField/Permission/UserPermissionGrid/UserPermissionGrid';
 import YesOrNoField from '../../FormField/YesOrNoField/YesOrNoField';
 import LayerTypeSelect from '../../Layer/LayerTypeSelect/LayerTypeSelect';
@@ -197,7 +199,7 @@ export const GeneralEntityForm: React.FC<GeneralEntityFormProps> = ({
         return (
           <UserPermissionGrid
             entityId={form.getFieldValue('id')}
-            entityType={entityType.toLowerCase()}
+            entityType={entityType.toLowerCase() as EntityType}
             {...fieldCfg?.fieldProps}
           />
         );
@@ -209,7 +211,19 @@ export const GeneralEntityForm: React.FC<GeneralEntityFormProps> = ({
         return (
           <GroupPermissionGrid
             entityId={form.getFieldValue('id')}
-            entityType={entityType.toLowerCase()}
+            entityType={entityType.toLowerCase() as EntityType}
+            {...fieldCfg?.fieldProps}
+          />
+        );
+      case 'RolePermissionGrid':
+        if (entityId !== form.getFieldValue('id')) {
+          return undefined;
+        }
+
+        return (
+          <RolePermissionGrid
+            entityId={form.getFieldValue('id')}
+            entityType={entityType.toLowerCase() as EntityType}
             {...fieldCfg?.fieldProps}
           />
         );
@@ -294,7 +308,7 @@ export const GeneralEntityForm: React.FC<GeneralEntityFormProps> = ({
 
     return (
       <Form.Item
-        key={`${entityType}-${form.getFieldValue('id')}-${dataField || component.toLocaleLowerCase()}`}
+        key={`${entityType}-${form.getFieldValue('id')}-${dataField || component?.toLocaleLowerCase()}`}
         name={dataField}
         className={`cls-${dataField}`}
         normalize={copyFieldCfg.component ? getNormalizeFn() : undefined}

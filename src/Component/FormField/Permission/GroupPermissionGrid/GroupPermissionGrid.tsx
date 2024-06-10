@@ -6,20 +6,20 @@ import {
   useTranslation
 } from 'react-i18next';
 
-import PermissionCollectionType from '@terrestris/shogun-util/dist/model/enum/PermissionCollectionType';
-import GroupInstancePermission from '@terrestris/shogun-util/dist/model/security/GroupInstancePermission';
-import Group from '@terrestris/shogun-util/dist/model/Group';
 import BaseEntity from '@terrestris/shogun-util/dist/model/BaseEntity';
-import GenericService from '@terrestris/shogun-util/dist/service/GenericService';
+import PermissionCollectionType from '@terrestris/shogun-util/dist/model/enum/PermissionCollectionType';
+import Group from '@terrestris/shogun-util/dist/model/Group';
+import GroupInstancePermission from '@terrestris/shogun-util/dist/model/security/GroupInstancePermission';
+import GenericEntityService from '@terrestris/shogun-util/dist/service/GenericEntityService';
+import { PageOpts } from '@terrestris/shogun-util/dist/service/GenericService';
 
+import useSHOGunAPIClient from '../../../../Hooks/useSHOGunAPIClient';
 import InstancePermissionGrid, {
   DataType,
   InstancePermissionGridProps
 } from '../InstancePermissionGrid/InstancePermissionGrid';
 
-import useSHOGunAPIClient from '../../../../Hooks/useSHOGunAPIClient';
-
-export interface GroupPermissionGridProps extends Omit<InstancePermissionGridProps,
+export interface GroupPermissionGridProps extends Omit<InstancePermissionGridProps<GroupInstancePermission>,
   'getInstancePermissions' | 'setInstancePermission' | 'deleteInstancePermission' | 'toDataType' |
   'nameColumnDefinition' | 'getReferences' | 'toTag' | 'modalProps'> { };
 
@@ -32,23 +32,23 @@ const GroupPermissionGrid: React.FC<GroupPermissionGridProps> = ({
   const client = useSHOGunAPIClient();
 
   const service = useCallback(() => {
-    return client[entityType]() as GenericService<BaseEntity>;
+    return (client?.[entityType] as () => GenericEntityService<BaseEntity>)();
   }, [client, entityType]);
 
   const getGroupInstancePermissions = async (id: number) => {
-    return await service().getGroupInstancePermissions(id);
+    return await service()?.getGroupInstancePermissions(id);
   };
 
   const setGroupInstancePermission = async (id: number, referenceId: number, permission: PermissionCollectionType) => {
-    await service().setGroupInstancePermission(id, referenceId, permission);
+    await service()?.setGroupInstancePermission(id, referenceId, permission);
   };
 
   const deleteGroupInstancePermission = async (id: number, referenceId: number) => {
-    await service().deleteGroupInstancePermission(id, referenceId);
+    await service()?.deleteGroupInstancePermission(id, referenceId);
   };
 
-  const getGroups = async () => {
-    return await client.group().findAll();
+  const getGroups = async (pageOpts?: PageOpts) => {
+    return await client?.group().findAll(pageOpts);
   };
 
   const toGroupDataType = (permission: GroupInstancePermission): DataType<Group> => {
@@ -69,7 +69,7 @@ const GroupPermissionGrid: React.FC<GroupPermissionGridProps> = ({
         group.providerDetails?.name
       ],
       label: (
-        <span>{group.providerDetails.name}</span>
+        <span>{group.providerDetails?.name}</span>
       )
     };
   };
@@ -77,19 +77,26 @@ const GroupPermissionGrid: React.FC<GroupPermissionGridProps> = ({
   const colDefinition = () => {
     return {
       sorter: (a: DataType<Group>, b: DataType<Group>) => {
-        return a.reference?.providerDetails?.name?.localeCompare(b.reference?.providerDetails?.name);
+        const aName = a.reference?.providerDetails?.name;
+        const bName = b.reference?.providerDetails?.name;
+
+        if (!aName || !bName) {
+          return 0;
+        }
+
+        return bName.localeCompare(aName);
       }
     };
   };
 
   return (
     <InstancePermissionGrid
+      entityType={entityType}
       getInstancePermissions={getGroupInstancePermissions}
       setInstancePermission={setGroupInstancePermission}
       deleteInstancePermission={deleteGroupInstancePermission}
       toDataType={toGroupDataType}
       nameColumnDefinition={colDefinition()}
-      entityType={entityType}
       modalProps={{
         toTag: toTag,
         getReferences: getGroups,

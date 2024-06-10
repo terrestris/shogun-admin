@@ -3,10 +3,6 @@ import React, {
 } from 'react';
 
 import {
-  useTranslation
-} from 'react-i18next';
-
-import {
   Tag
 } from 'antd';
 
@@ -14,25 +10,29 @@ import {
   CustomTagProps
 } from 'rc-select/lib/BaseSelect';
 
+import {
+  useTranslation
+} from 'react-i18next';
+
+import BaseEntity from '@terrestris/shogun-util/dist/model/BaseEntity';
 import PermissionCollectionType from '@terrestris/shogun-util/dist/model/enum/PermissionCollectionType';
 import UserInstancePermission from '@terrestris/shogun-util/dist/model/security/UserInstancePermission';
 import User from '@terrestris/shogun-util/dist/model/User';
-import BaseEntity from '@terrestris/shogun-util/dist/model/BaseEntity';
-import GenericService from '@terrestris/shogun-util/dist/service/GenericService';
+import GenericEntityService from '@terrestris/shogun-util/dist/service/GenericEntityService';
+import { PageOpts } from '@terrestris/shogun-util/dist/service/GenericService';
 
+import useSHOGunAPIClient from '../../../../Hooks/useSHOGunAPIClient';
+import UserAvatar from '../../../UserAvatar/UserAvatar';
 import InstancePermissionGrid, {
   DataType,
   InstancePermissionGridProps
 } from '../InstancePermissionGrid/InstancePermissionGrid';
-import UserAvatar from '../../../UserAvatar/UserAvatar';
-
-import useSHOGunAPIClient from '../../../../Hooks/useSHOGunAPIClient';
 
 import './UserPermissionGrid.less';
 
-export interface UserPermissionGridProps extends Omit<InstancePermissionGridProps,
-'getInstancePermissions' | 'setInstancePermission' | 'deleteInstancePermission' | 'toDataType' |
-'nameColumnDefinition' | 'getReferences' | 'toTag' | 'modalProps'> { };
+export interface UserPermissionGridProps extends Omit<InstancePermissionGridProps<UserInstancePermission>,
+  'getInstancePermissions' | 'setInstancePermission' | 'deleteInstancePermission' | 'toDataType' |
+  'nameColumnDefinition' | 'getReferences' | 'toTag' | 'modalProps'> { };
 
 const UserPermissionGrid: React.FC<UserPermissionGridProps> = ({
   entityType,
@@ -43,23 +43,23 @@ const UserPermissionGrid: React.FC<UserPermissionGridProps> = ({
   const client = useSHOGunAPIClient();
 
   const service = useCallback(() => {
-    return client[entityType]() as GenericService<BaseEntity>;
+    return (client?.[entityType] as () => GenericEntityService<BaseEntity>)();
   }, [client, entityType]);
 
   const getUserInstancePermissions = async (id: number) => {
-    return await service().getUserInstancePermissions(id);
+    return await service()?.getUserInstancePermissions(id);
   };
 
   const setUserInstancePermission = async (id: number, referenceId: number, permission: PermissionCollectionType) => {
-    await service().setUserInstancePermission(id, referenceId, permission);
+    await service()?.setUserInstancePermission(id, referenceId, permission);
   };
 
   const deleteUserInstancePermission = async (id: number, referenceId: number) => {
-    await service().deleteUserInstancePermission(id, referenceId);
+    await service()?.deleteUserInstancePermission(id, referenceId);
   };
 
-  const getUsers = async () => {
-    return await client.user().findAll();
+  const getUsers = async (pageOpts?: PageOpts) => {
+    return await client?.user().findAll(pageOpts);
   };
 
   const toUserDataType = (permission: UserInstancePermission): DataType<User> => {
@@ -113,9 +113,16 @@ const UserPermissionGrid: React.FC<UserPermissionGridProps> = ({
   const colDefinition = () => {
     return {
       sorter: (a: DataType<User>, b: DataType<User>) => {
-        return a.reference?.providerDetails?.username?.localeCompare(b.reference?.providerDetails?.username);
+        const aName = a.reference?.providerDetails?.username;
+        const bName = b.reference?.providerDetails?.username;
+
+        if (!aName || !bName) {
+          return 0;
+        }
+
+        return aName.localeCompare(bName);
       },
-      render: (value: any, record: DataType) => (
+      render: (_: any, record: DataType<User>) => (
         <UserAvatar
           user={record.reference}
         />
@@ -125,12 +132,12 @@ const UserPermissionGrid: React.FC<UserPermissionGridProps> = ({
 
   return (
     <InstancePermissionGrid
+      entityType={entityType}
       getInstancePermissions={getUserInstancePermissions}
       setInstancePermission={setUserInstancePermission}
       deleteInstancePermission={deleteUserInstancePermission}
       toDataType={toUserDataType}
       nameColumnDefinition={colDefinition()}
-      entityType={entityType}
       modalProps={{
         toTag: toTag,
         getReferences: getUsers,
