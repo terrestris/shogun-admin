@@ -163,16 +163,18 @@ export class GenericEntityController<T extends BaseEntity> {
       };
     }
 
-    const isPublic = this.entity?.[this.formConfig.publicKey as keyof T] as boolean;
-
     this.entity = isUpdate ?
       await this.service.update(entityUpdateObject as T) :
       await this.service.add(entityUpdateObject as T);
 
-    if (isPublic) {
-      await this.service.setPublic(this.entity.id!);
-    } else {
-      await this.service.revokePublic(this.entity.id!);
+    if (this.formConfig?.publicKey) {
+      const isPublic = this.entity?.[this.formConfig.publicKey as keyof T] as boolean;
+
+      if (isPublic) {
+        await this.service.setPublic(this.entity.id!);
+      } else {
+        await this.service.revokePublic(this.entity.id!);
+      }
     }
 
     return this.entity;
