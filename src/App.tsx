@@ -3,7 +3,7 @@ import './App.less';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import { useMonaco } from '@monaco-editor/react';
-import { App as AntdApp, Result, Spin } from 'antd';
+import { App as AntdApp, ConfigProvider, Result, Spin } from 'antd';
 import Logger from 'js-logger';
 import _isNil from 'lodash/isNil';
 import { IDisposable, languages } from 'monaco-editor';
@@ -152,34 +152,39 @@ const App: React.FC = () => {
   }
 
   return (
-    <AntdApp>
-      <div className='app'>
-        <Router>
-          <Header />
-          <React.Suspense
-            fallback={
-              <Spin
-                className="suspense-spin"
-                indicator={
-                  <ShogunSpinner />
-                }
-              />
-            }
-          >
-            <Routes>
-              <Route
-                path={`${config.appPrefix}/portal/*`}
-                element={<Portal />}
-              />
-              <Route
-                path={`${config.appPrefix}/`}
-                element={<Navigate to={`${config.appPrefix}/portal`} />}
-              />
-            </Routes>
-          </React.Suspense>
-        </Router>
-      </div>
-    </AntdApp>
+    <ConfigProvider
+      theme={{
+        cssVar: true
+      }}>
+      <AntdApp>
+        <div className='app'>
+          <Router>
+            <Header />
+            <React.Suspense
+              fallback={
+                <Spin
+                  className="suspense-spin"
+                  indicator={
+                    <ShogunSpinner />
+                  }
+                />
+              }
+            >
+              <Routes>
+                <Route
+                  path={`${config.appPrefix}/portal/*`}
+                  element={<Portal />}
+                />
+                <Route
+                  path={`${config.appPrefix}/`}
+                  element={<Navigate to={`${config.appPrefix}/portal`} />}
+                />
+              </Routes>
+            </React.Suspense>
+          </Router>
+        </div>
+      </AntdApp>
+    </ConfigProvider>
   );
 };
 
