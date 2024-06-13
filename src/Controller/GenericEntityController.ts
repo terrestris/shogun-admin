@@ -146,12 +146,14 @@ export class GenericEntityController<T extends BaseEntity> {
   public async saveOrUpdate(): Promise<T> {
     const isUpdate = _isNumber(this.entity?.id);
 
+    const publicKey = this.formConfig?.publicKey as keyof T;
+
     // omit constant fields and read only fields
     let entityUpdateObject: Partial<T> = _omit(this.entity, [
       'created',
       'modified',
       ...this.formConfig?.fields
-        .filter(field => field.dataField === this.formConfig.publicKey || field.readOnly)
+        .filter(field => field.dataField === publicKey || field.readOnly)
         .map(field => field.dataField)
     ]);
 
@@ -167,8 +169,9 @@ export class GenericEntityController<T extends BaseEntity> {
       await this.service.update(entityUpdateObject as T) :
       await this.service.add(entityUpdateObject as T);
 
-    if (this.formConfig?.publicKey) {
-      const isPublic = this.entity?.[this.formConfig.publicKey as keyof T] as boolean;
+
+    if (publicKey) {
+      const isPublic = this.entity?.[publicKey] as boolean;
 
       if (isPublic) {
         await this.service.setPublic(this.entity.id!);
