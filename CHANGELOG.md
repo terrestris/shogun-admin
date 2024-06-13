@@ -1,3 +1,62 @@
+## [15.2.0](https://github.com/terrestris/shogun-admin/compare/v15.1.2...v15.2.0) (2024-06-13)
+
+
+### Dependencies
+
+* **deps-dev:** bump @babel/core from 7.24.5 to 7.24.6 ([d6c2f3e](https://github.com/terrestris/shogun-admin/commit/d6c2f3e255b9b7939f80090aa611a223b26b99e7))
+* **deps-dev:** bump @babel/core from 7.24.6 to 7.24.7 ([97bd356](https://github.com/terrestris/shogun-admin/commit/97bd3569245d5625314ded505d3d8b7c6494916f))
+* **deps-dev:** bump @babel/preset-env from 7.24.5 to 7.24.6 ([4896d71](https://github.com/terrestris/shogun-admin/commit/4896d71e4a271c4d614bd411ee0efcc95a6d4c97))
+* **deps-dev:** bump @babel/preset-env from 7.24.6 to 7.24.7 ([1976a0d](https://github.com/terrestris/shogun-admin/commit/1976a0da7ab22c1dd15236bab61113bc8afa98f1))
+* **deps-dev:** bump @babel/preset-react from 7.24.1 to 7.24.6 ([2c18911](https://github.com/terrestris/shogun-admin/commit/2c18911019cddd99b7547056613d677db7d766e7))
+* **deps-dev:** bump @babel/preset-react from 7.24.6 to 7.24.7 ([7111ebb](https://github.com/terrestris/shogun-admin/commit/7111ebbc500366cca567dd145b2e353d46fb90f9))
+* **deps-dev:** bump @babel/preset-typescript from 7.24.1 to 7.24.6 ([538ee66](https://github.com/terrestris/shogun-admin/commit/538ee66c53feec3d298d28ced9abb443a1a824e5))
+* **deps-dev:** bump @babel/preset-typescript from 7.24.6 to 7.24.7 ([ad6ae05](https://github.com/terrestris/shogun-admin/commit/ad6ae05c6c4bd4af4106b562301e0a669700e3f7))
+* **deps-dev:** bump @playwright/test from 1.44.0 to 1.44.1 ([333181e](https://github.com/terrestris/shogun-admin/commit/333181e6d64d145d5fc2cfe7b23f6a2b9ad5f9c9))
+* **deps-dev:** bump @pmmmwh/react-refresh-webpack-plugin ([e714608](https://github.com/terrestris/shogun-admin/commit/e71460838a4c0517fa6f19084153a8528ba4f965))
+* **deps-dev:** bump @semantic-release/github from 10.0.4 to 10.0.5 ([ad2f141](https://github.com/terrestris/shogun-admin/commit/ad2f1417812a6cc86a72cb2039eef7260b1a834f))
+* **deps-dev:** bump @semantic-release/github from 10.0.5 to 10.0.6 ([661840d](https://github.com/terrestris/shogun-admin/commit/661840d6749dfb1d19f182021c5be7d107458a8c))
+* **deps-dev:** bump @semantic-release/release-notes-generator ([038ceff](https://github.com/terrestris/shogun-admin/commit/038ceff8ba0d711b8aa3cba638ca4c8dfa78c0ba))
+* **deps-dev:** bump @testing-library/jest-dom from 6.4.5 to 6.4.6 ([59e1827](https://github.com/terrestris/shogun-admin/commit/59e18277da0717c5ebe9bfb223c09413c930b7e7))
+* **deps-dev:** bump @testing-library/react from 15.0.7 to 16.0.0 ([3676be2](https://github.com/terrestris/shogun-admin/commit/3676be29fa69bcd1c18f31b6c300e119ce001b78))
+* **deps-dev:** bump @types/react from 18.3.2 to 18.3.3 ([3a494ff](https://github.com/terrestris/shogun-admin/commit/3a494ff49256a7ad69cca0b67a9ef88d2e661c0a))
+* **deps-dev:** bump @typescript-eslint/eslint-plugin ([fb5f5ef](https://github.com/terrestris/shogun-admin/commit/fb5f5ef605739a31bf3537aa1593e682009daae8))
+* **deps-dev:** bump @typescript-eslint/eslint-plugin ([7870191](https://github.com/terrestris/shogun-admin/commit/78701914045d457982fd74e413be5fde3c37a3d1))
+* **deps-dev:** bump @typescript-eslint/eslint-plugin ([dc96ea4](https://github.com/terrestris/shogun-admin/commit/dc96ea4d35990fc6ca7e9152bfa2bef70bbea925))
+* **deps-dev:** bump @typescript-eslint/parser from 7.10.0 to 7.11.0 ([ba25aeb](https://github.com/terrestris/shogun-admin/commit/ba25aebc5e0332b396931a0e243279e49ac391a4))
+* **deps-dev:** bump @typescript-eslint/parser from 7.11.0 to 7.12.0 ([a0d4d2a](https://github.com/terrestris/shogun-admin/commit/a0d4d2a25a97c20ee20dd99585316b3610e94f74))
+* **deps-dev:** bump @typescript-eslint/parser from 7.12.0 to 7.13.0 ([651e881](https://github.com/terrestris/shogun-admin/commit/651e881b46d23182572c7958c8e7ebf54e844dc6))
+* **deps-dev:** bump braces from 3.0.2 to 3.0.3 ([d96a82b](https://github.com/terrestris/shogun-admin/commit/d96a82b337e949517e915915c265010da060b802))
+* **deps-dev:** bump css-loader from 7.1.1 to 7.1.2 ([7b11beb](https://github.com/terrestris/shogun-admin/commit/7b11bebe546a3a0833774238a34d72f1d56ec2b9))
+* **deps-dev:** bump semantic-release from 23.1.1 to 24.0.0 ([31cb56b](https://github.com/terrestris/shogun-admin/commit/31cb56b51b63e8288cc41861ed5168cf7d7a9829))
+* **deps-dev:** bump webpack from 5.91.0 to 5.92.0 ([30bf7a1](https://github.com/terrestris/shogun-admin/commit/30bf7a1176a7d750d9aa8ac46e2dc5a614135aba))
+* **deps:** bump @ant-design/pro-components from 2.7.9 to 2.7.10 ([d491fdb](https://github.com/terrestris/shogun-admin/commit/d491fdbe68f43b7fb680b73298eb50f067cc772e))
+* **deps:** bump @terrestris/ol-util from 18.0.1 to 19.0.0 ([be1fb54](https://github.com/terrestris/shogun-admin/commit/be1fb542e0cf423a59011dd4debf1cf75587c930))
+* **deps:** bump @terrestris/shogun-util from 8.2.0 to 8.3.1 ([fd49377](https://github.com/terrestris/shogun-admin/commit/fd49377833b820af7176bca9c704f6859dbfdcd9))
+* **deps:** bump @terrestris/shogun-util from 8.3.1 to 8.3.2 ([4626b0f](https://github.com/terrestris/shogun-admin/commit/4626b0f5701bf9d772e125811d61fc6dee43ecc4))
+* **deps:** bump keycloak-js from 24.0.4 to 24.0.5 ([391f2d9](https://github.com/terrestris/shogun-admin/commit/391f2d96b1a5a0dde8f60e093738d68fae106392))
+* **deps:** bump monaco-editor from 0.48.0 to 0.49.0 ([bc38f9b](https://github.com/terrestris/shogun-admin/commit/bc38f9b5cec3def98d5cd481741fe5746b9c1fbf))
+* **deps:** bump ol from 9.2.1 to 9.2.2 ([ba58c15](https://github.com/terrestris/shogun-admin/commit/ba58c1530ae6b0a3a8ff5b698de1dd6e96844c4d))
+* **deps:** bump ol from 9.2.2 to 9.2.4 ([f005b77](https://github.com/terrestris/shogun-admin/commit/f005b778f2c15e0782d426d326c8d5664f30d81a))
+* **deps:** bump react-i18next from 14.1.1 to 14.1.2 ([b34416b](https://github.com/terrestris/shogun-admin/commit/b34416b4b5d28f0dc61622fb9c1b55a139762430))
+* introduce variable for publicKey ([8243be4](https://github.com/terrestris/shogun-admin/commit/8243be4934f368e8c48f03aa5fe036304d459041))
+* update shogun-util ([a3a6665](https://github.com/terrestris/shogun-admin/commit/a3a666564387a2706a1d16f0299c321c61236846))
+
+
+### Changes in configuration
+
+* debug sonarqube pipeline ([#610](https://github.com/terrestris/shogun-admin/issues/610)) ([a09f312](https://github.com/terrestris/shogun-admin/commit/a09f3126925465cd9995ba3c1ab85359b8a144f8))
+
+
+### Features
+
+* init the GroupPermissionGrid ([13557da](https://github.com/terrestris/shogun-admin/commit/13557dab9cb9a848e236ebd48875c7ed04e1929e))
+* init the RolePermissionGrid ([223d220](https://github.com/terrestris/shogun-admin/commit/223d220155250b763fb7428cd05c7cf2da1706e8))
+
+
+### Bugfixes
+
+* don't handle public permission without public key ([4477cee](https://github.com/terrestris/shogun-admin/commit/4477cee115e202f58ea35cc3c86895d1ad40c791))
+
 ## [15.1.2](https://github.com/terrestris/shogun-admin/compare/v15.1.1...v15.1.2) (2024-05-22)
 
 
