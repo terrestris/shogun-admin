@@ -1,15 +1,20 @@
 import './JSONEditor.less';
 
-import React, {useCallback,
+import './UserWorker';
+
+import React, {
+  useCallback,
   useEffect,
   useMemo,
-  useState} from 'react';
+  useState
+} from 'react';
 
 import Editor, {
   EditorProps,
   OnChange,
   useMonaco
 } from '@monaco-editor/react';
+
 import Logger from 'js-logger';
 import { uniqueId } from 'lodash';
 import cloneDeep from 'lodash/cloneDeep';
