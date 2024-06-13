@@ -9,7 +9,7 @@ import {
 
 import User from '@terrestris/shogun-util/dist/model/User';
 
-import UserUtil from '../../../../Util/UserUtil';
+import UserUtil from '../../Util/UserUtil';
 
 export interface UserAvatarProps extends AvatarProps {
   user: User;
@@ -22,7 +22,7 @@ const UserAvatar: React.FC<UserAvatarProps> = ({
 
   const avatarSrc = UserUtil.getGravatarUrl({
     email: user.providerDetails?.email || '',
-    size: 32
+    size: 30
   });
 
   return (

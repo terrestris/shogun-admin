@@ -165,14 +165,14 @@ export default {
         yes: 'Ja',
         no: 'Nein'
       },
-      UserPermissionGrid: {
+      InstancePermissionGrid: {
         loadErrorMsg: 'Fehler beim Laden der Berechtigungen',
         updateErrorMsg: 'Fehler beim Aktualisieren der Berechtigung',
         deleteErrorMsg: 'Fehler beim Löschen der Berechtigung',
         filterInputPlaceholder: 'Suche…',
         filterSearchButtonText: 'Suche',
         filterResetButtonText: 'Zurücksetzen',
-        userColumnTitle: 'Name',
+        nameColumnTitle: 'Name',
         permissionColumnTitle: 'Berechtigung',
         deletePermissionButtonTooltip: 'Berechtigung löschen'
       },
@@ -183,18 +183,49 @@ export default {
         readUpdateDeleteLabel: 'Aktualisieren & Löschen',
         adminLabel: 'Besitzer'
       },
-      UserPermissionModal: {
+      PermissionModal: {
         loadErrorMsg: 'Fehler beim Laden der Berechtigungen',
-        saveErrorMsg: 'Fehler beim Speichern der Berechtigung für die Nutzer mit den IDs: {{userIds}}',
         openModalButtonTooltipTitle: 'Berechtigung hinzufügen',
         title: 'Berechtigung hinzufügen',
-        description: 'Wählen Sie einen oder mehrere Nutzer sowie die zugehörige Berechtigung aus.',
-        userSelectLabel: 'Nutzername oder Email Adresse',
-        userSelectExtra: 'Wählen Sie die Nutzer aus der Liste aus oder geben Sie einen ' +
-          'Suchbegriff (Nutzername oder Email Adresse) ein',
-        userSelectPlaceholder: 'Nutzer auswählen…',
-        permissionSelectLabel: 'Berechtigung',
-        permissionSelectExtra: 'Wählen Sie die Berechtigung aus, die die Nutzer erhalten sollen.'
+        paginationTotal: 'Total',
+        paginationNextPage: 'Nächste Seite',
+        paginationPrevPage: 'Vorherige Seite'
+      },
+      GroupPermissionGrid: {
+        modal: {
+          description: 'Wählen Sie eine oder mehrere Gruppen sowie die zugehörige Berechtigung aus.',
+          referenceSelectLabel: 'Gruppenname',
+          referenceSelectExtra: 'Wählen Sie die Gruppe aus der Liste aus oder geben Sie einen ' +
+            'Suchbegriff (Gruppenname) ein',
+          referenceSelectPlaceholder: 'Gruppe auswählen…',
+          permissionSelectLabel: 'Berechtigung',
+          permissionSelectExtra: 'Wählen Sie die Berechtigung aus, die die Gruppe erhalten sollen.',
+          saveErrorMsg: 'Fehler beim Speichern der Berechtigung für die Gruppen mit den IDs: {{referenceIds}}'
+        }
+      },
+      UserPermissionGrid: {
+        modal: {
+          description: 'Wählen Sie einen oder mehrere Nutzer sowie die zugehörige Berechtigung aus.',
+          referenceSelectLabel: 'Nutzername oder Email Adresse',
+          referenceSelectExtra: 'Wählen Sie die Nutzer aus der Liste aus oder geben Sie einen ' +
+            'Suchbegriff (Gruppenname oder Email Adresse) ein',
+          referenceSelectPlaceholder: 'Nutzer auswählen…',
+          permissionSelectLabel: 'Berechtigung',
+          permissionSelectExtra: 'Wählen Sie die Berechtigung aus, die die Nutzer erhalten sollen.',
+          saveErrorMsg: 'Fehler beim Speichern der Berechtigung für die Nutzer mit den IDs: {{referenceIds}}'
+        }
+      },
+      RolePermissionGrid: {
+        modal: {
+          description: 'Wählen Sie einen oder mehrere Rolle sowie die zugehörige Berechtigung aus.',
+          referenceSelectLabel: 'Rollenname',
+          referenceSelectExtra: 'Wählen Sie die Rolle aus der Liste aus oder geben Sie einen ' +
+            'Suchbegriff (Rollenname) ein',
+          referenceSelectPlaceholder: 'Rolle auswählen…',
+          permissionSelectLabel: 'Berechtigung',
+          permissionSelectExtra: 'Wählen Sie die Berechtigung aus, die die Rolle erhalten sollen.',
+          saveErrorMsg: 'Fehler beim Speichern der Berechtigung für die Rollen mit den IDs: {{referenceIds}}'
+        }
       },
       ApplicationInfoModal: {
         clientAbout: 'Über',
@@ -398,14 +429,15 @@ export default {
         deleteFailDescript: 'The file "{{record}}" could not be deleted!',
         reloadTooltip: 'Reload'
       },
-      UserPermissionGrid: {
+
+      InstancePermissionGrid: {
         loadErrorMsg: 'Error while loading the permissions',
         updateErrorMsg: 'Error while updating the permission',
         deleteErrorMsg: 'Error while deleting the permission',
         filterInputPlaceholder: 'Search…',
         filterSearchButtonText: 'Search',
         filterResetButtonText: 'Reset',
-        userColumnTitle: 'Name',
+        nameColumnTitle: 'Name',
         permissionColumnTitle: 'Permission',
         deletePermissionButtonTooltip: 'Delete permission'
       },
@@ -416,17 +448,46 @@ export default {
         readUpdateDeleteLabel: 'Update & Delete',
         adminLabel: 'Owner'
       },
-      UserPermissionModal: {
+      PermissionModal: {
         loadErrorMsg: 'Error while loading the permissions',
-        saveErrorMsg: 'Error while setting the permission for users with IDs: {{userIds}}',
         openModalButtonTooltipTitle: 'Add permission',
         title: 'Add permission',
-        description: 'Select one or more users and the respective permission.',
-        userSelectLabel: 'Username or email address',
-        userSelectExtra: 'Select users from the list or search via username or email address.',
-        userSelectPlaceholder: 'Select user(s)…',
-        permissionSelectLabel: 'Permission',
-        permissionSelectExtra: 'Select the permission the users should be granted.'
+        paginationTotal: 'Total',
+        paginationNextPage: 'Next page',
+        paginationPrevPage: 'Previous page'
+      },
+      GroupPermissionGrid: {
+        modal: {
+          description: 'Select one or more groups and the respective permission.',
+          referenceSelectLabel: 'Group name',
+          referenceSelectExtra: 'Select groups from the list or search via name.',
+          referenceSelectPlaceholder: 'Select groups(s)…',
+          permissionSelectLabel: 'Permission',
+          permissionSelectExtra: 'Select the permission the groups should be granted.',
+          saveErrorMsg: 'Error while setting the permission for groups with IDs: {{referenceIds}}'
+        }
+      },
+      UserPermissionGrid: {
+        modal: {
+          description: 'Select one or more users and the respective permission.',
+          referenceSelectLabel: 'Username or email address',
+          referenceSelectExtra: 'Select users from the list or search via username or email address.',
+          referenceSelectPlaceholder: 'Select user(s)…',
+          permissionSelectLabel: 'Permission',
+          permissionSelectExtra: 'Select the permission the users should be granted.',
+          saveErrorMsg: 'Error while setting the permission for users with IDs: {{referenceIds}}'
+        }
+      },
+      RolePermissionGrid: {
+        modal: {
+          description: 'Select one or more roles and the respective permission.',
+          referenceSelectLabel: 'Role name',
+          referenceSelectExtra: 'Select roles from the list or search via role name.',
+          referenceSelectPlaceholder: 'Select role(s)…',
+          permissionSelectLabel: 'Permission',
+          permissionSelectExtra: 'Select the permission the roles should be granted.',
+          saveErrorMsg: 'Error while setting the permission for roles with IDs: {{referenceIds}}'
+        }
       },
       ApplicationInfoModal: {
         clientAbout: 'About',
