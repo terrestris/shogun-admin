@@ -63,7 +63,14 @@ export default {
           },
           button: '{{entity}} hochladen'
         },
+        reminderModal: {
+          title: 'Änderungen speichern?',
+          description: 'Die Änderungen wurden noch nicht gespeichert, möchten Sie speichern?',
+          accept: 'Speichern',
+          decline: 'Verwerfen'
+        },
         saveSuccess: '{{entity}} erfolgreich gespeichert',
+        saveWarning: '{{entity}} wurde nicht gespeichert!',
         saveFail: 'Konnte {{entity}} nicht speichern'
       },
       GeneralEntityTable: {
@@ -281,7 +288,14 @@ export default {
           },
           button: 'Upload {{entity}}'
         },
+        reminderModal: {
+          title: 'Save changes?',
+          description: 'The changes made were not saved yet, do you want to save them?',
+          accept: 'Save',
+          decline: 'Discard'
+        },
         saveSuccess: '{{entity}} successfully saved',
+        saveWarning: '{{entity}} was not saved!',
         saveFail: 'Could not save {{entity}}'
       },
       GeneralEntityTable: {
