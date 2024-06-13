@@ -70,7 +70,7 @@ export default {
           decline: 'Verwerfen'
         },
         saveSuccess: '{{entity}} erfolgreich gespeichert',
-        saveWarning: '{{entity}} wurde nicht gespeichert!',
+        saveWarning: '{{entity}} wurde nicht gespeichert',
         saveFail: 'Konnte {{entity}} nicht speichern'
       },
       GeneralEntityTable: {
@@ -290,12 +290,12 @@ export default {
         },
         reminderModal: {
           title: 'Save changes?',
-          description: 'The changes made were not saved yet, do you want to save them?',
+          description: 'The changes have not yet been saved, do you want to save?',
           accept: 'Save',
           decline: 'Discard'
         },
         saveSuccess: '{{entity}} successfully saved',
-        saveWarning: '{{entity}} was not saved!',
+        saveWarning: '{{entity}} has not been saved',
         saveFail: 'Could not save {{entity}}'
       },
       GeneralEntityTable: {
