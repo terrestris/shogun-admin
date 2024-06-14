@@ -31,6 +31,18 @@ export default defineConfig({
     port: 8080,
     strictPort: true,
   },
+  test: {
+    globals: true,
+    environment: 'happy-dom',
+    setupFiles: ['./src/test/setup.js'],
+    alias: [
+      {
+        find: /^monaco-editor$/,
+        replacement:
+          __dirname + '/node_modules/monaco-editor/esm/vs/editor/editor.api',
+      }
+    ]
+  },
   build: {
     rollupOptions: {
       external: 'shogunApplicationConfig'

@@ -1,48 +1,50 @@
-import * as React from 'react';
+import React from 'react';
+
+import { describe, expect, test, vi } from 'vitest';
 
 import { shogunInfoModalVisibleAtom } from '../../../State/atoms';
 import { render, screen } from '../../../test-util';
 
 import ApplicationInfo from './ApplicationInfo';
 
-const recoilInitializer = (snap) => snap.set(shogunInfoModalVisibleAtom, true);
+const recoilInitializer = (snap: any) => snap.set(shogunInfoModalVisibleAtom, true);
 
 const PROJECT_VERSION = '1.0.0';
 
-jest.mock('../../../Hooks/useClientVersion', () => ({
+vi.mock('../../../Hooks/useClientVersion', () => ({
   useClientVersion: () => PROJECT_VERSION
 }));
 
-jest.mock('react-i18next', () => ({
+vi.mock('react-i18next', () => ({
   useTranslation: () => ({
     t: (key: string) => key,
-    i18n: { changeLanguage: jest.fn() }
+    i18n: { changeLanguage: vi.fn() }
   })
 }));
 
 describe('<ApplicationInfo />', () => {
 
-  test('Modal has a title', async () => {
+  test('Modal has a title', () => {
     render(<ApplicationInfo />, recoilInitializer);
-    const modalTitle = await screen.getByText('ApplicationInfoModal.clientAbout');
+    const modalTitle = screen.getByText('ApplicationInfoModal.clientAbout');
     expect(modalTitle).toBeDefined();
   });
 
-  test('Modal contains Build-Info', async () => {
+  test('Modal contains Build-Info', () => {
     render(<ApplicationInfo />, recoilInitializer);
-    const buildInfo = await screen.getByText('ApplicationInfoModal.backendVersion');
+    const buildInfo = screen.getByText('ApplicationInfoModal.backendVersion');
     expect(buildInfo).toBeDefined();
   });
 
-  test('Modal contains Version-Info', async () => {
+  test('Modal contains Version-Info', () => {
     render(<ApplicationInfo />, recoilInitializer);
-    const versionInfo = await screen.getByText('ApplicationInfoModal.backendVersion');
+    const versionInfo = screen.getByText('ApplicationInfoModal.backendVersion');
     expect(versionInfo).toBeDefined();
   });
 
-  test('Modal contains Admin-Client-Version-Info', async () => {
+  test('Modal contains Admin-Client-Version-Info', () => {
     render(<ApplicationInfo />, recoilInitializer);
-    const adminClientVersionInfo = await screen.getByText('ApplicationInfoModal.clientVersion');
+    const adminClientVersionInfo = screen.getByText('ApplicationInfoModal.clientVersion');
     expect(adminClientVersionInfo).toBeDefined();
   });
 

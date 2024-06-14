@@ -1,3 +1,5 @@
+import { describe, it, expect } from 'vitest';
+
 import { SystemLoadAverage } from './SystemLoadAverage';
 
 describe('<SystemLoadAverage />', () => {

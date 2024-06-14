@@ -1,3 +1,5 @@
+import { describe, it, expect } from 'vitest';
+
 import GlobalSettingsRoot from './GlobalSettingsRoot';
 
 describe('<GlobalSettingsRoot />', () => {

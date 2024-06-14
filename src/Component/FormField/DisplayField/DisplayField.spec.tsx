@@ -1,3 +1,5 @@
+import { describe, it, expect } from 'vitest';
+
 import DisplayField from './DisplayField';
 
 describe('<DisplayField />', () => {

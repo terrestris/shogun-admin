@@ -1,3 +1,5 @@
+import { describe, it, expect } from 'vitest';
+
 import { LinkField } from './LinkField';
 
 describe('<LinkField />', () => {

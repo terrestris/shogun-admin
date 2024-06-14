@@ -6,6 +6,8 @@ import {
   screen
 } from '@testing-library/react';
 
+import { describe, it, expect } from 'vitest';
+
 import Layer from '@terrestris/shogun-util/dist/model/Layer';
 
 import {
