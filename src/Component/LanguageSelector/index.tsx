@@ -12,7 +12,7 @@ const {
   Option
 } = Select;
 
-export const LanguageSelect = () => {
+export const LanguageSelect: React.FC = () => {
   const supportedLanguages = Object.keys(i18n.services.resourceStore.data);
 
   const onLanguageChange = (lang: string) => {
