@@ -1,3 +1,5 @@
+import { describe, it, expect } from 'vitest';
+
 import { MetricsRoot } from './MetricsRoot';
 
 describe('<MetricsRoot />', () => {

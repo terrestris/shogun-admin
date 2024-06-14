@@ -1,3 +1,5 @@
+import { describe, it, expect } from 'vitest';
+
 import { MarkdownEditor } from './MarkdownEditor';
 
 describe('<MarkdownEditor />', () => {

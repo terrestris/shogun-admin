@@ -7,7 +7,7 @@ import React, {
 import OlMap from 'ol/Map';
 
 export interface MapComponentProps extends React.ComponentProps<'div'> {
-  map: OlMap;
+  map?: OlMap;
   mapDivId?: string;
   onRender?: () => void;
 }

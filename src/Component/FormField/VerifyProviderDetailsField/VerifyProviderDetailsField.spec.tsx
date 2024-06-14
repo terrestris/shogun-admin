@@ -4,6 +4,8 @@ import {
   render
 } from '@testing-library/react';
 
+import { describe, it, expect } from 'vitest';
+
 import User from '@terrestris/shogun-util/dist/model/User';
 
 import VerifyProviderDetailsField from './VerifyProviderDetailsField';

@@ -1,3 +1,5 @@
+import { describe, it, expect } from 'vitest';
+
 import { DashboardStatistics } from './DashboardStatistics';
 
 describe('<DashboardStatistics />', () => {
