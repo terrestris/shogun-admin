@@ -1,3 +1,15 @@
+## [15.2.1](https://github.com/terrestris/shogun-admin/compare/v15.2.0...v15.2.1) (2024-06-25)
+
+
+### Dependencies
+
+* **deps:** bump @terrestris/shogun-util from 8.4.0 to 8.5.0 ([5db00a1](https://github.com/terrestris/shogun-admin/commit/5db00a138db7615d5fc2456598e90f148c7a2c14))
+
+
+### Bugfixes
+
+* update saving of public state ([e8b11b9](https://github.com/terrestris/shogun-admin/commit/e8b11b9bd2c118f90f2d80d6d05535f8fdb7dd87))
+
 ## [15.2.0](https://github.com/terrestris/shogun-admin/compare/v15.1.2...v15.2.0) (2024-06-13)
 
 
