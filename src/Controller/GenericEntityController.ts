@@ -147,6 +147,7 @@ export class GenericEntityController<T extends BaseEntity> {
     const isUpdate = _isNumber(this.entity?.id);
 
     const publicKey = this.formConfig?.publicKey as keyof T;
+    const isPublic = publicKey ? this.entity?.[publicKey] : undefined;
 
     // omit constant fields and read only fields
     let entityUpdateObject: Partial<T> = _omit(this.entity, [
@@ -169,10 +170,7 @@ export class GenericEntityController<T extends BaseEntity> {
       await this.service.update(entityUpdateObject as T) :
       await this.service.add(entityUpdateObject as T);
 
-
     if (publicKey) {
-      const isPublic = this.entity?.[publicKey] as boolean;
-
       if (isPublic) {
         await this.service.setPublic(this.entity.id!);
       } else {
