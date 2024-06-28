@@ -4,6 +4,7 @@ import React, {
   useCallback,
   useEffect,
   useMemo,
+  useRef,
   useState
 } from 'react';
 
@@ -18,6 +19,7 @@ import { PageHeader } from '@ant-design/pro-components';
 import {
   Button,
   Form,
+  Modal,
   notification,
   Upload
 } from 'antd';
@@ -49,10 +51,12 @@ import {
 import {
   useTranslation
 } from 'react-i18next';
-import {Link,
+import {
+  Link,
   matchPath,
   useLocation,
-  useNavigate} from 'react-router-dom';
+  useNavigate
+} from 'react-router-dom';
 import {
   Shapefile
 } from 'shapefile.js';
@@ -161,6 +165,7 @@ export function GeneralEntityRoot<T extends BaseEntity>({
   const [sortOrder, setSortOrder] = useState<SortOrder>();
   const [isFiltered, setFiltered] = useState<boolean>(false);
 
+  const [modal, contextHolder] = Modal.useModal();
   const [form] = Form.useForm();
 
   const client = useSHOGunAPIClient();
@@ -703,6 +708,26 @@ export function GeneralEntityRoot<T extends BaseEntity>({
     }
   };
 
+  let oldStatus = useRef(false);
+
+  useEffect(() => {
+    //console.log('old', oldStatus.current, 'new', formIsDirty);
+    if (oldStatus.current) {
+      modal.confirm({
+        title: t('GeneralEntityRoot.reminderModal.title'),
+        content: t('GeneralEntityRoot.reminderModal.description'),
+        okText: t('GeneralEntityRoot.reminderModal.accept'),
+        cancelText: t('GeneralEntityRoot.reminderModal.decline'),
+        onOk() {
+          onSaveClick();
+        },
+      });
+    }
+    oldStatus.current = formIsDirty;
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [formIsDirty, modal]);
+
   return (
     <div className="general-entity-root">
       <PageHeader
@@ -796,6 +821,7 @@ export function GeneralEntityRoot<T extends BaseEntity>({
           tableConfig={tableConfig}
         />
       </div>
+      <div>{contextHolder}</div>;
       <div className="right-container">
         {
           id && !_isNil(entityId) && (
