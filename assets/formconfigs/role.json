@@ -1,0 +1,128 @@
+{
+  "i18n": {
+    "de": {
+      "entityName": "Rolle",
+      "navigationTitle": "Rollen",
+      "labelId": "ID",
+      "labelEstabl": "Erstellt am",
+      "labelEdit": "Zuletzt editiert am",
+      "labelKey": "Keycloak ID",
+      "labelKeyProvDetail": "Keycloak Details",
+      "titleId": "ID",
+      "titleKeyId": "Keycloak ID",
+      "roleDoesNotExistTitle": "Die Rolle existiert nicht in Keycloak",
+      "titleRolename": "Rollenname",
+      "titleLink": "Link zur Rolle",
+      "titleOpen": "Öffne Rolle in Keycloak"
+    },
+    "en": {
+      "entityName": "Role",
+      "navigationTitle": "Roles",
+      "labelId": "ID",
+      "labelEstabl": "Created at",
+      "labelEdit": "Last edited on",
+      "labelKey": "Keycloak ID",
+      "labelKeyProvDetail": "Keycloak details",
+      "titleId": "ID",
+      "titleKeyId": "Keycloak ID",
+      "roleDoesNotExistTitle": "Role does not exist in Keycloak",
+      "titleRolename": "Role name",
+      "titleLink": "Link to role",
+      "titleOpen": "Open role in Keycloak"
+    }
+  },
+  "endpoint": "/roles",
+  "entityType": "role",
+  "entityName": "#i18n.entityName",
+  "navigationTitle": "#i18n.navigationTitle",
+  "subTitle": "",
+  "formConfig": {
+    "name": "role",
+    "fields": [
+      {
+        "dataType": "number",
+        "dataField": "id",
+        "readOnly": true,
+        "label": "#i18n.labelId"
+      },
+      {
+        "dataField": "created",
+        "dataType": "date",
+        "readOnly": "true",
+        "component": "DateField",
+        "label": "#i18n.labelEstabl",
+        "fieldProps": {
+          "dateFormat": "DD.MM.YYYY HH:mm"
+        }
+      },
+      {
+        "dataField": "modified",
+        "dataType": "date",
+        "readOnly": "true",
+        "label": "#i18n.labelEdit",
+        "component": "DateField",
+        "fieldProps": {
+          "dateFormat": "DD.MM.YYYY HH:mm"
+        }
+      },
+      {
+        "dataType": "string",
+        "dataField": "authProviderId",
+        "label": "#i18n.labelKey"
+      },
+      {
+        "component": "JSONEditor",
+        "dataField": "providerDetails",
+        "label": "#i18n.labelKeyProvDetail",
+        "fieldProps": {}
+      }
+    ]
+  },
+  "tableConfig": {
+    "columnDefinition": [
+      {
+        "title": "#i18n.titleId",
+        "dataIndex": "id",
+        "sortConfig": {
+          "isSortable": true
+        }
+      },
+      {
+        "title": "#i18n.titleRolename",
+        "dataIndex": ["providerDetails", "name"],
+        "key": "name",
+        "sortConfig": {
+          "isSortable": true
+        },
+        "filterConfig": {
+          "isFilterable": true
+        }
+      },
+      {
+        "title": "#i18n.titleKeyId",
+        "dataIndex": "authProviderId",
+        "key": "authProviderId",
+        "cellRenderComponentName": "VerifyProviderDetailsCell",
+        "cellRenderComponentProps": {
+          "title": "#i18n.roleDoesNotExistTitle"
+        },
+        "sortConfig": {
+          "isSortable": true
+        },
+        "filterConfig": {
+          "isFilterable": true
+        }
+      },
+      {
+        "title": "#i18n.titleLink",
+        "dataIndex": "authProviderId",
+        "key": "link",
+        "cellRenderComponentName": "LinkCell",
+        "cellRenderComponentProps": {
+          "title": "#i18n.titleOpen",
+          "template": "/auth/admin/master/console/#/SHOGun/roles/{}/details"
+        }
+      }
+    ]
+  }
+}

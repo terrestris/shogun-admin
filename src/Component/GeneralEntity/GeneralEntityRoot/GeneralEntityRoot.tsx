@@ -14,11 +14,11 @@ import {
   UploadOutlined
 } from '@ant-design/icons';
 
+import { PageHeader } from '@ant-design/pro-components';
 import {
   Button,
   Form,
   notification,
-  PageHeader,
   Upload
 } from 'antd';
 import {
@@ -175,6 +175,7 @@ export function GeneralEntityRoot<T extends BaseEntity>({
     setSortField(defaultSortField? defaultSortField : undefined);
     setSortOrder('ascend');
     setPageCurrent(1);
+    setFiltered(false); // to always obtain pagination when changing the entity
   }, [entityType, defaultSortField]);
 
   /**
@@ -344,6 +345,7 @@ export function GeneralEntityRoot<T extends BaseEntity>({
     try {
       const updatedEntity: T = await entityController?.saveOrUpdate() as T;
       await fetchEntities();
+      await fetchEntity(updatedEntity.id!);
       navigate(`${config.appPrefix}/portal/${entityType}/${updatedEntity.id}`);
       notification.success({
         message: t('GeneralEntityRoot.saveSuccess', {

@@ -2,9 +2,9 @@ import './MetricsRoot.less';
 
 import React from 'react';
 
+import { PageHeader } from '@ant-design/pro-components';
 import {
   Col,
-  PageHeader,
   Row
 } from 'antd';
 import { useTranslation } from 'react-i18next';

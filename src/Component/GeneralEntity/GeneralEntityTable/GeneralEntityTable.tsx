@@ -326,6 +326,7 @@ export function GeneralEntityTable<T extends BaseEntity>({
       }}
       rowKey={'id'}
       {...tablePassThroughProps}
+      key={entityType}
     />
   );
 }

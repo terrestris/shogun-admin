@@ -31,6 +31,12 @@ module.exports = {
   },
   module: {
     rules: [{
+      test: /\.m?js$/,
+      include: /node_modules\/@terrestris/,
+      resolve: {
+        fullySpecified: false
+      }
+    }, {
       test: /\.tsx?|\.jsx?$/,
       use: 'babel-loader',
       exclude: /node_modules\/(?!@terrestris)/
@@ -92,7 +98,7 @@ module.exports = {
       }, {
         from: './assets/fallbackConfig.js',
         to: 'fallbackConfig.js'
-      },{
+      }, {
         from: './node_modules/monaco-editor/min/vs',
         to: 'vs'
       }],

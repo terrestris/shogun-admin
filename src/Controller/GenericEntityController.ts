@@ -3,6 +3,7 @@ import _get from 'lodash/get';
 import _intersects from 'lodash/intersection';
 import _isNil from 'lodash/isNil';
 import _isNumber from 'lodash/isNumber';
+import _isString from 'lodash/isString';
 import _omit from 'lodash/omit';
 import _set from 'lodash/set';
 
@@ -77,6 +78,12 @@ export class GenericEntityController<T extends BaseEntity> {
   public async load(id: number): Promise<T> {
     this.entity = await this.service?.findOne(id);
 
+    if (_isString(this.formConfig?.publicKey)) {
+      const isPublic = await this.service.isPublic(this.entity?.id!);
+      const pubKey = this.formConfig.publicKey;
+      (this.entity as Record<string, any>)[pubKey] = isPublic;
+    }
+
     // initialize form value
     this.initializeFormValues();
     return this.entity;
@@ -137,26 +144,39 @@ export class GenericEntityController<T extends BaseEntity> {
    * @returns The updated / saved entitiy
    */
   public async saveOrUpdate(): Promise<T> {
-    const isUpdate = _isNumber(this?.entity?.id);
+    const isUpdate = _isNumber(this.entity?.id);
+
+    const publicKey = this.formConfig?.publicKey as keyof T;
+    const isPublic = publicKey ? this.entity?.[publicKey] : undefined;
 
     // omit constant fields and read only fields
-    let entityUpdateObject: Partial<T> = _omit(this?.entity, [
+    let entityUpdateObject: Partial<T> = _omit(this.entity, [
       'created',
       'modified',
-      ...this.formConfig?.fields.filter(field => field.readOnly).map(field => field.dataField)
+      ...this.formConfig?.fields
+        .filter(field => field.dataField === publicKey || field.readOnly)
+        .map(field => field.dataField)
     ]);
 
     // re-add id for service methods
     if (isUpdate) {
       entityUpdateObject = {
         ...entityUpdateObject,
-        id: this?.entity?.id
+        id: this.entity?.id
       };
     }
 
     this.entity = isUpdate ?
-      await this.service?.update(entityUpdateObject as T) :
+      await this.service.update(entityUpdateObject as T) :
       await this.service.add(entityUpdateObject as T);
+
+    if (publicKey) {
+      if (isPublic) {
+        await this.service.setPublic(this.entity.id!);
+      } else {
+        await this.service.revokePublic(this.entity.id!);
+      }
+    }
 
     return this.entity;
   }

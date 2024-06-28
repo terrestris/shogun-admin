@@ -2,7 +2,8 @@ name: Node CI
 on: [ pull_request ]
 
 jobs:
-  build:
+  test:
+    name: Lint, Typecheck and Test
 
     runs-on: ubuntu-latest
 

@@ -41,7 +41,7 @@ jobs:
           password: ${{ secrets.NEXUS_PASSWORD }}
 
       - name: Build docker image (latest)
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           context: .
           tags: |
@@ -50,7 +50,7 @@ jobs:
 
       - name: Build docker image (version)
         if: steps.semantic.outputs.new_release_published == 'true'
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           context: .
           tags: |
@@ -67,7 +67,7 @@ jobs:
           docker push ${{ env.DOCKER_REGISTRY }}/shogun-admin:${{ steps.semantic.outputs.new_release_version }}
 
       - name: Build docker image e2e-tests (latest) 🏗️
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           file: Dockerfile.e2e
           context: .
@@ -77,7 +77,7 @@ jobs:
 
       - name: Build docker image e2e-tests (version) 🏗️
         if: steps.semantic.outputs.new_release_published == 'true'
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           file: Dockerfile.e2e
           context: .
@@ -93,43 +93,3 @@ jobs:
         if: steps.semantic.outputs.new_release_published == 'true'
         run: |
           docker push ${{ env.DOCKER_REGISTRY }}/shogun-admin-client-e2e-tests:${{ steps.semantic.outputs.new_release_version }}
-
-  sonarqube:
-    name: SonarQube Trigger
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout sources 🔰
-        uses: actions/checkout@v4
-        with:
-          # Disabling shallow clone is recommended for improving relevancy of reporting
-          fetch-depth: 0
-
-      - name: Setup Node.js 20 🧮
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-
-      - name: Cache Node.js modules 💾
-        uses: actions/cache@v4
-        with:
-          path: ~/.npm
-          key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.OS }}-node-
-            ${{ runner.OS }}-
-
-      - name: Install dependencies ⏬
-        run: npm ci
-
-      - name: Test code ✅
-        run: npm run test
-        env:
-          CI: true
-
-      - name: SonarQube Scan 🔬
-        uses: kitabisa/sonarqube-action@v1.2.1
-        with:
-          host: ${{ secrets.SONARQUBE_HOST }}
-          login: ${{ secrets.SONARQUBE_TOKEN }}
-          projectBaseDir: "src/"
-          projectKey: "shogun-admin"

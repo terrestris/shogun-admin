@@ -1,8 +1,10 @@
 import React from 'react';
 
-import {fireEvent,
+import {
+  fireEvent,
   render,
-  screen} from '@testing-library/react';
+  screen
+} from '@testing-library/react';
 
 import Layer from '@terrestris/shogun-util/dist/model/Layer';
 
@@ -25,6 +27,7 @@ describe('LayerPreview', () => {
     render(
       <LayerPreview
         layer={layer}
+        transitionName=""
       />
     );
 

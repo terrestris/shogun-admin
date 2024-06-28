@@ -66,7 +66,7 @@ declare module 'shogunApplicationConfig' {
          * enabled, e.g. 'shogun-admin'
          */
         clientId?: string;
-       /**
+        /**
          * Returns all authorized Roles, e.g. 'admin'.
          */
         authorizedRoles?: string[];

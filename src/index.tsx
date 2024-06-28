@@ -72,7 +72,7 @@ const initSHOGunAPIClient = (keycloak?: Keycloak) => {
 };
 
 const renderApp = async () => {
-  const rootElement = document.getElementById('app');
+  const rootElement = document.getElementById('root');
   if (_isNil(rootElement)) {
     return Promise.reject();
   }
