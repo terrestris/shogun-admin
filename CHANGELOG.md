@@ -1,3 +1,24 @@
+## [15.2.2](https://github.com/terrestris/shogun-admin/compare/v15.2.1...v15.2.2) (2024-06-28)
+
+
+### Dependencies
+
+* **deps-dev:** bump @playwright/test from 1.44.1 to 1.45.0 ([0d71344](https://github.com/terrestris/shogun-admin/commit/0d71344bb82d7933aa4f3e901d287832b75599ab))
+* **deps-dev:** bump @semantic-release/release-notes-generator ([6058515](https://github.com/terrestris/shogun-admin/commit/6058515c49041b66aaafe88510c02defc9a7b92d))
+* **deps-dev:** bump @typescript-eslint/eslint-plugin ([9f5f37e](https://github.com/terrestris/shogun-admin/commit/9f5f37e583db5991ea489b4419501944de589b4b))
+* **deps-dev:** bump @typescript-eslint/parser from 7.13.0 to 7.14.1 ([31efa27](https://github.com/terrestris/shogun-admin/commit/31efa27a9e346f2ae86b3ad5eb6828a482a05233))
+* **deps-dev:** bump typescript from 5.4.5 to 5.5.2 ([361c9c7](https://github.com/terrestris/shogun-admin/commit/361c9c7c28be2df25f84db0b5dd2d3d3e195d7e6))
+* **deps-dev:** bump webpack from 5.92.0 to 5.92.1 ([4c02c7d](https://github.com/terrestris/shogun-admin/commit/4c02c7d54fda4718000e54eae3de2a2aff98317d))
+* **deps-dev:** bump ws from 8.16.0 to 8.17.1 ([93cd67e](https://github.com/terrestris/shogun-admin/commit/93cd67e9fb7dc0654406c174359d0944db30b661))
+* **deps:** bump docker/build-push-action from 5 to 6 ([e4c42e7](https://github.com/terrestris/shogun-admin/commit/e4c42e70a0292052bf4424011ce6fdb8faee7141))
+* **deps:** bump monaco-editor from 0.49.0 to 0.50.0 ([79c23bc](https://github.com/terrestris/shogun-admin/commit/79c23bc0c295ff071d567151c97a7766ce1eccc4))
+* **deps:** bump react-router-dom from 6.23.1 to 6.24.0 ([223e471](https://github.com/terrestris/shogun-admin/commit/223e471d088aa09407fe8088741e1216b799b393))
+
+
+### Bugfixes
+
+* corrects sorting over multiple pages ([acdcfba](https://github.com/terrestris/shogun-admin/commit/acdcfbaabd8baed8bd80519bd71bf89f972f21c4))
+
 ## [15.2.1](https://github.com/terrestris/shogun-admin/compare/v15.2.0...v15.2.1) (2024-06-25)
 
 
