@@ -1,3 +1,12 @@
+## [15.2.3](https://github.com/terrestris/shogun-admin/compare/v15.2.2...v15.2.3) (2024-06-28)
+
+
+### Bugfixes
+
+* center the logo while loading ([85b0d94](https://github.com/terrestris/shogun-admin/commit/85b0d941bf37c69df85269a401dae181d19b9e22))
+* correct centering ([37abb8a](https://github.com/terrestris/shogun-admin/commit/37abb8a30ef4336ca7a143627a66b12cff2ed86a))
+* spacing ([6252982](https://github.com/terrestris/shogun-admin/commit/6252982bf270872f50fef4214bd99202818b4e4e))
+
 ## [15.2.2](https://github.com/terrestris/shogun-admin/compare/v15.2.1...v15.2.2) (2024-06-28)
 
 
