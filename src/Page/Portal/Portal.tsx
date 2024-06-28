@@ -124,6 +124,7 @@ export const Portal: React.FC<PortalProps> = () => {
                   path={`${entityConfig?.entityType}/*`}
                   element={
                     <GeneralEntityRoot
+                      key={entityConfig.entityType}
                       {...entityConfig}
                       onEntitiesLoaded={onEntitiesLoaded}
                     />
