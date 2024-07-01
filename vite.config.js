@@ -53,6 +53,9 @@ export default defineConfig({
         'react-dom': {
           requiredVersion: deps['react-dom']
         },
+        'react-router-dom': {
+          requiredVersion: deps['react-router-dom']
+        },
         'react-i18next': {
           requiredVersion: deps['react-i18next']
         }
