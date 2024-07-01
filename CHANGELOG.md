@@ -1,3 +1,27 @@
+## [16.0.0](https://github.com/terrestris/shogun-admin/compare/v15.2.3...v16.0.0) (2024-07-01)
+
+
+### ⚠ BREAKING CHANGES
+
+* requires config adjustments when used with shogun-docker
+
+Co-authored-by: Daniel Koch <koch@terrestris.de>
+Co-authored-by: Kai Volland <kaivolland@yahoo.de>
+
+### Dependencies
+
+* **deps:** bump keycloak-js from 24.0.5 to 25.0.1 ([697a363](https://github.com/terrestris/shogun-admin/commit/697a3630127750f6cc71f26850eb19a8d00d4a85))
+
+
+### Changes in configuration
+
+* sonarqube-scan does not run when merging from dependabot ([#654](https://github.com/terrestris/shogun-admin/issues/654)) ([b111f6a](https://github.com/terrestris/shogun-admin/commit/b111f6a780214323e221c421cefeb0385d593230))
+
+
+### Features
+
+* switch bundler to vite ([800a769](https://github.com/terrestris/shogun-admin/commit/800a76936097c9efcdbcf586949ae36d5f4484d1))
+
 ## [15.2.3](https://github.com/terrestris/shogun-admin/compare/v15.2.2...v15.2.3) (2024-06-28)
 
 
