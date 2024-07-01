@@ -22,6 +22,8 @@ import config from 'shogunApplicationConfig';
 
 import BaseEntity from '@terrestris/shogun-util/dist/model/BaseEntity';
 
+import usePlugins from '../../../Hooks/usePlugins';
+import { isToolMenuIntegration } from '../../../plugin';
 import TranslationUtil from '../../../Util/TranslationUtil';
 import { GeneralEntityConfigType } from '../../GeneralEntity/GeneralEntityRoot/GeneralEntityRoot';
 
@@ -39,6 +41,8 @@ export const Navigation: React.FC<NavigationProps> = ({
   const {
     t
   } = useTranslation();
+
+  const plugins = usePlugins();
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -147,6 +151,26 @@ export const Navigation: React.FC<NavigationProps> = ({
       key: 'settings',
       label: t('Navigation.configuration'),
       children: settingsChildren
+    });
+  }
+
+  if (plugins) {
+    plugins.forEach(plugin => {
+      if (isToolMenuIntegration(plugin.integration)) {
+        const {
+          key,
+          integration: {
+            label = 'Plugin',
+            insertionIndex
+          }
+        } = plugin;
+
+        items.splice(insertionIndex || 0, 0, {
+          key,
+          icon: plugin.integration.icon && <plugin.integration.icon />,
+          label: <span>{t(label)}</span>
+        });
+      }
     });
   }
 
