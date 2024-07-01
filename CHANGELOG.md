@@ -5,8 +5,37 @@
 
 * requires config adjustments when used with shogun-docker
 
-Co-authored-by: Daniel Koch <koch@terrestris.de>
-Co-authored-by: Kai Volland <kaivolland@yahoo.de>
+1. `shogun-admin/config/admin-client-config.js`:
+
+```diff
+  path: {
+-   modelConfigs: './modelconfigs',
++   modelConfigs: '/admin/modelconfigs',
+    shogunBase: '/',
+    logo: null
+  },
+}
+```
+
+2. `shogun-nginx/dev/default.conf`:
+
+```diff
+  location /admin/ {
+-    proxy_pass http://shogun-admin:8080/;
++    proxy_pass http://shogun-admin:8080/admin/;
+
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection "upgrade";
+
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $scheme;
+    proxy_set_header X-Forwarded-Port $server_port;
+  }
+```
+
 
 ### Dependencies
 
