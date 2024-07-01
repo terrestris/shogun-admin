@@ -18,18 +18,18 @@ export default defineConfig({
     },
   },
   define: {
-    PROJECT_VERSION: JSON.stringify(process.env.npm_package_version),
+    PROJECT_VERSION: JSON.stringify(process.env.npm_package_version)
   },
   plugins: [
     react(),
     viteExternalsPlugin({
       shogunApplicationConfig: 'shogunApplicationConfig'
-    }),
+    })
   ],
   server: {
     host: '0.0.0.0',
     port: 8080,
-    strictPort: true,
+    strictPort: true
   },
   build: {
     rollupOptions: {

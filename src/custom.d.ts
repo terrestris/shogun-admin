@@ -200,4 +200,4 @@ declare type FormTranslations = {
   };
 };
 
-declare module 'monaco-editor/esm/vs/*?worker'
+declare module 'monaco-editor/esm/vs/*?worker';
