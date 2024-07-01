@@ -34,5 +34,7 @@ export default {
     'json'
   ],
   testEnvironment: 'jsdom',
-  reporters: ['default', '@casualbot/jest-sonar-reporter']
+  reporters: ['default', '@casualbot/jest-sonar-reporter'],
+  coverageReporters: ['json-summary'],
+  coverageDirectory: 'coverage/all'
 };
