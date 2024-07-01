@@ -199,3 +199,5 @@ declare type FormTranslations = {
     [localeKey: string]: string;
   };
 };
+
+declare module 'monaco-editor/esm/vs/*?worker';

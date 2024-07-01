@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 
 import { shogunInfoModalVisibleAtom } from '../../../State/atoms';
 import { render, screen } from '../../../test-util';
