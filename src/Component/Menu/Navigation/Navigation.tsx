@@ -167,11 +167,8 @@ export const Navigation: React.FC<NavigationProps> = ({
 
         items.splice(insertionIndex || 0, 0, {
           key,
-          label: (<>
-            { plugin.integration.icon && <plugin.integration.icon /> }
-            <span>{t(label)}</span>
-          </>),
-          // icon
+          icon: plugin.integration.icon && <plugin.integration.icon />,
+          label: <span>{t(label)}</span>
         });
       }
     });
