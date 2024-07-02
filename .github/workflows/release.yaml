@@ -1,9 +1,10 @@
 name: Release
 
 on:
+  workflow_dispatch:
   push:
     branches:
-      - main
+      - next
 
 env:
   DOCKER_REGISTRY: docker-public.terrestris.de/terrestris
