@@ -1,6 +1,10 @@
 {
   "branches": [
-    "main"
+    "main",
+    {
+      "name": "next",
+      "prerelease": true
+    }
   ],
   "plugins": [
     [
@@ -40,12 +44,7 @@
         }
       }
     ],
-    [
-      "@semantic-release/npm",
-      {
-        "npmPublish": false
-      }
-    ],
+    "@semantic-release/npm",
     "@semantic-release/changelog",
     [
       "@semantic-release/git",
