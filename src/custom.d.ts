@@ -2,6 +2,12 @@ declare module '*.png';
 declare module '*.svg';
 declare module '*.gif';
 
+type PluginConfiguration = {
+  name?: string;
+  resourcePath?: string;
+  exposedPaths?: string[];
+};
+
 declare module 'shogunApplicationConfig' {
   /**
    * Config object which contains the settings to adapt the admin client
@@ -38,6 +44,10 @@ declare module 'shogunApplicationConfig' {
        */
       logo: string;
     };
+    /**
+     * Configuration of admin plugins.
+     */
+    plugins?: PuginConfiguration[];
     /**
      * Security related configuration object
      */
