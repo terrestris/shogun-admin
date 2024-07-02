@@ -1,5 +1,7 @@
 import { CollapsePanelProps } from 'antd';
 
+import { TFunction } from 'i18next';
+
 import type SHOGunAPIClient from '@terrestris/shogun-util/dist/service/SHOGunAPIClient';
 
 export type AdminPluginLocale = {
@@ -12,6 +14,7 @@ export type AdminPluginLocale = {
 
 export type AdminPluginComponentProps = {
   client?: SHOGunAPIClient;
+  t?: TFunction;
 };
 
 export type AdminPluginIntegration = {

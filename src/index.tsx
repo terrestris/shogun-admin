@@ -146,6 +146,7 @@ const loadPlugins = async (client: SHOGunAPIClient) => {
       const WrappedPluginComponent = () => (
         <PluginComponent
           client={client}
+          t={i18n.t}
         />
       );
 
