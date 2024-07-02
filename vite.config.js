@@ -74,6 +74,7 @@ export default defineConfig({
     // vite.config.ts file is higher than that of "es2020".
     target: 'esnext',
     cssCodeSplit: false,
+    outDir: 'dist/build',
     rollupOptions: {
       external: 'shogunApplicationConfig'
     }

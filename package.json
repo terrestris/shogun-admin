@@ -3,7 +3,7 @@
   "private": true,
   "version": "16.0.0",
   "description": "The admin UI for the SHOGun Web-mapping backend.",
-  "main": "index.js",
+  "main": "lib/index.js",
   "files": [
     "dist"
   ],
@@ -17,7 +17,6 @@
     "start": "vite",
     "test": "jest --coverage --maxWorkers=50%",
     "test:watch": "jest --watch",
-    "transpile": "tsc",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "type": "module",
