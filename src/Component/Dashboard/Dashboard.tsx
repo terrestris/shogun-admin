@@ -1,6 +1,14 @@
-import './Dashboard.less';
+import React, {
+  ReactNode
+} from 'react';
 
-import React, { ReactNode } from 'react';
+import Util from '@terrestris/ol-util/dist/GeometryUtil/GeometryUtil';
+import { apply } from 'ol-mapbox-style';
+// import ExamplePlugin from 'ExamplePlugin/FooterLinks';
+
+import usePlugins from '../../Hooks/usePlugins';
+
+import './Dashboard.less';
 
 interface OwnProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'title'> {
   actions?: ReactNode;
@@ -25,6 +33,14 @@ export const Dashboard: React.FC<DashoardProps> = (props) => {
     ...passThroughProps
   } = props;
 
+  const plugins = usePlugins();
+
+  console.log(apply)
+  Util.toString()
+  console.log(plugins)
+
+  const PluginComponent = plugins[0].wrappedComponent;
+
   const gridTemplateColumns = `repeat(${columns}, 1fr)`;
 
   return (
@@ -33,6 +49,8 @@ export const Dashboard: React.FC<DashoardProps> = (props) => {
       {...passThroughProps}
     >
       <div className="header">
+        {/* <ExamplePlugin /> */}
+        <PluginComponent />
         {
           icon &&
           <img className="icon" src={icon} alt={`${title} icon`} />
