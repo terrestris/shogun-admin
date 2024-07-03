@@ -2,7 +2,20 @@ declare module '*.png';
 declare module '*.svg';
 declare module '*.gif';
 
+type Scope = unknown;
+type Factory = () => any;
+// eslint-disable-next-line @typescript-eslint/naming-convention, camelcase, no-underscore-dangle
+declare const __webpack_init_sharing__: (shareScope: string) => Promise<void>;
+// eslint-disable-next-line @typescript-eslint/naming-convention, camelcase, no-underscore-dangle
+declare const __webpack_share_scopes__: { default: Scope };
+
 declare module 'shogunApplicationConfig' {
+  type PluginConfiguration = {
+    name?: string;
+    resourcePath?: string;
+    exposedPaths?: string[];
+  };
+
   /**
    * Config object which contains the settings to adapt the admin client
    * to your application.
@@ -38,6 +51,10 @@ declare module 'shogunApplicationConfig' {
        */
       logo: string;
     };
+    /**
+     * Configuration of admin plugins.
+     */
+    plugins?: PluginConfiguration[];
     /**
      * Security related configuration object
      */

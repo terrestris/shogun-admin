@@ -1,9 +1,10 @@
-const CopyPlugin = require('copy-webpack-plugin');
+// const { ModuleFederationPlugin } = require('@module-federation/enhanced/rspack');
+const rspack = require('@rspack/core');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-const webpack = require('webpack');
-
 const CustomAntThemeModifyVars = require('./theme.js');
+
+const deps = require('./package.json').dependencies;
 
 module.exports = {
   entry: [
@@ -41,12 +42,6 @@ module.exports = {
       use: 'babel-loader',
       exclude: /node_modules\/(?!@terrestris)/
     }, {
-      test: /\.css$/,
-      use: [
-        'style-loader',
-        'css-loader'
-      ]
-    }, {
       test: /\.less$/,
       use: [
         'style-loader',
@@ -63,20 +58,10 @@ module.exports = {
       ]
     }, {
       test: /\.(eot|ttf|svg|woff|woff2)$/i,
-      use: [{
-        loader: 'file-loader',
-        options: {
-          name: 'static/font/[name].[contenthash:8].[ext]'
-        }
-      }]
+      type: 'asset/resource'
     }, {
       test: /\.(jpe?g|png|gif|ico)$/i,
-      use: [{
-        loader: 'file-loader',
-        options: {
-          name: 'static/img/[name].[contenthash:8].[ext]'
-        }
-      }]
+      type: 'asset/resource'
     }]
   },
   plugins: [
@@ -88,7 +73,7 @@ module.exports = {
       template: './assets/index.html',
       title: 'SHOGun admin'
     }),
-    new CopyPlugin({
+    new rspack.CopyRspackPlugin({
       patterns: [{
         from: './assets/formconfigs/',
         to: 'formconfigs'
@@ -103,14 +88,42 @@ module.exports = {
         to: 'vs'
       }],
     }),
-    new webpack.DefinePlugin({
+    new rspack.DefinePlugin({
       PROJECT_VERSION: JSON.stringify(require('./package.json').version),
     }),
-    new webpack.ProvidePlugin({
+    new rspack.ProvidePlugin({
       Buffer: [
         'buffer',
         'Buffer'
       ]
+    }),
+    new rspack.container.ModuleFederationPlugin({
+      name: 'SHOGunAdmin',
+      // remotes: {
+      //   'ExamplePlugin': 'ExamplePlugin@https://localhost/admin-plugins/index.js'
+      // },
+      shared: {
+        react: {
+          singleton: true,
+          eager: true,
+          requiredVersion: deps.react
+        },
+        'react-dom': {
+          singleton: true,
+          eager: true,
+          requiredVersion: deps['react-dom']
+        },
+        'react-i18next': {
+          singleton: true,
+          eager: true,
+          requiredVersion: deps['react-i18next']
+        },
+        // 'ol/': {
+        //   singleton: true,
+        //   eager: true,
+        //   requiredVersion: deps.ol
+        // }
+      }
     })
   ]
 };

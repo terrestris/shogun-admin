@@ -1,12 +1,12 @@
 const path = require('path');
 
-const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
+const ReactRefreshPlugin = require('@rspack/plugin-react-refresh');
 
 const {
   merge
 } = require('webpack-merge');
 
-const common = require('./webpack.common.js');
+const common = require('./rspack.common.js');
 
 module.exports = merge(common, {
   mode: 'development',
@@ -24,6 +24,6 @@ module.exports = merge(common, {
     historyApiFallback: true
   },
   plugins: [
-    new ReactRefreshWebpackPlugin()
+    new ReactRefreshPlugin()
   ]
 });
