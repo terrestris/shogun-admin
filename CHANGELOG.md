@@ -1,3 +1,15 @@
+## [16.1.0-next.1](https://github.com/terrestris/shogun-admin/compare/v16.0.0...v16.1.0-next.1) (2024-07-03)
+
+
+### Changes in configuration
+
+* update release pipelines ([b9ab9ec](https://github.com/terrestris/shogun-admin/commit/b9ab9ec062b06d617578a7d22beb658f8c22c6f8))
+
+
+### Features
+
+* introduces admin plugins ([5059a85](https://github.com/terrestris/shogun-admin/commit/5059a859059f12af3bd60410ed3140a60b9983a9))
+
 ## [16.0.0](https://github.com/terrestris/shogun-admin/compare/v15.2.3...v16.0.0) (2024-07-01)
 
 
