@@ -14,11 +14,12 @@ import {
   UploadOutlined
 } from '@ant-design/icons';
 
-import { PageHeader } from '@ant-design/pro-components';
+import { PageHeader } from '@ant-design/pro-layout';
 import {
   Button,
   Form,
   notification,
+  Modal,
   Upload
 } from 'antd';
 import {
@@ -162,11 +163,11 @@ export function GeneralEntityRoot<T extends BaseEntity>({
   const [sortField, setSortField] = useState<string>();
   const [sortOrder, setSortOrder] = useState<SortOrder>();
   const [isFiltered, setFiltered] = useState<boolean>(false);
-
+  const [isPreviousFormDirty, setIsPreviousFormDirty] = useState<boolean>(false);
+  const [modal, contextHolder] = Modal.useModal();
   const [form] = Form.useForm();
 
   const client = useSHOGunAPIClient();
-
   const {
     t
   } = useTranslation();
@@ -257,14 +258,46 @@ export function GeneralEntityRoot<T extends BaseEntity>({
    */
   useEffect(() => {
     if (id && id.toString() !== 'create' && id !== editEntity?.id) {
-      fetchEntity(parseInt(id.toString(), 10));
+      if (isPreviousFormDirty) {
+        modal.confirm({
+          title: t('GeneralEntityRoot.reminderModal.title'),
+          content: t('GeneralEntityRoot.reminderModal.description'),
+          okText: t('GeneralEntityRoot.reminderModal.accept'),
+          cancelText: t('GeneralEntityRoot.reminderModal.decline'),
+          onOk() {
+            onSaveClick();
+            fetchEntity(parseInt(id.toString(), 10));
+          },
+          onCancel() {
+            fetchEntity(parseInt(id.toString(), 10));
+            notification.info({
+              message: t('GeneralEntityRoot.saveWarning', {
+                entity: TranslationUtil.getTranslationFromConfig(entityName, i18n)
+              })
+            });
+          }
+        });
+      }
+      else {
+        fetchEntity(parseInt(id.toString(), 10));
+      }
+      // here we either saved or discarded the changes, so we don't need the value anymore
+      setIsPreviousFormDirty(false);
     }
     if (id && id.toString() === 'create' && editEntity === undefined) {
       const e: T = entityController?.createEntity();
       setEditEntity(e);
       form.setFieldsValue(entityController?.getEntity());
     }
-  }, [id, fetchEntity, editEntity, entityController, form]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id, fetchEntity, editEntity, entityController, form, modal]);
+
+  useEffect(() => {
+    if (formIsDirty) {
+      // only set if it changes from false to true, but not when it changes back
+      setIsPreviousFormDirty(true);
+    }
+  }, [formIsDirty]);
 
   /**
    * Set actual edited entity
@@ -817,6 +850,7 @@ export function GeneralEntityRoot<T extends BaseEntity>({
           )
         }
       </div>
+      <div>{contextHolder}</div>
     </div>
   );
 }
