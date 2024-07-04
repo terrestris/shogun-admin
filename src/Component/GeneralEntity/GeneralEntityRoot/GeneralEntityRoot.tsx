@@ -293,7 +293,8 @@ export function GeneralEntityRoot<T extends BaseEntity>({
   useEffect(() => {
     if (formIsDirty) {
       // only set if it changes from false to true, but not when it changes back
-      setIsPreviousFormDirty(true);    }
+      setIsPreviousFormDirty(true);
+    }
   }, [formIsDirty]);
 
   /**
