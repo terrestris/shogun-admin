@@ -162,12 +162,11 @@ export function GeneralEntityRoot<T extends BaseEntity>({
   const [sortField, setSortField] = useState<string>();
   const [sortOrder, setSortOrder] = useState<SortOrder>();
   const [isFiltered, setFiltered] = useState<boolean>(false);
-
+  const [isPreviousFormDirty, setIsPreviousFormDirty] = useState<boolean>(false);
   const [modal, contextHolder] = Modal.useModal();
   const [form] = Form.useForm();
 
   const client = useSHOGunAPIClient();
-  let isPreviousFormDirty = useRef(formIsDirty);
   const {
     t
   } = useTranslation();
@@ -258,7 +257,7 @@ export function GeneralEntityRoot<T extends BaseEntity>({
    */
   useEffect(() => {
     if (id && id.toString() !== 'create' && id !== editEntity?.id) {
-      if (isPreviousFormDirty.current) {
+      if (isPreviousFormDirty) {
         modal.confirm({
           title: t('GeneralEntityRoot.reminderModal.title'),
           content: t('GeneralEntityRoot.reminderModal.description'),
@@ -277,22 +276,25 @@ export function GeneralEntityRoot<T extends BaseEntity>({
             });
           }
         });
-        isPreviousFormDirty.current = formIsDirty;
       }
       else {
         fetchEntity(parseInt(id.toString(), 10));
       }
+      // here we either saved or discarded the changes, so we don't need the value anymore
+      setIsPreviousFormDirty(false);
     }
     if (id && id.toString() === 'create' && editEntity === undefined) {
       const e: T = entityController?.createEntity();
       setEditEntity(e);
       form.setFieldsValue(entityController?.getEntity());
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id, fetchEntity, formIsDirty, editEntity, entityController, form, modal]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id, fetchEntity, editEntity, entityController, form, modal]);
 
   useEffect(() => {
-    isPreviousFormDirty.current = formIsDirty;
+    if (formIsDirty) {
+      // only set if it changes from false to true, but not when it changes back
+      setIsPreviousFormDirty(true);    }
   }, [formIsDirty]);
 
   /**
