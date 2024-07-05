@@ -67,6 +67,7 @@ export default {
           title: 'Änderungen speichern?',
           description: 'Die Änderungen wurden noch nicht gespeichert, möchten Sie speichern?',
           accept: 'Speichern',
+          review: 'Änderungen zeigen',
           decline: 'Verwerfen'
         },
         saveSuccess: '{{entity}} erfolgreich gespeichert',
@@ -323,6 +324,7 @@ export default {
           title: 'Save changes?',
           description: 'The changes have not yet been saved, do you want to save?',
           accept: 'Save',
+          review: 'review changes',
           decline: 'Discard'
         },
         saveSuccess: '{{entity}} successfully saved',
