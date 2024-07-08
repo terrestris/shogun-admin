@@ -2,8 +2,6 @@ import './index.less';
 
 import React, { Suspense } from 'react';
 
-import { loader } from '@monaco-editor/react';
-
 import {
   // eslint-disable-next-line camelcase
   __federation_method_setRemote,
@@ -193,12 +191,6 @@ const renderApp = async () => {
     const client = initSHOGunAPIClient(keycloak);
 
     const plugins = await loadPlugins(client);
-
-    loader.config({
-      paths: {
-        vs: './vs'
-      }
-    });
 
     root.render(
       <SHOGunAPIClientProvider client={client}>

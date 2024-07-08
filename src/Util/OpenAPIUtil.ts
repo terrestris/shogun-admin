@@ -189,7 +189,7 @@ export class OpenAPIUtil {
         const referenceObject = def as OpenAPIV3.ReferenceObject;
         const nextDef = this.getEntityDefinition(this.getRefName(referenceObject));
         if (!_isNil(nextDef)) {
-          this.walkSchemaDefinition(nextDef, findDiscriminator);
+          // this.walkSchemaDefinition(nextDef, findDiscriminator);
         } else {
           Logger.warn(`Schema definition of ${def} is not defined.`);
         }
