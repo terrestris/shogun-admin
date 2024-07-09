@@ -1,3 +1,9 @@
+![nodejs]
+(https://github.com/terrestris/shogun-admin/actions/workflows/nodejs.yml/badge.svg)
+
+![release]
+(https://github.com/terrestris/shogun-admin/actions/workflows/release.yaml/badge.svg)
+
 # shogun-admin
 
 ## An UI for handling SHOGun entities like users, applications, and layers
