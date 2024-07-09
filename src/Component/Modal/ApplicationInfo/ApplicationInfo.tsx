@@ -10,7 +10,8 @@ import { ModalProps } from 'antd/lib/modal';
 import { useTranslation } from 'react-i18next';
 import { useRecoilState } from 'recoil';
 
-import defaultLogo from '../../../../assets/img/shogun_logo.png';
+import defaultLogo from '../../../../resources/public/img/shogun_logo.png';
+
 import {
   useClientVersion
 } from '../../../Hooks/useClientVersion';
