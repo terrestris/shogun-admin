@@ -1,7 +1,5 @@
 import './JSONEditor.less';
 
-import './UserWorker';
-
 import React, {
   useCallback,
   useEffect,
