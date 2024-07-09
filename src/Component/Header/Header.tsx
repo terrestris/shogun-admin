@@ -6,7 +6,8 @@ import { PageHeader } from '@ant-design/pro-components';
 import { Link } from 'react-router-dom';
 import config from 'shogunApplicationConfig';
 
-import defaultLogo from '../../../assets/img/shogun_logo.png';
+import defaultLogo from '../../../resources/public/img/shogun_logo.png';
+
 import LanguageSelect from '../LanguageSelector';
 import User from '../Menu/User/User';
 
