@@ -203,7 +203,7 @@ const renderApp = async () => {
 
     loader.config({
       paths: {
-        vs: './vs'
+        vs: '/vs'
       }
     });
 

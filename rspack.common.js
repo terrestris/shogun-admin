@@ -17,6 +17,7 @@ module.exports = {
     shogunApplicationConfig: 'shogunApplicationConfig'
   },
   output: {
+    appPrefix: '/admin/',
     filename: 'js/[name].bundle.js',
     publicPath: 'auto',
   },
