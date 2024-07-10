@@ -1,7 +1,6 @@
 import React from 'react';
 
 import {
-  prettyDOM,
   render,
   screen
 } from '@testing-library/react';
@@ -38,7 +37,6 @@ describe('<Dashboard />', () => {
         rows={3}
         title={'test-title'}
       />);
-    expect(container).toBeVisible();
 
     const iconElement = screen.getByAltText('test-title icon');
     expect(iconElement).toBeVisible();
@@ -50,9 +48,8 @@ describe('<Dashboard />', () => {
     const actionsElement = screen.getByText('test-action');
     expect(actionsElement).toBeVisible();
 
-    const gridElement = document.querySelector('.grid');
+    const gridElement = container.querySelector('.grid');
     expect(gridElement).toBeVisible();
     expect(gridElement).toHaveStyle('grid-template-columns: repeat(3, 1fr);');
   });
-
 });
