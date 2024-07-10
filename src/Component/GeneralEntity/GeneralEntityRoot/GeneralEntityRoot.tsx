@@ -265,7 +265,9 @@ export function GeneralEntityRoot<T extends BaseEntity>({
 
   const saveChanges = () => {
     onSaveClick();
-    fetchEntity(parseInt(id.toString(), 10));
+    if (!isNil(id)) {
+      fetchEntity(parseInt(id.toString(), 10));
+    }
     Modal.destroyAll();
   };
   const reviewChanges = () => {
