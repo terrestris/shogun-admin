@@ -255,7 +255,9 @@ export function GeneralEntityRoot<T extends BaseEntity>({
 
   const discardChanges = () => {
     Modal.destroyAll();
-    fetchEntity(parseInt(id.toString(), 10));
+    if (!_isNil(id)){
+      fetchEntity(parseInt(id.toString(), 10));
+    }
     notification.info({
       message: t('GeneralEntityRoot.saveWarning', {
         entity: TranslationUtil.getTranslationFromConfig(entityName, i18n)
@@ -265,7 +267,7 @@ export function GeneralEntityRoot<T extends BaseEntity>({
 
   const saveChanges = () => {
     onSaveClick();
-    if (!isNil(id)) {
+    if (!_isNil(id)) {
       fetchEntity(parseInt(id.toString(), 10));
     }
     Modal.destroyAll();
