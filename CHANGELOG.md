@@ -3,6 +3,33 @@
 
 ### Dependencies
 
+* **release:** 16.1.0-next.1 [skip ci] ([7ebf856](https://github.com/terrestris/shogun-admin/commit/7ebf85651cd3cc23107974ffe061301267694a21))
+* **release:** 16.1.0-next.1 [skip ci] ([5ffdaf1](https://github.com/terrestris/shogun-admin/commit/5ffdaf15693e9e91bfe34aa1dd091a0fd92e9df5))
+* **release:** 16.1.0-next.1 [skip ci] ([19c1afd](https://github.com/terrestris/shogun-admin/commit/19c1afd6d2a06d1a9ba303e280b0c41399bb94f6))
+
+
+### Changes in configuration
+
+* remove "private" from package.json ([f22d4a4](https://github.com/terrestris/shogun-admin/commit/f22d4a4729de493b2771d3c73915c6153444387e))
+* remove @semantic-release/github ([31f4ee2](https://github.com/terrestris/shogun-admin/commit/31f4ee223e5d95039974b4a64496c3f8ea8055c9))
+* update release pipelines ([b9ab9ec](https://github.com/terrestris/shogun-admin/commit/b9ab9ec062b06d617578a7d22beb658f8c22c6f8))
+
+
+### Features
+
+* introduces admin plugins ([6a4b133](https://github.com/terrestris/shogun-admin/commit/6a4b1331dad0c879e15969b52a21601e393d45ee))
+
+
+### Bugfixes
+
+* update build directory in dockerfile ([f76c3d7](https://github.com/terrestris/shogun-admin/commit/f76c3d7a808628109aedf862f0a08306ccf90a86))
+* update README.md ([66da110](https://github.com/terrestris/shogun-admin/commit/66da110ac270cdf0060292853dde2b40d3f0a259))
+
+## [16.1.0-next.1](https://github.com/terrestris/shogun-admin/compare/v16.0.0...v16.1.0-next.1) (2024-07-10)
+
+
+### Dependencies
+
 * **release:** 16.1.0-next.1 [skip ci] ([5ffdaf1](https://github.com/terrestris/shogun-admin/commit/5ffdaf15693e9e91bfe34aa1dd091a0fd92e9df5))
 * **release:** 16.1.0-next.1 [skip ci] ([19c1afd](https://github.com/terrestris/shogun-admin/commit/19c1afd6d2a06d1a9ba303e280b0c41399bb94f6))
 
