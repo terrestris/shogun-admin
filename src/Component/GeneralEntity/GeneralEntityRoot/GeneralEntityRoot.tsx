@@ -253,8 +253,33 @@ export function GeneralEntityRoot<T extends BaseEntity>({
     }
   }, [entityController, onEntitiesLoaded, entityType, pageCurrent, pageSize, sortField, sortOrder, isFiltered]);
 
+  const discardChanges = () => {
+    Modal.destroyAll();
+    if (!_isNil(id)){
+      fetchEntity(parseInt(id.toString(), 10));
+    }
+    notification.info({
+      message: t('GeneralEntityRoot.saveWarning', {
+        entity: TranslationUtil.getTranslationFromConfig(entityName, i18n)
+      })
+    });
+  };
+
+  const saveChanges = () => {
+    onSaveClick();
+    if (!_isNil(id)) {
+      fetchEntity(parseInt(id.toString(), 10));
+    }
+    Modal.destroyAll();
+  };
+  const reviewChanges = () => {
+    Modal.destroyAll();
+    setFormIsDirty(true);
+  };
+
   /**
    * Fetch entity or create new one
+   * A modal is called in case edited entity is not saved
    */
   useEffect(() => {
     if (id && id.toString() !== 'create' && id !== editEntity?.id) {
@@ -264,18 +289,23 @@ export function GeneralEntityRoot<T extends BaseEntity>({
           content: t('GeneralEntityRoot.reminderModal.description'),
           okText: t('GeneralEntityRoot.reminderModal.accept'),
           cancelText: t('GeneralEntityRoot.reminderModal.decline'),
-          onOk() {
-            onSaveClick();
-            fetchEntity(parseInt(id.toString(), 10));
-          },
-          onCancel() {
-            fetchEntity(parseInt(id.toString(), 10));
-            notification.info({
-              message: t('GeneralEntityRoot.saveWarning', {
-                entity: TranslationUtil.getTranslationFromConfig(entityName, i18n)
-              })
-            });
-          }
+          closable: true,
+          footer: ([
+            <div key="modalButtons" className='selectionButtons'>
+              <Button className='viewChangesButton'
+                onClick={() => reviewChanges()}>
+                {t('GeneralEntityRoot.reminderModal.review')}
+              </Button>
+              <Button className='discardChangesButton'
+                onClick={() => discardChanges()}
+              >{t('GeneralEntityRoot.reminderModal.decline')}
+              </Button>
+              <Button type="primary" className='acceptChangesButton'
+                onClick={() => saveChanges()}
+              >{t('GeneralEntityRoot.reminderModal.accept')}
+              </Button>
+            </div>
+          ]),
         });
       }
       else {
