@@ -42,7 +42,7 @@ describe('<LinkField />', () => {
         i18n={i18n}
       />);
     expect(container).toBeVisible();
- 
+
     const wrapperElement = container.querySelector('.link-wrapper');
     expect(wrapperElement).toBeVisible();
 
