@@ -87,7 +87,7 @@ describe('<DisplayField />', () => {
     }, {
       'id': 1,
       'value': 'test-value1',
-    }]
+    }];
 
     const {
       container
