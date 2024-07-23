@@ -4,7 +4,7 @@ import {
   render
 } from '@testing-library/react';
 
-import { FormInstance } from 'antd';
+import { FormInstance } from 'antd/lib/form';
 
 import { EntityType } from '../InstancePermissionGrid/InstancePermissionGrid';
 
@@ -48,7 +48,7 @@ describe('<GroupPermissionGrid />', () => {
     } = render(
       <GroupPermissionGrid
         entityId={mockForm.getFieldValue('id')}
-        entityType={mockEntityType.toLowerCase()}
+        entityType={mockEntityType}
       />);
     expect(container).toBeVisible();
 
