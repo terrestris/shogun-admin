@@ -24,7 +24,7 @@ import InstancePermissionGrid, { DataType, EntityType } from './InstancePermissi
 let mockEntityType: EntityType;
 let mockModalProps;
 let mockToTag: (reference: User) => DefaultOptionType;
-let mockColumnDefinition: ColumnType<DataType>
+let mockColumnDefinition: ColumnType<DataType>;
 let mockToDataType;
 
 const mockDeletePermission = jest.fn();
