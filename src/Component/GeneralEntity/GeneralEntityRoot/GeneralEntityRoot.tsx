@@ -424,6 +424,7 @@ export function GeneralEntityRoot<T extends BaseEntity>({
       });
     } finally {
       setIsSaving(false);
+      setIsPreviousFormDirty(false);
       setFormIsDirty(false);
     }
   };
