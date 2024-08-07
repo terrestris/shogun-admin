@@ -5,6 +5,9 @@ import {
   BarChartOutlined,
   ControlOutlined,
   FileImageOutlined,
+  AppstoreOutlined,
+  UserOutlined,
+  TeamOutlined,
   FileTextOutlined
 } from '@ant-design/icons';
 
@@ -55,15 +58,61 @@ export const Navigation: React.FC<NavigationProps> = ({
 
   const navigationConf = config.navigation;
 
-  const navigationContentChildren: ItemType[] = entityConfigs.map(conf => ({
-    key: conf.entityType,
-    label: (
-      <>
-        <BankOutlined />
-        <span>{TranslationUtil.getTranslationFromConfig(conf.navigationTitle, conf.i18n)}</span>
-      </>
-    )
-  }));
+  const navigationContentChildren: ItemType[] = [];
+
+  if (entityConfigs && entityConfigs.length > 0) {
+
+    if (navigationConf?.general?.imagefiles?.visible) {
+      const applicationConfig = entityConfigs.find(e => e.entityType === 'application');
+      const layersConfig = entityConfigs.find(e => e.entityType === 'layer');
+      const userConfig = entityConfigs.find(e => e.entityType === 'user');
+      const groupsConfig = entityConfigs.find(e => e.entityType === 'group');
+      navigationContentChildren.push({
+        key: 'application',
+        label: (
+          <>
+            <BankOutlined />
+            <span>
+              {TranslationUtil.getTranslationFromConfig(applicationConfig?.navigationTitle, applicationConfig?.i18n)}
+            </span>
+          </>
+        )
+      });
+      navigationContentChildren.push({
+        key: 'layers',
+        label: (
+          <>
+            <AppstoreOutlined />
+            <span>
+              {TranslationUtil.getTranslationFromConfig(layersConfig?.navigationTitle, layersConfig?.i18n)}
+            </span>
+          </>
+        )
+      });
+      navigationContentChildren.push({
+        key: 'user',
+        label: (
+          <>
+            <UserOutlined />
+            <span>
+              {TranslationUtil.getTranslationFromConfig(userConfig?.navigationTitle, userConfig?.i18n)}
+            </span>
+          </>
+        )
+      });
+      navigationContentChildren.push({
+        key: 'group',
+        label: (
+          <>
+            <TeamOutlined />
+            <span>
+              {TranslationUtil.getTranslationFromConfig(groupsConfig?.navigationTitle, groupsConfig?.i18n)}
+            </span>
+          </>
+        )
+      });
+    }
+  }
 
   if (navigationConf?.general?.imagefiles?.visible) {
     navigationContentChildren.push({
