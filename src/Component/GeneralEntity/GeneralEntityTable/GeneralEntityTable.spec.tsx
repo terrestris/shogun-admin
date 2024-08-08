@@ -1,9 +1,170 @@
-import { GeneralEntityTable } from './GeneralEntityTable';
+import React from 'react';
+
+import {
+  cleanup,
+  fireEvent,
+  render,
+  screen
+} from '@testing-library/react';
+
+import BaseEntity from '@terrestris/shogun-util/dist/model/BaseEntity';
+
+import {
+  ControllerUtil
+} from '../../../Controller/ControllerUtil';
+
+import i18n from '../../../i18n';
+
+import { EntityType } from '../../FormField/Permission/InstancePermissionGrid/InstancePermissionGrid';
+
+import { GeneralEntityTable, GeneralEntityTableColumn, TableConfig } from './GeneralEntityTable';
+
+const mockUsedNavigate = jest.fn();
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useNavigate: () => mockUsedNavigate,
+}));
 
 describe('<GeneralEntityTable />', () => {
+  let mockController;
+  let mockEntityType: EntityType;
+  let mockTableConfig: TableConfig<BaseEntity>;
+  let mockBaseEntities: BaseEntity[];
+
+  beforeEach(() => {
+    mockController = {
+      someMethod: jest.fn(),
+    };
+    jest.spyOn(ControllerUtil, 'createController').mockImplementation(() => mockController);
+
+    const mockGeneralEntityTableColumn: GeneralEntityTableColumn<BaseEntity> = {
+      title: 'ID',
+      sorter: true,
+      sortOrder: 'ascend',
+      filters: [
+        {
+          text: 'Filter 1',
+          value: 'filter1'
+        },
+        {
+          text: 'Filter 2',
+          value: 'filter2'
+        }
+      ],
+      onFilter: (value, record) => record.id === value,
+      filtered: true,
+      filterDropdownOpen: true,
+      filterIcon: (filtered) => (filtered ? <span>🔍</span> : <span>🔎</span>),
+      responsive: ['lg', 'md', 'sm'],
+    };
+
+    mockTableConfig = {
+      columnDefinition: [mockGeneralEntityTableColumn],
+      dataMapping: {
+        column1: {
+          title: 'Column 1',
+          dataIndex: 'column1',
+          key: 'key1'
+        },
+        column2: {
+          title: 'Column 2',
+          dataIndex: 'column2',
+          key: 'key2'
+        },
+      },
+    };
+
+    mockBaseEntities = [new BaseEntity({
+      id: undefined,
+      created: new Date('2023-07-01T00:00:00Z'),
+      modified: new Date('2024-07-31T00:00:00Z')
+    }),
+    new BaseEntity({
+      id: 1,
+      created: new Date('2023-07-01T00:00:00Z'),
+      modified: new Date('2024-07-31T00:00:00Z')
+    })];
+  });
+
+  afterEach(() => {
+    cleanup();
+  });
 
   it('is defined', () => {
     expect(GeneralEntityTable).not.toBeUndefined();
   });
 
+  it('can be rendered', async () => {
+    mockEntityType = 'group';
+
+    const {
+      container
+    } = render(
+      <GeneralEntityTable
+        actions={['delete', 'edit']}
+        controller={mockController}
+        entities={[]}
+        entityType={mockEntityType}
+        i18n={i18n}
+        tableConfig={{}}
+      />);
+    expect(container).toBeVisible();
+    expect(container.querySelector('.general-entity-table')).toBeVisible();
+    expect(screen.getByText('No data')).toBeVisible();
+    expect(screen.getByText('ID')).toBeVisible();
+    expect(screen.getByText('Name')).toBeVisible();
+  });
+
+  it('navigates on click', async () => {
+    mockEntityType = 'layer';
+
+    const {
+      container
+    } = render(
+      <GeneralEntityTable
+        actions={['delete', 'edit']}
+        controller={mockController}
+        entities={mockBaseEntities}
+        entityType={mockEntityType}
+        i18n={i18n}
+        tableConfig={mockTableConfig}
+      />);
+    expect(container).toBeVisible();
+    expect(screen.getByText('1')).toBeVisible();
+    expect(container.querySelector('.ant-pagination-disabled')).toBeVisible();
+
+    const rowElement: HTMLElement | null = container.querySelector('tr[data-row-key="1"]');
+    expect(rowElement).toBeVisible();
+
+    await fireEvent.click(rowElement!);
+    expect(mockUsedNavigate).toHaveBeenCalled();
+  });
+
+  it('fetches entity if ID is not defined', async () => {
+    mockEntityType = 'layer';
+    const mockFetchEnteties = jest.fn();
+
+    const {
+      container
+    } = render(
+      <GeneralEntityTable
+        actions={['delete', 'edit']}
+        controller={mockController}
+        entities={mockBaseEntities}
+        fetchEntities={mockFetchEnteties}
+        entityType={mockEntityType}
+        i18n={i18n}
+        tableConfig={mockTableConfig}
+      />);
+    expect(container).toBeVisible();
+
+    const deleteElement: HTMLElement | null = container.querySelector('span[aria-label="delete"]');
+    expect(deleteElement).toBeVisible();
+
+    await fireEvent.click(deleteElement!);
+
+    expect(mockUsedNavigate).toHaveBeenCalled();
+    expect(mockFetchEnteties).toHaveBeenCalled();
+  });
 });
+
