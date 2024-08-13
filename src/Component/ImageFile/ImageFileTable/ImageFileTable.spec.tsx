@@ -14,8 +14,6 @@ import { MemoryRouter } from 'react-router-dom';
 
 import ImageFileTable from './ImageFileTable';
 
-jest.mock('../../../Hooks/useSHOGunAPIClient');
-
 const mockUsedNavigate = jest.fn();
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
