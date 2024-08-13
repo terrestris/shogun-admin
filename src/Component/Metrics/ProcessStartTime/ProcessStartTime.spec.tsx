@@ -3,15 +3,15 @@ import React from 'react';
 import {
   render,
   screen,
-  fireEvent,
 } from '@testing-library/react';
 
-import { ProcessStartTime } from './ProcessStartTime';
 import moment from 'moment';
+
+import { ProcessStartTime } from './ProcessStartTime';
 
 jest.mock('../MetricEntry/MetricEntry', () => jest.fn(({ valueRenderer }) => (
   <div data-testid="metric-entry">
-    {valueRenderer(1627840800)} { }
+    {valueRenderer(1627840800)}
   </div>
 )));
 
