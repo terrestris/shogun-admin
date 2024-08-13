@@ -52,7 +52,7 @@ describe('<Logs />', () => {
     expect(Logs).not.toBeUndefined();
   });
 
-  it('can be rendered with default props', async () => {
+  it('can be rendered', async () => {
     const {
       container
     } = render(
