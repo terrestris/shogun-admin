@@ -20,7 +20,7 @@ import { SelectInfo } from 'rc-menu/lib/interface';
 import {
   useTranslation
 } from 'react-i18next';
-import { matchPath, useLocation,useNavigate } from 'react-router-dom';
+import { matchPath, useLocation, useNavigate } from 'react-router-dom';
 import config from 'shogunApplicationConfig';
 
 import BaseEntity from '@terrestris/shogun-util/dist/model/BaseEntity';
@@ -62,56 +62,54 @@ export const Navigation: React.FC<NavigationProps> = ({
 
   if (entityConfigs && entityConfigs.length > 0) {
 
-    if (navigationConf?.general?.imagefiles?.visible) {
-      const applicationConfig = entityConfigs.find(e => e.entityType === 'application');
-      const layersConfig = entityConfigs.find(e => e.entityType === 'layer');
-      const userConfig = entityConfigs.find(e => e.entityType === 'user');
-      const groupsConfig = entityConfigs.find(e => e.entityType === 'group');
-      navigationContentChildren.push({
-        key: 'application',
-        label: (
-          <>
-            <BankOutlined />
-            <span>
-              {TranslationUtil.getTranslationFromConfig(applicationConfig?.navigationTitle, applicationConfig?.i18n)}
-            </span>
-          </>
-        )
-      });
-      navigationContentChildren.push({
-        key: 'layers',
-        label: (
-          <>
-            <AppstoreOutlined />
-            <span>
-              {TranslationUtil.getTranslationFromConfig(layersConfig?.navigationTitle, layersConfig?.i18n)}
-            </span>
-          </>
-        )
-      });
-      navigationContentChildren.push({
-        key: 'user',
-        label: (
-          <>
-            <UserOutlined />
-            <span>
-              {TranslationUtil.getTranslationFromConfig(userConfig?.navigationTitle, userConfig?.i18n)}
-            </span>
-          </>
-        )
-      });
-      navigationContentChildren.push({
-        key: 'group',
-        label: (
-          <>
-            <TeamOutlined />
-            <span>
-              {TranslationUtil.getTranslationFromConfig(groupsConfig?.navigationTitle, groupsConfig?.i18n)}
-            </span>
-          </>
-        )
-      });
-    }
+    const applicationConfig = entityConfigs.find(e => e.entityType === 'application');
+    const layersConfig = entityConfigs.find(e => e.entityType === 'layer');
+    const userConfig = entityConfigs.find(e => e.entityType === 'user');
+    const groupsConfig = entityConfigs.find(e => e.entityType === 'group');
+    navigationContentChildren.push({
+      key: 'application',
+      label: (
+        <>
+          <BankOutlined />
+          <span>
+            {TranslationUtil.getTranslationFromConfig(applicationConfig?.navigationTitle, applicationConfig?.i18n)}
+          </span>
+        </>
+      )
+    });
+    navigationContentChildren.push({
+      key: 'layer',
+      label: (
+        <>
+          <AppstoreOutlined />
+          <span>
+            {TranslationUtil.getTranslationFromConfig(layersConfig?.navigationTitle, layersConfig?.i18n)}
+          </span>
+        </>
+      )
+    });
+    navigationContentChildren.push({
+      key: 'user',
+      label: (
+        <>
+          <UserOutlined />
+          <span>
+            {TranslationUtil.getTranslationFromConfig(userConfig?.navigationTitle, userConfig?.i18n)}
+          </span>
+        </>
+      )
+    });
+    navigationContentChildren.push({
+      key: 'group',
+      label: (
+        <>
+          <TeamOutlined />
+          <span>
+            {TranslationUtil.getTranslationFromConfig(groupsConfig?.navigationTitle, groupsConfig?.i18n)}
+          </span>
+        </>
+      )
+    });
   }
 
   if (navigationConf?.general?.imagefiles?.visible) {
