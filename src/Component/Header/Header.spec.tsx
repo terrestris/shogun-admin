@@ -75,7 +75,7 @@ describe('<Header />', () => {
     const titleElement = screen.getByText('SHOGun Admin');
     expect(titleElement!).toBeVisible();
 
-    expect(container.querySelector('.header-link')!).toHaveProperty('href', 'http://localhost/undefined/portal')
+    expect(container.querySelector('.header-link')!).toHaveProperty('href', 'http://localhost/undefined/portal');
   });
 
   it('renders language selector', async () => {

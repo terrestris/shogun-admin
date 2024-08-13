@@ -63,7 +63,7 @@ describe('<LayerTypeSelect />', () => {
     });
 
     rerender(<LayerTypeSelect value='WMTS' />);
-    document.querySelector('.ant-select-selection-item')
+    document.querySelector('.ant-select-selection-item');
     expect(document.querySelector('.ant-select-selection-item')?.innerHTML).toBe('WMTS');
   });
 
