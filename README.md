@@ -1,8 +1,6 @@
-![nodejs]
-(https://github.com/terrestris/shogun-admin/actions/workflows/nodejs.yml/badge.svg)
+![nodejs](https://github.com/terrestris/shogun-admin/actions/workflows/nodejs.yml/badge.svg)
 
-![release]
-(https://github.com/terrestris/shogun-admin/actions/workflows/release.yaml/badge.svg)
+![release](https://github.com/terrestris/shogun-admin/actions/workflows/release.yaml/badge.svg)
 
 # shogun-admin
 
