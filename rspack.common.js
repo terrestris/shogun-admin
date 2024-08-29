@@ -2,6 +2,8 @@
 const rspack = require('@rspack/core');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
+const path = require('path');
+
 const CustomAntThemeModifyVars = require('./theme.js');
 
 const deps = require('./package.json').dependencies;
@@ -28,16 +30,28 @@ module.exports = {
     ],
     fallback: {
       buffer: require.resolve('buffer/')
+    },
+    alias: {
+      'ol': path.join(__dirname, 'node_modules', 'ol'),
     }
   },
   module: {
-    rules: [{
-      test: /\.m?js$/,
-      include: /node_modules\/@terrestris/,
+    rules: [
+    //   {
+    //   test: /\.m?js$/,
+    //   include: /node_modules\/@terrestris/,
+    //   resolve: {
+    //     fullySpecified: false
+    //   }
+    // },
+    {
+      test: /\.m?js/,
+      type: 'javascript/auto',
       resolve: {
         fullySpecified: false
       }
-    }, {
+    },
+    {
       test: /\.tsx?|\.jsx?$/,
       use: 'babel-loader',
       exclude: /node_modules\/(?!@terrestris)/
@@ -118,11 +132,21 @@ module.exports = {
           eager: true,
           requiredVersion: deps['react-i18next']
         },
-        // 'ol/': {
-        //   singleton: true,
-        //   eager: true,
-        //   requiredVersion: deps.ol
-        // }
+        'ol': {
+          singleton: true,
+          eager: true,
+          requiredVersion: deps.ol
+        },
+        'ol/': {
+          singleton: true,
+          eager: true,
+          requiredVersion: deps.ol
+        },
+        'ol-mapbox-style': {
+          singleton: true,
+          eager: true,
+          requiredVersion: deps['ol-mapbox-style']
+        },
       }
     })
   ]
