@@ -18,12 +18,12 @@ import { SHOGunAPIClientProvider } from './Context/SHOGunAPIClientContext';
 import i18n from './i18n';
 import Logger from './Logger';
 
-import {
-  AdminPluginInternal
-} from './plugin';
+// import {
+//   AdminPluginInternal
+// } from './plugin';
 
-import { PluginProvider } from './Context/PluginContext';
-import OlFeature from 'ol/Feature';
+// import { PluginProvider } from './Context/PluginContext';
+// import OlFeature from 'ol/Feature';
 
 const App = React.lazy(() => import('./App'));
 
@@ -80,137 +80,141 @@ const initSHOGunAPIClient = (keycloak?: Keycloak) => {
 };
 
 // ExamplePlugin: 'ExamplePlugin@/client-plugin/remoteEntry.js'
-const loadPluginModules = async (moduleName: string, moduleUrl: string, remoteNames: string[]) => {
-  await __webpack_init_sharing__('default');
+// const loadPluginModules = async (moduleName: string, moduleUrl: string, remoteNames: string[]) => {
+//   await __webpack_init_sharing__('default');
 
-  await new Promise<void>((resolve, reject) => {
-    const element = document.createElement('script');
+//   await new Promise<void>((resolve, reject) => {
+//     const element = document.createElement('script');
 
-    element.src = moduleUrl;
-    element.type = 'text/javascript';
-    element.async = true;
+//     element.src = moduleUrl;
+//     element.type = 'text/javascript';
+//     element.async = true;
 
-    element.onload = () => {
-      element.parentElement?.removeChild(element);
-      resolve();
-    };
+//     element.onload = () => {
+//       element.parentElement?.removeChild(element);
+//       resolve();
+//     };
 
-    element.onerror = (err) => {
-      element.parentElement?.removeChild(element);
-      reject(err);
-    };
+//     element.onerror = (err) => {
+//       element.parentElement?.removeChild(element);
+//       reject(err);
+//     };
 
-    document.head.appendChild(element);
-  });
+//     document.head.appendChild(element);
+//   });
 
-  // @ts-ignore
-  const container = window[moduleName];
+//   // @ts-ignore
+//   const container = window[moduleName];
 
-  // eslint-disable-next-line camelcase
-  await container.init(__webpack_share_scopes__.default);
+//   // eslint-disable-next-line camelcase
+//   await container.init(__webpack_share_scopes__.default);
 
-  const modules = [];
-  for (const remoteName of remoteNames) {
-    const factory = await container.get(remoteName);
-    const module = factory();
-    modules.push(module);
-  }
+//   const modules = [];
+//   for (const remoteName of remoteNames) {
+//     const factory = await container.get(remoteName);
+//     const module = factory();
+//     modules.push(module);
+//   }
 
-  return modules;
-};
+//   return modules;
+// };
 
-const loadPlugins = async () => {
-  if (!config.plugins || config.plugins.length === 0) {
-    console.info('No plugins found');
-    return [];
-  }
+// const loadPlugins = async () => {
+//   if (!config.plugins || config.plugins.length === 0) {
+//     console.info('No plugins found');
+//     return [];
+//   }
 
-  console.info('Loading plugins');
+//   console.info('Loading plugins');
 
-  const clientPlugins: AdminPluginInternal[] = [];
+//   const clientPlugins: AdminPluginInternal[] = [];
 
-  for (const plugin of config.plugins) {
-    const name = plugin.name;
-    const resourcePath = plugin.resourcePath;
-    const exposedPaths = plugin.exposedPaths;
+//   for (const plugin of config.plugins) {
+//     const name = plugin.name;
+//     const resourcePath = plugin.resourcePath;
+//     const exposedPaths = plugin.exposedPaths;
 
-    if (!name) {
-      console.error('Required plugin configuration \'name\' is not set');
-      return clientPlugins;
-    }
+//     if (!name) {
+//       console.error('Required plugin configuration \'name\' is not set');
+//       return clientPlugins;
+//     }
 
-    if (!resourcePath) {
-      console.error('Required plugin configuration \'resourcePath\' is not set');
-      return clientPlugins;
-    }
+//     if (!resourcePath) {
+//       console.error('Required plugin configuration \'resourcePath\' is not set');
+//       return clientPlugins;
+//     }
 
-    if (!exposedPaths) {
-      console.error('Required plugin configuration \'exposedPaths\' is not set');
-      return clientPlugins;
-    }
+//     if (!exposedPaths) {
+//       console.error('Required plugin configuration \'exposedPaths\' is not set');
+//       return clientPlugins;
+//     }
 
-    console.info(`Loading plugin ${name} (with exposed paths ${exposedPaths.join(' and ')}) from ${resourcePath}`);
+//     console.info(`Loading plugin ${name} (with exposed paths ${exposedPaths.join(' and ')}) from ${resourcePath}`);
 
-    let clientPluginModules: any[];
-    try {
-      clientPluginModules = await loadPluginModules(name, resourcePath, exposedPaths);
-      console.info(`Successfully loaded plugin ${name}`);
-    } catch (error) {
-      console.error(`Could not load plugin ${name}:`, error);
-      return clientPlugins;
-    }
+//     let clientPluginModules: any[];
+//     try {
+//       clientPluginModules = await loadPluginModules(name, resourcePath, exposedPaths);
+//       console.info(`Successfully loaded plugin ${name}`);
+//     } catch (error) {
+//       console.error(`Could not load plugin ${name}:`, error);
+//       return clientPlugins;
+//     }
 
-    for (let module of clientPluginModules) {
-      const clientPluginDefault: AdminPluginInternal = module.default;
-      const PluginComponent = clientPluginDefault.component;
+//     for (let module of clientPluginModules) {
+//       const clientPluginDefault: AdminPluginInternal = module.default;
+//       const PluginComponent = clientPluginDefault.component;
 
-      // if (toolConfig) {
-      //   const pluginApplicationConfig = toolConfig.find((tc) => tc.name === clientPluginDefault.key);
-      //   if (pluginApplicationConfig?.config?.disabled) {
-      //     Logger.info(`"${clientPluginDefault.key}" is disabled by the application config`);
-      //     continue;
-      //   }
-      // }
+//       // if (toolConfig) {
+//       //   const pluginApplicationConfig = toolConfig.find((tc) => tc.name === clientPluginDefault.key);
+//       //   if (pluginApplicationConfig?.config?.disabled) {
+//       //     Logger.info(`"${clientPluginDefault.key}" is disabled by the application config`);
+//       //     continue;
+//       //   }
+//       // }
 
-      const WrappedPluginComponent = () => (
-        <PluginComponent
-          feature={new OlFeature()}
-          // map={map}
-          // client={client}
-        />
-      );
+//       const WrappedPluginComponent = () => (
+//         <PluginComponent
+//           // feature={new OlFeature()}
+//           // map={map}
+//           // client={client}
+//         />
+//       );
 
-      clientPluginDefault.wrappedComponent = WrappedPluginComponent;
+//       clientPluginDefault.wrappedComponent = WrappedPluginComponent;
 
-      if (clientPluginDefault.i18n) {
-        Object.entries(clientPluginDefault.i18n).forEach(locale => {
-          const lng = locale[0];
-          const resources = locale[1].translation;
-          i18n.addResourceBundle(lng, 'translation', resources, true, true);
-        });
-      }
+//       if (clientPluginDefault.i18n) {
+//         Object.entries(clientPluginDefault.i18n).forEach(locale => {
+//           const lng = locale[0];
+//           const resources = locale[1].translation;
+//           i18n.addResourceBundle(lng, 'translation', resources, true, true);
+//         });
+//       }
 
-      // if (clientPluginDefault.reducers) {
-      //   const reducers = createReducer(clientPluginDefault.reducers);
-      //   store.replaceReducer(reducers);
-      // }
+//       // if (clientPluginDefault.reducers) {
+//       //   const reducers = createReducer(clientPluginDefault.reducers);
+//       //   store.replaceReducer(reducers);
+//       // }
 
-      // if (Array.isArray(clientPluginDefault.middlewares)) {
-      //   clientPluginDefault.middlewares?.forEach(mw => dynamicMiddleware.addMiddleware(mw));
-      // }
+//       // if (Array.isArray(clientPluginDefault.middlewares)) {
+//       //   clientPluginDefault.middlewares?.forEach(mw => dynamicMiddleware.addMiddleware(mw));
+//       // }
 
-      clientPlugins.push(clientPluginDefault);
-    }
-  }
+//       clientPlugins.push(clientPluginDefault);
+//     }
+//   }
 
-  return clientPlugins;
-};
+//   return clientPlugins;
+// };
 
 const renderApp = async () => {
-  const rootElement = document.getElementById('root');
+  const rootElement = document.getElementById('app');
+
   if (_isNil(rootElement)) {
-    return Promise.reject();
+    // TODO Logger is not working?!
+    Logger.error('element not found');
+    return;
   }
+
   const root = createRoot(rootElement);
   let keycloak: Keycloak | undefined;
 
@@ -231,7 +235,7 @@ const renderApp = async () => {
 
     const client = initSHOGunAPIClient(keycloak);
 
-    const plugins = await loadPlugins();
+    // const plugins = await loadPlugins();
 
     loader.config({
       paths: {
@@ -241,13 +245,13 @@ const renderApp = async () => {
 
     root.render(
       <SHOGunAPIClientProvider client={client}>
-        <PluginProvider plugins={plugins}>
+        {/*<PluginProvider plugins={plugins}>*/}
           <RecoilRoot>
             <Suspense>
               <App />
             </Suspense>
           </RecoilRoot>
-        </PluginProvider>
+        {/*</PluginProvider>*/}
       </SHOGunAPIClientProvider>
     );
   } catch (error) {

@@ -1,6 +1,7 @@
+const path = require('path');
+
 const rspack = require('@rspack/core');
-const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
-const TerserPlugin = require('terser-webpack-plugin');
+
 const {
   merge
 } = require('webpack-merge');
@@ -11,22 +12,24 @@ module.exports = merge(common, {
   mode: 'production',
   devtool: 'source-map',
   plugins: [
-    process.env.BUNDLE_ANALYZE && new (require('webpack-bundle-analyzer')).BundleAnalyzerPlugin(),
     new rspack.CopyRspackPlugin({
       patterns: [
         {
-          from: 'assets',
-          filter: (filepath) => !filepath.endsWith('.html'),
+          from: path.join(__dirname, 'assets'),
+          to: '.',
+          globOptions: {
+            ignore: ['*.html']
+          },
           noErrorOnMissing: true
         }
       ]
     }),
-    new rspack.CssExtractRspackPlugin({
-      filename: '[name].[contenthash].css'
-    })
+    // new rspack.CssExtractRspackPlugin({
+    //   filename: 'css/[name].[contenthash].css'
+    // })
   ].filter(Boolean),
   output: {
-    filename: '[name].[contenthash].js'
+    filename: 'js/[name].[contenthash].js'
   },
   optimization: {
     splitChunks: {
@@ -47,11 +50,6 @@ module.exports = merge(common, {
     moduleIds: 'deterministic',
     runtimeChunk: {
       name: 'manifest'
-    },
-    minimize: true,
-    minimizer: [
-      new TerserPlugin(),
-      new CssMinimizerPlugin()
-    ]
+    }
   }
 });

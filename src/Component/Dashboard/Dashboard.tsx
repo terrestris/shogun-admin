@@ -2,11 +2,7 @@ import React, {
   ReactNode
 } from 'react';
 
-import Util from '@terrestris/ol-util/dist/GeometryUtil/GeometryUtil';
-import { apply } from 'ol-mapbox-style';
-// import ExamplePlugin from 'ExamplePlugin/FooterLinks';
-
-import usePlugins from '../../Hooks/usePlugins';
+// import usePlugins from '../../Hooks/usePlugins';
 
 import './Dashboard.less';
 
@@ -33,13 +29,13 @@ export const Dashboard: React.FC<DashoardProps> = (props) => {
     ...passThroughProps
   } = props;
 
-  const plugins = usePlugins();
+  // const plugins = usePlugins();
 
-  console.log(apply)
-  Util.toString()
-  console.log(plugins)
+  // console.log(apply)
+  // Util.toString()
+  // console.log(plugins)
 
-  const PluginComponent = plugins[0].wrappedComponent;
+  // const PluginComponent = plugins[0].wrappedComponent;
 
   const gridTemplateColumns = `repeat(${columns}, 1fr)`;
 
@@ -50,7 +46,6 @@ export const Dashboard: React.FC<DashoardProps> = (props) => {
     >
       <div className="header">
         {/* <ExamplePlugin /> */}
-        <PluginComponent />
         {
           icon &&
           <img className="icon" src={icon} alt={`${title} icon`} />
