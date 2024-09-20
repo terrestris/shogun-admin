@@ -11,7 +11,7 @@ import {
   Dropdown
 } from 'antd';
 import Avatar from 'antd/lib/avatar/avatar';
-import { ItemType } from 'antd/lib/menu/hooks/useItems';
+import { ItemType } from 'antd/lib/menu/interface';
 import _isNil from 'lodash/isNil';
 import { useTranslation } from 'react-i18next';
 import {

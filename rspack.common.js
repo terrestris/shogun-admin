@@ -1,24 +1,22 @@
 // const { ModuleFederationPlugin } = require('@module-federation/enhanced/rspack');
-const rspack = require('@rspack/core');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-
 const path = require('path');
 
-const CustomAntThemeModifyVars = require('./theme.js');
+const rspack = require('@rspack/core');
 
 const deps = require('./package.json').dependencies;
 
+const CustomAntThemeModifyVars = require('./theme.js');
+
 module.exports = {
   entry: [
-    'whatwg-fetch',
-    '@babel/polyfill',
     './src/index.tsx'
   ],
   externals: {
     shogunApplicationConfig: 'shogunApplicationConfig'
   },
   output: {
-    filename: 'js/[name].bundle.js'
+    path: path.resolve(__dirname, 'dist'),
+    clean: true
   },
   resolve: {
     extensions: [
@@ -30,62 +28,86 @@ module.exports = {
     ],
     fallback: {
       buffer: require.resolve('buffer/')
-    },
-    alias: {
-      'ol': path.join(__dirname, 'node_modules', 'ol'),
     }
   },
   module: {
-    rules: [
-    //   {
-    //   test: /\.m?js$/,
-    //   include: /node_modules\/@terrestris/,
-    //   resolve: {
-    //     fullySpecified: false
-    //   }
-    // },
-    {
+    rules: [{
       test: /\.m?js/,
       type: 'javascript/auto',
       resolve: {
         fullySpecified: false
       }
-    },
-    {
-      test: /\.tsx?|\.jsx?$/,
-      use: 'babel-loader',
-      exclude: /node_modules\/(?!@terrestris)/
+    }, {
+      test: /\.(j|t)s$/,
+      exclude: [/[\\/]node_modules[\\/]/],
+      loader: 'builtin:swc-loader',
+      options: {
+        jsc: {
+          parser: {
+            syntax: 'typescript'
+          },
+          externalHelpers: true
+        },
+        env: {
+          targets: 'Chrome >= 48'
+        }
+      }
+    }, {
+      test: /\.tsx$/,
+      loader: 'builtin:swc-loader',
+      exclude: [/[\\/]node_modules[\\/]/],
+      options: {
+        jsc: {
+          parser: {
+            syntax: 'typescript',
+            tsx: true
+          },
+          transform: {
+            react: {
+              runtime: 'automatic'
+            }
+          },
+          externalHelpers: true
+        },
+        env: {
+          targets: 'Chrome >= 48'
+        }
+      }
     }, {
       test: /\.less$/,
-      use: [
-        'style-loader',
-        'css-loader',
-        {
-          loader: 'less-loader',
-          options: {
-            lessOptions: {
-              javascriptEnabled: true,
-              modifyVars: CustomAntThemeModifyVars
-            }
+      type: 'css/auto',
+      use: [{
+        loader: 'less-loader',
+        options: {
+          lessOptions: {
+            javascriptEnabled: true,
+            modifyVars: CustomAntThemeModifyVars
           }
         }
-      ]
+      }]
     }, {
-      test: /\.(eot|ttf|svg|woff|woff2)$/i,
-      type: 'asset/resource'
+      test: /\.d\.ts$/,
+      loader: 'ignore-loader'
     }, {
-      test: /\.(jpe?g|png|gif|ico)$/i,
+      test: /\.(jpe?g|png|gif|ico|pdf|eot|svg|ttf|woff(2)?)$/,
       type: 'asset/resource'
     }]
   },
+  experiments: {
+    css: true
+  },
   plugins: [
-    new HtmlWebpackPlugin({
-      favicon: './assets/favicon.ico',
+    new rspack.HtmlRspackPlugin({
       filename: 'index.html',
-      hash: true,
-      minify: 'auto',
-      template: './assets/index.html',
-      title: 'SHOGun admin'
+      template: path.join(__dirname, 'assets', 'index.html'),
+      templateParameters: {
+        title: 'SHOGun Admin',
+        appPrefix: process.env.HTML_BASE_URL ?? ''
+      },
+      favicon: path.join(__dirname, 'assets', 'favicon.ico'),
+      meta: {
+        viewport: 'user-scalable=no, width=device-width, initial-scale=1, shrink-to-fit=no'
+      }
     }),
     new rspack.CopyRspackPlugin({
       patterns: [{
@@ -100,7 +122,7 @@ module.exports = {
       }, {
         from: './node_modules/monaco-editor/min/vs',
         to: 'vs'
-      }],
+      }]
     }),
     new rspack.DefinePlugin({
       PROJECT_VERSION: JSON.stringify(require('./package.json').version),

@@ -14,7 +14,7 @@ import {
 import {
   Menu
 } from 'antd';
-import { ItemType } from 'antd/lib/menu/hooks/useItems';
+import { ItemType } from 'antd/lib/menu/interface';
 import _isNil from 'lodash/isNil';
 import { SelectInfo } from 'rc-menu/lib/interface';
 import {

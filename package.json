@@ -2,14 +2,28 @@
   "name": "@terrestris/shogun-admin",
   "version": "16.0.0",
   "description": "The admin UI for the SHOGun Web-mapping backend.",
+  "keywords": [
+    "SHOGun",
+    "WebMapping"
+  ],
+  "homepage": "https://github.com/terrestris/shogun-admin#readme",
+  "bugs": {
+    "url": "https://github.com/terrestris/shogun-admin/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/terrestris/shogun-admin.git"
+  },
+  "license": "Apache-2.0 ",
+  "author": "terrestris GmbH & Co. KG <info@terrestris.de>",
   "main": "index.js",
   "files": [
     "dist"
   ],
   "scripts": {
-    "build": "npm run test && npm run build:dist",
-    "build:dist": "npm run clean:dist && rspack --config rspack.prod.js build",
-    "clean:dist": "rimraf ./dist/*",
+    "build": "rspack --config rspack.prod.js build",
+    "build:analyze": "npm run build -- --analyze",
+    "check": "npm run typecheck && npm run lint && npm run test",
     "lint": "eslint -c .eslintrc.cjs --ext .js,.ts,.tsx src/",
     "lint:fix": "eslint -c .eslintrc.cjs --ext .js,.ts,.tsx --fix src/",
     "prepare": "husky",
@@ -19,31 +33,16 @@
     "test:watch": "jest --watch",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
-  "type": "module",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/terrestris/shogun-admin.git"
-  },
-  "author": "terrestris GmbH & Co. KG <info@terrestris.de>",
-  "keywords": [
-    "SHOGun",
-    "WebMapping"
-  ],
-  "license": "Apache-2.0 ",
-  "bugs": {
-    "url": "https://github.com/terrestris/shogun-admin/issues"
-  },
-  "homepage": "https://github.com/terrestris/shogun-admin#readme",
   "dependencies": {
     "@ant-design/icons": "5.5.1",
     "@ant-design/pro-components": "^2.7.10",
     "@casualbot/jest-sonar-reporter": "2.4.0",
     "@monaco-editor/react": "4.6.0",
     "@terrestris/base-util": "2.0.0",
-    "@terrestris/ol-util": "19.0.1",
+    "@terrestris/ol-util": "20.0.0",
     "@terrestris/shogun-util": "9.0.0",
     "@uiw/react-md-editor": "4.0.4",
-    "antd": "5.17.2",
+    "antd": "5.20.6",
     "i18next": "23.15.1",
     "i18next-browser-languagedetector": "8.0.0",
     "js-logger": "1.6.1",
@@ -74,21 +73,22 @@
     "@commitlint/cli": "19.5.0",
     "@commitlint/config-conventional": "19.5.0",
     "@playwright/test": "1.47.2",
-    "@originjs/vite-plugin-federation": "^1.3.5",
-    "@rspack/cli": "^0.7.5",
-    "@rspack/core": "^0.7.5",
-    "@rspack/plugin-react-refresh": "^0.7.5",
+    "@rspack/cli": "^1.0.5",
+    "@rspack/core": "^1.0.5",
+    "@rspack/plugin-react-refresh": "^1.0.0",
     "@semantic-release/changelog": "6.0.3",
     "@semantic-release/git": "10.0.1",
     "@semantic-release/github": "11.0.0",
     "@semantic-release/npm": "12.0.1",
     "@semantic-release/release-notes-generator": "14.0.1",
+    "@swc/helpers": "^0.5.13",
     "@terrestris/eslint-config-typescript": "5.0.0",
     "@terrestris/eslint-config-typescript-react": "2.0.0",
     "@testing-library/jest-dom": "6.5.0",
     "@testing-library/react": "16.0.1",
     "@types/jest": "29.5.13",
     "@types/react": "18.3.11",
+    "@types/lodash": "^4.17.7",
     "@types/react-dom": "18.3.0",
     "@types/react-redux": "7.1.34",
     "@types/react-router-dom": "5.3.3",
@@ -99,7 +99,6 @@
     "babel-plugin-import": "^1.13.8",
     "buffer": "6.0.3",
     "css-loader": "7.1.2",
-    "css-minimizer-webpack-plugin": "7.0.0",
     "dotenv": "16.4.5",
     "eslint": "8.57.0",
     "eslint-plugin-import": "2.30.0",
@@ -110,21 +109,25 @@
     "jest-dom": "4.0.0",
     "jest-environment-jsdom": "29.7.0",
     "less": "4.2.0",
-    "mini-css-extract-plugin": "2.9.1",
     "less-loader": "12.2.0",
+    "mini-css-extract-plugin": "2.9.1",
     "openapi-types": "12.1.3",
     "react-refresh": "^0.14.2",
     "regenerator-runtime": "0.14.1",
     "rimraf": "6.0.1",
     "semantic-release": "24.1.2",
-    "typescript": "5.6.3",
     "source-map-loader": "5.0.0",
     "style-loader": "4.0.0",
-    "webpack-merge": "5.10.0",
+    "typescript": "5.6.3",
+    "webpack-merge": "6.0.1",
     "whatwg-fetch": "3.6.20"
   },
   "optionalDependencies": {
     "@rollup/rollup-linux-x64-gnu": "4.24.0"
+  },
+  "engines": {
+    "node": ">=20",
+    "npm": ">=10"
   },
   "@casualbot/jest-sonar-reporter": {
     "suiteName": "jest tests",
@@ -136,9 +139,5 @@
     "ancestorSeparator": " › ",
     "usePathForSuiteName": "true",
     "relativePaths": "true"
-  },
-  "engines": {
-    "node": ">=20",
-    "npm": ">=10"
   }
 }
