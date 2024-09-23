@@ -12,18 +12,18 @@ module.exports = merge(common, {
   mode: 'production',
   devtool: 'source-map',
   plugins: [
-    new rspack.CopyRspackPlugin({
-      patterns: [
-        {
-          from: path.join(__dirname, 'assets'),
-          to: '.',
-          globOptions: {
-            ignore: ['*.html']
-          },
-          noErrorOnMissing: true
-        }
-      ]
-    }),
+    // new rspack.CopyRspackPlugin({
+    //   patterns: [
+    //     {
+    //       from: path.join(__dirname, 'assets'),
+    //       to: '.',
+    //       globOptions: {
+    //         ignore: ['*.html']
+    //       },
+    //       noErrorOnMissing: true
+    //     }
+    //   ]
+    // }),
     // new rspack.CssExtractRspackPlugin({
     //   filename: 'css/[name].[contenthash].css'
     // })

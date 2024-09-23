@@ -1,6 +1,6 @@
 import './JSONEditor.less';
 
-import './UserWorker';
+// import './UserWorker';
 
 import React, {
   useCallback,
@@ -12,7 +12,8 @@ import React, {
 import Editor, {
   EditorProps,
   OnChange,
-  useMonaco
+  useMonaco,
+  loader
 } from '@monaco-editor/react';
 
 import Logger from 'js-logger';
@@ -20,11 +21,39 @@ import { uniqueId } from 'lodash';
 import cloneDeep from 'lodash/cloneDeep';
 import _isNil from 'lodash/isNil';
 
+import * as monaco from 'monaco-editor';
+
 import {
   swaggerDocs
 } from '../../../State/static';
 import OpenAPIUtil from '../../../Util/OpenAPIUtil';
 import FullscreenWrapper from '../../FullscreenWrapper/FullscreenWrapper';
+
+// loader.config({ monaco });
+
+// @ts-ignore
+
+// self.MonacoEnvironment = {
+//   getWorker: function (moduleId, label) {
+//     if (label === 'json') {
+//       return new Worker(new URL('monaco-editor/esm/vs/language/json/json.worker', import.meta.url));
+//     }
+//     if (label === 'css' || label === 'scss' || label === 'less') {
+//       return new Worker(new URL('monaco-editor/esm/vs/language/css/css.worker', import.meta.url));
+//     }
+//     if (label === 'html' || label === 'handlebars' || label === 'razor') {
+//       return new Worker(new URL('monaco-editor/esm/vs/language/html/html.worker', import.meta.url));
+//     }
+//     if (label === 'typescript' || label === 'javascript') {
+//       return new Worker(
+//         new URL('monaco-editor/esm/vs/language/typescript/ts.worker', import.meta.url),
+//       );
+//     }
+//     return new Worker(new URL('monaco-editor/esm/vs/editor/editor.worker', import.meta.url));
+//   }
+// };
+
+loader.config({ monaco });
 
 export type JSONEditorProps = {
   value?: string;

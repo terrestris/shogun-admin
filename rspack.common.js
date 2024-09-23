@@ -1,7 +1,10 @@
-// const { ModuleFederationPlugin } = require('@module-federation/enhanced/rspack');
 const path = require('path');
 
+const { ModuleFederationPlugin } = require('@module-federation/enhanced/rspack');
+
 const rspack = require('@rspack/core');
+
+const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
 
 const deps = require('./package.json').dependencies;
 
@@ -15,11 +18,13 @@ module.exports = {
     shogunApplicationConfig: 'shogunApplicationConfig'
   },
   output: {
+    globalObject: 'self',
     path: path.resolve(__dirname, 'dist'),
     clean: true
   },
   resolve: {
     extensions: [
+      // '*',
       '.tsx',
       '.ts',
       '.js',
@@ -39,22 +44,26 @@ module.exports = {
       }
     }, {
       test: /\.(j|t)s$/,
+      type: 'javascript/auto',
       exclude: [/[\\/]node_modules[\\/]/],
       loader: 'builtin:swc-loader',
       options: {
+        sourceMap: true,
         jsc: {
           parser: {
             syntax: 'typescript'
           },
-          externalHelpers: true
+          externalHelpers: true,
+          preserveAllComments: false
         },
-        env: {
-          targets: 'Chrome >= 48'
-        }
+        // env: {
+        //   targets: 'Chrome >= 48'
+        // }
       }
     }, {
       test: /\.tsx$/,
       loader: 'builtin:swc-loader',
+      type: 'javascript/auto',
       exclude: [/[\\/]node_modules[\\/]/],
       options: {
         jsc: {
@@ -102,9 +111,8 @@ module.exports = {
       template: path.join(__dirname, 'assets', 'index.html'),
       templateParameters: {
         title: 'SHOGun Admin',
-        appPrefix: process.env.HTML_BASE_URL ?? ''
+        appPrefix: process.env.HTML_BASE_URL ?? '/admin/'
       },
-      favicon: path.join(__dirname, 'assets', 'favicon.ico'),
       meta: {
         viewport: 'user-scalable=no, width=device-width, initial-scale=1, shrink-to-fit=no'
       }
@@ -119,9 +127,6 @@ module.exports = {
       }, {
         from: './assets/fallbackConfig.js',
         to: 'fallbackConfig.js'
-      }, {
-        from: './node_modules/monaco-editor/min/vs',
-        to: 'vs'
       }]
     }),
     new rspack.DefinePlugin({
@@ -133,7 +138,10 @@ module.exports = {
         'Buffer'
       ]
     }),
-    new rspack.container.ModuleFederationPlugin({
+    new MonacoWebpackPlugin({
+      languages: ['json']
+    }),
+    new ModuleFederationPlugin({
       name: 'SHOGunAdmin',
       // remotes: {
       //   'ExamplePlugin': 'ExamplePlugin@https://localhost/admin-plugins/index.js'
@@ -154,21 +162,11 @@ module.exports = {
           eager: true,
           requiredVersion: deps['react-i18next']
         },
-        'ol': {
-          singleton: true,
-          eager: true,
-          requiredVersion: deps.ol
-        },
         'ol/': {
           singleton: true,
           eager: true,
           requiredVersion: deps.ol
-        },
-        'ol-mapbox-style': {
-          singleton: true,
-          eager: true,
-          requiredVersion: deps['ol-mapbox-style']
-        },
+        }
       }
     })
   ]
