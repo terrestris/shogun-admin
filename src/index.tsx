@@ -237,11 +237,11 @@ const renderApp = async () => {
 
     // const plugins = await loadPlugins();
 
-    loader.config({
-      paths: {
-        vs: './vs'
-      }
-    });
+    // loader.config({
+    //   paths: {
+    //     vs: './vs'
+    //   }
+    // });
 
     root.render(
       <SHOGunAPIClientProvider client={client}>
