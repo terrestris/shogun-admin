@@ -3,27 +3,31 @@ import './index.less';
 
 import React, { Suspense } from 'react';
 
-import { loader } from '@monaco-editor/react';
+// import {
+//   init,
+//   loadRemote
+// } from '@module-federation/enhanced/runtime';
 
 import { Button, Result } from 'antd';
+
 import Keycloak from 'keycloak-js';
+
 import _isNil from 'lodash/isNil';
+
 import { createRoot } from 'react-dom/client';
+
 import { RecoilRoot } from 'recoil';
+
 import config from 'shogunApplicationConfig';
 
 import SHOGunAPIClient from '@terrestris/shogun-util/dist/service/SHOGunAPIClient';
 
+import { PluginProvider } from './Context/PluginContext';
 import { SHOGunAPIClientProvider } from './Context/SHOGunAPIClientContext';
+
 import i18n from './i18n';
 import Logger from './Logger';
-
-// import {
-//   AdminPluginInternal
-// } from './plugin';
-
-// import { PluginProvider } from './Context/PluginContext';
-// import OlFeature from 'ol/Feature';
+import { AdminPlugin, AdminPluginInternal } from './plugin';
 
 const App = React.lazy(() => import('./App'));
 
@@ -79,132 +83,97 @@ const initSHOGunAPIClient = (keycloak?: Keycloak) => {
   });
 };
 
-// ExamplePlugin: 'ExamplePlugin@/client-plugin/remoteEntry.js'
-// const loadPluginModules = async (moduleName: string, moduleUrl: string, remoteNames: string[]) => {
-//   await __webpack_init_sharing__('default');
+const loadPluginModules = async (moduleName: string, moduleUrl: string, remoteNames: string[]) => {
+  init({
+    name: 'SHOGunAdmin',
+    remotes: [{
+      entry: moduleUrl,
+      name: moduleName
+    }]
+  });
 
-//   await new Promise<void>((resolve, reject) => {
-//     const element = document.createElement('script');
+  const modules: AdminPlugin[] = [];
 
-//     element.src = moduleUrl;
-//     element.type = 'text/javascript';
-//     element.async = true;
+  for (const remoteName of remoteNames) {
 
-//     element.onload = () => {
-//       element.parentElement?.removeChild(element);
-//       resolve();
-//     };
+    // For backwards compatibility (existing plugin remote are potentially prefixed with './')
+    const remote = `${moduleName}/${remoteName.startsWith('./') ? remoteName.substring(2) : remoteName}`;
 
-//     element.onerror = (err) => {
-//       element.parentElement?.removeChild(element);
-//       reject(err);
-//     };
+    const adminPlugin = await loadRemote<any>(remote);
 
-//     document.head.appendChild(element);
-//   });
+    if (adminPlugin && adminPlugin.default) {
+      modules.push(adminPlugin.default);
+    }
+  }
 
-//   // @ts-ignore
-//   const container = window[moduleName];
+  return modules;
+};
 
-//   // eslint-disable-next-line camelcase
-//   await container.init(__webpack_share_scopes__.default);
+const loadPlugins = async () => {
+  if (!config.plugins || config.plugins.length === 0) {
+    Logger.info('No plugins found');
+    return [];
+  }
 
-//   const modules = [];
-//   for (const remoteName of remoteNames) {
-//     const factory = await container.get(remoteName);
-//     const module = factory();
-//     modules.push(module);
-//   }
+  Logger.info('Loading plugins');
 
-//   return modules;
-// };
+  const adminPlugins: AdminPluginInternal[] = [];
 
-// const loadPlugins = async () => {
-//   if (!config.plugins || config.plugins.length === 0) {
-//     console.info('No plugins found');
-//     return [];
-//   }
+  for (const plugin of config.plugins) {
+    const name = plugin.name;
+    const resourcePath = plugin.resourcePath;
+    const exposedPaths = plugin.exposedPaths;
 
-//   console.info('Loading plugins');
+    if (!name) {
+      Logger.error('Required plugin configuration \'name\' is not set');
+      return adminPlugins;
+    }
 
-//   const clientPlugins: AdminPluginInternal[] = [];
+    if (!resourcePath) {
+      Logger.error('Required plugin configuration \'resourcePath\' is not set');
+      return adminPlugins;
+    }
 
-//   for (const plugin of config.plugins) {
-//     const name = plugin.name;
-//     const resourcePath = plugin.resourcePath;
-//     const exposedPaths = plugin.exposedPaths;
+    if (!exposedPaths) {
+      Logger.error('Required plugin configuration \'exposedPaths\' is not set');
+      return adminPlugins;
+    }
 
-//     if (!name) {
-//       console.error('Required plugin configuration \'name\' is not set');
-//       return clientPlugins;
-//     }
+    Logger.info(`Loading plugin ${name} (with exposed paths ${exposedPaths.join(' and ')}) from ${resourcePath}`);
 
-//     if (!resourcePath) {
-//       console.error('Required plugin configuration \'resourcePath\' is not set');
-//       return clientPlugins;
-//     }
+    let adminPluginModules: AdminPlugin[];
+    try {
+      adminPluginModules = await loadPluginModules(name, resourcePath, exposedPaths);
+      Logger.info(`Successfully loaded plugin ${name}`);
+    } catch (error) {
+      Logger.error(`Could not load plugin ${name}:`, error);
+      return adminPlugins;
+    }
 
-//     if (!exposedPaths) {
-//       console.error('Required plugin configuration \'exposedPaths\' is not set');
-//       return clientPlugins;
-//     }
+    for (let module of adminPluginModules) {
+      const adminPluginDefault: AdminPluginInternal = module as AdminPluginInternal;
+      const PluginComponent = adminPluginDefault.component;
 
-//     console.info(`Loading plugin ${name} (with exposed paths ${exposedPaths.join(' and ')}) from ${resourcePath}`);
+      const WrappedPluginComponent = () => (
+        <PluginComponent />
+      );
 
-//     let clientPluginModules: any[];
-//     try {
-//       clientPluginModules = await loadPluginModules(name, resourcePath, exposedPaths);
-//       console.info(`Successfully loaded plugin ${name}`);
-//     } catch (error) {
-//       console.error(`Could not load plugin ${name}:`, error);
-//       return clientPlugins;
-//     }
+      adminPluginDefault.wrappedComponent = WrappedPluginComponent;
 
-//     for (let module of clientPluginModules) {
-//       const clientPluginDefault: AdminPluginInternal = module.default;
-//       const PluginComponent = clientPluginDefault.component;
+      if (adminPluginDefault.i18n) {
+        Object.entries(adminPluginDefault.i18n).forEach(locale => {
+          const lng = locale[0];
+          const resources = locale[1].translation;
+          i18n.addResourceBundle(lng, 'translation', resources, true, true);
+        });
+      }
 
-//       // if (toolConfig) {
-//       //   const pluginApplicationConfig = toolConfig.find((tc) => tc.name === clientPluginDefault.key);
-//       //   if (pluginApplicationConfig?.config?.disabled) {
-//       //     Logger.info(`"${clientPluginDefault.key}" is disabled by the application config`);
-//       //     continue;
-//       //   }
-//       // }
+      adminPlugins.push(adminPluginDefault);
+    }
+  }
 
-//       const WrappedPluginComponent = () => (
-//         <PluginComponent
-//           // feature={new OlFeature()}
-//           // map={map}
-//           // client={client}
-//         />
-//       );
-
-//       clientPluginDefault.wrappedComponent = WrappedPluginComponent;
-
-//       if (clientPluginDefault.i18n) {
-//         Object.entries(clientPluginDefault.i18n).forEach(locale => {
-//           const lng = locale[0];
-//           const resources = locale[1].translation;
-//           i18n.addResourceBundle(lng, 'translation', resources, true, true);
-//         });
-//       }
-
-//       // if (clientPluginDefault.reducers) {
-//       //   const reducers = createReducer(clientPluginDefault.reducers);
-//       //   store.replaceReducer(reducers);
-//       // }
-
-//       // if (Array.isArray(clientPluginDefault.middlewares)) {
-//       //   clientPluginDefault.middlewares?.forEach(mw => dynamicMiddleware.addMiddleware(mw));
-//       // }
-
-//       clientPlugins.push(clientPluginDefault);
-//     }
-//   }
-
-//   return clientPlugins;
-// };
+  return adminPlugins;
+};
 
 const renderApp = async () => {
   const rootElement = document.getElementById('app');
@@ -243,15 +212,17 @@ const renderApp = async () => {
     //   }
     // });
 
+    console.log(client.application());
+
     root.render(
       <SHOGunAPIClientProvider client={client}>
-        {/*<PluginProvider plugins={plugins}>*/}
+        {/* <PluginProvider plugins={plugins}> */}
           <RecoilRoot>
             <Suspense>
               <App />
             </Suspense>
           </RecoilRoot>
-        {/*</PluginProvider>*/}
+        {/* </PluginProvider> */}
       </SHOGunAPIClientProvider>
     );
   } catch (error) {

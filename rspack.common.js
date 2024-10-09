@@ -18,13 +18,13 @@ module.exports = {
     shogunApplicationConfig: 'shogunApplicationConfig'
   },
   output: {
+    // TODO needed?
     globalObject: 'self',
     path: path.resolve(__dirname, 'dist'),
     clean: true
   },
   resolve: {
     extensions: [
-      // '*',
       '.tsx',
       '.ts',
       '.js',
@@ -55,10 +55,7 @@ module.exports = {
           },
           externalHelpers: true,
           preserveAllComments: false
-        },
-        // env: {
-        //   targets: 'Chrome >= 48'
-        // }
+        }
       }
     }, {
       test: /\.tsx$/,
@@ -77,9 +74,6 @@ module.exports = {
             }
           },
           externalHelpers: true
-        },
-        env: {
-          targets: 'Chrome >= 48'
         }
       }
     }, {
@@ -141,33 +135,26 @@ module.exports = {
     new MonacoWebpackPlugin({
       languages: ['json']
     }),
-    new ModuleFederationPlugin({
-      name: 'SHOGunAdmin',
-      // remotes: {
-      //   'ExamplePlugin': 'ExamplePlugin@https://localhost/admin-plugins/index.js'
-      // },
-      shared: {
-        react: {
-          singleton: true,
-          eager: true,
-          requiredVersion: deps.react
-        },
-        'react-dom': {
-          singleton: true,
-          eager: true,
-          requiredVersion: deps['react-dom']
-        },
-        'react-i18next': {
-          singleton: true,
-          eager: true,
-          requiredVersion: deps['react-i18next']
-        },
-        'ol/': {
-          singleton: true,
-          eager: true,
-          requiredVersion: deps.ol
-        }
-      }
-    })
+    // new ModuleFederationPlugin({
+    //   name: 'SHOGunAdmin',
+    //   shared: {
+    //     react: {
+    //       singleton: true,
+    //       requiredVersion: deps.react
+    //     },
+    //     'react-dom': {
+    //       singleton: true,
+    //       requiredVersion: deps['react-dom']
+    //     },
+    //     'react-i18next': {
+    //       singleton: true,
+    //       requiredVersion: deps['react-i18next']
+    //     },
+    //     'ol/': {
+    //       singleton: true,
+    //       requiredVersion: deps.ol
+    //     }
+    //   }
+    // })
   ]
 };
