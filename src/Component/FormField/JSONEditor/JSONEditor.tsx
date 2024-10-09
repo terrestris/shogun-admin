@@ -21,7 +21,7 @@ import { uniqueId } from 'lodash';
 import cloneDeep from 'lodash/cloneDeep';
 import _isNil from 'lodash/isNil';
 
-import * as monaco from 'monaco-editor';
+import * as monacoEditor from 'monaco-editor';
 
 import {
   swaggerDocs
@@ -53,7 +53,7 @@ import FullscreenWrapper from '../../FullscreenWrapper/FullscreenWrapper';
 //   }
 // };
 
-loader.config({ monaco });
+loader.config({ monacoEditor });
 
 export type JSONEditorProps = {
   value?: string;
