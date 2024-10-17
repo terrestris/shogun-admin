@@ -22,7 +22,7 @@ import config from 'shogunApplicationConfig';
 
 import SHOGunAPIClient from '@terrestris/shogun-util/dist/service/SHOGunAPIClient';
 
-import { PluginProvider } from './Context/PluginContext';
+// import { PluginProvider } from './Context/PluginContext';
 import { SHOGunAPIClientProvider } from './Context/SHOGunAPIClientContext';
 
 import i18n from './i18n';
@@ -206,22 +206,14 @@ const renderApp = async () => {
 
     // const plugins = await loadPlugins();
 
-    // loader.config({
-    //   paths: {
-    //     vs: './vs'
-    //   }
-    // });
-
-    console.log(client.application());
-
     root.render(
       <SHOGunAPIClientProvider client={client}>
         {/* <PluginProvider plugins={plugins}> */}
-          <RecoilRoot>
-            <Suspense>
-              <App />
-            </Suspense>
-          </RecoilRoot>
+        <RecoilRoot>
+          <Suspense>
+            <App />
+          </Suspense>
+        </RecoilRoot>
         {/* </PluginProvider> */}
       </SHOGunAPIClientProvider>
     );

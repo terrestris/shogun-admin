@@ -18,8 +18,6 @@ module.exports = {
     shogunApplicationConfig: 'shogunApplicationConfig'
   },
   output: {
-    // TODO needed?
-    globalObject: 'self',
     path: path.resolve(__dirname, 'dist'),
     clean: true
   },
