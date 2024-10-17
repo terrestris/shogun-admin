@@ -84,6 +84,7 @@ const initSHOGunAPIClient = (keycloak?: Keycloak) => {
 };
 
 const loadPluginModules = async (moduleName: string, moduleUrl: string, remoteNames: string[]) => {
+  // @ts-expect-error
   init({
     name: 'SHOGunAdmin',
     remotes: [{
@@ -99,6 +100,7 @@ const loadPluginModules = async (moduleName: string, moduleUrl: string, remoteNa
     // For backwards compatibility (existing plugin remote are potentially prefixed with './')
     const remote = `${moduleName}/${remoteName.startsWith('./') ? remoteName.substring(2) : remoteName}`;
 
+    // @ts-expect-error
     const adminPlugin = await loadRemote<any>(remote);
 
     if (adminPlugin && adminPlugin.default) {
@@ -109,6 +111,7 @@ const loadPluginModules = async (moduleName: string, moduleUrl: string, remoteNa
   return modules;
 };
 
+// @ts-expect-error
 const loadPlugins = async () => {
   if (!config.plugins || config.plugins.length === 0) {
     Logger.info('No plugins found');
