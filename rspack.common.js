@@ -133,26 +133,26 @@ module.exports = {
     new MonacoWebpackPlugin({
       languages: ['json']
     }),
-    // new ModuleFederationPlugin({
-    //   name: 'SHOGunAdmin',
-    //   shared: {
-    //     react: {
-    //       singleton: true,
-    //       requiredVersion: deps.react
-    //     },
-    //     'react-dom': {
-    //       singleton: true,
-    //       requiredVersion: deps['react-dom']
-    //     },
-    //     'react-i18next': {
-    //       singleton: true,
-    //       requiredVersion: deps['react-i18next']
-    //     },
-    //     'ol/': {
-    //       singleton: true,
-    //       requiredVersion: deps.ol
-    //     }
-    //   }
-    // })
+    new ModuleFederationPlugin({
+      name: 'SHOGunAdmin',
+      shared: {
+        react: {
+          singleton: true,
+          requiredVersion: deps.react
+        },
+        'react-dom': {
+          singleton: true,
+          requiredVersion: deps['react-dom']
+        },
+        'react-i18next': {
+          singleton: true,
+          requiredVersion: deps['react-i18next']
+        },
+        'ol/': {
+          singleton: true,
+          requiredVersion: deps.ol
+        }
+      }
+    })
   ]
 };
