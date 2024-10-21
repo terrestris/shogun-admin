@@ -1,3 +1,28 @@
+## [17.0.0-next.4](https://github.com/terrestris/shogun-admin/compare/v17.0.0-next.3...v17.0.0-next.4) (2024-10-21)
+
+
+### Dependencies
+
+* more wip ([adbe091](https://github.com/terrestris/shogun-admin/commit/adbe0919644b5140f9e0116a1e47e9ad50bcda9a))
+* sort dependencies ([3721218](https://github.com/terrestris/shogun-admin/commit/3721218a7e50f16d32145506a26e750303a5088e))
+* wip ([57fa655](https://github.com/terrestris/shogun-admin/commit/57fa655d90604df5c21946548582fee9801257d3))
+* wip ([64d465a](https://github.com/terrestris/shogun-admin/commit/64d465a641f621edd303b7b073e416a9adf20f24))
+* wip ([9cd7a50](https://github.com/terrestris/shogun-admin/commit/9cd7a50ec73f1661c3858c9d76af94c6b6f10b36))
+
+
+### Features
+
+* upgrade eslint to v9 ([c13bfd0](https://github.com/terrestris/shogun-admin/commit/c13bfd04767dfed3848df65ded80d7b22745efbe))
+
+
+### Bugfixes
+
+* add monaco plugin to prevent loading of CDN files ([726bbce](https://github.com/terrestris/shogun-admin/commit/726bbce0541bd88fb94998b6b2e8c67898eef11b))
+* and more wip ([3e4a95b](https://github.com/terrestris/shogun-admin/commit/3e4a95bf91974b75be6f9a04735d31a7048c4153))
+* fix fetching of permissions ([8f7afc6](https://github.com/terrestris/shogun-admin/commit/8f7afc6056c2e25fbc9ae453a706b3ac6f2ac1ad))
+* fix type errors ([011f09c](https://github.com/terrestris/shogun-admin/commit/011f09ce48d1e12e0742e8594ff69b22c55d8365))
+* reenable plugin support ([7aa6cda](https://github.com/terrestris/shogun-admin/commit/7aa6cda7f6629f67a9d8931518eb3bdf92109795))
+
 ## [17.0.0-next.3](https://github.com/terrestris/shogun-admin/compare/v17.0.0-next.2...v17.0.0-next.3) (2024-10-21)
 
 
