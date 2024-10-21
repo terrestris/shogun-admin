@@ -6,6 +6,7 @@ import {
 
 import resources from './translations';
 
+// eslint-disable-next-line react-hooks/rules-of-hooks
 use(LanguageDetector)
   .use(initReactI18next)
   .init({

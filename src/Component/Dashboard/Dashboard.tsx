@@ -14,9 +14,9 @@ interface OwnProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'title'> {
   title?: ReactNode;
 }
 
-type DashoardProps = OwnProps;
+type DashboardProps = OwnProps;
 
-export const Dashboard: React.FC<DashoardProps> = (props) => {
+export const Dashboard: React.FC<DashboardProps> = (props) => {
 
   const {
     actions,
@@ -24,6 +24,8 @@ export const Dashboard: React.FC<DashoardProps> = (props) => {
     className,
     children,
     columns = 2,
+    // required for destructuring
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     rows,
     title,
     ...passThroughProps

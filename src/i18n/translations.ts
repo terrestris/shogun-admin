@@ -169,7 +169,7 @@ export default {
         triggerAsc: 'Klicken, um aufsteigend zu sortieren',
         cancelSort: 'Klicken, um Sortierung zurückzusetzen'
       },
-      YesorNoField: {
+      YesOrNoField: {
         yes: 'Ja',
         no: 'Nein'
       },
@@ -428,7 +428,7 @@ export default {
         triggerAsc: 'Click to sort ascending',
         cancelSort: 'Click to cancel sorting'
       },
-      YesorNoField: {
+      YesOrNoField: {
         yes: 'Yes',
         no: 'No'
       },

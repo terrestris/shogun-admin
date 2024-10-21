@@ -20,6 +20,7 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import config from 'shogunApplicationConfig';
 
+import logger from '@terrestris/base-util/dist/Logger';
 import ImageFile from '@terrestris/shogun-util/dist/model/ImageFile';
 
 import useSHOGunAPIClient from '../../../Hooks/useSHOGunAPIClient';
@@ -97,6 +98,7 @@ export const ImageFileTable: React.FC<ImageFileTableProps> = ({
       setLoadingState('done');
     } catch (error) {
       setLoadingState('failed');
+      logger.error(`Could not fetch images due to the following error: ${error}`);
     }
   }, [service, pageCurrent, pageSize, sortField, sortOrder]);
 
@@ -141,6 +143,7 @@ export const ImageFileTable: React.FC<ImageFileTableProps> = ({
             message: t('ImageFileTable.deleteFail'),
             description: t('ImageFileTable.deleteFailDescript', { record: record.fileName })
           });
+          logger.error(`Could not delete image entities due to the following error: ${error}`);
         }
       }
     });

@@ -7,7 +7,7 @@ import {
 } from 'react-i18next';
 
 import BaseEntity from '@terrestris/shogun-util/dist/model/BaseEntity';
-import PermissionCollectionType from '@terrestris/shogun-util/dist/model/enum/PermissionCollectionType';
+import { PermissionCollectionType } from '@terrestris/shogun-util/dist/model/enum/PermissionCollectionType';
 import Group from '@terrestris/shogun-util/dist/model/Group';
 import GroupInstancePermission from '@terrestris/shogun-util/dist/model/security/GroupInstancePermission';
 import GenericEntityService from '@terrestris/shogun-util/dist/service/GenericEntityService';

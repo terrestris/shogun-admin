@@ -6,9 +6,9 @@ import { useNavigate } from 'react-router-dom';
 
 import LogLevelTable from '../LogLevelTable/LogLevelTable';
 
-type LogSettingsRootProps = {};
+interface LogSettingsRootProps {}
 
-export const LogSettingsRoot: React.FC<LogSettingsRootProps> = (props) => {
+export const LogSettingsRoot: React.FC<LogSettingsRootProps> = () => {
 
   const {
     t

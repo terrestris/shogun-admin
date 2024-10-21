@@ -35,16 +35,12 @@ import LayerTypeSelect from '../../Layer/LayerTypeSelect/LayerTypeSelect';
 
 const { TextArea } = Input;
 
-export type FieldConfig = {
+export interface FieldConfig {
   component?: string;
   dataField: string;
   dataType?: string;
-  fieldProps?: {
-    [key: string]: any;
-  };
-  formItemProps?: {
-    [key: string]: any;
-  };
+  fieldProps?: Record<string, any>;
+  formItemProps?: Record<string, any>;
   label?: string;
   noOptionValue?: {
     value: string;
@@ -55,15 +51,15 @@ export type FieldConfig = {
   required?: boolean;
   requiredI18n?: string;
   readOnly?: boolean;
-};
+}
 
 export type FormMode = 'EDIT' | 'VIEW';
 
-export type FormConfig = {
+export interface FormConfig {
   name: string;
   publicKey?: string;
   fields: FieldConfig[];
-};
+}
 
 interface OwnProps {
   loading?: boolean;
@@ -103,10 +99,12 @@ export const GeneralEntityForm: React.FC<GeneralEntityFormProps> = ({
       case 'Statistic':
         return createFieldComponent(fieldConfig);
       case 'DateField':
-        return <DisplayField
-          format="date"
-          {...fieldConfig.fieldProps}
-        />;
+        return (
+          <DisplayField
+            format="date"
+            {...fieldConfig.fieldProps}
+          />
+        );
       default:
         return (
           <DisplayField
@@ -249,7 +247,7 @@ export const GeneralEntityForm: React.FC<GeneralEntityFormProps> = ({
    * Generates an antd normalize function with the specified "no"-value.
    */
   const getNormalizeFn = () => {
-    let noValue: string = '';
+    const noValue = '';
     return (value: any, prevValue: any = []) => {
       if (
         Array.isArray(value) &&
@@ -269,7 +267,7 @@ export const GeneralEntityForm: React.FC<GeneralEntityFormProps> = ({
    * @returns An antd FormItem
    */
   const createFormItem = (fieldCfg: FieldConfig): React.ReactNode => {
-    let copyFieldCfg = _cloneDeep(fieldCfg);
+    const copyFieldCfg = _cloneDeep(fieldCfg);
     copyFieldCfg.label = TranslationUtil.getTranslationFromConfig(fieldCfg.label as string, i18n);
     let field: React.ReactNode;
     if (copyFieldCfg.readOnly) {
