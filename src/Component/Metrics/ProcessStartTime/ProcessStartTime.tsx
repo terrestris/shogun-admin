@@ -13,7 +13,7 @@ export const ProcessStartTime: React.FC<ProcessStartTimeProps> = ({
 }) => {
 
   const valueRenderer = (value: number | string): ReactNode => {
-    let val = moment(Number(value) * 1000).format('llll');
+    const val = moment(Number(value) * 1000).format('llll');
 
     return <span>{val}</span>;
   };

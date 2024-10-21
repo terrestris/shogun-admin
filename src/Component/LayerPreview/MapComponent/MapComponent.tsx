@@ -15,7 +15,7 @@ export interface MapComponentProps extends React.ComponentProps<'div'> {
 export const MapComponent: React.FC<MapComponentProps> = ({
   map,
   mapDivId = 'map',
-  onRender = () => {},
+  onRender = () => undefined,
   ...passThroughProps
 }): JSX.Element => {
 

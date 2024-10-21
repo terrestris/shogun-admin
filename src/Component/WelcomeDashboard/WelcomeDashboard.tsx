@@ -26,7 +26,7 @@ import { Dashboard } from '../Dashboard/Dashboard';
 import { DashboardCard } from '../Dashboard/DashboardCard/DashboardCard';
 import DashboardStatistics from '../Dashboard/DashboardStatistics/DashboardStatistics';
 
-type WelcomeDashboardProps = {};
+interface WelcomeDashboardProps {}
 
 export const WelcomeDashboard: React.FC<WelcomeDashboardProps> = () => {
   const {

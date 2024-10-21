@@ -13,6 +13,8 @@ import {
 } from 'react-router-dom';
 import config from 'shogunApplicationConfig';
 
+import logger from '@terrestris/base-util/dist/Logger';
+
 import useSHOGunAPIClient from '../../../Hooks/useSHOGunAPIClient';
 import ImageFileForm from '../ImageFileForm/ImageFileForm';
 import ImageFileTable from '../ImageFileTable/ImageFileTable';
@@ -70,6 +72,7 @@ export const ImageFileRoot: React.FC<ImageFileRootProps> = () => {
                   message: t('ImageFileRoot.failure'),
                   description: t('ImageFileRoot.uploadFailure', { entityName: file.name })
                 });
+                logger.error(`Could not upload image due to the following error: ${error}`);
               }
             }}
           >

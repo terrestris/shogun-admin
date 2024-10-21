@@ -6,10 +6,10 @@ import MDEditor, { ICommand } from '@uiw/react-md-editor';
 
 import FullscreenWrapper from '../../FullscreenWrapper/FullscreenWrapper';
 
-export type MarkdownEditorProps = {
+export interface MarkdownEditorProps {
   value?: string;
   onChange?: (value?: string) => void;
-};
+}
 
 export const commandsFilter = (command: ICommand) => {
   if (command?.name === 'fullscreen') {

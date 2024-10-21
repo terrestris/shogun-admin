@@ -20,7 +20,7 @@ import SystemCpuCount from '../SystemCpuCount/SystemCpuCount';
 import SystemCpuUsage from '../SystemCpuUsage/SystemCpuUsage';
 import SystemLoadAverage from '../SystemLoadAverage/SystemLoadAverage';
 
-type MetricsRootProps = {};
+interface MetricsRootProps {}
 
 /**
  * TODO Ideas:
@@ -30,7 +30,7 @@ type MetricsRootProps = {};
  *
  */
 
-export const MetricsRoot: React.FC<MetricsRootProps> = (props) => {
+export const MetricsRoot: React.FC<MetricsRootProps> = () => {
 
   const navigate = useNavigate();
 

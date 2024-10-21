@@ -2,10 +2,10 @@ import React from 'react';
 
 import SHOGunAPIClient from '@terrestris/shogun-util/dist/service/SHOGunAPIClient';
 
-export type SHOGunAPIClientProviderProps = {
+export interface SHOGunAPIClientProviderProps {
   client: SHOGunAPIClient;
   children: JSX.Element;
-};
+}
 
 export const SHOGunAPIClientContext = React.createContext<(SHOGunAPIClient | undefined)>(undefined);
 

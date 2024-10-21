@@ -15,7 +15,7 @@ import {
 } from 'react-i18next';
 
 import BaseEntity from '@terrestris/shogun-util/dist/model/BaseEntity';
-import PermissionCollectionType from '@terrestris/shogun-util/dist/model/enum/PermissionCollectionType';
+import { PermissionCollectionType } from '@terrestris/shogun-util/dist/model/enum/PermissionCollectionType';
 import Role from '@terrestris/shogun-util/dist/model/Role';
 import RoleInstancePermission from '@terrestris/shogun-util/dist/model/security/RoleInstancePermission';
 import GenericEntityService from '@terrestris/shogun-util/dist/service/GenericEntityService';
@@ -29,7 +29,7 @@ import InstancePermissionGrid, {
 
 export interface RolePermissionGridProps extends Omit<InstancePermissionGridProps<RoleInstancePermission>,
   'getInstancePermissions' | 'setInstancePermission' | 'deleteInstancePermission' | 'toDataType' |
-  'nameColumnDefinition' | 'getReferences' | 'toTag' | 'modalProps'> { };
+  'nameColumnDefinition' | 'getReferences' | 'toTag' | 'modalProps'> { }
 
 const RolePermissionGrid: React.FC<RolePermissionGridProps> = ({
   entityType,
@@ -56,7 +56,7 @@ const RolePermissionGrid: React.FC<RolePermissionGridProps> = ({
   };
 
   const getRoles = async (pageOpts?: PageOpts) => {
-    return await client?.role().findAll(pageOpts);
+    return client?.role().findAll(pageOpts);
   };
 
   const toRoleDataType = (permission: RoleInstancePermission): DataType<Role> => {

@@ -8,7 +8,7 @@ import {
 } from 'antd';
 import { SelectProps } from 'antd/lib/select';
 
-import LayerType from '@terrestris/shogun-util/dist/model/enum/LayerType';
+import { LayerType } from '@terrestris/shogun-util/dist/model/enum/LayerType';
 
 type SelectPropsExcludes = 'defaultValue' | 'value' | 'options' | 'onChange';
 

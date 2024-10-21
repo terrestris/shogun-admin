@@ -1,7 +1,10 @@
 // @ts-check
 import globals from 'globals';
+import reactHooks from 'eslint-plugin-react-hooks';
 import importPlugin from 'eslint-plugin-import';
+import eslintReact from 'eslint-plugin-react';
 import eslintTerrestris from '@terrestris/eslint-config-typescript';
+import eslintReactTerrestris from '@terrestris/eslint-config-typescript-react';
 import eslint from '@eslint/js';
 import tsEslint from 'typescript-eslint';
 import stylisticEslint from '@stylistic/eslint-plugin'
@@ -14,28 +17,47 @@ export default tsEslint.config({
     importPlugin.flatConfigs.recommended
   ],
   files: [
-    '**/*.ts'
+    '**/*.{ts,tsx}',
   ],
   ignores: [
-    '**/*.spec.ts',
-    '**/jest/__mocks__/*.ts'
+    '**/test/setup.ts',
+    '**/e2e-tests/**.ts',
+    '**/global-setup.ts',
+    '**/playwright.config.ts',
+    '**/*.spec.{ts,tsx}',
+    'coverage/**/*.{js,ts*}',
+    'dist/**/*.{js,ts*}'
   ],
+  settings: {
+    react: {
+      version: 'detect'
+    }
+  },
   languageOptions: {
     ecmaVersion: 2022,
     globals: globals.browser,
     parserOptions: {
       project: true,
       tsconfigRootDir: import.meta.dirname
-    },
+    }
   },
   plugins: {
-    '@stylistic': stylisticEslint
+    'react-hooks': reactHooks,
+    '@stylistic': stylisticEslint,
+    react: eslintReact,
+    '@typescript-eslint/eslint-plugin': tsEslint
   },
   rules: {
     ...eslintTerrestris.rules,
-    '@typescript-eslint/member-ordering': 'off',
+    ...eslintReactTerrestris.rules,
+    ...reactHooks.configs.recommended.rules,
+    'react/jsx-closing-tag-location': ['warn'],
+    'react/jsx-closing-bracket-location': ['warn'],
+    'react-hooks/rules-of-hooks': ['warn'],
+    'react-hooks/exhaustive-deps': ['warn'],
     '@typescript-eslint/no-empty-object-type': 'off',
     '@typescript-eslint/no-unused-vars': 'warn',
+    'import/no-named-as-default': 'off',
     'import/no-unresolved': 'off',
     'import/named': 'off',
     'import/order': ['warn', {

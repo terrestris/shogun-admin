@@ -1,4 +1,4 @@
-# diasble CI
+# disable CI
 [ -n "$CI" ] && exit 0
 
 npx --no-install commitlint --edit $1

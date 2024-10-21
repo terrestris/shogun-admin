@@ -83,21 +83,21 @@ import GeneralEntityTable, {
   TableConfig
 } from '../GeneralEntityTable/GeneralEntityTable';
 
-type LayerUploadOptions = {
+interface LayerUploadOptions {
   baseUrl: string;
   workspace: string;
   storeName: string;
   layerName: string;
   file: RcFile;
-};
+}
 
-type LayerUploadResponse = {
+interface LayerUploadResponse {
   layerName: string;
   workspace: string;
   baseUrl: string;
-};
+}
 
-type FeatureTypeAttributes = {
+interface FeatureTypeAttributes {
   attribute: {
     name: string;
     minOccurs: number;
@@ -106,9 +106,9 @@ type FeatureTypeAttributes = {
     binding?: string;
     length?: number;
   }[];
-};
+}
 
-export type GeneralEntityConfigType<T extends BaseEntity> = {
+export interface GeneralEntityConfigType<T extends BaseEntity> {
   i18n: FormTranslations;
   endpoint: string;
   entityType: string;
@@ -120,7 +120,7 @@ export type GeneralEntityConfigType<T extends BaseEntity> = {
   tableConfig: TableConfig<T>;
   onEntitiesLoaded?: (entities: T[], entityType: string) => void;
   defaultEntity?: T;
-};
+}
 
 type OwnProps<T extends BaseEntity> = GeneralEntityConfigType<T>;
 
@@ -137,7 +137,7 @@ export function GeneralEntityRoot<T extends BaseEntity>({
   formConfig,
   tableConfig = {},
   defaultEntity,
-  onEntitiesLoaded = () => { }
+  onEntitiesLoaded = () => undefined
 }: GeneralEntityRootProps<T>) {
 
   const location = useLocation();
@@ -293,7 +293,8 @@ export function GeneralEntityRoot<T extends BaseEntity>({
           footer: ([
             <div key="modalButtons" className='selectionButtons'>
               <Button className='viewChangesButton'
-                onClick={() => reviewChanges()}>
+                onClick={() => reviewChanges()}
+              >
                 {t('GeneralEntityRoot.reminderModal.review')}
               </Button>
               <Button className='discardChangesButton'
@@ -504,7 +505,7 @@ export function GeneralEntityRoot<T extends BaseEntity>({
     const shp = await Shapefile.load(file);
 
     let featureTypeName = '';
-    let featureTypeAttributes: FeatureTypeAttributes = {
+    const featureTypeAttributes: FeatureTypeAttributes = {
       attribute: []
     };
 
@@ -580,9 +581,7 @@ export function GeneralEntityRoot<T extends BaseEntity>({
   };
 
   const getGeometryType = (geometryTypeNumber: number): string | undefined => {
-    const allTypes: {
-      [key: number]: string | undefined;
-    } = {
+    const allTypes: Record<number, string | undefined> = {
       0: undefined, // Null
       1: 'org.locationtech.jts.geom.Point', // Point
       3: 'org.locationtech.jts.geom.LineString', // Polyline
