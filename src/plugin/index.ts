@@ -2,22 +2,18 @@ import { CollapsePanelProps } from 'antd';
 
 import { TFunction } from 'i18next';
 
-import type SHOGunAPIClient from '@terrestris/shogun-util/dist/service/SHOGunAPIClient';
+import type { SHOGunAPIClient } from '@terrestris/shogun-util/dist/service/SHOGunAPIClient';
 
-export type AdminPluginLocale = {
-  [locale: string]: {
-    translation: {
-      [key: string]: any;
-    };
-  };
-};
+export type AdminPluginLocale = Record<string, {
+    translation: Record<string, any>;
+  }>;;
 
-export type AdminPluginComponentProps = {
+export interface AdminPluginComponentProps {
   client?: SHOGunAPIClient;
   t?: TFunction;
 };
 
-export type AdminPluginIntegration = {
+export interface AdminPluginIntegration {
   /**
    * The main identifier of the integration point of the plugin.
    */
@@ -43,7 +39,7 @@ export type AdminPluginIntegrationToolMenu = AdminPluginIntegration &
 
 export type AdminPluginIntegrations = AdminPluginIntegrationToolMenu;
 
-export type AdminPlugin = {
+export interface AdminPlugin {
   /**
    * The key of the plugin, usually used for internal references (e.g. element class names) only.
    */
@@ -60,7 +56,7 @@ export type AdminPlugin = {
    * The i18n definition to be used in the plugin.
    */
   i18n?: AdminPluginLocale;
-};
+}
 
 export type AdminPluginInternal = AdminPlugin & {
   wrappedComponent: React.FunctionComponent<AdminPluginComponentProps>;

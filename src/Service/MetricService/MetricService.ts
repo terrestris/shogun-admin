@@ -5,29 +5,29 @@ import { getBearerTokenHeader } from '@terrestris/shogun-util/dist/security/getB
 
 import Logger from '../../Logger';
 
-export type Statistic = {
+export interface Statistic {
   statistic: string;
   value: number | string;
-};
+}
 
-export type Tag = {
+export interface Tag {
   tag: string;
   values: string[];
-};
+}
 
 export type BaseUnit = 'seconds' | 'events' | 'threads' | 'bytes';
 
-export type Metric = {
+export interface Metric {
   name: string;
   description: string;
   baseUnit: BaseUnit;
   measurements: Statistic[];
   availableTags: Tag[];
-};
+}
 
-export type MetricServiceOpts = {
+export interface MetricServiceOpts {
   keycloak?: Keycloak;
-};
+}
 
 class MetricService {
 

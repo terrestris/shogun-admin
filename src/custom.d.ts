@@ -10,17 +10,17 @@ declare const __webpack_init_sharing__: (shareScope: string) => Promise<void>;
 declare const __webpack_share_scopes__: { default: Scope };
 
 declare module 'shogunApplicationConfig' {
-  type PluginConfiguration = {
+  interface PluginConfiguration {
     name?: string;
     resourcePath?: string;
     exposedPaths?: string[];
-  };
+  }
 
   /**
    * Config object which contains the settings to adapt the admin client
    * to your application.
    */
-  type AdminConfiguration = {
+  interface AdminConfiguration {
   /**
    * Geoserver configuration object.
    */
@@ -200,7 +200,7 @@ declare module 'shogunApplicationConfig' {
         };
       };
     };
-  };
+  }
   const config: AdminConfiguration;
 
   export default config;
@@ -208,13 +208,9 @@ declare module 'shogunApplicationConfig' {
 
 declare const PROJECT_VERSION: string;
 
-declare type FormTranslations = {
-  de: {
-    [localeKey: string]: string;
-  };
-  en: {
-    [localeKey: string]: string;
-  };
-};
+declare interface FormTranslations {
+  de: Record<string, string>;
+  en: Record<string, string>;
+}
 
 declare module 'monaco-editor/esm/vs/*?worker';
