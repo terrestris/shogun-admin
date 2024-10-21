@@ -36,7 +36,6 @@ import Navigation from '../../Component/Menu/Navigation/Navigation';
 import MetricsRoot from '../../Component/Metrics/MetricsRoot/MetricsRoot';
 import ApplicationInfo from '../../Component/Modal/ApplicationInfo/ApplicationInfo';
 import WelcomeDashboard from '../../Component/WelcomeDashboard/WelcomeDashboard';
-import usePlugins from '../../Hooks/usePlugins';
 import {
   layerSuggestionListAtom
 } from '../../State/atoms';
@@ -50,7 +49,6 @@ export const Portal: React.FC<PortalProps> = () => {
   const toggleCollapsed = () => setCollapsed(!collapsed);
   const [entitiesToLoad, setEntitiesToLoad] = useState<GeneralEntityConfigType<BaseEntity>[]>([]);
   const [configsAreLoading, setConfigsAreLoading] = useState<boolean>(false);
-  const plugins = usePlugins();
 
   const setLayerSuggestionList = useSetRecoilState(layerSuggestionListAtom);
 
@@ -96,16 +94,6 @@ export const Portal: React.FC<PortalProps> = () => {
   if (config?.models && config?.models?.length !== entitiesToLoad?.length && !configsAreLoading) {
     fetchConfigsForModels();
   }
-
-  let pluginRoutes = plugins.map(plugin => {
-    return (
-      <Route
-        key={plugin.key}
-        path={plugin.key}
-        element={<plugin.wrappedComponent />}
-      />
-    );
-  });
 
   return (
     <div className="portal">
@@ -165,7 +153,6 @@ export const Portal: React.FC<PortalProps> = () => {
             path={'settings/logs/*'}
             element={<LogSettingsRoot />}
           />
-          {pluginRoutes}
         </Routes>
       </div>
       <>
