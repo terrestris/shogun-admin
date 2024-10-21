@@ -1,3 +1,10 @@
+## [17.0.0-next.2](https://github.com/terrestris/shogun-admin/compare/v17.0.0-next.1...v17.0.0-next.2) (2024-10-21)
+
+
+### Bugfixes
+
+* revert plugin commits ([43a943f](https://github.com/terrestris/shogun-admin/commit/43a943f029e434649980ac40b18505e7828976ce))
+
 ## [17.0.0-next.1](https://github.com/terrestris/shogun-admin/compare/v16.0.0...v17.0.0-next.1) (2024-07-10)
 
 
