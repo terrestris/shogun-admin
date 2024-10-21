@@ -38,6 +38,7 @@
   "entityName": "#i18n.entityName",
   "navigationTitle": "#i18n.navigationTitle",
   "subTitle": "",
+  "importEnabled": true,
   "formConfig": {
     "name": "layer",
     "fields": [
