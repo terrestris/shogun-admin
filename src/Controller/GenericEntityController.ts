@@ -11,7 +11,7 @@ import Logger from '@terrestris/base-util/dist/Logger';
 import Application from '@terrestris/shogun-util/dist/model/Application';
 import BaseEntity from '@terrestris/shogun-util/dist/model/BaseEntity';
 import { Page } from '@terrestris/shogun-util/dist/model/Page';
-import GenericEntityService from '@terrestris/shogun-util/dist/service/GenericEntityService';
+import { GenericEntityService } from '@terrestris/shogun-util/dist/service/GenericEntityService';
 import { PageOpts } from '@terrestris/shogun-util/dist/service/GenericService';
 
 import { FieldConfig, FormConfig } from '../Component/GeneralEntity/GeneralEntityForm/GeneralEntityForm';
@@ -19,24 +19,22 @@ import { FieldConfig, FormConfig } from '../Component/GeneralEntity/GeneralEntit
 // TODO: add explicit value objects
 export type FieldValue = any;
 
-export type FormValues = {
-  [key: string]: FieldValue;
-};
+export type FormValues = Record<string, FieldValue>;
 
-export type FieldValidation = {
+export interface FieldValidation {
   validateStatus: ValidateStatus;
   message?: string;
   needsTranslation?: boolean;
-};
+}
 
-export type GenericEntityControllerArgs<T extends BaseEntity> = {
+export interface GenericEntityControllerArgs<T extends BaseEntity> {
   entity?: T;
   formConfig: FormConfig;
   formUpdater?: (values: FormValues) => void; // maybe not required
   initialValues?: FormValues;
   nextUpdate?: FormValues;
   service: GenericEntityService<T>;
-};
+}
 
 export class GenericEntityController<T extends BaseEntity> {
   protected entity: T | undefined;
@@ -79,7 +77,7 @@ export class GenericEntityController<T extends BaseEntity> {
     this.entity = await this.service?.findOne(id);
 
     if (_isString(this.formConfig?.publicKey)) {
-      const isPublic = await this.service.isPublic(this.entity?.id!);
+      const isPublic = await this.service.isPublic(this.entity.id!);
       const pubKey = this.formConfig.publicKey;
       (this.entity as Record<string, any>)[pubKey] = isPublic;
     }
@@ -125,7 +123,7 @@ export class GenericEntityController<T extends BaseEntity> {
    */
   public async updateEntity(values: FormValues): Promise<void> {
     for (const fieldConfig of this.formConfig.fields) {
-      if (values.hasOwnProperty(fieldConfig.dataField)) {
+      if (Object.prototype.hasOwnProperty.call(values, fieldConfig.dataField)) {
         await this.setEntityValue(fieldConfig, values[fieldConfig.dataField]);
       }
     }
@@ -146,14 +144,14 @@ export class GenericEntityController<T extends BaseEntity> {
   public async saveOrUpdate(): Promise<T> {
     const isUpdate = _isNumber(this.entity?.id);
 
-    const publicKey = this.formConfig?.publicKey as keyof T;
+    const publicKey = this.formConfig.publicKey as keyof T;
     const isPublic = publicKey ? this.entity?.[publicKey] : undefined;
 
     // omit constant fields and read only fields
     let entityUpdateObject: Partial<T> = _omit(this.entity, [
       'created',
       'modified',
-      ...this.formConfig?.fields
+      ...this.formConfig.fields
         .filter(field => field.dataField === publicKey || field.readOnly)
         .map(field => field.dataField)
     ]);
@@ -192,7 +190,8 @@ export class GenericEntityController<T extends BaseEntity> {
     return this.initialValues;
   }
 
-  public isFieldValid(fieldConfig: FieldConfig, value: FieldValue): FieldValidation {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  public isFieldValid(_fieldConfig: FieldConfig, _value: FieldValue): FieldValidation {
     return {
       validateStatus: 'success'
     };

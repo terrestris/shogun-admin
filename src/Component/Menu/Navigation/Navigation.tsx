@@ -14,7 +14,7 @@ import {
 import {
   Menu
 } from 'antd';
-import { ItemType } from 'antd/lib/menu/hooks/useItems';
+import { ItemType } from 'antd/lib/menu/interface';
 import _isNil from 'lodash/isNil';
 import { SelectInfo } from 'rc-menu/lib/interface';
 import {
@@ -66,50 +66,58 @@ export const Navigation: React.FC<NavigationProps> = ({
     const layersConfig = entityConfigs.find(e => e.entityType === 'layer');
     const userConfig = entityConfigs.find(e => e.entityType === 'user');
     const groupsConfig = entityConfigs.find(e => e.entityType === 'group');
-    navigationContentChildren.push({
-      key: 'application',
-      label: (
-        <>
-          <BankOutlined />
-          <span>
-            {TranslationUtil.getTranslationFromConfig(applicationConfig?.navigationTitle, applicationConfig?.i18n)}
-          </span>
-        </>
-      )
-    });
-    navigationContentChildren.push({
-      key: 'layer',
-      label: (
-        <>
-          <AppstoreOutlined />
-          <span>
-            {TranslationUtil.getTranslationFromConfig(layersConfig?.navigationTitle, layersConfig?.i18n)}
-          </span>
-        </>
-      )
-    });
-    navigationContentChildren.push({
-      key: 'user',
-      label: (
-        <>
-          <UserOutlined />
-          <span>
-            {TranslationUtil.getTranslationFromConfig(userConfig?.navigationTitle, userConfig?.i18n)}
-          </span>
-        </>
-      )
-    });
-    navigationContentChildren.push({
-      key: 'group',
-      label: (
-        <>
-          <TeamOutlined />
-          <span>
-            {TranslationUtil.getTranslationFromConfig(groupsConfig?.navigationTitle, groupsConfig?.i18n)}
-          </span>
-        </>
-      )
-    });
+    if (applicationConfig) {
+      navigationContentChildren.push({
+        key: 'application',
+        label: (
+          <>
+            <BankOutlined />
+            <span>
+              {TranslationUtil.getTranslationFromConfig(applicationConfig?.navigationTitle, applicationConfig?.i18n)}
+            </span>
+          </>
+        )
+      });
+    }
+    if (layersConfig) {
+      navigationContentChildren.push({
+        key: 'layer',
+        label: (
+          <>
+            <AppstoreOutlined />
+            <span>
+              {TranslationUtil.getTranslationFromConfig(layersConfig?.navigationTitle, layersConfig?.i18n)}
+            </span>
+          </>
+        )
+      });
+    }
+    if (userConfig) {
+      navigationContentChildren.push({
+        key: 'user',
+        label: (
+          <>
+            <UserOutlined />
+            <span>
+              {TranslationUtil.getTranslationFromConfig(userConfig?.navigationTitle, userConfig?.i18n)}
+            </span>
+          </>
+        )
+      });
+    }
+    if (groupsConfig) {
+      navigationContentChildren.push({
+        key: 'group',
+        label: (
+          <>
+            <TeamOutlined />
+            <span>
+              {TranslationUtil.getTranslationFromConfig(groupsConfig?.navigationTitle, groupsConfig?.i18n)}
+            </span>
+          </>
+        )
+      });
+    }
   }
 
   if (navigationConf?.general?.imagefiles?.visible) {

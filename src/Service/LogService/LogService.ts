@@ -9,14 +9,14 @@ import Logger from '../../Logger';
 
 export type LogLevel = 'OFF' | 'FATAL' | 'ERROR' | 'WARN' | 'INFO' | 'DEBUG' | 'TRACE';
 
-export type LogLevels = {
+export interface LogLevels {
   configuredLevel: LogLevel;
   effectiveLevel: LogLevel;
-};
+}
 
-export type LogServiceOpts = {
+export interface LogServiceOpts {
   keycloak?: Keycloak;
-};
+}
 
 class LogService {
 
@@ -67,7 +67,7 @@ class LogService {
           ...getBearerTokenHeader(this.keycloak)
         },
         body: JSON.stringify({
-          'configuredLevel': logLevel
+          configuredLevel: logLevel
         })
       });
 

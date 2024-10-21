@@ -11,13 +11,11 @@ import {
   OpenAPIV3
 } from 'openapi-types';
 
-export type JSONSchemaDefinition = {
-  [key: string]: JSONSchema7Definition;
-};
+export type JSONSchemaDefinition = Record<string, JSONSchema7Definition>;
 
-export type OpenAPIUtilOpts = {
+export interface OpenAPIUtilOpts {
   document: OpenAPIV3.Document;
-};
+}
 
 export class OpenAPIUtil {
 
@@ -145,7 +143,7 @@ export class OpenAPIUtil {
         continue;
       }
 
-      let definition = cloneDeep(this.document.components.schemas[schemaName]);
+      const definition = cloneDeep(this.document.components.schemas[schemaName]);
 
       this.replaceRefs(definition);
       this.applyDiscriminator(definition);
@@ -207,7 +205,7 @@ export class OpenAPIUtil {
         return;
       }
 
-      let schemaObject = def as OpenAPIV3.SchemaObject;
+      const schemaObject = def as OpenAPIV3.SchemaObject;
       if (_isNil(schemaObject?.oneOf)) {
         return;
       }
@@ -235,7 +233,7 @@ export class OpenAPIUtil {
               required: []
             },
             then: {
-              '$ref': undefined
+              $ref: undefined
             }
           };
 
@@ -252,7 +250,7 @@ export class OpenAPIUtil {
 
       if (allOf.length > 0) {
         delete schemaObject.oneOf;
-        // @ts-ignore
+        // @ts-expect-error TODO type seems incompatible
         schemaObject.allOf = allOf;
       }
     };

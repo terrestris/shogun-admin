@@ -1,26 +1,25 @@
-import jsLogger from 'js-logger';
+import jsLogger, { ILogLevel } from 'js-logger';
 
-let loglevel: string;
+let loglevel: ILogLevel;
 switch (process.env.NODE_ENV) {
   case 'development':
-    loglevel = 'DEBUG';
+    loglevel = jsLogger.DEBUG;
     break;
   case 'test':
-    loglevel = 'DEBUG';
+    loglevel = jsLogger.DEBUG;
     break;
   case 'production':
-    loglevel = 'INFO';
+    loglevel = jsLogger.INFO;
     break;
   case 'CI':
-    loglevel = 'INFO';
+    loglevel = jsLogger.INFO;
     break;
   default:
-    loglevel = 'INFO';
+    loglevel = jsLogger.INFO;
     break;
 }
-
 jsLogger.useDefaults({
-  defaultLevel: jsLogger.get(loglevel).getLevel()
+  defaultLevel: loglevel
 });
 
 export default jsLogger;
