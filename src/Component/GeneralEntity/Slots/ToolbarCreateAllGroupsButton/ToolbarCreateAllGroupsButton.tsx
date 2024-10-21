@@ -4,13 +4,13 @@ import {
 
 import Group from '@terrestris/shogun-util/dist/model/Group';
 
+import GeneralEntityRootContext, {
+  ContextValue
+} from '../../../../Context/GeneralEntityRootContext';
 import CreateAllGroupsButton, {
   CreateAllGroupsButtonProps
 } from '../../../CreateAllGroupsButton/CreateAllGroupsButton';
 
-import GeneralEntityRootContext, {
-  ContextValue
-} from '../../../../Context/GeneralEntityRootContext';
 
 export const ToolbarCreateAllGroupsButton: React.FC<CreateAllGroupsButtonProps> = () => {
   const generalEntityRootContext = useContext<ContextValue<Group> | undefined>(GeneralEntityRootContext);

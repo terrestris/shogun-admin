@@ -33,7 +33,8 @@ import {
   useTranslation
 } from 'react-i18next';
 
-import PermissionCollectionType from '@terrestris/shogun-util/dist/model/enum/PermissionCollectionType';
+import logger from '@terrestris/base-util/dist/Logger';
+import { PermissionCollectionType } from '@terrestris/shogun-util/dist/model/enum/PermissionCollectionType';
 import Group from '@terrestris/shogun-util/dist/model/Group';
 import { Page } from '@terrestris/shogun-util/dist/model/Page';
 import Role from '@terrestris/shogun-util/dist/model/Role';
@@ -44,10 +45,10 @@ import PermissionSelect from '../PermissionSelect/PermissionSelect';
 
 import './PermissionModal.less';
 
-type FormData = {
+interface FormData {
   referenceIds: number[];
   permission: PermissionCollectionType;
-};
+}
 
 export interface PermissionModalProps extends ModalProps {
   entityId: number;
@@ -63,7 +64,7 @@ export interface PermissionModalProps extends ModalProps {
   permissionSelectLabel?: string;
   permissionSelectExtra?: string;
   saveErrorMsg?: (placeholder: string) => string;
-};
+}
 
 const PermissionModal: React.FC<PermissionModalProps> = ({
   entityId,
@@ -71,7 +72,7 @@ const PermissionModal: React.FC<PermissionModalProps> = ({
   getReferences,
   toTag,
   tagRenderer,
-  onSave = () => {},
+  onSave = () => undefined,
   descriptionText = '',
   referenceLabelText = '',
   referenceExtraText = '',
@@ -144,6 +145,7 @@ const PermissionModal: React.FC<PermissionModalProps> = ({
     try {
       await form.validateFields();
     } catch (error) {
+      logger.error(`Could not validate fields to the following error: ${error}`);
       return;
     }
 
@@ -152,7 +154,7 @@ const PermissionModal: React.FC<PermissionModalProps> = ({
       permission
     } = form.getFieldsValue();
 
-    let erroneousRequestReferenceIds = [];
+    const erroneousRequestReferenceIds = [];
 
     setIsSaving(true);
 

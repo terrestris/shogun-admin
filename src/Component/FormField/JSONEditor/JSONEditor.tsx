@@ -30,13 +30,13 @@ import FullscreenWrapper from '../../FullscreenWrapper/FullscreenWrapper';
 
 loader.config({ monaco: monacoEditor });
 
-export type JSONEditorProps = {
+export interface JSONEditorProps {
   value?: string;
   onChange?: (value?: string) => void;
   editorProps?: EditorProps;
   entityType: string;
   dataField: string;
-};
+}
 
 export const JSONEditor: React.FC<JSONEditorProps> = ({
   value,

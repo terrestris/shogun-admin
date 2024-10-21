@@ -150,7 +150,7 @@ const loadPlugins = async () => {
       return adminPlugins;
     }
 
-    for (let module of adminPluginModules) {
+    for (const module of adminPluginModules) {
       const adminPluginDefault: AdminPluginInternal = module as AdminPluginInternal;
       const PluginComponent = adminPluginDefault.component;
 

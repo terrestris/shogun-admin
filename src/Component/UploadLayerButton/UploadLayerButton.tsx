@@ -11,6 +11,7 @@ import {
   Button,
   Upload
 } from 'antd';
+import { ButtonProps } from 'antd/lib/button';
 import {
   RcFile,
   UploadChangeParam
@@ -21,39 +22,38 @@ import {
 import {
   UploadRequestOption
 } from 'rc-upload/lib/interface';
+import { useTranslation } from 'react-i18next';
 import {
   Shapefile
 } from 'shapefile.js';
 
-import { ButtonProps } from 'antd/lib/button';
+
+import config from 'shogunApplicationConfig';
 
 import {
   getBearerTokenHeader
 } from '@terrestris/shogun-util/dist/security/getBearerTokenHeader';
 
-import config from 'shogunApplicationConfig';
-
-import { useTranslation } from 'react-i18next';
 
 import useSHOGunAPIClient from '../../Hooks/useSHOGunAPIClient';
 
 import Logger from '../../Logger';
 
-export type LayerUploadOptions = {
+export interface LayerUploadOptions {
   baseUrl: string;
   workspace: string;
   storeName: string;
   layerName: string;
   file: RcFile;
-};
+}
 
-export type LayerUploadResponse = {
+export interface LayerUploadResponse {
   layerName: string;
   workspace: string;
   baseUrl: string;
-};
+}
 
-export type FeatureTypeAttributes = {
+export interface FeatureTypeAttributes {
   attribute: {
     name: string;
     minOccurs: number;
@@ -62,12 +62,12 @@ export type FeatureTypeAttributes = {
     binding?: string;
     length?: number;
   }[];
-};
+}
 
 export type UploadLayerButtonProps = Omit<ButtonProps, 'onClick' | 'loading'> & {
   onSuccess?: (layerName?: LayerUploadResponse) => void;
   onError?: (error: any) => void;
-}
+};
 
 export const UploadLayerButton: React.FC<UploadLayerButtonProps> = ({
   onSuccess: onSuccessProp,
@@ -153,7 +153,7 @@ export const UploadLayerButton: React.FC<UploadLayerButtonProps> = ({
     const shp = await Shapefile.load(file);
 
     let featureTypeName = '';
-    let featureTypeAttributes: FeatureTypeAttributes = {
+    const featureTypeAttributes: FeatureTypeAttributes = {
       attribute: []
     };
 
@@ -229,9 +229,7 @@ export const UploadLayerButton: React.FC<UploadLayerButtonProps> = ({
   };
 
   const getGeometryType = (geometryTypeNumber: number): string | undefined => {
-    const allTypes: {
-      [key: number]: string | undefined;
-    } = {
+    const allTypes: Record<number, string | undefined> = {
       0: undefined, // Null
       1: 'org.locationtech.jts.geom.Point', // Point
       3: 'org.locationtech.jts.geom.LineString', // Polyline

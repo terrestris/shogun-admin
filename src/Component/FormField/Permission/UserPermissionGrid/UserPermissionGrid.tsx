@@ -14,7 +14,7 @@ import {
   useTranslation
 } from 'react-i18next';
 
-import PermissionCollectionType from '@terrestris/shogun-util/dist/model/enum/PermissionCollectionType';
+import { PermissionCollectionType } from '@terrestris/shogun-util/dist/model/enum/PermissionCollectionType';
 import UserInstancePermission from '@terrestris/shogun-util/dist/model/security/UserInstancePermission';
 import User from '@terrestris/shogun-util/dist/model/User';
 import { PageOpts } from '@terrestris/shogun-util/dist/service/GenericService';
@@ -30,7 +30,7 @@ import './UserPermissionGrid.less';
 
 export interface UserPermissionGridProps extends Omit<InstancePermissionGridProps<UserInstancePermission>,
   'getInstancePermissions' | 'setInstancePermission' | 'deleteInstancePermission' | 'toDataType' |
-  'nameColumnDefinition' | 'getReferences' | 'toTag' | 'modalProps'> { };
+  'nameColumnDefinition' | 'getReferences' | 'toTag' | 'modalProps'> { }
 
 const UserPermissionGrid: React.FC<UserPermissionGridProps> = ({
   entityType,
@@ -41,9 +41,8 @@ const UserPermissionGrid: React.FC<UserPermissionGridProps> = ({
   const client = useSHOGunAPIClient();
 
   const service = useCallback(() => {
-    // for unknown reasons, just calling the function here will result in 'this'
+    // @ts-expect-error for unknown reasons, just calling the function here will result in 'this'
     // not being defined in the function, so 'apply' is used to set 'this' correctly
-    // @ts-expect-error
     return client?.[entityType].apply(client);
   }, [client, entityType]);
 
@@ -60,7 +59,7 @@ const UserPermissionGrid: React.FC<UserPermissionGridProps> = ({
   };
 
   const getUsers = async (pageOpts?: PageOpts) => {
-    return await client?.user().findAll(pageOpts);
+    return client?.user().findAll(pageOpts);
   };
 
   const toUserDataType = (permission: UserInstancePermission): DataType<User> => {

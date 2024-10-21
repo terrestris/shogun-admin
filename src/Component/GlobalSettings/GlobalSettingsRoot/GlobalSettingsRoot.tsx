@@ -1,27 +1,23 @@
-import './GlobalSettingsRoot.less';
+import React from 'react';
 
-import React, {
-  useEffect
-} from 'react';
+import {PageHeader} from '@ant-design/pro-components';
 
-import { PageHeader } from '@ant-design/pro-components';
-import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import {useTranslation} from 'react-i18next';
+import {useNavigate} from 'react-router-dom';
 
 import EvictCache from '../../../Component/EvictCache/EvictCache';
 
-type LogsProps = {};
+import './GlobalSettingsRoot.less';
 
-export const GlobalSettings: React.FC<LogsProps> = (props) => {
+interface LogsProps {}
+
+export const GlobalSettings: React.FC<LogsProps> = () => {
 
   const {
     t
   } = useTranslation();
 
   const navigate = useNavigate();
-
-  useEffect(() => {
-  }, []);
 
   return (
     <div

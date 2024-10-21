@@ -8,7 +8,7 @@ import {
   useTranslation
 } from 'react-i18next';
 
-export interface PermissionSelectProps extends SelectProps {};
+export interface PermissionSelectProps extends SelectProps {}
 
 const PermissionSelect: React.FC<PermissionSelectProps> = ({
   ...passThroughProps

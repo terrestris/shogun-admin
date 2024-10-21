@@ -61,7 +61,8 @@ export default class TableUtil {
                 handleSearch(selectedKeys, confirm);
               }}
               size="small"
-              style={{ flex: 1 }}>
+              style={{ flex: 1 }}
+            >
               {`${i18n.t('GeneralEntityTable.popupReset')}`}
             </Button>
           </div>

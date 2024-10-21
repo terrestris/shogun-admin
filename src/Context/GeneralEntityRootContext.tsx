@@ -1,17 +1,18 @@
-import BaseEntity from '@terrestris/shogun-util/dist/model/BaseEntity';
 import React from 'react';
 
-export type ContextValue<T extends BaseEntity> = {
+import BaseEntity from '@terrestris/shogun-util/dist/model/BaseEntity';
+
+export interface ContextValue<T extends BaseEntity> {
   entityType?: string;
   entityName?: string;
   fetchEntities?: () => Promise<void>;
   entities?: T[];
-};
+}
 
-export type GeneralEntityRootProps<T extends BaseEntity> = {
+export interface GeneralEntityRootProps<T extends BaseEntity> {
   value: ContextValue<T>;
   children: JSX.Element;
-};
+}
 
 // Typing the context here with a generic type T is not possible (or at least I didn't find
 // a proper way to do so). As a workaround, one must type it while using the context, e.g.:

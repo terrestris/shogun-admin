@@ -5,9 +5,8 @@ module.exports = {
     '@babel/preset-react'
   ],
   plugins: [
-    '@babel/transform-class-properties',
-    '@babel/proposal-object-rest-spread',
-    '@babel/proposal-optional-chaining',
+    '@babel/plugin-transform-optional-chaining',
+    ['@babel/plugin-transform-class-properties', { loose: false }],
     [
       'import',
       {
