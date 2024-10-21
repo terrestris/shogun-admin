@@ -1,3 +1,10 @@
+## [17.0.0-next.5](https://github.com/terrestris/shogun-admin/compare/v17.0.0-next.4...v17.0.0-next.5) (2024-10-21)
+
+
+### Bugfixes
+
+* fix role permission grid ([#853](https://github.com/terrestris/shogun-admin/issues/853)) ([ba0a7fb](https://github.com/terrestris/shogun-admin/commit/ba0a7fb71a471577b1e7ef987ffe345b22047690))
+
 ## [17.0.0-next.4](https://github.com/terrestris/shogun-admin/compare/v17.0.0-next.3...v17.0.0-next.4) (2024-10-21)
 
 
