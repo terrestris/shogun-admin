@@ -93,7 +93,7 @@ export const ImageFileForm: React.FC<ImageFileRootProps> = () => {
           }
         }`,
         variables: {
-          id: imageFileId
+          id: parseInt(imageFileId, 10)
         }
       });
       setFile(result.imageFileById);
