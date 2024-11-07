@@ -1,3 +1,10 @@
+## [17.0.0-next.6](https://github.com/terrestris/shogun-admin/compare/v17.0.0-next.5...v17.0.0-next.6) (2024-11-07)
+
+
+### Bugfixes
+
+* pass image id as number ([9a62b49](https://github.com/terrestris/shogun-admin/commit/9a62b49c879f0ee743ff2c1ef342f9acf6e1b2a6))
+
 ## [17.0.0-next.5](https://github.com/terrestris/shogun-admin/compare/v17.0.0-next.4...v17.0.0-next.5) (2024-10-21)
 
 
