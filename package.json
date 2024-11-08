@@ -96,7 +96,7 @@
     "buffer": "6.0.3",
     "dotenv": "16.4.5",
     "eslint": "8.57.0",
-    "eslint-plugin-import": "2.30.0",
+    "eslint-plugin-import": "2.31.0",
     "eslint-plugin-react-hooks": "4.6.2",
     "husky": "9.1.6",
     "isomorphic-fetch": "3.0.0",
