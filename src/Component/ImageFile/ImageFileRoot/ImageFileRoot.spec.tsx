@@ -76,7 +76,6 @@ describe('<ImageFileRoot />', () => {
 
   it('should handle file upload', async () => {
     const {
-      getByText,
       container
     } = render(
       <RecoilRoot>

@@ -1,5 +1,3 @@
-import './GeneralEntityRoot.less';
-
 import React, {
   useCallback,
   useEffect,
@@ -10,8 +8,7 @@ import React, {
 import {
   FormOutlined,
   SaveOutlined,
-  UndoOutlined,
-  UploadOutlined
+  UndoOutlined
 } from '@ant-design/icons';
 
 import { PageHeader } from '@ant-design/pro-layout';
@@ -19,8 +16,7 @@ import {
   Button,
   Form,
   notification,
-  Modal,
-  Upload
+  Modal
 } from 'antd';
 import {
   TableProps,
@@ -28,42 +24,31 @@ import {
 import {
   SortOrder
 } from 'antd/es/table/interface';
-import {
-  RcFile,
-  UploadChangeParam
-} from 'antd/lib/upload';
-import {
-  UploadFile
-} from 'antd/lib/upload/interface';
+
 import i18next from 'i18next';
 import _isEmpty from 'lodash/isEmpty';
 import _isNil from 'lodash/isNil';
 import {
   NamePath
 } from 'rc-field-form/lib/interface';
-import {
-  UploadRequestOption
-} from 'rc-upload/lib/interface';
+
 import {
   useHotkeys
 } from 'react-hotkeys-hook';
 import {
   useTranslation
 } from 'react-i18next';
-import {Link,
+import {
+  Link,
   matchPath,
   useLocation,
-  useNavigate} from 'react-router-dom';
-import {
-  Shapefile
-} from 'shapefile.js';
+  useNavigate
+} from 'react-router-dom';
+
 import config from 'shogunApplicationConfig';
 
 import Logger from '@terrestris/base-util/dist/Logger';
 import BaseEntity from '@terrestris/shogun-util/dist/model/BaseEntity';
-import {
-  getBearerTokenHeader
-} from '@terrestris/shogun-util/dist/security/getBearerTokenHeader';
 
 import { PageOpts } from '@terrestris/shogun-util/dist/service/GenericService';
 
@@ -82,31 +67,9 @@ import GeneralEntityForm, {
 import GeneralEntityTable, {
   TableConfig
 } from '../GeneralEntityTable/GeneralEntityTable';
+import { GeneralEntityRootProvider } from '../../../Context/GeneralEntityRootContext';
 
-type LayerUploadOptions = {
-  baseUrl: string;
-  workspace: string;
-  storeName: string;
-  layerName: string;
-  file: RcFile;
-};
-
-type LayerUploadResponse = {
-  layerName: string;
-  workspace: string;
-  baseUrl: string;
-};
-
-type FeatureTypeAttributes = {
-  attribute: {
-    name: string;
-    minOccurs: number;
-    maxOccurs: number;
-    nillable: boolean;
-    binding?: string;
-    length?: number;
-  }[];
-};
+import './GeneralEntityRoot.less';
 
 export type GeneralEntityConfigType<T extends BaseEntity> = {
   i18n: FormTranslations;
@@ -122,7 +85,22 @@ export type GeneralEntityConfigType<T extends BaseEntity> = {
   defaultEntity?: T;
 };
 
-type OwnProps<T extends BaseEntity> = GeneralEntityConfigType<T>;
+export type ToolbarSlotProps = {
+  onSuccess?: () => void;
+  onError?: () => void;
+} & Record<string, any>;
+
+type OwnProps<T extends BaseEntity> = GeneralEntityConfigType<T> & {
+  /**
+   * Slots for additional components that are dependent on the entity type.
+   */
+  slots?: {
+    /**
+     * Slot for left toolbar (above the table).
+     */
+    leftToolbar?: React.ReactNode;
+  };
+};
 
 export type GeneralEntityRootProps<T extends BaseEntity> = OwnProps<T> & React.HTMLAttributes<HTMLDivElement>;
 
@@ -135,9 +113,10 @@ export function GeneralEntityRoot<T extends BaseEntity>({
   navigationTitle = 'Entitäten',
   subTitle = '… mit denen man Dinge tun kann (aus Gründen bspw.)',
   formConfig,
-  tableConfig = {},
+  tableConfig,
   defaultEntity,
-  onEntitiesLoaded = () => { }
+  onEntitiesLoaded,
+  slots
 }: GeneralEntityRootProps<T>) {
 
   const location = useLocation();
@@ -156,7 +135,6 @@ export function GeneralEntityRoot<T extends BaseEntity>({
   const [isGridLoading, setGridLoading] = useState<boolean>(false);
   const [isFormLoading, setFormLoading] = useState<boolean>(false);
   const [isSaving, setIsSaving] = useState<boolean>(false);
-  const [isUploadingFile, setIsUploadingFile] = useState<boolean>(false);
   const [pageTotal, setPageTotal] = useState<number>();
   const [pageSize, setPageSize] = useState<number>(config.defaultPageSize || 10);
   const [pageCurrent, setPageCurrent] = useState<number>(1);
@@ -164,10 +142,13 @@ export function GeneralEntityRoot<T extends BaseEntity>({
   const [sortOrder, setSortOrder] = useState<SortOrder>();
   const [isFiltered, setFiltered] = useState<boolean>(false);
   const [isPreviousFormDirty, setIsPreviousFormDirty] = useState<boolean>(false);
+
   const [modal, contextHolder] = Modal.useModal();
-  const [form] = Form.useForm();
+
+  const [form] = Form.useForm<FormValues | undefined>();
 
   const client = useSHOGunAPIClient();
+
   const {
     t
   } = useTranslation();
@@ -245,13 +226,21 @@ export function GeneralEntityRoot<T extends BaseEntity>({
       const allEntries = await entityController?.findAll(pageOpts);
       setPageTotal(allEntries.totalElements);
       setEntities(allEntries.content || []);
-      onEntitiesLoaded(allEntries.content, entityType);
+      onEntitiesLoaded?.(allEntries.content, entityType);
     } catch (error) {
       Logger.error(error);
     } finally {
       setGridLoading(false);
     }
   }, [entityController, onEntitiesLoaded, entityType, pageCurrent, pageSize, sortField, sortOrder, isFiltered]);
+
+  // TODO This is just a small subset of possible context values, it might be extended.
+  const contextValue = useMemo(() => ({
+    entityType: entityType,
+    entityName: entityName,
+    fetchEntities: fetchEntities,
+    entities: allEntities
+  }), [fetchEntities, entityType, allEntities]);
 
   const discardChanges = () => {
     Modal.destroyAll();
@@ -429,293 +418,6 @@ export function GeneralEntityRoot<T extends BaseEntity>({
     }
   };
 
-  const onBeforeFileUpload = (file: RcFile) => {
-    const maxSize = config.geoserver?.upload?.limit || '200000000';
-    const fileType = file.type;
-    const fileSize = file.size;
-
-    // 1. Check file size
-    if (fileSize > maxSize) {
-      notification.error({
-        message: t('GeneralEntityRoot.upload.error.message', {
-          entity: TranslationUtil.getTranslationFromConfig(entityName, i18n)
-        }),
-        description: t('GeneralEntityRoot.upload.error.descriptionSize', {
-          maxSize: maxSize / 1000000
-        })
-      });
-
-      return false;
-    }
-
-    // 2. Check file format
-    const supportedFormats = ['application/zip', 'application/x-zip-compressed', 'image/tiff'];
-    if (!supportedFormats.includes(fileType)) {
-      notification.error({
-        message: t('GeneralEntityRoot.upload.error.message', {
-          entity: TranslationUtil.getTranslationFromConfig(entityName, i18n)
-        }),
-        description: t('GeneralEntityRoot.upload.error.descriptionFormat', {
-          supportedFormats: supportedFormats.join(', ')
-        })
-      });
-
-      return false;
-    }
-
-    return true;
-  };
-
-  const uploadGeoTiff = async (options: LayerUploadOptions): Promise<void> => {
-    const {
-      baseUrl,
-      workspace,
-      storeName,
-      layerName,
-      file
-    } = options;
-
-    const url = `${baseUrl}/rest/workspaces/${workspace}/coveragestores/` +
-      `${storeName}/file.geotiff?coverageName=${layerName}`;
-
-    const response = await fetch(url, {
-      method: 'PUT',
-      headers: {
-        ...getBearerTokenHeader(client?.getKeycloak()),
-        'Content-Type': 'image/tiff'
-      },
-      body: file
-    });
-
-    if (!response.ok) {
-      throw new Error('No successful response while uploading the file');
-    }
-  };
-
-  const uploadShapeZip = async (options: LayerUploadOptions): Promise<void> => {
-    const {
-      baseUrl,
-      workspace,
-      storeName,
-      layerName,
-      file
-    } = options;
-
-    const shp = await Shapefile.load(file);
-
-    let featureTypeName = '';
-    let featureTypeAttributes: FeatureTypeAttributes = {
-      attribute: []
-    };
-
-    if (Object.entries(shp).length !== 1) {
-      throw new Error(t('GeneralEntityRoot.upload.error.descriptionZipContent'));
-    }
-
-    Object.entries(shp).forEach(([k, v]) => {
-      featureTypeName = k;
-
-      const dbfContent = v.parse('dbf', {
-        properties: false
-      });
-
-      featureTypeAttributes.attribute = dbfContent.fields.map(field => ({
-        name: field.name,
-        minOccurs: 0,
-        maxOccurs: 1,
-        nillable: true,
-        binding: getAttributeType(field.type),
-        length: field.length
-      }));
-
-      const shxContent = v.parse('shx');
-
-      featureTypeAttributes.attribute.push({
-        name: 'the_geom',
-        minOccurs: 0,
-        maxOccurs: 1,
-        nillable: true,
-        binding: getGeometryType(shxContent.header.type)
-      });
-    });
-
-    const url = `${baseUrl}/rest/workspaces/${workspace}/datastores/` +
-      `${storeName}/file.shp?configure=none`;
-
-    const response = await fetch(url, {
-      method: 'PUT',
-      headers: {
-        ...getBearerTokenHeader(client?.getKeycloak()),
-        'Content-Type': 'application/zip'
-      },
-      body: file
-    });
-
-    if (!response.ok) {
-      throw new Error('No successful response while uploading the file');
-    }
-
-    const featureTypeUrl = `${baseUrl}/rest/workspaces/${workspace}/datastores/${storeName}/featuretypes`;
-
-    const featureTypeResponse = await fetch(featureTypeUrl, {
-      method: 'POST',
-      headers: {
-        ...getBearerTokenHeader(client?.getKeycloak()),
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        featureType: {
-          enabled: true,
-          name: layerName,
-          nativeName: featureTypeName,
-          title: layerName,
-          attributes: featureTypeAttributes
-        }
-      })
-    });
-
-    if (!featureTypeResponse.ok) {
-      throw new Error('No successful response while creating the featuretype');
-    }
-  };
-
-  const getGeometryType = (geometryTypeNumber: number): string | undefined => {
-    const allTypes: {
-      [key: number]: string | undefined;
-    } = {
-      0: undefined, // Null
-      1: 'org.locationtech.jts.geom.Point', // Point
-      3: 'org.locationtech.jts.geom.LineString', // Polyline
-      5: 'org.locationtech.jts.geom.Polygon', // Polygon
-      8: 'org.locationtech.jts.geom.MultiPoint', // MultiPoint
-      11: 'org.locationtech.jts.geom.Point', // PointZ
-      13: 'org.locationtech.jts.geom.LineString', // PolylineZ
-      15: 'org.locationtech.jts.geom.Polygon', // PolygonZ
-      18: 'org.locationtech.jts.geom.MultiPoint', // MultiPointZ
-      21: 'org.locationtech.jts.geom.Point', // PointM
-      23: 'org.locationtech.jts.geom.LineString', // PolylineM
-      25: 'org.locationtech.jts.geom.Polygon', // PolygonM
-      28: 'org.locationtech.jts.geom.MultiPoint', // MultiPointM
-      31: undefined // MultiPatch
-    };
-
-    return allTypes[geometryTypeNumber];
-  };
-
-  const getAttributeType = (dbfFieldType: string) => {
-    switch (dbfFieldType) {
-      case 'C': // Character
-        return 'java.lang.String';
-      case 'D': // Date
-        return 'java.util.Date';
-      case 'N': // Numeric
-        return 'java.lang.Long';
-      case 'F': // Floating point
-        return 'java.lang.Double';
-      case 'L': // Logical
-        return 'java.lang.Boolean';
-      case 'M': // Memo
-        return undefined;
-      default:
-        return undefined;
-    }
-  };
-
-  const onFileUploadAction = async (options: UploadRequestOption<LayerUploadResponse>) => {
-    const {
-      onError = () => undefined,
-      onSuccess = () => undefined,
-      file
-    } = options;
-
-    const splittedFileName = (file as RcFile).name.split('.');
-    const fileType = (file as RcFile).type;
-    const geoServerBaseUrl = config.geoserver?.base || '/geoserver';
-    const workspace = config.geoserver?.upload?.workspace || 'SHOGUN';
-    const layerName = `${splittedFileName[0]}_${Date.now()}`.toUpperCase();
-
-    const uploadData = {
-      file: file as RcFile,
-      baseUrl: geoServerBaseUrl,
-      workspace: workspace,
-      storeName: layerName,
-      layerName: layerName
-    };
-
-    try {
-      if (fileType === 'image/tiff') {
-        await uploadGeoTiff(uploadData);
-      }
-
-      if (fileType === 'application/zip' || fileType === 'application/x-zip-compressed') {
-        await uploadShapeZip(uploadData);
-      }
-
-      onSuccess({
-        baseUrl: geoServerBaseUrl,
-        workspace: workspace,
-        layerName: layerName
-      });
-    } catch (error) {
-      onError({
-        name: 'UploadError',
-        message: (error as Error)?.message
-      });
-    }
-  };
-
-  const onFileUploadChange = async (info: UploadChangeParam<UploadFile<LayerUploadResponse>>) => {
-    const file = info.file;
-
-    if (file.status === 'uploading') {
-      setIsUploadingFile(true);
-    }
-
-    if (file.status === 'done') {
-      await client?.layer().add({
-        name: file.response?.layerName ?? 'LAYER-DEFAULT-NAME',
-        type: 'TILEWMS',
-        clientConfig: {
-          hoverable: false
-        },
-        sourceConfig: {
-          url: `${file.response?.baseUrl}/ows?`,
-          layerNames: `${file.response?.workspace}:${file.response?.layerName}`,
-          useBearerToken: true
-        }
-      });
-
-      // Refresh the list
-      await fetchEntities();
-
-      // Finally, show success message
-      setIsUploadingFile(false);
-
-      notification.success({
-        message: t('GeneralEntityRoot.upload.success.message', {
-          entity: TranslationUtil.getTranslationFromConfig(entityName, i18n)
-        }),
-        description: t('GeneralEntityRoot.upload.success.description', {
-          fileName: file.fileName,
-          layerName: file.response?.layerName
-        }),
-      });
-    } else if (file.status === 'error') {
-      setIsUploadingFile(false);
-
-      Logger.error(file.error);
-
-      notification.error({
-        message: t('GeneralEntityRoot.upload.error.message', {
-          entity: TranslationUtil.getTranslationFromConfig(entityName, i18n)
-        }),
-        description: t('GeneralEntityRoot.upload.error.description', {
-          fileName: file.fileName
-        })
-      });
-    }
-  };
-
   /**
    * Shortcut: Save entity form when ctrl+s is pressed.
    */
@@ -770,119 +472,103 @@ export function GeneralEntityRoot<T extends BaseEntity>({
   };
 
   return (
-    <div className="general-entity-root">
-      <PageHeader
-        className="header"
-        onBack={() => navigate(-1)}
-        title={TranslationUtil.getTranslationFromConfig(navigationTitle, i18n)}
-        subTitle={subTitle}
-        extra={[
-          <Button
-            disabled={saveReloadDisabled || !formValid}
-            icon={<SaveOutlined />}
-            key="save"
-            onClick={onSaveClick}
-            type="primary"
-            loading={isSaving}
-          >
-            {t('GeneralEntityRoot.save', {
-              context: i18next.language,
-              entity: TranslationUtil.getTranslationFromConfig(entityName, i18n)
-            })}
-          </Button>,
-          <Button
-            disabled={saveReloadDisabled}
-            icon={<UndoOutlined />}
-            key="reset"
-            onClick={onResetForm}
-            type="primary"
-          >
-            {t('GeneralEntityRoot.reset', {
-              context: i18next.language,
-              entity: TranslationUtil.getTranslationFromConfig(entityName, i18n)
-            })}
-          </Button>
-        ]}
+    <GeneralEntityRootProvider
+      value={contextValue}
+    >
+      <div
+        className="general-entity-root"
       >
-      </PageHeader>
-      <div className="left-container">
-        <div className="left-toolbar">
-          <Link
-            key="create"
-            to={`${config.appPrefix}/portal/${entityType}/create`}
-            onClick={onCreateForm}
-          >
+        <PageHeader
+          className="header"
+          onBack={() => navigate(-1)}
+          title={TranslationUtil.getTranslationFromConfig(navigationTitle, i18n)}
+          subTitle={subTitle}
+          extra={[
             <Button
+              disabled={saveReloadDisabled || !formValid}
+              icon={<SaveOutlined />}
+              key="save"
+              onClick={onSaveClick}
               type="primary"
-              key="create"
-              icon={<FormOutlined />}
+              loading={isSaving}
             >
-              {t('GeneralEntityRoot.create', {
+              {t('GeneralEntityRoot.save', {
+                context: i18next.language,
+                entity: TranslationUtil.getTranslationFromConfig(entityName, i18n)
+              })}
+            </Button>,
+            <Button
+              disabled={saveReloadDisabled}
+              icon={<UndoOutlined />}
+              key="reset"
+              onClick={onResetForm}
+              type="primary"
+            >
+              {t('GeneralEntityRoot.reset', {
                 context: i18next.language,
                 entity: TranslationUtil.getTranslationFromConfig(entityName, i18n)
               })}
             </Button>
-          </Link>
-          {/* Upload only available for layer entities */}
-          {entityType === 'layer' && (
-            <Upload
-              customRequest={onFileUploadAction}
-              accept='image/tiff,application/zip'
-              maxCount={1}
-              showUploadList={false}
-              beforeUpload={onBeforeFileUpload}
-              onChange={onFileUploadChange}
+          ]}
+        >
+        </PageHeader>
+        <div className="left-container">
+          <div className="left-toolbar">
+            <Link
+              key="create"
+              to={`${config.appPrefix}/portal/${entityType}/create`}
+              onClick={onCreateForm}
             >
               <Button
                 type="primary"
-                key="upload"
-                icon={<UploadOutlined />}
-                loading={isUploadingFile}
-                disabled={isUploadingFile}
+                key="create"
+                icon={<FormOutlined />}
               >
-                {t('GeneralEntityRoot.upload.button', {
+                {t('GeneralEntityRoot.create', {
                   context: i18next.language,
                   entity: TranslationUtil.getTranslationFromConfig(entityName, i18n)
                 })}
               </Button>
-            </Upload>
-          )}
+            </Link>
+            {slots?.leftToolbar && (
+              <div
+                className="general-entity-slots-left-toolbar"
+              >
+                { slots.leftToolbar }
+              </div>
+            )}
+          </div>
+          <GeneralEntityTable
+            bordered
+            controller={entityController}
+            i18n={i18n}
+            loading={isGridLoading}
+            onChange={onTableChange}
+            pagination={isFiltered ? false : paginationConfig}
+            size="small"
+            tableConfig={tableConfig}
+          />
         </div>
-        <GeneralEntityTable
-          bordered
-          controller={entityController}
-          entities={allEntities ?? []}
-          entityType={entityType}
-          fetchEntities={fetchEntities}
-          i18n={i18n}
-          loading={isGridLoading}
-          onChange={onTableChange}
-          pagination={isFiltered ? false : paginationConfig}
-          size="small"
-          tableConfig={tableConfig}
-        />
+        <div className="right-container">
+          {
+            id && !_isNil(entityId) && (
+              <GeneralEntityForm
+                loading={isFormLoading}
+                i18n={i18n}
+                entityId={parseInt(entityId, 10)}
+                formConfig={formConfig}
+                form={form}
+                formProps={{
+                  initialValues,
+                  onValuesChange
+                }}
+              />
+            )
+          }
+        </div>
+        <div>{contextHolder}</div>
       </div>
-      <div className="right-container">
-        {
-          id && !_isNil(entityId) && (
-            <GeneralEntityForm
-              loading={isFormLoading}
-              i18n={i18n}
-              entityId={parseInt(entityId, 10)}
-              entityName={entityName}
-              entityType={entityType}
-              formConfig={formConfig}
-              form={form}
-              formProps={{
-                initialValues,
-                onValuesChange
-              }}
-            />
-          )
-        }
-      </div>
-      <div>{contextHolder}</div>
-    </div>
+    </GeneralEntityRootProvider>
   );
 }
 

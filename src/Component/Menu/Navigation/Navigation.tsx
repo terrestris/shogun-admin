@@ -8,7 +8,9 @@ import {
   AppstoreOutlined,
   UserOutlined,
   TeamOutlined,
-  FileTextOutlined
+  FileTextOutlined,
+  TagOutlined,
+  ApiOutlined
 } from '@ant-design/icons';
 
 import {
@@ -61,11 +63,22 @@ export const Navigation: React.FC<NavigationProps> = ({
   const navigationContentChildren: ItemType[] = [];
 
   if (entityConfigs && entityConfigs.length > 0) {
-
+    // The following entities are the "default" SHOGun ones.
     const applicationConfig = entityConfigs.find(e => e.entityType === 'application');
     const layersConfig = entityConfigs.find(e => e.entityType === 'layer');
     const userConfig = entityConfigs.find(e => e.entityType === 'user');
     const groupsConfig = entityConfigs.find(e => e.entityType === 'group');
+    const rolesConfig = entityConfigs.find(e => e.entityType === 'role');
+
+    // But it's also possible to add custom entities to the navigation.
+    const otherConfigs = entityConfigs.filter(e => ![
+      applicationConfig,
+      layersConfig,
+      userConfig,
+      groupsConfig,
+      rolesConfig
+    ].includes(e));
+
     if (applicationConfig) {
       navigationContentChildren.push({
         key: 'application',
@@ -118,6 +131,33 @@ export const Navigation: React.FC<NavigationProps> = ({
         )
       });
     }
+    if (rolesConfig) {
+      navigationContentChildren.push({
+        key: 'role',
+        label: (
+          <>
+            <TagOutlined />
+            <span>
+              {TranslationUtil.getTranslationFromConfig(rolesConfig?.navigationTitle, rolesConfig?.i18n)}
+            </span>
+          </>
+        )
+      });
+    }
+    otherConfigs.forEach(entityConfig => {
+      navigationContentChildren.push({
+        key: entityConfig.entityType,
+        label: (
+          <>
+            {/* TODO We might think about making the icon configurable */}
+            <ApiOutlined />
+            <span>
+              {TranslationUtil.getTranslationFromConfig(entityConfig?.navigationTitle, entityConfig?.i18n)}
+            </span>
+          </>
+        )
+      });
+    });
   }
 
   if (navigationConf?.general?.imagefiles?.visible) {

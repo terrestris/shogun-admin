@@ -1,0 +1,25 @@
+import {
+  useContext
+} from 'react';
+
+import UploadLayerButton, {
+  UploadLayerButtonProps
+} from '../../../UploadLayerButton/UploadLayerButton';
+
+import GeneralEntityRootContext from '../../../../Context/GeneralEntityRootContext';
+
+export const ToolbarUploadLayerButton: React.FC<UploadLayerButtonProps> = () => {
+  const generalEntityRootContext = useContext(GeneralEntityRootContext);
+
+  const onSuccess = () => {
+    generalEntityRootContext?.fetchEntities?.();
+  };
+
+  return (
+    <UploadLayerButton
+      onSuccess={onSuccess}
+    />
+  );
+};
+
+export default ToolbarUploadLayerButton;
