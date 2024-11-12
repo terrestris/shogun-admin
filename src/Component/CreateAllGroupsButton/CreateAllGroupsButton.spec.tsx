@@ -33,7 +33,7 @@ jest.mock('../../Hooks/useSHOGunAPIClient', () => {
   };
 });
 
-describe('<CreateAllUsersButton />', () => {
+describe('<CreateAllGroupsButton />', () => {
 
   afterEach(cleanup);
 

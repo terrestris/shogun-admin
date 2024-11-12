@@ -256,19 +256,19 @@ export default {
       },
       CreateAllUsersButton: {
         title: 'Nutzer synchronisieren',
-        tooltip: 'Add all missing users from the user provider',
+        tooltip: 'Füge alle fehlenden Nutzer aus dem Nutzerprovider hinzu',
         success: 'Nutzer erfolgreich erstellt',
         error: 'Fehler beim Erstellen der Nutzer'
       },
       CreateAllGroupsButton: {
         title: 'Gruppen synchronisieren',
-        tooltip: 'Add all missing users from the user provider',
+        tooltip: 'Füge alle fehlenden Gruppen aus dem Gruppenprovider hinzu',
         success: 'Gruppen erfolgreich erstellt',
         error: 'Fehler beim Erstellen der Gruppen'
       },
       CreateAllRolesButton: {
         title: 'Rollen synchronisieren',
-        tooltip: 'Add all missing users from the user provider',
+        tooltip: 'Füge alle fehlenden Rollen aus dem Rollenprovider hinzu',
         success: 'Rollen erfolgreich erstellt',
         error: 'Fehler beim Erstellen der Rollen'
       }
