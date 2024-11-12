@@ -1,3 +1,20 @@
+## [17.0.0-next.7](https://github.com/terrestris/shogun-admin/compare/v17.0.0-next.6...v17.0.0-next.7) (2024-11-12)
+
+
+### Dependencies
+
+* update shogun-util ([a47407f](https://github.com/terrestris/shogun-admin/commit/a47407fef278588116184425e20c289b45a34685))
+
+
+### Features
+
+* introduce buttons to create users, groups and roles from the respective provider ([76d872a](https://github.com/terrestris/shogun-admin/commit/76d872a1bef650796631b9896750018d1e844840))
+
+
+### Bugfixes
+
+* update translations ([38d4309](https://github.com/terrestris/shogun-admin/commit/38d4309ef04c93a5bd9dfc5fc663e76cfa8a3399))
+
 ## [17.0.0-next.6](https://github.com/terrestris/shogun-admin/compare/v17.0.0-next.5...v17.0.0-next.6) (2024-11-07)
 
 
