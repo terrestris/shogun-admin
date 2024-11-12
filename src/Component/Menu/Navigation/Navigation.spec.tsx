@@ -7,7 +7,11 @@ import {
   waitFor,
 } from '@testing-library/react';
 
-import { MemoryRouter, useLocation, useNavigate } from 'react-router-dom';
+import {
+  MemoryRouter,
+  useLocation,
+  useNavigate
+} from 'react-router-dom';
 
 import { Navigation } from './Navigation';
 
@@ -81,8 +85,6 @@ describe('<Navigation />', () => {
       expect(screen.getByText('Global')).toBeInTheDocument();
       expect(screen.getByText('Logging levels')).toBeInTheDocument();
     });
-
-
   });
 
   it('opens submenu when an item is selected', async () => {
@@ -132,4 +134,88 @@ describe('<Navigation />', () => {
     expect(container.querySelector('.ant-menu-inline-collapsed')).toBeInTheDocument();
   });
 
+  it('renders default and custom entries in the navigation bar', async () => {
+    const defaultEntry = {
+      entityType: 'application',
+      entityName: '#i18n.entityName',
+      endpoint: '/applications',
+      navigationTitle: "#i18n.navigationTitle",
+      formConfig: {
+        name: 'application',
+        fields: [{
+          dataField: 'name',
+          readOnly: true
+        }]
+      },
+      i18n: {
+        de: {
+          entityName: 'Applikation',
+          navigationTitle: 'Applikationen',
+          titleName: 'Name'
+        },
+        en: {
+          entityName: 'Application',
+          navigationTitle: 'Applications',
+          titleName: 'Name'
+        }
+      },
+      tableConfig: {
+        columnDefinition: [{
+          title: '#i18n.titleName',
+          dataIndex: 'name',
+          key: 'name'
+        }]
+      }
+    };
+
+    const customEntry = {
+      entityType: 'myEntity',
+      entityName: '#i18n.entityName',
+      endpoint: '/myEntities',
+      navigationTitle: "#i18n.navigationTitle",
+      formConfig: {
+        name: 'myEntity',
+        fields: [{
+          dataField: 'name',
+          readOnly: true
+        }]
+      },
+      i18n: {
+        de: {
+          entityName: 'MyEntity',
+          navigationTitle: 'MyEntities',
+          titleName: 'Name'
+        },
+        en: {
+          entityName: 'MyEntity',
+          navigationTitle: 'MyEntities',
+          titleName: 'Name'
+        }
+      },
+      tableConfig: {
+        columnDefinition: [{
+          title: '#i18n.titleName',
+          dataIndex: 'name',
+          key: 'name'
+        }]
+      }
+    };
+
+    render(
+      <MemoryRouter>
+        <Navigation
+          entityConfigs={[
+            defaultEntry,
+            customEntry
+          ]}
+        />
+      </MemoryRouter>
+    );
+
+    const applicationEntry = await waitFor(() => screen.getByText('Applications'));
+    const myEntityEntry = await waitFor(() => screen.getByText('MyEntities'));
+
+    expect(applicationEntry).toBeInTheDocument();
+    expect(myEntityEntry).toBeInTheDocument();
+  });
 });

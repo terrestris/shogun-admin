@@ -36,21 +36,24 @@ import Navigation from '../../Component/Menu/Navigation/Navigation';
 import MetricsRoot from '../../Component/Metrics/MetricsRoot/MetricsRoot';
 import ApplicationInfo from '../../Component/Modal/ApplicationInfo/ApplicationInfo';
 import WelcomeDashboard from '../../Component/WelcomeDashboard/WelcomeDashboard';
+import ToolbarCreateAllUsersButton from '../../Component/GeneralEntity/Slots/ToolbarCreateAllUsersButton/ToolbarCreateAllUsersButton';
+import ToolbarCreateAllGroupsButton from '../../Component/GeneralEntity/Slots/ToolbarCreateAllGroupsButton/ToolbarCreateAllGroupsButton';
+import ToolbarCreateAllRolesButton from '../../Component/GeneralEntity/Slots/ToolbarCreateAllRolesButton/ToolbarCreateAllRolesButton';
+import ToolbarUploadLayerButton from '../../Component/GeneralEntity/Slots/ToolbarUploadLayerButton/ToolbarUploadLayerButton';
 import {
   layerSuggestionListAtom
 } from '../../State/atoms';
 
-interface OwnProps { }
-
-type PortalProps = OwnProps;
+type PortalProps = {};
 
 export const Portal: React.FC<PortalProps> = () => {
   const [collapsed, setCollapsed] = useState<boolean>(false);
-  const toggleCollapsed = () => setCollapsed(!collapsed);
   const [entitiesToLoad, setEntitiesToLoad] = useState<GeneralEntityConfigType<BaseEntity>[]>([]);
   const [configsAreLoading, setConfigsAreLoading] = useState<boolean>(false);
 
   const setLayerSuggestionList = useSetRecoilState(layerSuggestionListAtom);
+
+  const toggleCollapsed = () => setCollapsed(!collapsed);
 
   const fetchConfigForModel = async (modelName: string): Promise<GeneralEntityConfigType<BaseEntity>> => {
     const reqOpts = {
@@ -91,6 +94,21 @@ export const Portal: React.FC<PortalProps> = () => {
     }
   }, [setLayerSuggestionList]);
 
+  const getLeftToolbarItems = (entityType: string): React.ReactNode => {
+    switch (entityType) {
+      case 'layer':
+        return <ToolbarUploadLayerButton />;
+      case 'user':
+        return <ToolbarCreateAllUsersButton />
+      case 'group':
+        return <ToolbarCreateAllGroupsButton />;
+      case 'role':
+        return <ToolbarCreateAllRolesButton />;
+      default:
+        break;
+    }
+  };
+
   if (config?.models && config?.models?.length !== entitiesToLoad?.length && !configsAreLoading) {
     fetchConfigsForModels();
   }
@@ -125,8 +143,11 @@ export const Portal: React.FC<PortalProps> = () => {
                   element={
                     <GeneralEntityRoot
                       key={entityConfig.entityType}
-                      {...entityConfig}
                       onEntitiesLoaded={onEntitiesLoaded}
+                      slots={{
+                        leftToolbar: getLeftToolbarItems(entityConfig.entityType)
+                      }}
+                      {...entityConfig}
                     />
                   }
                 />

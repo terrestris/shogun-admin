@@ -49,20 +49,6 @@ export default {
         save: '{{entity}} speichern',
         reset: '{{entity}} zurücksetzen',
         create: '{{entity}} erstellen',
-        upload: {
-          success: {
-            message: '{{entity}} erfolgreich erstellt',
-            description: 'Datei {{fileName}} wurde erfolgreich geladen und der Layer {{layerName}} erstellt'
-          },
-          error: {
-            message: 'Konnte {{entity}} nicht erstellen',
-            description: 'Fehler beim Hochladen der Datei {{fileName}}',
-            descriptionSize: 'Der Upload überschreitet das Limit von {{maxSize}} MB',
-            descriptionFormat: 'Der Dateityp ist nicht unterstützt ({{supportedFormats}})',
-            descriptionZipContent: 'Mehrere Geodatensätze innerhalb eines Archivs sind nicht unterstützt'
-          },
-          button: '{{entity}} hochladen'
-        },
         reminderModal: {
           title: 'Änderungen speichern?',
           description: 'Die Änderungen wurden noch nicht gespeichert, möchten Sie speichern?',
@@ -250,10 +236,42 @@ export default {
         addLayerErrorMsg: 'Fehler beim Hinzufügen des Layers zur Karte.',
         loadLayerErrorMsg: 'Fehler beim Laden des Layers.',
         extentNotSupportedErrorMsg: 'Zoomen auf Gesamtansicht wird für diesen Typ nicht unterstützt.'
+      },
+      VerifyProviderDetailsField: {
+        title: 'Keine Informationen des Authentication-Providers verfügbar'
+      },
+      UploadLayerButton: {
+        success: {
+          message: 'Layer erfolgreich erstellt',
+          description: 'Datei {{fileName}} wurde erfolgreich geladen und der Layer {{layerName}} erstellt'
+        },
+        error: {
+          message: 'Konnte Layer nicht erstellen',
+          description: 'Fehler beim Hochladen der Datei {{fileName}}',
+          descriptionSize: 'Der Upload überschreitet das Limit von {{maxSize}} MB',
+          descriptionFormat: 'Der Dateityp ist nicht unterstützt ({{supportedFormats}})',
+          descriptionZipContent: 'Mehrere Geodatensätze innerhalb eines Archivs sind nicht unterstützt'
+        },
+        title: 'Layer erstellen'
+      },
+      CreateAllUsersButton: {
+        title: 'Nutzer synchronisieren',
+        tooltip: 'Füge alle fehlenden Nutzer aus dem Nutzerprovider hinzu',
+        success: 'Nutzer erfolgreich erstellt',
+        error: 'Fehler beim Erstellen der Nutzer'
+      },
+      CreateAllGroupsButton: {
+        title: 'Gruppen synchronisieren',
+        tooltip: 'Füge alle fehlenden Gruppen aus dem Gruppenprovider hinzu',
+        success: 'Gruppen erfolgreich erstellt',
+        error: 'Fehler beim Erstellen der Gruppen'
+      },
+      CreateAllRolesButton: {
+        title: 'Rollen synchronisieren',
+        tooltip: 'Füge alle fehlenden Rollen aus dem Rollenprovider hinzu',
+        success: 'Rollen erfolgreich erstellt',
+        error: 'Fehler beim Erstellen der Rollen'
       }
-    },
-    VerifyProviderDetailsField: {
-      title: 'Keine Informationen des Authentication-Providers verfügbar'
     }
   },
   en: {
@@ -306,20 +324,6 @@ export default {
         save: 'Save {{entity}}',
         reset: 'Reset {{entity}}',
         create: 'Create {{entity}}',
-        upload: {
-          success: {
-            message: '{{entity}} successfully created',
-            description: 'Successfully uploaded file {{fileName}} and created layer {{layerName}}'
-          },
-          error: {
-            message: 'Could not create {{entity}}',
-            description: 'Error while uploading file {{fileName}}',
-            descriptionSize: 'The file exceeds the upload limit of {{maxSize}} MB',
-            descriptionFormat: 'The given file type does not match the supported ones ({{supportedFormats}})',
-            descriptionZipContent: 'Multiple geodatasets within one archive are not supported'
-          },
-          button: 'Upload {{entity}}'
-        },
         reminderModal: {
           title: 'Save changes?',
           description: 'The changes have not yet been saved, do you want to save?',
@@ -523,6 +527,38 @@ export default {
       },
       VerifyProviderDetailsField: {
         title: 'No authentication provider information available'
+      },
+      UploadLayerButton: {
+        success: {
+          message: 'Layer successfully created',
+          description: 'Successfully uploaded file {{fileName}} and created layer {{layerName}}'
+        },
+        error: {
+          message: 'Could not create layer',
+          description: 'Error while uploading file {{fileName}}',
+          descriptionSize: 'The file exceeds the upload limit of {{maxSize}} MB',
+          descriptionFormat: 'The given file type does not match the supported ones ({{supportedFormats}})',
+          descriptionZipContent: 'Multiple geodatasets within one archive are not supported'
+        },
+        title: 'Create layer'
+      },
+      CreateAllUsersButton: {
+        title: 'Add users',
+        tooltip: 'Add all missing users from the user provider',
+        success: 'Successfully created all users',
+        error: 'Could not create the users'
+      },
+      CreateAllGroupsButton: {
+        title: 'Add groups',
+        tooltip: 'Add all missing groups from the group provider',
+        success: 'Successfully created all groups',
+        error: 'Could not create the groups'
+      },
+      CreateAllRolesButton: {
+        title: 'Add roles',
+        tooltip: 'Add all missing roles from the role provider',
+        success: 'Successfully created all roles',
+        error: 'Could not create the roles'
       }
     }
   }

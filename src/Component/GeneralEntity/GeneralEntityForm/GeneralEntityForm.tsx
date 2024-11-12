@@ -1,4 +1,6 @@
-import React from 'react';
+import React, {
+  useContext
+} from 'react';
 
 import { PageHeader } from '@ant-design/pro-components';
 
@@ -12,14 +14,15 @@ import {
   Statistic,
   Switch
 } from 'antd';
-import './GeneralEntityForm.less';
 
 import {
   FormInstance,
   FormItemProps,
   FormProps
 } from 'antd/lib/form';
+
 import Logger from 'js-logger';
+
 import _cloneDeep from 'lodash/cloneDeep';
 
 import TranslationUtil from '../../../Util/TranslationUtil';
@@ -32,8 +35,13 @@ import RolePermissionGrid from '../../FormField/Permission/RolePermissionGrid/Ro
 import UserPermissionGrid from '../../FormField/Permission/UserPermissionGrid/UserPermissionGrid';
 import YesOrNoField from '../../FormField/YesOrNoField/YesOrNoField';
 import LayerTypeSelect from '../../Layer/LayerTypeSelect/LayerTypeSelect';
+import GeneralEntityRootContext, {
+  ContextValue
+} from '../../../Context/GeneralEntityRootContext';
 
 const { TextArea } = Input;
+
+import './GeneralEntityForm.less';
 
 export type FieldConfig = {
   component?: string;
@@ -69,8 +77,6 @@ interface OwnProps {
   loading?: boolean;
   i18n: FormTranslations;
   entityId?: number;
-  entityName: string;
-  entityType: string;
   formConfig: FormConfig;
   formProps?: Partial<FormProps>;
   form: FormInstance;
@@ -84,12 +90,12 @@ export const GeneralEntityForm: React.FC<GeneralEntityFormProps> = ({
   loading = false,
   i18n,
   entityId,
-  entityName,
-  entityType,
   formProps,
   form,
   formConfig
 }) => {
+
+  const generalEntityRootContext = useContext<ContextValue<any> | undefined>(GeneralEntityRootContext);
 
   /**
    * Create read-only components for certain form items
@@ -173,7 +179,7 @@ export const GeneralEntityForm: React.FC<GeneralEntityFormProps> = ({
       case 'JSONEditor':
         return (
           <JSONEditor
-            entityType={entityType}
+            entityType={generalEntityRootContext?.entityType || ''}
             dataField={fieldCfg.dataField}
             {
               ...fieldCfg?.fieldProps
@@ -199,7 +205,7 @@ export const GeneralEntityForm: React.FC<GeneralEntityFormProps> = ({
         return (
           <UserPermissionGrid
             entityId={form.getFieldValue('id')}
-            entityType={entityType.toLowerCase() as EntityType}
+            entityType={generalEntityRootContext?.entityType?.toLowerCase() as EntityType}
             {...fieldCfg?.fieldProps}
           />
         );
@@ -211,7 +217,7 @@ export const GeneralEntityForm: React.FC<GeneralEntityFormProps> = ({
         return (
           <GroupPermissionGrid
             entityId={form.getFieldValue('id')}
-            entityType={entityType.toLowerCase() as EntityType}
+            entityType={generalEntityRootContext?.entityType?.toLowerCase() as EntityType}
             {...fieldCfg?.fieldProps}
           />
         );
@@ -223,7 +229,7 @@ export const GeneralEntityForm: React.FC<GeneralEntityFormProps> = ({
         return (
           <RolePermissionGrid
             entityId={form.getFieldValue('id')}
-            entityType={entityType.toLowerCase() as EntityType}
+            entityType={generalEntityRootContext?.entityType?.toLowerCase() as EntityType}
             {...fieldCfg?.fieldProps}
           />
         );
@@ -308,7 +314,7 @@ export const GeneralEntityForm: React.FC<GeneralEntityFormProps> = ({
 
     return (
       <Form.Item
-        key={`${entityType}-${form.getFieldValue('id')}-${dataField || component?.toLocaleLowerCase()}`}
+        key={`${generalEntityRootContext?.entityType}-${form.getFieldValue('id')}-${dataField || component?.toLocaleLowerCase()}`}
         name={dataField}
         className={`cls-${dataField}`}
         normalize={copyFieldCfg.component ? getNormalizeFn() : undefined}
@@ -323,7 +329,7 @@ export const GeneralEntityForm: React.FC<GeneralEntityFormProps> = ({
 
   const initialValues = {};
 
-  const title = TranslationUtil.getTranslationFromConfig(entityName, i18n);
+  const title = TranslationUtil.getTranslationFromConfig(generalEntityRootContext?.entityName, i18n);
 
   return (
     <>

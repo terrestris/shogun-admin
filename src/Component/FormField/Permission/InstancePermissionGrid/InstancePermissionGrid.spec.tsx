@@ -15,9 +15,6 @@ import { t } from 'i18next';
 
 import InstancePermission from '@terrestris/shogun-util/dist/model/security/InstancePermission';
 import User, { KeycloakUserRepresentation } from '@terrestris/shogun-util/dist/model/User';
-import SHOGunAPIClient from '@terrestris/shogun-util/dist/service/SHOGunAPIClient';
-
-import useSHOGunAPIClient from '../../../../Hooks/useSHOGunAPIClient';
 
 import InstancePermissionGrid, { DataType, EntityType } from './InstancePermissionGrid';
 
