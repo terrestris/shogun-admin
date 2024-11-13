@@ -76,12 +76,11 @@ import {
 } from '../../../Controller/GenericEntityController';
 import useSHOGunAPIClient from '../../../Hooks/useSHOGunAPIClient';
 import TranslationUtil from '../../../Util/TranslationUtil';
-import GeneralEntityForm, {
-  FormConfig
-} from '../GeneralEntityForm/GeneralEntityForm';
+import GeneralEntityForm from '../GeneralEntityForm/GeneralEntityForm';
 import GeneralEntityTable, {
   TableConfig
 } from '../GeneralEntityTable/GeneralEntityTable';
+import {FormConfig} from "antd/es/config-provider/context";
 
 type LayerUploadOptions = {
   baseUrl: string;
@@ -109,17 +108,17 @@ type FeatureTypeAttributes = {
 };
 
 export type GeneralEntityConfigType<T extends BaseEntity> = {
-  i18n: FormTranslations;
+  defaultEntity?: T;
   endpoint: string;
+  entityName?: string;
+  formConfig?: FormConfig;
   entityType: string;
   defaultSortField?: string;
-  entityName?: string;
+  importEnabled?: boolean;
   navigationTitle?: string;
-  subTitle?: string;
-  formConfig: FormConfig;
-  tableConfig: TableConfig<T>;
   onEntitiesLoaded?: (entities: T[], entityType: string) => void;
-  defaultEntity?: T;
+  subTitle?: string;
+  tableConfig: TableConfig<T>;
 };
 
 type OwnProps<T extends BaseEntity> = GeneralEntityConfigType<T>;
@@ -127,17 +126,17 @@ type OwnProps<T extends BaseEntity> = GeneralEntityConfigType<T>;
 export type GeneralEntityRootProps<T extends BaseEntity> = OwnProps<T> & React.HTMLAttributes<HTMLDivElement>;
 
 export function GeneralEntityRoot<T extends BaseEntity>({
-  i18n,
+  importEnabled = true,
+  defaultEntity,
   endpoint,
   entityType,
   defaultSortField,
   entityName = 'Entität',
-  navigationTitle = 'Entitäten',
-  subTitle = '… mit denen man Dinge tun kann (aus Gründen bspw.)',
   formConfig,
-  tableConfig = {},
-  defaultEntity,
-  onEntitiesLoaded = () => { }
+  navigationTitle = 'Entitäten',
+  onEntitiesLoaded = () => { },
+  subTitle = '… mit denen man Dinge tun kann (aus Gründen bspw.)',
+  tableConfig = {}
 }: GeneralEntityRootProps<T>) {
 
   const location = useLocation();
@@ -824,7 +823,7 @@ export function GeneralEntityRoot<T extends BaseEntity>({
             </Button>
           </Link>
           {/* Upload only available for layer entities */}
-          {entityType === 'layer' && (
+          {entityType === 'layer' && importEnabled && (
             <Upload
               customRequest={onFileUploadAction}
               accept='image/tiff,application/zip'
