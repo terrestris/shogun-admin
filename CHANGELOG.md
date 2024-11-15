@@ -1,3 +1,10 @@
+## [17.0.0-next.9](https://github.com/terrestris/shogun-admin/compare/v17.0.0-next.8...v17.0.0-next.9) (2024-11-15)
+
+
+### Features
+
+* makes create layer button visibility configurable ([8f1c2fa](https://github.com/terrestris/shogun-admin/commit/8f1c2fa23e26e81022f1d302fd2c0cb3098d3749))
+
 ## [17.0.0-next.8](https://github.com/terrestris/shogun-admin/compare/v17.0.0-next.7...v17.0.0-next.8) (2024-11-15)
 
 
