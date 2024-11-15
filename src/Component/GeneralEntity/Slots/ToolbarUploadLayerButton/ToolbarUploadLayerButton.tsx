@@ -2,6 +2,8 @@ import {
   useContext
 } from 'react';
 
+import config from 'shogunApplicationConfig';
+
 import UploadLayerButton, {
   UploadLayerButtonProps
 } from '../../../UploadLayerButton/UploadLayerButton';
@@ -14,6 +16,10 @@ export const ToolbarUploadLayerButton: React.FC<UploadLayerButtonProps> = () => 
   const onSuccess = () => {
     generalEntityRootContext?.fetchEntities?.();
   };
+
+  if (!config.geoserver?.upload?.buttonVisible) {
+    return <></>
+  }
 
   return (
     <UploadLayerButton

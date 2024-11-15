@@ -83,7 +83,7 @@ export const UploadLayerButton: React.FC<UploadLayerButtonProps> = ({
   } = useTranslation();
 
   const onBeforeFileUpload = (file: RcFile) => {
-    const maxSize = config.geoserver?.upload?.limit || '200000000';
+    const maxSize = config.geoserver?.upload?.limit || 200000000;
     const fileType = file.type;
     const fileSize = file.size;
 
