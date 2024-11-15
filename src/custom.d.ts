@@ -15,16 +15,23 @@ declare module 'shogunApplicationConfig' {
     resourcePath?: string;
     exposedPaths?: string[];
   }
-
+  interface GeoServerConfiguration {
+    base?: string;
+    upload?: {
+      buttonVisible?: boolean;
+      workspace?: string;
+      limit?: number;
+    };
+  }
   /**
    * Config object which contains the settings to adapt the admin client
    * to your application.
    */
   interface AdminConfiguration {
-  /**
-   * Geoserver configuration object.
-   */
-    geoserver?;
+    /**
+     * Geoserver configuration object.
+     */
+    geoserver?: GeoServerConfiguration;
     /**
      * The path to the admin client on your host, e.g. '/admin'
      */

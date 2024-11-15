@@ -21,6 +21,7 @@ var shogunApplicationConfig = {
   geoserver: {
     base: '/geoserver',
     upload: {
+      buttonVisible: false,
       workspace: 'SHOGUN',
       limit: 200000000 // ~200MB
     }
