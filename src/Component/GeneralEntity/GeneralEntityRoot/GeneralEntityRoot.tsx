@@ -261,10 +261,6 @@ export function GeneralEntityRoot<T extends BaseEntity>({
     }
     Modal.destroyAll();
   };
-  const reviewChanges = () => {
-    Modal.destroyAll();
-    setFormIsDirty(true);
-  };
 
   /**
    * Fetch entity or create new one
@@ -281,10 +277,6 @@ export function GeneralEntityRoot<T extends BaseEntity>({
           closable: true,
           footer: ([
             <div key="modalButtons" className='selectionButtons'>
-              <Button className='viewChangesButton'
-                onClick={() => reviewChanges()}>
-                {t('GeneralEntityRoot.reminderModal.review')}
-              </Button>
               <Button className='discardChangesButton'
                 onClick={() => discardChanges()}
               >{t('GeneralEntityRoot.reminderModal.decline')}
