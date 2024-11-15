@@ -1,3 +1,10 @@
+## [17.0.0-next.8](https://github.com/terrestris/shogun-admin/compare/v17.0.0-next.7...v17.0.0-next.8) (2024-11-15)
+
+
+### Bugfixes
+
+* removes non-functional review changes button ([ec6b043](https://github.com/terrestris/shogun-admin/commit/ec6b043f02331ffb488d0fc93e65b6aeaa551e58))
+
 ## [17.0.0-next.7](https://github.com/terrestris/shogun-admin/compare/v17.0.0-next.6...v17.0.0-next.7) (2024-11-12)
 
 
