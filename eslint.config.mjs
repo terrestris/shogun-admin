@@ -17,7 +17,7 @@ export default tsEslint.config({
     importPlugin.flatConfigs.recommended
   ],
   files: [
-    '**/*.{ts,tsx}',
+    '**/*.{ts,tsx}'
   ],
   ignores: [
     '**/test/setup.ts',
