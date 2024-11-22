@@ -1,3 +1,11 @@
+## [17.0.0-next.10](https://github.com/terrestris/shogun-admin/compare/v17.0.0-next.9...v17.0.0-next.10) (2024-11-22)
+
+
+### Bugfixes
+
+* **eslintv9:** include and apply eslint react rules and eslint-config-typescript-react ([14aceb8](https://github.com/terrestris/shogun-admin/commit/14aceb8af7da2280d7ed57f7968cb1ee7769cb9a))
+* wait for promise resolve ([9b7243d](https://github.com/terrestris/shogun-admin/commit/9b7243dc8c4f6ec2d58a980ef68ac97f796b7c18))
+
 ## [17.0.0-next.9](https://github.com/terrestris/shogun-admin/compare/v17.0.0-next.8...v17.0.0-next.9) (2024-11-15)
 
 
