@@ -56,7 +56,7 @@ const RolePermissionGrid: React.FC<RolePermissionGridProps> = ({
   };
 
   const getRoles = async (pageOpts?: PageOpts) => {
-    return client?.role().findAll(pageOpts);
+    return await client?.role().findAll(pageOpts);
   };
 
   const toRoleDataType = (permission: RoleInstancePermission): DataType<Role> => {
