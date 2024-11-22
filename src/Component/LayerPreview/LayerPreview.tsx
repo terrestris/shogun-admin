@@ -124,7 +124,6 @@ export const LayerPreview: React.FC<LayerPreviewProps> = ({
 
         vectorSource.on('featuresloadend', () => setLoadLayerError(undefined));
       }
-      // @ts-ignore
       map.addLayer(olLayer);
     } catch (e) {
       Logger.error(e);

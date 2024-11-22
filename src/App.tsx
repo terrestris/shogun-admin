@@ -76,7 +76,7 @@ const App: React.FC = () => {
       provideCompletionItems: async (model, position) => {
         const lineContent = model.getLineContent(position.lineNumber).trim();
 
-        if (!lineContent.startsWith('\"layerId\"')) {
+        if (!lineContent.startsWith('"layerId"')) {
           return null;
         }
 
@@ -155,7 +155,8 @@ const App: React.FC = () => {
     <ConfigProvider
       theme={{
         cssVar: true
-      }}>
+      }}
+    >
       <AntdApp>
         <div className='app'>
           <Router>

@@ -26,7 +26,9 @@ const customRender = (ui: React.ReactElement<any, string | React.JSXElementConst
 };
 
 // re-export everything
+// eslint-disable-next-line import/export
 export * from '@testing-library/react';
 
 // override render method
+// eslint-disable-next-line import/export
 export { customRender as render };

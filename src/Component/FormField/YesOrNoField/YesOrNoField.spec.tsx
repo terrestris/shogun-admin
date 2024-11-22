@@ -37,7 +37,7 @@ describe('<YesOrNoField />', () => {
         value={true}
       />);
 
-    expect(screen.getByText('YesorNoField.yes')).toBeVisible();
+    expect(screen.getByText('YesOrNoField.yes')).toBeVisible();
     expect(screen.getByRole('img')).toHaveClass('anticon-check');
 
     await rerender(
@@ -45,7 +45,7 @@ describe('<YesOrNoField />', () => {
         value={false}
       />);
 
-    expect(screen.getByText('YesorNoField.no')).toBeVisible();
+    expect(screen.getByText('YesOrNoField.no')).toBeVisible();
     expect(screen.getByRole('img')).toHaveClass('anticon-close');
   });
 });

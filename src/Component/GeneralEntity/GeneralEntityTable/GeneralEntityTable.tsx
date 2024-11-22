@@ -19,6 +19,7 @@ import config from 'shogunApplicationConfig';
 import BaseEntity from '@terrestris/shogun-util/dist/model/BaseEntity';
 import Layer from '@terrestris/shogun-util/dist/model/Layer';
 
+import GeneralEntityRootContext, { ContextValue } from '../../../Context/GeneralEntityRootContext';
 import { GenericEntityController } from '../../../Controller/GenericEntityController';
 import TableUtil from '../../../Util/TableUtil';
 import TranslationUtil from '../../../Util/TranslationUtil';
@@ -27,51 +28,44 @@ import LinkField from '../../FormField/LinkField/LinkField';
 import VerifyProviderDetailsField from '../../FormField/VerifyProviderDetailsField/VerifyProviderDetailsField';
 
 import LayerPreview from '../../LayerPreview/LayerPreview';
-import GeneralEntityRootContext, { ContextValue } from '../../../Context/GeneralEntityRootContext';
 
 import './GeneralEntityTable.less';
 
-export type TableConfig<T extends BaseEntity> = {
+export interface TableConfig<T extends BaseEntity> {
   columnDefinition?: GeneralEntityTableColumn<T>[];
   dataMapping?: DataMapping;
-};
+}
 
-type DataMapping = {
-  [dataIndex: string]: {
-    [key: string]: string;
-  };
-};
+type DataMapping = Record<string, Record<string, string>>;
 
-type FilterConfig = {
+interface FilterConfig {
   isFilterable: boolean;
-};
+}
 
-type SortConfig = {
+interface SortConfig {
   customSorterName?: string;
   isSortable: boolean;
   sortOrder?: SortOrder;
-};
+}
 
 export type EntityTableAction = 'delete' | 'edit';
 
-type GeneralEntityTableColumnType = {
+interface GeneralEntityTableColumnType {
   cellRenderComponentName?: string;
-  cellRenderComponentProps?: {
-    [key: string]: any;
-  };
+  cellRenderComponentProps?: Record<string, any>;
   filterConfig?: FilterConfig; // if available: property is filterable by corresponding property using default config
   sortConfig?: SortConfig; // if available: property is sortable by corresponding property using default config
-};
+}
 
 export type GeneralEntityTableColumn<T extends BaseEntity> = ColumnType<T> & GeneralEntityTableColumnType;
 
-type OwnProps<T extends BaseEntity> = {
+interface OwnProps<T extends BaseEntity> {
   actions?: EntityTableAction[];
   controller: GenericEntityController<T>;
   i18n: FormTranslations;
   onRowClick?: (record: T, event: React.MouseEvent<HTMLElement, MouseEvent>) => void;
   tableConfig: TableConfig<T>;
-};
+}
 
 type GeneralEntityTableProps<T extends BaseEntity> = OwnProps<T> & TableProps<T>;
 
@@ -121,7 +115,7 @@ export function GeneralEntityTable<T extends BaseEntity>({
         </div>
       ),
       onOk: async () => {
-        let isCheck = typeof entityName === 'string' ?
+        const isCheck = typeof entityName === 'string' ?
           confirmName === TranslationUtil.getTranslationFromConfig(entityName, i18n) :
           parseInt(confirmName, 10) === entityName;
 
@@ -145,8 +139,8 @@ export function GeneralEntityTable<T extends BaseEntity>({
     });
   };
 
-  const getRenderer = (cellRendererName: string, cellRenderComponentProps?: {[key: string]: any},
-    mapping?: {[key: string]: string}) => (value: any, record: T) => {
+  const getRenderer = (cellRendererName: string, cellRenderComponentProps?: Record<string, any>,
+    mapping?: Record<string, string>) => (value: any, record: T) => {
     const displayValue = mapping ? mapping[value] : value;
 
     if (cellRendererName === 'JSONCell') {
@@ -230,7 +224,7 @@ export function GeneralEntityTable<T extends BaseEntity>({
     } else {
       // check for preconfigured sorters, filters and custom components (TODO)
       cols = tableConfig?.columnDefinition?.map(cfg => {
-        let copyCfg = _cloneDeep(cfg);
+        const copyCfg = _cloneDeep(cfg);
         copyCfg.title = TranslationUtil.getTranslationFromConfig(cfg.title as string, i18n);
         const {
           sortConfig,
@@ -247,7 +241,7 @@ export function GeneralEntityTable<T extends BaseEntity>({
             defaultSortOrder: columnDef.dataIndex === 'name' ? 'ascend' : sortConfig.sortOrder
           };
         }
-        let dataIndex = copyCfg?.dataIndex?.toString();
+        const dataIndex = copyCfg?.dataIndex?.toString();
         if (!_isEmpty(filterConfig) && filterConfig.isFilterable) {
           columnDef = {
             ...columnDef,
@@ -266,7 +260,7 @@ export function GeneralEntityTable<T extends BaseEntity>({
       });
     }
 
-    let retArray = [];
+    const retArray = [];
     if (!_isNil(cols)) {
       retArray.push(...cols);
     }

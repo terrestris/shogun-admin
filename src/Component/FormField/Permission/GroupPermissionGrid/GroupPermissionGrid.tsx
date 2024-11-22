@@ -6,7 +6,7 @@ import {
   useTranslation
 } from 'react-i18next';
 
-import PermissionCollectionType from '@terrestris/shogun-util/dist/model/enum/PermissionCollectionType';
+import { PermissionCollectionType } from '@terrestris/shogun-util/dist/model/enum/PermissionCollectionType';
 import Group from '@terrestris/shogun-util/dist/model/Group';
 import GroupInstancePermission from '@terrestris/shogun-util/dist/model/security/GroupInstancePermission';
 import { PageOpts } from '@terrestris/shogun-util/dist/service/GenericService';
@@ -19,7 +19,7 @@ import InstancePermissionGrid, {
 
 export interface GroupPermissionGridProps extends Omit<InstancePermissionGridProps<GroupInstancePermission>,
   'getInstancePermissions' | 'setInstancePermission' | 'deleteInstancePermission' | 'toDataType' |
-  'nameColumnDefinition' | 'getReferences' | 'toTag' | 'modalProps'> { };
+  'nameColumnDefinition' | 'getReferences' | 'toTag' | 'modalProps'> { }
 
 const GroupPermissionGrid: React.FC<GroupPermissionGridProps> = ({
   entityType,
@@ -30,9 +30,8 @@ const GroupPermissionGrid: React.FC<GroupPermissionGridProps> = ({
   const client = useSHOGunAPIClient();
 
   const service = useCallback(() => {
-    // for unknown reasons, just calling the function here will result in 'this'
+    // @ts-expect-error for unknown reasons, just calling the function here will result in 'this'
     // not being defined in the function, so 'apply' is used to set 'this' correctly
-    // @ts-expect-error
     return client?.[entityType].apply(client);
   }, [client, entityType]);
 

@@ -4,11 +4,10 @@ import {
 
 import config from 'shogunApplicationConfig';
 
+import GeneralEntityRootContext from '../../../../Context/GeneralEntityRootContext';
 import UploadLayerButton, {
   UploadLayerButtonProps
 } from '../../../UploadLayerButton/UploadLayerButton';
-
-import GeneralEntityRootContext from '../../../../Context/GeneralEntityRootContext';
 
 export const ToolbarUploadLayerButton: React.FC<UploadLayerButtonProps> = () => {
   const generalEntityRootContext = useContext(GeneralEntityRootContext);
@@ -18,7 +17,7 @@ export const ToolbarUploadLayerButton: React.FC<UploadLayerButtonProps> = () => 
   };
 
   if (!config.geoserver?.upload?.buttonVisible) {
-    return <></>
+    return <></>;
   }
 
   return (

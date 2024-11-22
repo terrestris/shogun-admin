@@ -2,10 +2,10 @@ import React from 'react';
 
 import { AdminPluginInternal } from '../plugin';
 
-export type PluginProviderProps = {
+export interface PluginProviderProps {
   plugins: AdminPluginInternal[];
   children: JSX.Element;
-};
+}
 
 export const PluginContext = React.createContext<(AdminPluginInternal[])>([]);
 

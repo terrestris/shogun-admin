@@ -4,13 +4,13 @@ import {
 
 import Role from '@terrestris/shogun-util/dist/model/Role';
 
+import GeneralEntityRootContext, {
+  ContextValue
+} from '../../../../Context/GeneralEntityRootContext';
 import CreateAllRolesButton, {
   CreateAllRolesButtonProps
 } from '../../../CreateAllRolesButton/CreateAllRolesButton';
 
-import GeneralEntityRootContext, {
-  ContextValue
-} from '../../../../Context/GeneralEntityRootContext';
 
 export const ToolbarCreateAllRolesButton: React.FC<CreateAllRolesButtonProps> = () => {
   const generalEntityRootContext = useContext<ContextValue<Role> | undefined>(GeneralEntityRootContext);

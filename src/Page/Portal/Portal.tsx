@@ -1,5 +1,3 @@
-import './Portal.less';
-
 import React, {
   useCallback,
   useState
@@ -28,6 +26,14 @@ import Layer from '@terrestris/shogun-util/dist/model/Layer';
 import GeneralEntityRoot, {
   GeneralEntityConfigType
 } from '../../Component/GeneralEntity/GeneralEntityRoot/GeneralEntityRoot';
+import ToolbarCreateAllGroupsButton
+  from '../../Component/GeneralEntity/Slots/ToolbarCreateAllGroupsButton/ToolbarCreateAllGroupsButton';
+import ToolbarCreateAllRolesButton
+  from '../../Component/GeneralEntity/Slots/ToolbarCreateAllRolesButton/ToolbarCreateAllRolesButton';
+import ToolbarCreateAllUsersButton
+  from '../../Component/GeneralEntity/Slots/ToolbarCreateAllUsersButton/ToolbarCreateAllUsersButton';
+import ToolbarUploadLayerButton
+  from '../../Component/GeneralEntity/Slots/ToolbarUploadLayerButton/ToolbarUploadLayerButton';
 import GlobalSettingsRoot from '../../Component/GlobalSettings/GlobalSettingsRoot/GlobalSettingsRoot';
 import ImageFileRoot from '../../Component/ImageFile/ImageFileRoot/ImageFileRoot';
 import Logs from '../../Component/Logs/Logs';
@@ -36,15 +42,13 @@ import Navigation from '../../Component/Menu/Navigation/Navigation';
 import MetricsRoot from '../../Component/Metrics/MetricsRoot/MetricsRoot';
 import ApplicationInfo from '../../Component/Modal/ApplicationInfo/ApplicationInfo';
 import WelcomeDashboard from '../../Component/WelcomeDashboard/WelcomeDashboard';
-import ToolbarCreateAllUsersButton from '../../Component/GeneralEntity/Slots/ToolbarCreateAllUsersButton/ToolbarCreateAllUsersButton';
-import ToolbarCreateAllGroupsButton from '../../Component/GeneralEntity/Slots/ToolbarCreateAllGroupsButton/ToolbarCreateAllGroupsButton';
-import ToolbarCreateAllRolesButton from '../../Component/GeneralEntity/Slots/ToolbarCreateAllRolesButton/ToolbarCreateAllRolesButton';
-import ToolbarUploadLayerButton from '../../Component/GeneralEntity/Slots/ToolbarUploadLayerButton/ToolbarUploadLayerButton';
 import {
   layerSuggestionListAtom
 } from '../../State/atoms';
 
-type PortalProps = {};
+import './Portal.less';
+
+interface PortalProps {}
 
 export const Portal: React.FC<PortalProps> = () => {
   const [collapsed, setCollapsed] = useState<boolean>(false);
@@ -99,7 +103,7 @@ export const Portal: React.FC<PortalProps> = () => {
       case 'layer':
         return <ToolbarUploadLayerButton />;
       case 'user':
-        return <ToolbarCreateAllUsersButton />
+        return <ToolbarCreateAllUsersButton />;
       case 'group':
         return <ToolbarCreateAllGroupsButton />;
       case 'role':

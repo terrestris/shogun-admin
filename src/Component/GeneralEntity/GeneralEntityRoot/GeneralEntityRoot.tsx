@@ -52,6 +52,7 @@ import BaseEntity from '@terrestris/shogun-util/dist/model/BaseEntity';
 
 import { PageOpts } from '@terrestris/shogun-util/dist/service/GenericService';
 
+import { GeneralEntityRootProvider } from '../../../Context/GeneralEntityRootContext';
 import {
   ControllerUtil
 } from '../../../Controller/ControllerUtil';
@@ -67,11 +68,9 @@ import GeneralEntityForm, {
 import GeneralEntityTable, {
   TableConfig
 } from '../GeneralEntityTable/GeneralEntityTable';
-import { GeneralEntityRootProvider } from '../../../Context/GeneralEntityRootContext';
-
 import './GeneralEntityRoot.less';
 
-export type GeneralEntityConfigType<T extends BaseEntity> = {
+export interface GeneralEntityConfigType<T extends BaseEntity> {
   i18n: FormTranslations;
   endpoint: string;
   entityType: string;
@@ -83,7 +82,7 @@ export type GeneralEntityConfigType<T extends BaseEntity> = {
   tableConfig: TableConfig<T>;
   onEntitiesLoaded?: (entities: T[], entityType: string) => void;
   defaultEntity?: T;
-};
+}
 
 export type ToolbarSlotProps = {
   onSuccess?: () => void;
@@ -234,13 +233,12 @@ export function GeneralEntityRoot<T extends BaseEntity>({
     }
   }, [entityController, onEntitiesLoaded, entityType, pageCurrent, pageSize, sortField, sortOrder, isFiltered]);
 
-  // TODO This is just a small subset of possible context values, it might be extended.
   const contextValue = useMemo(() => ({
     entityType: entityType,
     entityName: entityName,
     fetchEntities: fetchEntities,
     entities: allEntities
-  }), [fetchEntities, entityType, allEntities]);
+  }), [entityType, entityName, fetchEntities, allEntities]);
 
   const discardChanges = () => {
     Modal.destroyAll();

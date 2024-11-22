@@ -8,10 +8,10 @@ import {
   useTranslation
 } from 'react-i18next';
 
-export type YesOrNoFieldProps = {
+export interface YesOrNoFieldProps {
   value?: boolean;
   showIcons?: boolean;
-};
+}
 
 const YesOrNoField: React.FC<YesOrNoFieldProps> = ({
   showIcons = true,
@@ -23,13 +23,17 @@ const YesOrNoField: React.FC<YesOrNoFieldProps> = ({
   } = useTranslation();
 
   return (
-    value ? <div className="yes-no-field">
-      <span className="yn-text">{t('YesorNoField.yes')}</span>
-      {showIcons && <CheckOutlined />}
-    </div> : <div className="yes-no-field">
-      <span className="yn-text">{t('YesorNoField.no')}</span>
-      {showIcons && <CloseOutlined /> }
-    </div>
+    value ? (
+      <div className="yes-no-field">
+        <span className="yn-text">{t('YesOrNoField.yes')}</span>
+        {showIcons && <CheckOutlined />}
+      </div>
+    ): (
+      <div className="yes-no-field">
+        <span className="yn-text">{t('YesOrNoField.no')}</span>
+        {showIcons && <CloseOutlined /> }
+      </div>
+    )
   );
 };
 

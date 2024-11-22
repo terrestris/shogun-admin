@@ -8,7 +8,7 @@ import _isFunction from 'lodash/isFunction';
 import _isNil from 'lodash/isNil';
 import moment from 'moment';
 
-export type DisplayFieldProps = {
+export interface DisplayFieldProps {
   dateFormat?: string;
   format?: 'date' | 'text' | 'json';
   formatFunction?: (val?: any) => string;
@@ -17,7 +17,7 @@ export type DisplayFieldProps = {
   translationPrefix?: string;
   value?: any;
   valueKey?: string;
-};
+}
 
 const DisplayField: React.FC<DisplayFieldProps> = ({
   dateFormat = 'DD.MM.YYYY',
@@ -25,6 +25,8 @@ const DisplayField: React.FC<DisplayFieldProps> = ({
   formatFunction,
   numberOfDigits = 2,
   suffix,
+  // required for destructuring
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   translationPrefix,
   value,
   valueKey,
@@ -32,12 +34,14 @@ const DisplayField: React.FC<DisplayFieldProps> = ({
 }) => {
 
   if (_isFunction(formatFunction)) {
-    return <Typography.Text
-      className="displayfield"
-      {...passThroughProps}
-    >
-      {formatFunction(value)}
-    </Typography.Text>;
+    return (
+      <Typography.Text
+        className="displayfield"
+        {...passThroughProps}
+      >
+        {formatFunction(value)}
+      </Typography.Text>
+    );
   }
 
   if (valueKey !== undefined) {

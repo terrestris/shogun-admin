@@ -14,7 +14,7 @@ import {
   useTranslation
 } from 'react-i18next';
 
-import PermissionCollectionType from '@terrestris/shogun-util/dist/model/enum/PermissionCollectionType';
+import { PermissionCollectionType } from '@terrestris/shogun-util/dist/model/enum/PermissionCollectionType';
 import Role from '@terrestris/shogun-util/dist/model/Role';
 import RoleInstancePermission from '@terrestris/shogun-util/dist/model/security/RoleInstancePermission';
 import { PageOpts } from '@terrestris/shogun-util/dist/service/GenericService';
@@ -27,7 +27,7 @@ import InstancePermissionGrid, {
 
 export interface RolePermissionGridProps extends Omit<InstancePermissionGridProps<RoleInstancePermission>,
   'getInstancePermissions' | 'setInstancePermission' | 'deleteInstancePermission' | 'toDataType' |
-  'nameColumnDefinition' | 'getReferences' | 'toTag' | 'modalProps'> { };
+  'nameColumnDefinition' | 'getReferences' | 'toTag' | 'modalProps'> { }
 
 const RolePermissionGrid: React.FC<RolePermissionGridProps> = ({
   entityType,
@@ -38,9 +38,8 @@ const RolePermissionGrid: React.FC<RolePermissionGridProps> = ({
   const client = useSHOGunAPIClient();
 
   const service = useMemo(() => {
-    // for unknown reasons, just calling the function here will result in 'this'
+    // @ts-expect-error for unknown reasons, just calling the function here will result in 'this'
     // not being defined in the function, so 'apply' is used to set 'this' correctly
-    // @ts-expect-error
     return client?.[entityType].apply(client);
   }, [client, entityType]);
 
