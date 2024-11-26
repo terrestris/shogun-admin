@@ -15,9 +15,10 @@ import config from 'shogunApplicationConfig';
 
 import Header from './Component/Header/Header';
 import ShogunSpinner from './Component/ShogunSpinner/ShogunSpinner';
+import useExecuteWfsDescribeFeatureType, { DescribeFeatureType } from './Hooks/useExecuteWfsDescribeFeatureType';
 import useSHOGunAPIClient from './Hooks/useSHOGunAPIClient';
 import Portal from './Page/Portal/Portal';
-import { appInfoAtom, layerSuggestionListAtom, userInfoAtom } from './State/atoms';
+import { appInfoAtom, layerSuggestionListAtom, userInfoAtom, entityIdAtom } from './State/atoms';
 import { setSwaggerDocs } from './State/static';
 
 import ProviderResult = languages.ProviderResult;
@@ -29,6 +30,7 @@ const App: React.FC = () => {
   const [, setAppInfo] = useRecoilState(appInfoAtom);
   const [layerSuggestionList, setLayerSuggestionList] = useRecoilState(layerSuggestionListAtom);
   const [loadingState, setLoadingState] = useState<'failed' | 'loading' | 'done'>();
+  const [entityId, ] = useRecoilState(entityIdAtom);
 
   const disposableCompletionItemProviderRef = useRef<IDisposable>();
 
@@ -65,6 +67,24 @@ const App: React.FC = () => {
       Logger.error(error);
     }
   }, [setAppInfo, setUserInfo, client]);
+
+  const executeWfsDescribeFeatureType = useExecuteWfsDescribeFeatureType();
+  const getPropertyNames = useCallback(async (layerId: number | undefined) => {
+    let response: DescribeFeatureType | undefined;
+    const propertyNames: string[] = [];
+    if (layerSuggestionList && layerId) {
+      const layer = layerSuggestionList.filter(item => item.id === layerId)[0];
+      if (layer) {
+        response = await executeWfsDescribeFeatureType(layer);
+        if (response !== undefined) {
+          response.featureTypes[0].properties.forEach(prop => {
+            propertyNames.push(prop.name);
+          });
+        }
+      }
+    }
+    return propertyNames;
+  }, [executeWfsDescribeFeatureType, layerSuggestionList]);
 
   const registerLayerIdCompletionProvider = useCallback(() => {
     if (!monaco) {
@@ -120,19 +140,57 @@ const App: React.FC = () => {
     });
   }, [monaco, client, setLayerSuggestionList, layerSuggestionList]);
 
+  const registerPropertyNameCompletionProvider = useCallback(() => {
+    if (!monaco || entityId === undefined) {
+      return undefined;
+    }
+
+    disposableCompletionItemProviderRef.current = monaco.languages.registerCompletionItemProvider('json', {
+      triggerCharacters: ['.'],
+      provideCompletionItems: async (model, position) => {
+        const lineContent = model.getLineContent(position.lineNumber).trim();
+
+        if (lineContent.startsWith('"propertyName"')) {
+          const propertyNames = await getPropertyNames(entityId);
+
+          const currentWord = model.getWordAtPosition(position);
+          const providerResult: ProviderResult<CompletionList> = {
+            suggestions: propertyNames.map((prop): CompletionItem => {
+              return {
+                insertText: `"${prop}"`,
+                label: prop,
+                kind: monaco.languages.CompletionItemKind.Value,
+                documentation: `${JSON.stringify(prop, null, '  ')}`,
+                range: {
+                  // replace the current word, if applicable
+                  startColumn: currentWord ? currentWord.startColumn : position.column,
+                  endColumn: currentWord ? currentWord.endColumn : position.column,
+                  startLineNumber: position.lineNumber,
+                  endLineNumber: position.lineNumber,
+                }
+              };
+            })
+          };
+          return providerResult;
+        }
+      }
+    });
+  }, [monaco, getPropertyNames, entityId]);
+
   useEffect(() => {
     getInitialData();
   }, [getInitialData]);
 
   useEffect(() => {
     registerLayerIdCompletionProvider();
+    registerPropertyNameCompletionProvider();
 
     return () => {
       if (disposableCompletionItemProviderRef.current) {
         disposableCompletionItemProviderRef.current.dispose();
       }
     };
-  }, [registerLayerIdCompletionProvider]);
+  }, [registerLayerIdCompletionProvider, registerPropertyNameCompletionProvider]);
 
   if (loadingState === 'loading') {
     return (
