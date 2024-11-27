@@ -84,7 +84,7 @@ export const useExecuteWfsDescribeFeatureType = () => {
     });
 
     if (!response.ok) {
-      throw new Error('No successful response while executing a WFS-Transaction');
+      throw new Error('No successful response while executing a WFS DescribeFeatureType');
     }
 
     return await response.json() as DescribeFeatureType;

@@ -31,6 +31,7 @@ const App: React.FC = () => {
   const [layerSuggestionList, setLayerSuggestionList] = useRecoilState(layerSuggestionListAtom);
   const [loadingState, setLoadingState] = useState<'failed' | 'loading' | 'done'>();
   const [entityId, ] = useRecoilState(entityIdAtom);
+  const [propertyNames, setPropertyNames] = useState<string[]>([]);
 
   const disposableCompletionItemProviderRef = useRef<IDisposable>();
 
@@ -45,6 +46,24 @@ const App: React.FC = () => {
   const {
     t
   } = useTranslation();
+
+  useEffect(() => {
+    const  setLayers = async() => {
+      try {
+        const layers = await client?.layer().findAll();
+        if (!_isNil(layers)) {
+          setLayerSuggestionList(layers.content);
+        }
+
+        if (disposableCompletionItemProviderRef.current) {
+          disposableCompletionItemProviderRef.current.dispose();
+        }
+      } catch (error) {
+        Logger.error(error);
+      }
+    };
+    setLayers();
+  }, [client, setLayerSuggestionList]);
 
   const getInitialData = useCallback(async () => {
     try {
@@ -69,24 +88,30 @@ const App: React.FC = () => {
   }, [setAppInfo, setUserInfo, client]);
 
   const executeWfsDescribeFeatureType = useExecuteWfsDescribeFeatureType();
+
   const getPropertyNames = useCallback(async (layerId: number | undefined) => {
     let response: DescribeFeatureType | undefined;
-    const propertyNames: string[] = [];
+    const propNames: string[] = [];
     if (layerSuggestionList && layerId) {
       const layer = layerSuggestionList.filter(item => item.id === layerId)[0];
       if (layer) {
-        response = await executeWfsDescribeFeatureType(layer);
-        if (response !== undefined) {
-          response.featureTypes[0].properties.forEach(prop => {
-            propertyNames.push(prop.name);
-          });
+        try {
+          response = await executeWfsDescribeFeatureType(layer);
+          if (response !== undefined) {
+            response.featureTypes[0].properties.forEach(prop => {
+              propNames.push(prop.name);
+            });
+          }
+        } catch (error) {
+          Logger.error(error);
+          propNames[0] = '';
         }
       }
     }
-    return propertyNames;
+    return propNames;
   }, [executeWfsDescribeFeatureType, layerSuggestionList]);
 
-  const registerLayerIdCompletionProvider = useCallback(() => {
+  const registerCompletionProvider = useCallback(() => {
     if (!monaco) {
       return undefined;
     }
@@ -96,63 +121,30 @@ const App: React.FC = () => {
       provideCompletionItems: async (model, position) => {
         const lineContent = model.getLineContent(position.lineNumber).trim();
 
-        if (!lineContent.startsWith('"layerId"')) {
-          return null;
+        if (lineContent.startsWith('"layerId"')) {
+          const currentWord = model.getWordAtPosition(position);
+          const providerResult: ProviderResult<CompletionList> = {
+            suggestions: layerSuggestionList.map((layer): CompletionItem => {
+              return {
+                insertText: layer?.id?.toString() ?? '',
+                label: `${layer.name} (${layer.id})`,
+                kind: monaco.languages.CompletionItemKind.Value,
+                documentation: `${JSON.stringify(layer, null, '  ')}`,
+                range: {
+                  // replace the current word, if applicable
+                  startColumn: currentWord ? currentWord.startColumn : position.column,
+                  endColumn: currentWord ? currentWord.endColumn : position.column,
+                  startLineNumber: position.lineNumber,
+                  endLineNumber: position.lineNumber,
+                }
+              };
+            })
+          };
+
+          return providerResult;
         }
-
-        if (!layerSuggestionList) {
-          try {
-            const layers = await client?.layer().findAll();
-            if (!_isNil(layers)) {
-              setLayerSuggestionList(layers.content);
-            }
-
-            if (disposableCompletionItemProviderRef.current) {
-              disposableCompletionItemProviderRef.current.dispose();
-            }
-          } catch (error) {
-            Logger.error(error);
-          }
-          return undefined;
-        }
-
-        const currentWord = model.getWordAtPosition(position);
-        const providerResult: ProviderResult<CompletionList> = {
-          suggestions: layerSuggestionList.map((layer): CompletionItem => {
-            return {
-              insertText: layer?.id?.toString() ?? '',
-              label: `${layer.name} (${layer.id})`,
-              kind: monaco.languages.CompletionItemKind.Value,
-              documentation: `${JSON.stringify(layer, null, '  ')}`,
-              range: {
-                // replace the current word, if applicable
-                startColumn: currentWord ? currentWord.startColumn : position.column,
-                endColumn: currentWord ? currentWord.endColumn : position.column,
-                startLineNumber: position.lineNumber,
-                endLineNumber: position.lineNumber,
-              }
-            };
-          })
-        };
-
-        return providerResult;
-      }
-    });
-  }, [monaco, client, setLayerSuggestionList, layerSuggestionList]);
-
-  const registerPropertyNameCompletionProvider = useCallback(() => {
-    if (!monaco || entityId === undefined) {
-      return undefined;
-    }
-
-    disposableCompletionItemProviderRef.current = monaco.languages.registerCompletionItemProvider('json', {
-      triggerCharacters: ['.'],
-      provideCompletionItems: async (model, position) => {
-        const lineContent = model.getLineContent(position.lineNumber).trim();
 
         if (lineContent.startsWith('"propertyName"')) {
-          const propertyNames = await getPropertyNames(entityId);
-
           const currentWord = model.getWordAtPosition(position);
           const providerResult: ProviderResult<CompletionList> = {
             suggestions: propertyNames.map((prop): CompletionItem => {
@@ -175,22 +167,29 @@ const App: React.FC = () => {
         }
       }
     });
-  }, [monaco, getPropertyNames, entityId]);
+  }, [monaco, layerSuggestionList, propertyNames]);
 
   useEffect(() => {
     getInitialData();
   }, [getInitialData]);
 
   useEffect(() => {
-    registerLayerIdCompletionProvider();
-    registerPropertyNameCompletionProvider();
+    const propName = async() => {
+      const properties = await getPropertyNames(entityId);
+      setPropertyNames(properties);
+    };
+    propName();
+  }, [entityId, getPropertyNames]);
+
+  useEffect(() => {
+    registerCompletionProvider();
 
     return () => {
       if (disposableCompletionItemProviderRef.current) {
         disposableCompletionItemProviderRef.current.dispose();
       }
     };
-  }, [registerLayerIdCompletionProvider, registerPropertyNameCompletionProvider]);
+  }, [registerCompletionProvider]);
 
   if (loadingState === 'loading') {
     return (
