@@ -10,7 +10,8 @@ import {
   TeamOutlined,
   FileTextOutlined,
   TagOutlined,
-  ApiOutlined
+  ApiOutlined,
+  BranchesOutlined
 } from '@ant-design/icons';
 
 import {
@@ -217,6 +218,33 @@ export const Navigation: React.FC<NavigationProps> = ({
         <>
           <FileTextOutlined />
           <span>{t('Navigation.logLevels')}</span>
+        </>
+      )
+    });
+  }
+
+  if (navigationConf?.settings?.graphiql.visible) {
+    settingsChildren.push({
+      key: 'graphiql',
+      icon:<BranchesOutlined /> ,
+      label: (
+        <>
+          <a href={`${window.location.origin}/graphiql?path=/graphql`} target='_blank' rel='noopener noreferrer'>
+            <span>{t('Navigation.graphiql')}</span>
+          </a>
+        </>
+      )
+    });
+  }
+  if (navigationConf?.settings?.swagger.visible) {
+    settingsChildren.push({
+      key: 'swagger',
+      icon:<ApiOutlined /> ,
+      label: (
+        <>
+          <a href={`${window.location.origin}/swagger-ui/index.html`} target='_blank' rel='noopener noreferrer'>
+            <span>{t('Navigation.swagger')}</span>
+          </a>
         </>
       )
     });

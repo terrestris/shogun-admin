@@ -43,7 +43,9 @@ export default {
         logLevels: 'Logging-Level',
         configuration: 'Einstellungen',
         global: 'Global',
-        image: 'Bilddateien'
+        image: 'Bilddateien',
+        graphiql: 'GraphQL',
+        swagger: 'Swagger'
       },
       GeneralEntityRoot: {
         save: '{{entity}} speichern',
@@ -318,7 +320,9 @@ export default {
         logLevels: 'Logging levels',
         configuration: 'Configuration',
         global: 'Global',
-        image: 'Images'
+        image: 'Images',
+        graphiql: 'GraphQL',
+        swagger: 'Swagger'
       },
       GeneralEntityRoot: {
         save: 'Save {{entity}}',

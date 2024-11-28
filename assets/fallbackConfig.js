@@ -70,6 +70,12 @@ var shogunApplicationConfig = {
       },
       logs: {
         visible: true
+      },
+      graphiql: {
+        visible: true
+      },
+      swagger: {
+        visible: true
       }
     }
   }
