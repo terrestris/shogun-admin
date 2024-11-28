@@ -223,9 +223,6 @@ declare module 'shogunApplicationConfig' {
            */
           visible: boolean;
         };
-        /**
-         * link to external tools for users with admin rights
-         */
       };
     };
   }

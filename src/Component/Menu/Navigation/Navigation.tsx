@@ -223,7 +223,7 @@ export const Navigation: React.FC<NavigationProps> = ({
     });
   }
 
-  if (navigationConf?.settings?.graphiql.visible) {
+  if (navigationConf?.settings?.graphiql?.visible) {
     settingsChildren.push({
       key: 'graphiql',
       icon:<BranchesOutlined /> ,
@@ -236,7 +236,7 @@ export const Navigation: React.FC<NavigationProps> = ({
       )
     });
   }
-  if (navigationConf?.settings?.swagger.visible) {
+  if (navigationConf?.settings?.swagger?.visible) {
     settingsChildren.push({
       key: 'swagger',
       icon:<ApiOutlined /> ,
