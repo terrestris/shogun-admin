@@ -1,3 +1,12 @@
+## [17.0.0-next.11](https://github.com/terrestris/shogun-admin/compare/v17.0.0-next.10...v17.0.0-next.11) (2024-11-28)
+
+
+### Bugfixes
+
+* move swagger and graphql links to admin client ([aff93aa](https://github.com/terrestris/shogun-admin/commit/aff93aa99af9d94fe992a7aae4f0b2c2cc29ab02))
+* typing error ([b37781e](https://github.com/terrestris/shogun-admin/commit/b37781e518204f861822a4e00b394e6a19ca66df))
+* white spaces and translation ([64ceba2](https://github.com/terrestris/shogun-admin/commit/64ceba2ac3c2f187d90d484fc6573d52df839516))
+
 ## [17.0.0-next.10](https://github.com/terrestris/shogun-admin/compare/v17.0.0-next.9...v17.0.0-next.10) (2024-11-22)
 
 
