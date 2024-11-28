@@ -226,7 +226,7 @@ export const Navigation: React.FC<NavigationProps> = ({
   if (navigationConf?.settings?.graphiql?.visible) {
     settingsChildren.push({
       key: 'graphiql',
-      icon:<BranchesOutlined /> ,
+      icon: <BranchesOutlined />,
       label: (
         <>
           <a href={`${window.location.origin}/graphiql?path=/graphql`} target='_blank' rel='noopener noreferrer'>
@@ -239,7 +239,7 @@ export const Navigation: React.FC<NavigationProps> = ({
   if (navigationConf?.settings?.swagger?.visible) {
     settingsChildren.push({
       key: 'swagger',
-      icon:<ApiOutlined /> ,
+      icon: <ApiOutlined />,
       label: (
         <>
           <a href={`${window.location.origin}/swagger-ui/index.html`} target='_blank' rel='noopener noreferrer'>

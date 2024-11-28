@@ -44,7 +44,7 @@ export default {
         configuration: 'Einstellungen',
         global: 'Global',
         image: 'Bilddateien',
-        graphiql: 'GraphQL',
+        graphiql: 'GraphiQL',
         swagger: 'Swagger'
       },
       GeneralEntityRoot: {
@@ -321,7 +321,7 @@ export default {
         configuration: 'Configuration',
         global: 'Global',
         image: 'Images',
-        graphiql: 'GraphQL',
+        graphiql: 'GraphiQL',
         swagger: 'Swagger'
       },
       GeneralEntityRoot: {
