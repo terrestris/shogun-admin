@@ -13,8 +13,10 @@ import {
   message
 } from 'antd';
 import _isEqual from 'lodash/isEqual';
-import {Route,
-  Routes} from 'react-router-dom';
+import {
+  Route,
+  Routes
+} from 'react-router-dom';
 import {
   useSetRecoilState
 } from 'recoil';

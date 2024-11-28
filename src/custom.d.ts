@@ -197,11 +197,29 @@ declare module 'shogunApplicationConfig' {
           visible: boolean;
         };
         /**
-         * Configuration for the settings->global menu entry.
+         * Configuration for the settings->logs menu entry.
          */
         logs: {
           /**
-           * Should the menu include the settings->global menu entry.
+           * Should the menu include the settings->logs menu entry.
+           */
+          visible: boolean;
+        };
+        /**
+         * Configuration for the settings->graphQL menu entry.
+         */
+        graphiql: {
+          /**
+           * Should the menu include the settings->graphQL menu entry.
+           */
+          visible: boolean;
+        };
+        /**
+         * Configuration for the settings->swagger menu entry.
+         */
+        swagger: {
+          /**
+           * Should the menu include the settings->swagger menu entry.
            */
           visible: boolean;
         };
