@@ -1,3 +1,11 @@
+## [17.0.0-next.12](https://github.com/terrestris/shogun-admin/compare/v17.0.0-next.11...v17.0.0-next.12) (2024-12-13)
+
+
+### Bugfixes
+
+* apply suggestions ([87fca97](https://github.com/terrestris/shogun-admin/commit/87fca97e2bec4ec9b503a58f115fcb5b5b1a2e9b))
+* introduce suggestions for property name ([643259c](https://github.com/terrestris/shogun-admin/commit/643259c394262f8ab2f0b62461ea7b7f5810c795))
+
 ## [17.0.0-next.11](https://github.com/terrestris/shogun-admin/compare/v17.0.0-next.10...v17.0.0-next.11) (2024-11-28)
 
 
