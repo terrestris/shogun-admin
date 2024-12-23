@@ -117,7 +117,7 @@
     "whatwg-fetch": "3.6.20"
   },
   "optionalDependencies": {
-    "@rollup/rollup-linux-x64-gnu": "4.24.0"
+    "@rollup/rollup-linux-x64-gnu": "4.29.1"
   },
   "@casualbot/jest-sonar-reporter": {
     "suiteName": "jest tests",
