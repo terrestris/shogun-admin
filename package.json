@@ -83,7 +83,7 @@
     "@terrestris/eslint-config-typescript-react": "2.0.0",
     "@testing-library/jest-dom": "6.5.0",
     "@testing-library/react": "16.0.1",
-    "@types/jest": "29.5.13",
+    "@types/jest": "29.5.14",
     "@types/react": "18.3.11",
     "@types/react-dom": "18.3.0",
     "@types/react-redux": "7.1.34",
