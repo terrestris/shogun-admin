@@ -71,7 +71,7 @@ export interface InstancePermissionGridProps<E extends InstancePermission> exten
   modalProps: Omit<PermissionModalProps, 'entityId' | 'entityType'>;
 }
 
-export const InstancePermissionGrid = <T, E extends InstancePermission>({
+export const InstancePermissionGrid = <E extends InstancePermission>({
   entityId,
   getInstancePermissions,
   setInstancePermission,
