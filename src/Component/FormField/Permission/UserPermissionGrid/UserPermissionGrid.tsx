@@ -1,5 +1,6 @@
 import React, {
-  useCallback
+  useCallback,
+  useMemo
 } from 'react';
 
 import {
@@ -46,21 +47,75 @@ const UserPermissionGrid: React.FC<UserPermissionGridProps> = ({
     return client?.[entityType].apply(client);
   }, [client, entityType]);
 
-  const getUserInstancePermissions = async (id: number) => {
+  const getUserInstancePermissions = useCallback(async (id: number) => {
     return await service()?.getUserInstancePermissions(id);
-  };
+  }, [service]);
 
-  const setUserInstancePermission = async (id: number, referenceId: number, permission: PermissionCollectionType) => {
+  const setUserInstancePermission = useCallback(async (id: number, referenceId: number,
+    permission: PermissionCollectionType) => {
     await service()?.setUserInstancePermission(id, referenceId, permission);
-  };
+  }, [service]);
 
-  const deleteUserInstancePermission = async (id: number, referenceId: number) => {
+  const deleteUserInstancePermission = useCallback(async (id: number, referenceId: number) => {
     await service()?.deleteUserInstancePermission(id, referenceId);
-  };
+  }, [service]);
 
-  const getUsers = async (pageOpts?: PageOpts) => {
+  const getUsers = useCallback(async (pageOpts?: PageOpts) => {
     return client?.user().findAll(pageOpts);
-  };
+  }, [client]);
+
+  const modalProps = useMemo(() => ({
+    toTag: (user: User) => {
+      return {
+        value: user.id,
+        filterValues: [
+          user.providerDetails?.firstName,
+          user.providerDetails?.lastName,
+          user.providerDetails?.username,
+          user.providerDetails?.email
+        ],
+        label: (
+          <UserAvatar
+            user={user}
+          />
+        )
+      };
+    },
+    getReferences: getUsers,
+    tagRenderer: (props: CustomTagProps) => {
+      const {
+        label,
+        ...passProps
+      } = props;
+
+      const onPreventMouseDown = (event: React.MouseEvent<HTMLSpanElement>) => {
+        event.preventDefault();
+        event.stopPropagation();
+      };
+
+      return (
+        <Tag
+          onMouseDown={onPreventMouseDown}
+          className="user-avatar-tag"
+          {...passProps}
+        >
+          {label}
+        </Tag>
+      );
+    },
+    setInstancePermission: setUserInstancePermission,
+    descriptionText: t('UserPermissionGrid.modal.description'),
+    referenceLabelText: t('UserPermissionGrid.modal.referenceSelectLabel'),
+    referenceExtraText: t('UserPermissionGrid.modal.referenceSelectExtra'),
+    referenceSelectPlaceholderText: t('UserPermissionGrid.modal.referenceSelectPlaceholder'),
+    permissionSelectLabel: t('UserPermissionGrid.modal.permissionSelectLabel'),
+    permissionSelectExtra: t('UserPermissionGrid.modal.permissionSelectExtra'),
+    saveErrorMsg: (placeholder: string) => {
+      return t('UserPermissionGrid.modal.saveErrorMsg', {
+        referenceIds: placeholder
+      });
+    }
+  }), [getUsers, setUserInstancePermission, t]);
 
   const toUserDataType = (permission: UserInstancePermission): DataType<User> => {
     return {
@@ -69,45 +124,6 @@ const UserPermissionGrid: React.FC<UserPermissionGridProps> = ({
       name: permission.user?.providerDetails?.username,
       permission: permission.permission?.name
     };
-  };
-
-  const toTag = (user: User) => {
-    return {
-      value: user.id,
-      filterValues: [
-        user.providerDetails?.firstName,
-        user.providerDetails?.lastName,
-        user.providerDetails?.username,
-        user.providerDetails?.email
-      ],
-      label: (
-        <UserAvatar
-          user={user}
-        />
-      )
-    };
-  };
-
-  const tagRenderer = (props: CustomTagProps) => {
-    const {
-      label,
-      ...passProps
-    } = props;
-
-    const onPreventMouseDown = (event: React.MouseEvent<HTMLSpanElement>) => {
-      event.preventDefault();
-      event.stopPropagation();
-    };
-
-    return (
-      <Tag
-        onMouseDown={onPreventMouseDown}
-        className="user-avatar-tag"
-        {...passProps}
-      >
-        {label}
-      </Tag>
-    );
   };
 
   const colDefinition = () => {
@@ -138,23 +154,7 @@ const UserPermissionGrid: React.FC<UserPermissionGridProps> = ({
       deleteInstancePermission={deleteUserInstancePermission}
       toDataType={toUserDataType}
       nameColumnDefinition={colDefinition()}
-      modalProps={{
-        toTag: toTag,
-        getReferences: getUsers,
-        tagRenderer: tagRenderer,
-        setInstancePermission: setUserInstancePermission,
-        descriptionText: t('UserPermissionGrid.modal.description'),
-        referenceLabelText: t('UserPermissionGrid.modal.referenceSelectLabel'),
-        referenceExtraText: t('UserPermissionGrid.modal.referenceSelectExtra'),
-        referenceSelectPlaceholderText: t('UserPermissionGrid.modal.referenceSelectPlaceholder'),
-        permissionSelectLabel: t('UserPermissionGrid.modal.permissionSelectLabel'),
-        permissionSelectExtra: t('UserPermissionGrid.modal.permissionSelectExtra'),
-        saveErrorMsg: (placeholder: string) => {
-          return t('UserPermissionGrid.modal.saveErrorMsg', {
-            referenceIds: placeholder
-          });
-        }
-      }}
+      modalProps={modalProps}
       {...passThroughProps}
     />
   );
