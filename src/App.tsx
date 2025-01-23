@@ -48,7 +48,7 @@ const App: React.FC = () => {
   } = useTranslation();
 
   useEffect(() => {
-    const  setLayers = async() => {
+    const setLayers = async() => {
       try {
         const layers = await client?.layer().findAll();
         if (!_isNil(layers)) {
