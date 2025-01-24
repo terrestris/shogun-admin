@@ -141,8 +141,8 @@ export function GeneralEntityRoot<T extends BaseEntity>({
   const [pageTotal, setPageTotal] = useState<number>();
   const [pageSize, setPageSize] = useState<number>(config.defaultPageSize || 10);
   const [pageCurrent, setPageCurrent] = useState<number>(1);
-  const [sortField, setSortField] = useState<string>();
-  const [sortOrder, setSortOrder] = useState<SortOrder>();
+  const [sortField, setSortField] = useState<string | undefined>(defaultSortField);
+  const [sortOrder, setSortOrder] = useState<SortOrder | undefined>('ascend');
   const [isFiltered, setFiltered] = useState<boolean>(false);
   const [isPreviousFormDirty, setIsPreviousFormDirty] = useState<boolean>(false);
 
@@ -157,7 +157,7 @@ export function GeneralEntityRoot<T extends BaseEntity>({
   } = useTranslation();
 
   useEffect(() => {
-    setSortField(defaultSortField? defaultSortField : undefined);
+    setSortField(defaultSortField ? defaultSortField : undefined);
     setSortOrder('ascend');
     setPageCurrent(1);
     setFiltered(false); // to always obtain pagination when changing the entity
@@ -216,8 +216,13 @@ export function GeneralEntityRoot<T extends BaseEntity>({
    * Fetch all entities shown in table
    */
   const fetchEntities = useCallback(async () => {
+    if (!entityType) {
+      return;
+    }
+
     try {
       setGridLoading(true);
+
       const pageOpts: PageOpts | undefined = isFiltered ? undefined : {
         page: pageCurrent - 1,
         size: pageSize,
@@ -226,7 +231,9 @@ export function GeneralEntityRoot<T extends BaseEntity>({
           order: sortOrder === 'ascend' ? 'asc' : sortOrder === 'descend' ? 'desc' : undefined
         }
       };
+
       const allEntries = await entityController?.findAll(pageOpts);
+
       setPageTotal(allEntries.totalElements);
       setEntities(allEntries.content || []);
       onEntitiesLoaded?.(allEntries.content, entityType);
@@ -344,22 +351,11 @@ export function GeneralEntityRoot<T extends BaseEntity>({
   }, [updateForm, entityController]);
 
   /**
-   * Init data
+   * Init data (and update if the dependencies of fetchEntities change)
    */
   useEffect(() => {
-    if (allEntities === undefined && !isGridLoading) {
-      fetchEntities();
-    }
-  }, [fetchEntities, allEntities, isGridLoading]);
-
-  /**
-   * Table updates when Entities change
-   */
-  useEffect(() => {
-    if (entityType) {
-      fetchEntities();
-    }
-  }, [entityType, fetchEntities]);
+    fetchEntities();
+  }, [fetchEntities]);
 
   const onValuesChange = async (changedValues: FormValues) => {
     setFormIsDirty(true);

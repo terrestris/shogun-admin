@@ -1,14 +1,7 @@
 import React, {
+  useCallback,
   useMemo
 } from 'react';
-
-import {
-  Tag
-} from 'antd';
-
-import {
-  CustomTagProps
-} from 'rc-select/lib/BaseSelect';
 
 import {
   useTranslation
@@ -37,27 +30,55 @@ const RolePermissionGrid: React.FC<RolePermissionGridProps> = ({
   const { t } = useTranslation();
   const client = useSHOGunAPIClient();
 
-  const service = useMemo(() => {
+  const service = useCallback(() => {
     // @ts-expect-error for unknown reasons, just calling the function here will result in 'this'
     // not being defined in the function, so 'apply' is used to set 'this' correctly
     return client?.[entityType].apply(client);
   }, [client, entityType]);
 
-  const getRoleInstancePermissions = async (id: number) => {
-    return await service?.getRoleInstancePermissions(id);
-  };
+  const getRoleInstancePermissions = useCallback(async (id: number) => {
+    return await service()?.getRoleInstancePermissions(id);
+  }, [service]);
 
-  const setRoleInstancePermission = async (id: number, referenceId: number, permission: PermissionCollectionType) => {
-    await service?.setRoleInstancePermission(id, referenceId, permission);
-  };
+  const setRoleInstancePermission = useCallback(async (id: number, referenceId: number,
+    permission: PermissionCollectionType) => {
+    await service()?.setRoleInstancePermission(id, referenceId, permission);
+  }, [service]);
 
-  const deleteRoleInstancePermission = async (id: number, referenceId: number) => {
-    await service?.deleteRoleInstancePermission(id, referenceId);
-  };
+  const deleteRoleInstancePermission = useCallback(async (id: number, referenceId: number) => {
+    await service()?.deleteRoleInstancePermission(id, referenceId);
+  }, [service]);
 
-  const getRoles = async (pageOpts?: PageOpts) => {
+  const getRoles = useCallback(async (pageOpts?: PageOpts) => {
     return await client?.role().findAll(pageOpts);
-  };
+  }, [client]);
+
+  const modalProps = useMemo(() => ({
+    toTag: (role: Role) => {
+      return {
+        value: role.id,
+        filterValues: [
+          role.providerDetails?.name
+        ],
+        label: (
+          <span>{role.providerDetails?.name || `ID: ${role.id}`}</span>
+        )
+      };
+    },
+    getReferences: getRoles,
+    setInstancePermission: setRoleInstancePermission,
+    descriptionText: t('RolePermissionGrid.modal.description'),
+    referenceLabelText: t('RolePermissionGrid.modal.referenceSelectLabel'),
+    referenceExtraText: t('RolePermissionGrid.modal.referenceSelectExtra'),
+    referenceSelectPlaceholderText: t('RolePermissionGrid.modal.referenceSelectPlaceholder'),
+    permissionSelectLabel: t('RolePermissionGrid.modal.permissionSelectLabel'),
+    permissionSelectExtra: t('RolePermissionGrid.modal.permissionSelectExtra'),
+    saveErrorMsg: (placeholder: string) => {
+      return t('RolePermissionGrid.modal.saveErrorMsg', {
+        referenceIds: placeholder
+      });
+    }
+  }), [getRoles, setRoleInstancePermission, t]);
 
   const toRoleDataType = (permission: RoleInstancePermission): DataType<Role> => {
     return {
@@ -66,40 +87,6 @@ const RolePermissionGrid: React.FC<RolePermissionGridProps> = ({
       name: permission.role?.providerDetails?.name,
       permission: permission.permission?.name
     };
-  };
-
-  const toTag = (role: Role) => {
-    return {
-      value: role.id,
-      filterValues: [
-        role.providerDetails?.name
-      ],
-      label: (
-        <span>{role.providerDetails?.name}</span>
-      )
-    };
-  };
-
-  const tagRenderer = (props: CustomTagProps) => {
-    const {
-      label,
-      ...passProps
-    } = props;
-
-    const onPreventMouseDown = (event: React.MouseEvent<HTMLSpanElement>) => {
-      event.preventDefault();
-      event.stopPropagation();
-    };
-
-    return (
-      <Tag
-        onMouseDown={onPreventMouseDown}
-        className="user-avatar-tag"
-        {...passProps}
-      >
-        {label}
-      </Tag>
-    );
   };
 
   const colDefinition = () => {
@@ -125,23 +112,7 @@ const RolePermissionGrid: React.FC<RolePermissionGridProps> = ({
       deleteInstancePermission={deleteRoleInstancePermission}
       toDataType={toRoleDataType}
       nameColumnDefinition={colDefinition()}
-      modalProps={{
-        toTag: toTag,
-        getReferences: getRoles,
-        tagRenderer: tagRenderer,
-        setInstancePermission: setRoleInstancePermission,
-        descriptionText: t('RolePermissionGrid.modal.description'),
-        referenceLabelText: t('RolePermissionGrid.modal.referenceSelectLabel'),
-        referenceExtraText: t('RolePermissionGrid.modal.referenceSelectExtra'),
-        referenceSelectPlaceholderText: t('RolePermissionGrid.modal.referenceSelectPlaceholder'),
-        permissionSelectLabel: t('RolePermissionGrid.modal.permissionSelectLabel'),
-        permissionSelectExtra: t('RolePermissionGrid.modal.permissionSelectExtra'),
-        saveErrorMsg: (placeholder: string) => {
-          return t('RolePermissionGrid.modal.saveErrorMsg', {
-            referenceIds: placeholder
-          });
-        }
-      }}
+      modalProps={modalProps}
       {...passThroughProps}
     />
   );
