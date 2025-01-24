@@ -25,6 +25,8 @@ import Logger from 'js-logger';
 
 import _cloneDeep from 'lodash/cloneDeep';
 
+import { useTranslation } from 'react-i18next';
+
 import GeneralEntityRootContext, {
   ContextValue
 } from '../../../Context/GeneralEntityRootContext';
@@ -92,6 +94,10 @@ export const GeneralEntityForm: React.FC<GeneralEntityFormProps> = ({
 }) => {
 
   const generalEntityRootContext = useContext<ContextValue<any> | undefined>(GeneralEntityRootContext);
+
+  const {
+    t
+  } = useTranslation();
 
   /**
    * Create read-only components for certain form items
@@ -197,7 +203,7 @@ export const GeneralEntityForm: React.FC<GeneralEntityFormProps> = ({
         );
       case 'UserPermissionGrid':
         if (entityId !== form.getFieldValue('id')) {
-          return undefined;
+          return t('GeneralEntityForm.userPermissionGridNoIdWarning');
         }
 
         return (
@@ -209,7 +215,7 @@ export const GeneralEntityForm: React.FC<GeneralEntityFormProps> = ({
         );
       case 'GroupPermissionGrid':
         if (entityId !== form.getFieldValue('id')) {
-          return undefined;
+          return t('GeneralEntityForm.groupPermissionGridNoIdWarning');
         }
 
         return (
@@ -221,7 +227,7 @@ export const GeneralEntityForm: React.FC<GeneralEntityFormProps> = ({
         );
       case 'RolePermissionGrid':
         if (entityId !== form.getFieldValue('id')) {
-          return undefined;
+          return t('GeneralEntityForm.rolePermissionGridNoIdWarning');
         }
 
         return (

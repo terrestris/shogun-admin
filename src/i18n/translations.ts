@@ -87,6 +87,14 @@ export default {
           total: 'Total'
         }
       },
+      GeneralEntityForm: {
+        userPermissionGridNoIdWarning: 'Die Konfiguration muss gespeichert werden, ' +
+          'bevor die Benutzerberechtigungen festgelegt werden können.',
+        groupPermissionGridNoIdWarning: 'Die Konfiguration muss gespeichert werden, ' +
+          'bevor die Gruppenberechtigungen festgelegt werden können.',
+        rolePermissionGridNoIdWarning: 'Die Konfiguration muss gespeichert werden, ' +
+          'bevor die Rollenberechtigungen festgelegt werden können.'
+      },
       ImageFileRoot: {
         title: 'Bilddateien',
         subTitle: '… die die Welt zeigen',
@@ -363,6 +371,11 @@ export default {
           page: 'Page',
           total: 'Total'
         }
+      },
+      GeneralEntityForm: {
+        userPermissionGridNoIdWarning: 'Configuration must be saved before the user permissions can be set.',
+        groupPermissionGridNoIdWarning: 'Configuration must be saved before the group permissions can be set.',
+        rolePermissionGridNoIdWarning: 'Configuration must be saved before the role permissions can be set.'
       },
       ImageFileRoot: {
         title: 'Images',
