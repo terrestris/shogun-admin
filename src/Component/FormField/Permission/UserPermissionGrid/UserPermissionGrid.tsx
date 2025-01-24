@@ -97,6 +97,7 @@ const UserPermissionGrid: React.FC<UserPermissionGridProps> = ({
         <Tag
           onMouseDown={onPreventMouseDown}
           className="user-avatar-tag"
+          bordered={false}
           {...passProps}
         >
           {label}
