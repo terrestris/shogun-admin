@@ -1,3 +1,18 @@
+## [17.0.0-next.13](https://github.com/terrestris/shogun-admin/compare/v17.0.0-next.12...v17.0.0-next.13) (2025-01-24)
+
+
+### Dependencies
+
+* remove unneeded test case ([d6f4647](https://github.com/terrestris/shogun-admin/commit/d6f4647da4b50603deecbd31af6a0c120bd1a9e3))
+
+
+### Bugfixes
+
+* load references (users, groups, roles) as lazy as possible ([ecbef5d](https://github.com/terrestris/shogun-admin/commit/ecbef5d87d04dd8c8d8ed6d96c38b243ac43130f))
+* prevent unnecessary reloads of the entities ([992d574](https://github.com/terrestris/shogun-admin/commit/992d5748379def8c233fed98899b8418aa2cccb0))
+* prevent unnecessary rerenders by caching modalProps ([5c0cc5d](https://github.com/terrestris/shogun-admin/commit/5c0cc5d3de51a2c791dec265e9a954ff9c56763d))
+* remove unused generic type ([9044a8c](https://github.com/terrestris/shogun-admin/commit/9044a8c51da02ca81d56f0c53c5d296232c9054f))
+
 ## [17.0.0-next.12](https://github.com/terrestris/shogun-admin/compare/v17.0.0-next.11...v17.0.0-next.12) (2024-12-13)
 
 
