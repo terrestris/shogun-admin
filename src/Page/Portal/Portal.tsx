@@ -1,5 +1,3 @@
-import './Portal.less';
-
 import React, {
   useCallback,
   useState
@@ -15,8 +13,10 @@ import {
   message
 } from 'antd';
 import _isEqual from 'lodash/isEqual';
-import {Route,
-  Routes} from 'react-router-dom';
+import {
+  Route,
+  Routes
+} from 'react-router-dom';
 import {
   useSetRecoilState
 } from 'recoil';
@@ -28,6 +28,14 @@ import Layer from '@terrestris/shogun-util/dist/model/Layer';
 import GeneralEntityRoot, {
   GeneralEntityConfigType
 } from '../../Component/GeneralEntity/GeneralEntityRoot/GeneralEntityRoot';
+import ToolbarCreateAllGroupsButton
+  from '../../Component/GeneralEntity/Slots/ToolbarCreateAllGroupsButton/ToolbarCreateAllGroupsButton';
+import ToolbarCreateAllRolesButton
+  from '../../Component/GeneralEntity/Slots/ToolbarCreateAllRolesButton/ToolbarCreateAllRolesButton';
+import ToolbarCreateAllUsersButton
+  from '../../Component/GeneralEntity/Slots/ToolbarCreateAllUsersButton/ToolbarCreateAllUsersButton';
+import ToolbarUploadLayerButton
+  from '../../Component/GeneralEntity/Slots/ToolbarUploadLayerButton/ToolbarUploadLayerButton';
 import GlobalSettingsRoot from '../../Component/GlobalSettings/GlobalSettingsRoot/GlobalSettingsRoot';
 import ImageFileRoot from '../../Component/ImageFile/ImageFileRoot/ImageFileRoot';
 import Logs from '../../Component/Logs/Logs';
@@ -40,17 +48,18 @@ import {
   layerSuggestionListAtom
 } from '../../State/atoms';
 
-interface OwnProps { }
+import './Portal.less';
 
-type PortalProps = OwnProps;
+interface PortalProps {}
 
 export const Portal: React.FC<PortalProps> = () => {
   const [collapsed, setCollapsed] = useState<boolean>(false);
-  const toggleCollapsed = () => setCollapsed(!collapsed);
   const [entitiesToLoad, setEntitiesToLoad] = useState<GeneralEntityConfigType<BaseEntity>[]>([]);
   const [configsAreLoading, setConfigsAreLoading] = useState<boolean>(false);
 
   const setLayerSuggestionList = useSetRecoilState(layerSuggestionListAtom);
+
+  const toggleCollapsed = () => setCollapsed(!collapsed);
 
   const fetchConfigForModel = async (modelName: string): Promise<GeneralEntityConfigType<BaseEntity>> => {
     const reqOpts = {
@@ -91,6 +100,21 @@ export const Portal: React.FC<PortalProps> = () => {
     }
   }, [setLayerSuggestionList]);
 
+  const getLeftToolbarItems = (entityType: string): React.ReactNode => {
+    switch (entityType) {
+      case 'layer':
+        return <ToolbarUploadLayerButton />;
+      case 'user':
+        return <ToolbarCreateAllUsersButton />;
+      case 'group':
+        return <ToolbarCreateAllGroupsButton />;
+      case 'role':
+        return <ToolbarCreateAllRolesButton />;
+      default:
+        break;
+    }
+  };
+
   if (config?.models && config?.models?.length !== entitiesToLoad?.length && !configsAreLoading) {
     fetchConfigsForModels();
   }
@@ -125,8 +149,11 @@ export const Portal: React.FC<PortalProps> = () => {
                   element={
                     <GeneralEntityRoot
                       key={entityConfig.entityType}
-                      {...entityConfig}
                       onEntitiesLoaded={onEntitiesLoaded}
+                      slots={{
+                        leftToolbar: getLeftToolbarItems(entityConfig.entityType)
+                      }}
+                      {...entityConfig}
                     />
                   }
                 />

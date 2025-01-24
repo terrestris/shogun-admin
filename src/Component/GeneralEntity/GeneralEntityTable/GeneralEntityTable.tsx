@@ -1,6 +1,7 @@
-import './GeneralEntityTable.less';
-
-import React, { useMemo } from 'react';
+import React, {
+  useContext,
+  useMemo
+} from 'react';
 
 import { DeleteOutlined, SyncOutlined } from '@ant-design/icons';
 
@@ -18,6 +19,7 @@ import config from 'shogunApplicationConfig';
 import BaseEntity from '@terrestris/shogun-util/dist/model/BaseEntity';
 import Layer from '@terrestris/shogun-util/dist/model/Layer';
 
+import GeneralEntityRootContext, { ContextValue } from '../../../Context/GeneralEntityRootContext';
 import { GenericEntityController } from '../../../Controller/GenericEntityController';
 import TableUtil from '../../../Util/TableUtil';
 import TranslationUtil from '../../../Util/TranslationUtil';
@@ -27,74 +29,70 @@ import VerifyProviderDetailsField from '../../FormField/VerifyProviderDetailsFie
 
 import LayerPreview from '../../LayerPreview/LayerPreview';
 
-export type TableConfig<T extends BaseEntity> = {
+import './GeneralEntityTable.less';
+
+export interface TableConfig<T extends BaseEntity> {
   columnDefinition?: GeneralEntityTableColumn<T>[];
   dataMapping?: DataMapping;
-};
+}
 
-type DataMapping = {
-  [dataIndex: string]: {
-    [key: string]: string;
-  };
-};
+type DataMapping = Record<string, Record<string, string>>;
 
-type FilterConfig = {
+interface FilterConfig {
   isFilterable: boolean;
-};
+}
 
-type SortConfig = {
+interface SortConfig {
   customSorterName?: string;
   isSortable: boolean;
   sortOrder?: SortOrder;
-};
+}
 
 export type EntityTableAction = 'delete' | 'edit';
 
-type GeneralEntityTableColumnType = {
+interface GeneralEntityTableColumnType {
   cellRenderComponentName?: string;
-  cellRenderComponentProps?: {
-    [key: string]: any;
-  };
+  cellRenderComponentProps?: Record<string, any>;
   filterConfig?: FilterConfig; // if available: property is filterable by corresponding property using default config
   sortConfig?: SortConfig; // if available: property is sortable by corresponding property using default config
-};
+}
 
 export type GeneralEntityTableColumn<T extends BaseEntity> = ColumnType<T> & GeneralEntityTableColumnType;
 
-type OwnProps<T extends BaseEntity> = {
+interface OwnProps<T extends BaseEntity> {
   actions?: EntityTableAction[];
   controller: GenericEntityController<T>;
-  entities: T[];
-  entityType: string;
-  fetchEntities?: () => void;
   i18n: FormTranslations;
   onRowClick?: (record: T, event: React.MouseEvent<HTMLElement, MouseEvent>) => void;
   tableConfig: TableConfig<T>;
-};
+}
 
 type GeneralEntityTableProps<T extends BaseEntity> = OwnProps<T> & TableProps<T>;
 
 export function GeneralEntityTable<T extends BaseEntity>({
   actions = ['delete'],
   controller,
-  entities,
-  entityType,
-  fetchEntities = () => undefined,
   i18n,
   tableConfig,
   ...tablePassThroughProps
 }: GeneralEntityTableProps<T>) {
 
-  const routePath = useMemo(() => `${config.appPrefix}/portal/${entityType}`, [entityType]);
   const navigate = useNavigate();
+
   const { t } = useTranslation();
+
+  const generalEntityRootContext = useContext<ContextValue<T> | undefined>(GeneralEntityRootContext);
+
+  const routePath = useMemo(() => `${config.appPrefix}/portal/${generalEntityRootContext?.entityType}`,
+    [generalEntityRootContext?.entityType]);
+
   const onRowClick = (record: T) => navigate(`${routePath}/${record.id}`);
 
   const onDeleteClick = async (record: T) => {
     const entityId = record?.id;
 
     if (!entityId) {
-      fetchEntities();
+      generalEntityRootContext?.fetchEntities?.();
       return;
     }
 
@@ -117,7 +115,7 @@ export function GeneralEntityTable<T extends BaseEntity>({
         </div>
       ),
       onOk: async () => {
-        let isCheck = typeof entityName === 'string' ?
+        const isCheck = typeof entityName === 'string' ?
           confirmName === TranslationUtil.getTranslationFromConfig(entityName, i18n) :
           parseInt(confirmName, 10) === entityName;
 
@@ -128,7 +126,7 @@ export function GeneralEntityTable<T extends BaseEntity>({
               message: t('GeneralEntityTable.deleteConfirm'),
               description: t('GeneralEntityTable.deleteConfirmDescript', { entityName: entityName })
             });
-            fetchEntities();
+            generalEntityRootContext?.fetchEntities?.();
           } catch (error) {
             notification.error({
               message: t('GeneralEntityTable.deleteFail'),
@@ -141,8 +139,8 @@ export function GeneralEntityTable<T extends BaseEntity>({
     });
   };
 
-  const getRenderer = (cellRendererName: string, cellRenderComponentProps?: {[key: string]: any},
-    mapping?: {[key: string]: string}) => (value: any, record: T) => {
+  const getRenderer = (cellRendererName: string, cellRenderComponentProps?: Record<string, any>,
+    mapping?: Record<string, string>) => (value: any, record: T) => {
     const displayValue = mapping ? mapping[value] : value;
 
     if (cellRendererName === 'JSONCell') {
@@ -226,7 +224,7 @@ export function GeneralEntityTable<T extends BaseEntity>({
     } else {
       // check for preconfigured sorters, filters and custom components (TODO)
       cols = tableConfig?.columnDefinition?.map(cfg => {
-        let copyCfg = _cloneDeep(cfg);
+        const copyCfg = _cloneDeep(cfg);
         copyCfg.title = TranslationUtil.getTranslationFromConfig(cfg.title as string, i18n);
         const {
           sortConfig,
@@ -243,7 +241,7 @@ export function GeneralEntityTable<T extends BaseEntity>({
             defaultSortOrder: columnDef.dataIndex === 'name' ? 'ascend' : sortConfig.sortOrder
           };
         }
-        let dataIndex = copyCfg?.dataIndex?.toString();
+        const dataIndex = copyCfg?.dataIndex?.toString();
         if (!_isEmpty(filterConfig) && filterConfig.isFilterable) {
           columnDef = {
             ...columnDef,
@@ -262,7 +260,7 @@ export function GeneralEntityTable<T extends BaseEntity>({
       });
     }
 
-    let retArray = [];
+    const retArray = [];
     if (!_isNil(cols)) {
       retArray.push(...cols);
     }
@@ -270,7 +268,7 @@ export function GeneralEntityTable<T extends BaseEntity>({
       title: (
         <Tooltip title={t('GeneralEntityTable.tooltipReload')}>
           <SyncOutlined
-            onClick={fetchEntities}
+            onClick={generalEntityRootContext?.fetchEntities}
           />
         </Tooltip>
       ),
@@ -318,7 +316,7 @@ export function GeneralEntityTable<T extends BaseEntity>({
         triggerAsc: t('Table.triggerAsc'),
         cancelSort: t('Table.cancelSort')
       }}
-      dataSource={entities}
+      dataSource={generalEntityRootContext?.entities}
       onRow={(record) => {
         return {
           onClick: () => onRowClick(record)
@@ -326,7 +324,7 @@ export function GeneralEntityTable<T extends BaseEntity>({
       }}
       rowKey={'id'}
       {...tablePassThroughProps}
-      key={entityType}
+      key={generalEntityRootContext?.entityType}
     />
   );
 }

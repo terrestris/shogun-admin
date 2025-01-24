@@ -13,7 +13,7 @@ export const ProcessUptime: React.FC<ProcessUptimeProps> = ({
 }) => {
 
   const valueRenderer = (value: number | string): ReactNode => {
-    let val = moment.utc(Number(value) * 1000).format('HH:mm:ss');
+    const val = moment.utc(Number(value) * 1000).format('HH:mm:ss');
 
     return <span>{val}</span>;
   };

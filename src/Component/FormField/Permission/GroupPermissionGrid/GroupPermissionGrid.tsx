@@ -1,16 +1,15 @@
 import React, {
-  useCallback
+  useCallback,
+  useMemo
 } from 'react';
 
 import {
   useTranslation
 } from 'react-i18next';
 
-import BaseEntity from '@terrestris/shogun-util/dist/model/BaseEntity';
-import PermissionCollectionType from '@terrestris/shogun-util/dist/model/enum/PermissionCollectionType';
+import { PermissionCollectionType } from '@terrestris/shogun-util/dist/model/enum/PermissionCollectionType';
 import Group from '@terrestris/shogun-util/dist/model/Group';
 import GroupInstancePermission from '@terrestris/shogun-util/dist/model/security/GroupInstancePermission';
-import GenericEntityService from '@terrestris/shogun-util/dist/service/GenericEntityService';
 import { PageOpts } from '@terrestris/shogun-util/dist/service/GenericService';
 
 import useSHOGunAPIClient from '../../../../Hooks/useSHOGunAPIClient';
@@ -21,7 +20,7 @@ import InstancePermissionGrid, {
 
 export interface GroupPermissionGridProps extends Omit<InstancePermissionGridProps<GroupInstancePermission>,
   'getInstancePermissions' | 'setInstancePermission' | 'deleteInstancePermission' | 'toDataType' |
-  'nameColumnDefinition' | 'getReferences' | 'toTag' | 'modalProps'> { };
+  'nameColumnDefinition' | 'getReferences' | 'toTag' | 'modalProps'> { }
 
 const GroupPermissionGrid: React.FC<GroupPermissionGridProps> = ({
   entityType,
@@ -32,24 +31,56 @@ const GroupPermissionGrid: React.FC<GroupPermissionGridProps> = ({
   const client = useSHOGunAPIClient();
 
   const service = useCallback(() => {
-    return (client?.[entityType] as () => GenericEntityService<BaseEntity>)();
+    // @ts-expect-error for unknown reasons, just calling the function here will result in 'this'
+    // not being defined in the function, so 'apply' is used to set 'this' correctly
+    return client?.[entityType].apply(client);
   }, [client, entityType]);
 
-  const getGroupInstancePermissions = async (id: number) => {
+  const getGroupInstancePermissions = useCallback(async (id: number) => {
     return await service()?.getGroupInstancePermissions(id);
-  };
+  }, [service]);
 
-  const setGroupInstancePermission = async (id: number, referenceId: number, permission: PermissionCollectionType) => {
+  const setGroupInstancePermission = useCallback(async (id: number, referenceId: number,
+    permission: PermissionCollectionType) => {
     await service()?.setGroupInstancePermission(id, referenceId, permission);
-  };
+  }, [service]);
 
-  const deleteGroupInstancePermission = async (id: number, referenceId: number) => {
+  const deleteGroupInstancePermission = useCallback(async (id: number, referenceId: number) => {
     await service()?.deleteGroupInstancePermission(id, referenceId);
-  };
+  }, [service]);
 
-  const getGroups = async (pageOpts?: PageOpts) => {
+  const getGroups = useCallback(async (pageOpts?: PageOpts) => {
     return await client?.group().findAll(pageOpts);
-  };
+  }, [client]);
+
+  const modalProps = useMemo(() => ({
+    toTag: (group: Group) => {
+      return {
+        value: group.id,
+        filterValues: [
+          group.id,
+          group.authProviderId,
+          group.providerDetails?.name
+        ],
+        label: (
+          <span>{group.providerDetails?.name || `ID: ${group.id}`}</span>
+        )
+      };
+    },
+    getReferences: getGroups,
+    setInstancePermission: setGroupInstancePermission,
+    descriptionText: t('GroupPermissionGrid.modal.description'),
+    referenceLabelText: t('GroupPermissionGrid.modal.referenceSelectLabel'),
+    referenceExtraText: t('GroupPermissionGrid.modal.referenceSelectExtra'),
+    referenceSelectPlaceholderText: t('GroupPermissionGrid.modal.referenceSelectPlaceholder'),
+    permissionSelectLabel: t('GroupPermissionGrid.modal.permissionSelectLabel'),
+    permissionSelectExtra: t('GroupPermissionGrid.modal.permissionSelectExtra'),
+    saveErrorMsg: (placeholder: string) => {
+      return t('GroupPermissionGrid.modal.saveErrorMsg', {
+        referenceIds: placeholder
+      });
+    }
+  }), [getGroups, setGroupInstancePermission, t]);
 
   const toGroupDataType = (permission: GroupInstancePermission): DataType<Group> => {
     return {
@@ -57,20 +88,6 @@ const GroupPermissionGrid: React.FC<GroupPermissionGridProps> = ({
       reference: permission.group,
       name: permission.group?.providerDetails?.name,
       permission: permission.permission?.name
-    };
-  };
-
-  const toTag = (group: Group) => {
-    return {
-      value: group.id,
-      filterValues: [
-        group.id,
-        group.authProviderId,
-        group.providerDetails?.name
-      ],
-      label: (
-        <span>{group.providerDetails?.name}</span>
-      )
     };
   };
 
@@ -97,22 +114,7 @@ const GroupPermissionGrid: React.FC<GroupPermissionGridProps> = ({
       deleteInstancePermission={deleteGroupInstancePermission}
       toDataType={toGroupDataType}
       nameColumnDefinition={colDefinition()}
-      modalProps={{
-        toTag: toTag,
-        getReferences: getGroups,
-        setInstancePermission: setGroupInstancePermission,
-        descriptionText: t('GroupPermissionGrid.modal.description'),
-        referenceLabelText: t('GroupPermissionGrid.modal.referenceSelectLabel'),
-        referenceExtraText: t('GroupPermissionGrid.modal.referenceSelectExtra'),
-        referenceSelectPlaceholderText: t('GroupPermissionGrid.modal.referenceSelectPlaceholder'),
-        permissionSelectLabel: t('GroupPermissionGrid.modal.permissionSelectLabel'),
-        permissionSelectExtra: t('GroupPermissionGrid.modal.permissionSelectExtra'),
-        saveErrorMsg: (placeholder: string) => {
-          return t('GroupPermissionGrid.modal.saveErrorMsg', {
-            referenceIds: placeholder
-          });
-        }
-      }}
+      modalProps={modalProps}
       {...passThroughProps}
     />
   );

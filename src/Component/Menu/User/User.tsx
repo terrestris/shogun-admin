@@ -11,7 +11,7 @@ import {
   Dropdown
 } from 'antd';
 import Avatar from 'antd/lib/avatar/avatar';
-import { ItemType } from 'antd/lib/menu/hooks/useItems';
+import { ItemType } from 'antd/lib/menu/interface';
 import _isNil from 'lodash/isNil';
 import { useTranslation } from 'react-i18next';
 import {
@@ -57,7 +57,7 @@ export const User: React.FC<UserProps> = () => {
         // TODO: Fix settings for non keycloak setups
         client?.getKeycloak()?.accountManagement();
         break;
-      case 'logout':
+      case 'logout': {
         const keycloak = client.getKeycloak();
         if (keycloak) {
           keycloak.logout();
@@ -73,6 +73,7 @@ export const User: React.FC<UserProps> = () => {
           });
         }
         break;
+      }
       default:
         break;
     }
@@ -80,7 +81,7 @@ export const User: React.FC<UserProps> = () => {
 
   const userName = userInfo?.providerDetails?.username || userInfo?.authProviderId;
 
-  let userMenuItems: ItemType[] = [];
+  const userMenuItems: ItemType[] = [];
 
   if (userName) {
     userMenuItems.push({

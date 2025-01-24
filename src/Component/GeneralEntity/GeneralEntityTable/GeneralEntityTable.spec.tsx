@@ -4,6 +4,7 @@ import {
   cleanup,
   fireEvent,
   render,
+  RenderOptions,
   screen
 } from '@testing-library/react';
 
@@ -17,13 +18,30 @@ import i18n from '../../../i18n';
 
 import { EntityType } from '../../FormField/Permission/InstancePermissionGrid/InstancePermissionGrid';
 
-import { GeneralEntityTable, GeneralEntityTableColumn, TableConfig } from './GeneralEntityTable';
+import {
+  GeneralEntityTable,
+  GeneralEntityTableColumn,
+  TableConfig
+} from './GeneralEntityTable';
+import GeneralEntityRootContext, { ContextValue } from '../../../Context/GeneralEntityRootContext';
 
 const mockUsedNavigate = jest.fn();
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
   useNavigate: () => mockUsedNavigate,
 }));
+
+const renderInContext = <T extends BaseEntity,>(ui: React.ReactNode, providerProps?: ContextValue<T>,
+  renderOptions?: Omit<RenderOptions, 'queries'> | undefined) => {
+  return render(
+    <GeneralEntityRootContext.Provider
+      value={providerProps}
+    >
+      {ui}
+    </GeneralEntityRootContext.Provider>,
+    renderOptions
+  )
+};
 
 describe('<GeneralEntityTable />', () => {
   let mockController;
@@ -90,24 +108,23 @@ describe('<GeneralEntityTable />', () => {
     cleanup();
   });
 
-  it('is defined', () => {
-    expect(GeneralEntityTable).not.toBeUndefined();
-  });
-
   it('can be rendered', async () => {
     mockEntityType = 'group';
 
     const {
       container
-    } = render(
+    } = renderInContext(
       <GeneralEntityTable
         actions={['delete', 'edit']}
         controller={mockController}
-        entities={[]}
-        entityType={mockEntityType}
         i18n={i18n}
         tableConfig={{}}
-      />);
+      />,
+      {
+        entityType: mockEntityType,
+        entities: []
+      }
+    );
     expect(container).toBeVisible();
     expect(container.querySelector('.general-entity-table')).toBeVisible();
     expect(screen.getByText('No data')).toBeVisible();
@@ -120,15 +137,18 @@ describe('<GeneralEntityTable />', () => {
 
     const {
       container
-    } = render(
+    } = renderInContext(
       <GeneralEntityTable
         actions={['delete', 'edit']}
         controller={mockController}
-        entities={mockBaseEntities}
-        entityType={mockEntityType}
         i18n={i18n}
         tableConfig={mockTableConfig}
-      />);
+      />,
+      {
+        entityType: mockEntityType,
+        entities: mockBaseEntities
+      }
+    );
     expect(container).toBeVisible();
     expect(screen.getByText('1')).toBeVisible();
     expect(container.querySelector('.ant-pagination-disabled')).toBeVisible();
@@ -142,20 +162,23 @@ describe('<GeneralEntityTable />', () => {
 
   it('fetches entity if ID is not defined', async () => {
     mockEntityType = 'layer';
-    const mockFetchEnteties = jest.fn();
+    const mockFetchEntities = jest.fn();
 
     const {
       container
-    } = render(
+    } = renderInContext(
       <GeneralEntityTable
         actions={['delete', 'edit']}
         controller={mockController}
-        entities={mockBaseEntities}
-        fetchEntities={mockFetchEnteties}
-        entityType={mockEntityType}
         i18n={i18n}
         tableConfig={mockTableConfig}
-      />);
+      />,
+      {
+        entityType: mockEntityType,
+        entities: mockBaseEntities,
+        fetchEntities: mockFetchEntities
+      }
+    );
     expect(container).toBeVisible();
 
     const deleteElement: HTMLElement | null = container.querySelector('span[aria-label="delete"]');
@@ -164,7 +187,7 @@ describe('<GeneralEntityTable />', () => {
     await fireEvent.click(deleteElement!);
 
     expect(mockUsedNavigate).toHaveBeenCalled();
-    expect(mockFetchEnteties).toHaveBeenCalled();
+    expect(mockFetchEntities).toHaveBeenCalled();
   });
 });
 

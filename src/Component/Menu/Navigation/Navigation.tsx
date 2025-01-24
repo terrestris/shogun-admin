@@ -8,13 +8,16 @@ import {
   AppstoreOutlined,
   UserOutlined,
   TeamOutlined,
-  FileTextOutlined
+  FileTextOutlined,
+  TagOutlined,
+  ApiOutlined,
+  BranchesOutlined
 } from '@ant-design/icons';
 
 import {
   Menu
 } from 'antd';
-import { ItemType } from 'antd/lib/menu/hooks/useItems';
+import { ItemType } from 'antd/lib/menu/interface';
 import _isNil from 'lodash/isNil';
 import { SelectInfo } from 'rc-menu/lib/interface';
 import {
@@ -61,54 +64,100 @@ export const Navigation: React.FC<NavigationProps> = ({
   const navigationContentChildren: ItemType[] = [];
 
   if (entityConfigs && entityConfigs.length > 0) {
-
+    // The following entities are the "default" SHOGun ones.
     const applicationConfig = entityConfigs.find(e => e.entityType === 'application');
     const layersConfig = entityConfigs.find(e => e.entityType === 'layer');
     const userConfig = entityConfigs.find(e => e.entityType === 'user');
     const groupsConfig = entityConfigs.find(e => e.entityType === 'group');
-    navigationContentChildren.push({
-      key: 'application',
-      label: (
-        <>
-          <BankOutlined />
-          <span>
-            {TranslationUtil.getTranslationFromConfig(applicationConfig?.navigationTitle, applicationConfig?.i18n)}
-          </span>
-        </>
-      )
-    });
-    navigationContentChildren.push({
-      key: 'layer',
-      label: (
-        <>
-          <AppstoreOutlined />
-          <span>
-            {TranslationUtil.getTranslationFromConfig(layersConfig?.navigationTitle, layersConfig?.i18n)}
-          </span>
-        </>
-      )
-    });
-    navigationContentChildren.push({
-      key: 'user',
-      label: (
-        <>
-          <UserOutlined />
-          <span>
-            {TranslationUtil.getTranslationFromConfig(userConfig?.navigationTitle, userConfig?.i18n)}
-          </span>
-        </>
-      )
-    });
-    navigationContentChildren.push({
-      key: 'group',
-      label: (
-        <>
-          <TeamOutlined />
-          <span>
-            {TranslationUtil.getTranslationFromConfig(groupsConfig?.navigationTitle, groupsConfig?.i18n)}
-          </span>
-        </>
-      )
+    const rolesConfig = entityConfigs.find(e => e.entityType === 'role');
+
+    // But it's also possible to add custom entities to the navigation.
+    const otherConfigs = entityConfigs.filter(e => ![
+      applicationConfig,
+      layersConfig,
+      userConfig,
+      groupsConfig,
+      rolesConfig
+    ].includes(e));
+
+    if (applicationConfig) {
+      navigationContentChildren.push({
+        key: 'application',
+        label: (
+          <>
+            <BankOutlined />
+            <span>
+              {TranslationUtil.getTranslationFromConfig(applicationConfig?.navigationTitle, applicationConfig?.i18n)}
+            </span>
+          </>
+        )
+      });
+    }
+    if (layersConfig) {
+      navigationContentChildren.push({
+        key: 'layer',
+        label: (
+          <>
+            <AppstoreOutlined />
+            <span>
+              {TranslationUtil.getTranslationFromConfig(layersConfig?.navigationTitle, layersConfig?.i18n)}
+            </span>
+          </>
+        )
+      });
+    }
+    if (userConfig) {
+      navigationContentChildren.push({
+        key: 'user',
+        label: (
+          <>
+            <UserOutlined />
+            <span>
+              {TranslationUtil.getTranslationFromConfig(userConfig?.navigationTitle, userConfig?.i18n)}
+            </span>
+          </>
+        )
+      });
+    }
+    if (groupsConfig) {
+      navigationContentChildren.push({
+        key: 'group',
+        label: (
+          <>
+            <TeamOutlined />
+            <span>
+              {TranslationUtil.getTranslationFromConfig(groupsConfig?.navigationTitle, groupsConfig?.i18n)}
+            </span>
+          </>
+        )
+      });
+    }
+    if (rolesConfig) {
+      navigationContentChildren.push({
+        key: 'role',
+        label: (
+          <>
+            <TagOutlined />
+            <span>
+              {TranslationUtil.getTranslationFromConfig(rolesConfig?.navigationTitle, rolesConfig?.i18n)}
+            </span>
+          </>
+        )
+      });
+    }
+    otherConfigs.forEach(entityConfig => {
+      navigationContentChildren.push({
+        key: entityConfig.entityType,
+        label: (
+          <>
+            {/* TODO We might think about making the icon configurable */}
+            <ApiOutlined />
+            <span>
+              {TranslationUtil.getTranslationFromConfig(entityConfig?.navigationTitle, entityConfig?.i18n)}
+            </span>
+          </>
+        )
+      });
     });
   }
 
@@ -169,6 +218,33 @@ export const Navigation: React.FC<NavigationProps> = ({
         <>
           <FileTextOutlined />
           <span>{t('Navigation.logLevels')}</span>
+        </>
+      )
+    });
+  }
+
+  if (navigationConf?.settings?.graphiql?.visible) {
+    settingsChildren.push({
+      key: 'graphiql',
+      icon: <BranchesOutlined />,
+      label: (
+        <>
+          <a href={`${window.location.origin}/graphiql?path=/graphql`} target='_blank' rel='noopener noreferrer'>
+            <span>{t('Navigation.graphiql')}</span>
+          </a>
+        </>
+      )
+    });
+  }
+  if (navigationConf?.settings?.swagger?.visible) {
+    settingsChildren.push({
+      key: 'swagger',
+      icon: <ApiOutlined />,
+      label: (
+        <>
+          <a href={`${window.location.origin}/swagger-ui/index.html`} target='_blank' rel='noopener noreferrer'>
+            <span>{t('Navigation.swagger')}</span>
+          </a>
         </>
       )
     });

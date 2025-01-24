@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <title><%= title %></title>
+    <base href="<%= appPrefix %>" />
+    <link href="favicon.ico" rel="icon">
+  </head>
+  <body>
+    <noscript>
+      You need to enable JavaScript to run this app.
+    </noscript>
+    <script src="./config/admin-client-config.js"></script>
+    <script>
+      if (!window.shogunApplicationConfig) {
+        console.warn('No SHOGun application config found. Loading fallback.');
+        document.write('<script src="./fallbackConfig.js">\x3C/script>')
+      }
+    </script>
+    <div id="app" class="app"></div>
+  </body>
+</html>

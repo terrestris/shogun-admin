@@ -33,7 +33,7 @@ import {
   useTranslation
 } from 'react-i18next';
 
-import PermissionCollectionType from '@terrestris/shogun-util/dist/model/enum/PermissionCollectionType';
+import { PermissionCollectionType } from '@terrestris/shogun-util/dist/model/enum/PermissionCollectionType';
 import Group from '@terrestris/shogun-util/dist/model/Group';
 import Role from '@terrestris/shogun-util/dist/model/Role';
 import InstancePermission from '@terrestris/shogun-util/dist/model/security/InstancePermission';
@@ -48,10 +48,10 @@ import PermissionSelect from '../PermissionSelect/PermissionSelect';
 
 import './InstancePermissionGrid.less';
 
-type NonBaseEntityCLientKeys = 'cache' | 'info' | 'auth' | 'graphql' | 'openapi' |
+type NonBaseEntityClientKeys = 'cache' | 'info' | 'auth' | 'graphql' | 'openapi' |
   'getBasePath' | 'setBasePath' | 'getKeycloak' | 'setKeycloak';
 
-export type EntityType = Exclude<keyof SHOGunAPIClient, NonBaseEntityCLientKeys>;
+export type EntityType = Exclude<keyof SHOGunAPIClient, NonBaseEntityClientKeys>;
 
 export interface DataType<T = Role | User | Group> {
   key?: number;
@@ -69,9 +69,9 @@ export interface InstancePermissionGridProps<E extends InstancePermission> exten
   toDataType: (permission: E) => DataType;
   nameColumnDefinition: ColumnType<DataType>;
   modalProps: Omit<PermissionModalProps, 'entityId' | 'entityType'>;
-};
+}
 
-export const InstancePermissionGrid = <T, E extends InstancePermission>({
+export const InstancePermissionGrid = <E extends InstancePermission>({
   entityId,
   getInstancePermissions,
   setInstancePermission,
@@ -185,9 +185,9 @@ export const InstancePermissionGrid = <T, E extends InstancePermission>({
     try {
       setInstancePermission(entityId, record.reference.id, permission);
 
-      let dataClone = _cloneDeep(data);
+      const dataClone = _cloneDeep(data);
 
-      let match = dataClone.find(entry => entry.reference?.id === record.reference?.id);
+      const match = dataClone.find(entry => entry.reference?.id === record.reference?.id);
 
       if (match) {
         match.permission = permission;
@@ -212,7 +212,7 @@ export const InstancePermissionGrid = <T, E extends InstancePermission>({
     try {
       deleteInstancePermission(entityId, record.reference.id);
 
-      let dataClone = data.filter(entry => entry.reference?.id !== record.reference?.id);
+      const dataClone = data.filter(entry => entry.reference?.id !== record.reference?.id);
 
       setData(dataClone);
     } catch (error) {

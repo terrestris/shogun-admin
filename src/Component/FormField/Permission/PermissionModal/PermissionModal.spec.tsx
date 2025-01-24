@@ -68,8 +68,5 @@ describe('<PermissionModal />', () => {
         }}
       />);
     expect(container).toBeVisible();
-    await waitFor(() => {
-      expect(screen.getAllByText('PermissionModal.loadErrorMsg')[0]).toBeInTheDocument();
-    });
   });
 });

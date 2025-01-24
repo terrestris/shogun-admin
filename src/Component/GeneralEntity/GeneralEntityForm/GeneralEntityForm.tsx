@@ -1,4 +1,6 @@
-import React from 'react';
+import React, {
+  useContext
+} from 'react';
 
 import { PageHeader } from '@ant-design/pro-components';
 
@@ -12,16 +14,22 @@ import {
   Statistic,
   Switch
 } from 'antd';
-import './GeneralEntityForm.less';
 
 import {
   FormInstance,
   FormItemProps,
   FormProps
 } from 'antd/lib/form';
+
 import Logger from 'js-logger';
+
 import _cloneDeep from 'lodash/cloneDeep';
 
+import { useTranslation } from 'react-i18next';
+
+import GeneralEntityRootContext, {
+  ContextValue
+} from '../../../Context/GeneralEntityRootContext';
 import TranslationUtil from '../../../Util/TranslationUtil';
 import DisplayField from '../../FormField/DisplayField/DisplayField';
 import JSONEditor from '../../FormField/JSONEditor/JSONEditor';
@@ -35,16 +43,14 @@ import LayerTypeSelect from '../../Layer/LayerTypeSelect/LayerTypeSelect';
 
 const { TextArea } = Input;
 
-export type FieldConfig = {
+import './GeneralEntityForm.less';
+
+export interface FieldConfig {
   component?: string;
   dataField: string;
   dataType?: string;
-  fieldProps?: {
-    [key: string]: any;
-  };
-  formItemProps?: {
-    [key: string]: any;
-  };
+  fieldProps?: Record<string, any>;
+  formItemProps?: Record<string, any>;
   label?: string;
   noOptionValue?: {
     value: string;
@@ -55,22 +61,20 @@ export type FieldConfig = {
   required?: boolean;
   requiredI18n?: string;
   readOnly?: boolean;
-};
+}
 
 export type FormMode = 'EDIT' | 'VIEW';
 
-export type FormConfig = {
+export interface FormConfig {
   name: string;
   publicKey?: string;
   fields: FieldConfig[];
-};
+}
 
 interface OwnProps {
   loading?: boolean;
   i18n: FormTranslations;
   entityId?: number;
-  entityName: string;
-  entityType: string;
   formConfig: FormConfig;
   formProps?: Partial<FormProps>;
   form: FormInstance;
@@ -84,12 +88,16 @@ export const GeneralEntityForm: React.FC<GeneralEntityFormProps> = ({
   loading = false,
   i18n,
   entityId,
-  entityName,
-  entityType,
   formProps,
   form,
   formConfig
 }) => {
+
+  const generalEntityRootContext = useContext<ContextValue<any> | undefined>(GeneralEntityRootContext);
+
+  const {
+    t
+  } = useTranslation();
 
   /**
    * Create read-only components for certain form items
@@ -103,10 +111,12 @@ export const GeneralEntityForm: React.FC<GeneralEntityFormProps> = ({
       case 'Statistic':
         return createFieldComponent(fieldConfig);
       case 'DateField':
-        return <DisplayField
-          format="date"
-          {...fieldConfig.fieldProps}
-        />;
+        return (
+          <DisplayField
+            format="date"
+            {...fieldConfig.fieldProps}
+          />
+        );
       default:
         return (
           <DisplayField
@@ -173,7 +183,7 @@ export const GeneralEntityForm: React.FC<GeneralEntityFormProps> = ({
       case 'JSONEditor':
         return (
           <JSONEditor
-            entityType={entityType}
+            entityType={generalEntityRootContext?.entityType || ''}
             dataField={fieldCfg.dataField}
             {
               ...fieldCfg?.fieldProps
@@ -193,37 +203,37 @@ export const GeneralEntityForm: React.FC<GeneralEntityFormProps> = ({
         );
       case 'UserPermissionGrid':
         if (entityId !== form.getFieldValue('id')) {
-          return undefined;
+          return t('GeneralEntityForm.userPermissionGridNoIdWarning');
         }
 
         return (
           <UserPermissionGrid
             entityId={form.getFieldValue('id')}
-            entityType={entityType.toLowerCase() as EntityType}
+            entityType={generalEntityRootContext?.entityType?.toLowerCase() as EntityType}
             {...fieldCfg?.fieldProps}
           />
         );
       case 'GroupPermissionGrid':
         if (entityId !== form.getFieldValue('id')) {
-          return undefined;
+          return t('GeneralEntityForm.groupPermissionGridNoIdWarning');
         }
 
         return (
           <GroupPermissionGrid
             entityId={form.getFieldValue('id')}
-            entityType={entityType.toLowerCase() as EntityType}
+            entityType={generalEntityRootContext?.entityType?.toLowerCase() as EntityType}
             {...fieldCfg?.fieldProps}
           />
         );
       case 'RolePermissionGrid':
         if (entityId !== form.getFieldValue('id')) {
-          return undefined;
+          return t('GeneralEntityForm.rolePermissionGridNoIdWarning');
         }
 
         return (
           <RolePermissionGrid
             entityId={form.getFieldValue('id')}
-            entityType={entityType.toLowerCase() as EntityType}
+            entityType={generalEntityRootContext?.entityType?.toLowerCase() as EntityType}
             {...fieldCfg?.fieldProps}
           />
         );
@@ -249,7 +259,7 @@ export const GeneralEntityForm: React.FC<GeneralEntityFormProps> = ({
    * Generates an antd normalize function with the specified "no"-value.
    */
   const getNormalizeFn = () => {
-    let noValue: string = '';
+    const noValue = '';
     return (value: any, prevValue: any = []) => {
       if (
         Array.isArray(value) &&
@@ -269,7 +279,7 @@ export const GeneralEntityForm: React.FC<GeneralEntityFormProps> = ({
    * @returns An antd FormItem
    */
   const createFormItem = (fieldCfg: FieldConfig): React.ReactNode => {
-    let copyFieldCfg = _cloneDeep(fieldCfg);
+    const copyFieldCfg = _cloneDeep(fieldCfg);
     copyFieldCfg.label = TranslationUtil.getTranslationFromConfig(fieldCfg.label as string, i18n);
     let field: React.ReactNode;
     if (copyFieldCfg.readOnly) {
@@ -306,9 +316,12 @@ export const GeneralEntityForm: React.FC<GeneralEntityFormProps> = ({
       dataField
     } = copyFieldCfg;
 
+    const formKey = `${generalEntityRootContext?.entityType}-${
+      form.getFieldValue('id')}-${dataField || component?.toLocaleLowerCase()}`;
+
     return (
       <Form.Item
-        key={`${entityType}-${form.getFieldValue('id')}-${dataField || component?.toLocaleLowerCase()}`}
+        key={formKey}
         name={dataField}
         className={`cls-${dataField}`}
         normalize={copyFieldCfg.component ? getNormalizeFn() : undefined}
@@ -323,7 +336,7 @@ export const GeneralEntityForm: React.FC<GeneralEntityFormProps> = ({
 
   const initialValues = {};
 
-  const title = TranslationUtil.getTranslationFromConfig(entityName, i18n);
+  const title = TranslationUtil.getTranslationFromConfig(generalEntityRootContext?.entityName, i18n);
 
   return (
     <>

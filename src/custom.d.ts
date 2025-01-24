@@ -2,16 +2,36 @@ declare module '*.png';
 declare module '*.svg';
 declare module '*.gif';
 
+type Scope = unknown;
+type Factory = () => any;
+// eslint-disable-next-line @typescript-eslint/naming-convention, camelcase, no-underscore-dangle
+declare const __webpack_init_sharing__: (shareScope: string) => Promise<void>;
+// eslint-disable-next-line @typescript-eslint/naming-convention, camelcase, no-underscore-dangle
+declare const __webpack_share_scopes__: { default: Scope };
+
 declare module 'shogunApplicationConfig' {
+  interface PluginConfiguration {
+    name?: string;
+    resourcePath?: string;
+    exposedPaths?: string[];
+  }
+  interface GeoServerConfiguration {
+    base?: string;
+    upload?: {
+      buttonVisible?: boolean;
+      workspace?: string;
+      limit?: number;
+    };
+  }
   /**
    * Config object which contains the settings to adapt the admin client
    * to your application.
    */
-  type AdminConfiguration = {
-  /**
-   * Geoserver configuration object.
-   */
-    geoserver?;
+  interface AdminConfiguration {
+    /**
+     * Geoserver configuration object.
+     */
+    geoserver?: GeoServerConfiguration;
     /**
      * The path to the admin client on your host, e.g. '/admin'
      */
@@ -38,6 +58,10 @@ declare module 'shogunApplicationConfig' {
        */
       logo: string;
     };
+    /**
+     * Configuration of admin plugins.
+     */
+    plugins?: PluginConfiguration[];
     /**
      * Security related configuration object
      */
@@ -173,17 +197,35 @@ declare module 'shogunApplicationConfig' {
           visible: boolean;
         };
         /**
-         * Configuration for the settings->global menu entry.
+         * Configuration for the settings->logs menu entry.
          */
         logs: {
           /**
-           * Should the menu include the settings->global menu entry.
+           * Should the menu include the settings->logs menu entry.
+           */
+          visible: boolean;
+        };
+        /**
+         * Configuration for the settings->graphQL menu entry.
+         */
+        graphiql: {
+          /**
+           * Should the menu include the settings->graphQL menu entry.
+           */
+          visible: boolean;
+        };
+        /**
+         * Configuration for the settings->swagger menu entry.
+         */
+        swagger: {
+          /**
+           * Should the menu include the settings->swagger menu entry.
            */
           visible: boolean;
         };
       };
     };
-  };
+  }
   const config: AdminConfiguration;
 
   export default config;
@@ -191,13 +233,9 @@ declare module 'shogunApplicationConfig' {
 
 declare const PROJECT_VERSION: string;
 
-declare type FormTranslations = {
-  de: {
-    [localeKey: string]: string;
-  };
-  en: {
-    [localeKey: string]: string;
-  };
-};
+declare interface FormTranslations {
+  de: Record<string, string>;
+  en: Record<string, string>;
+}
 
 declare module 'monaco-editor/esm/vs/*?worker';

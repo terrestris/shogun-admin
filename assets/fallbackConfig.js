@@ -21,6 +21,7 @@ var shogunApplicationConfig = {
   geoserver: {
     base: '/geoserver',
     upload: {
+      buttonVisible: false,
       workspace: 'SHOGUN',
       limit: 200000000 // ~200MB
     }
@@ -68,6 +69,12 @@ var shogunApplicationConfig = {
         visible: true
       },
       logs: {
+        visible: true
+      },
+      graphiql: {
+        visible: true
+      },
+      swagger: {
         visible: true
       }
     }

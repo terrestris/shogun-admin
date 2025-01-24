@@ -33,3 +33,8 @@ export const layerSuggestionListAtom = atom<Layer[]>({
   key: 'layerSuggestionList',
   default: undefined
 });
+
+export const entityIdAtom = atom<number | undefined>({
+  key: 'entityId',
+  default: undefined
+});

@@ -1,4 +1,5 @@
 import React, {
+  useCallback,
   useEffect,
   useState
 } from 'react';
@@ -33,7 +34,8 @@ import {
   useTranslation
 } from 'react-i18next';
 
-import PermissionCollectionType from '@terrestris/shogun-util/dist/model/enum/PermissionCollectionType';
+import logger from '@terrestris/base-util/dist/Logger';
+import { PermissionCollectionType } from '@terrestris/shogun-util/dist/model/enum/PermissionCollectionType';
 import Group from '@terrestris/shogun-util/dist/model/Group';
 import { Page } from '@terrestris/shogun-util/dist/model/Page';
 import Role from '@terrestris/shogun-util/dist/model/Role';
@@ -44,10 +46,10 @@ import PermissionSelect from '../PermissionSelect/PermissionSelect';
 
 import './PermissionModal.less';
 
-type FormData = {
+interface FormData {
   referenceIds: number[];
   permission: PermissionCollectionType;
-};
+}
 
 export interface PermissionModalProps extends ModalProps {
   entityId: number;
@@ -63,7 +65,7 @@ export interface PermissionModalProps extends ModalProps {
   permissionSelectLabel?: string;
   permissionSelectExtra?: string;
   saveErrorMsg?: (placeholder: string) => string;
-};
+}
 
 const PermissionModal: React.FC<PermissionModalProps> = ({
   entityId,
@@ -71,7 +73,7 @@ const PermissionModal: React.FC<PermissionModalProps> = ({
   getReferences,
   toTag,
   tagRenderer,
-  onSave = () => {},
+  onSave = () => undefined,
   descriptionText = '',
   referenceLabelText = '',
   referenceExtraText = '',
@@ -81,11 +83,12 @@ const PermissionModal: React.FC<PermissionModalProps> = ({
   saveErrorMsg = () => '',
   ...passThroughProps
 }) => {
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
+  const [isSelectMenuOpen, setIsSelectMenuOpen] = useState(false);
   const [references, setReferences] = useState<(User | Group | Role)[]>([]);
   const [options, setOptions] = useState<DefaultOptionType[]>();
-  const [visible, setVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
 
   const [referencePage, setReferencePage] = useState<number>(1);
   const [referenceTotal, setReferenceTotal] = useState<number>();
@@ -95,35 +98,38 @@ const PermissionModal: React.FC<PermissionModalProps> = ({
 
   const referencePageSize = 20;
 
-  useEffect(() => {
+  const loadReferences = useCallback(async () => {
     if (!getReferences) {
       return;
     }
 
-    (async () => {
-      setLoading(true);
+    setIsLoading(true);
 
-      try {
-        const refs = await getReferences({
-          page: referencePage - 1,
-          size: referencePageSize
-        });
+    try {
+      const refs = await getReferences({
+        page: referencePage - 1,
+        size: referencePageSize
+      });
 
-        if (!refs) {
-          throw new Error('Failed to load references');
-        }
-
-        setReferenceTotal(refs.totalElements);
-        setReferencePage(refs.number + 1);
-        setReferences(refs.content);
-      } catch (error) {
-        message.error(t('PermissionModal.loadErrorMsg'));
-        Logger.error(error);
-      } finally {
-        setLoading(false);
+      if (!refs) {
+        throw new Error('Failed to load references');
       }
-    })();
+
+      setReferenceTotal(refs.totalElements);
+      setReferences(refs.content);
+    } catch (error) {
+      message.error(t('PermissionModal.loadErrorMsg'));
+      Logger.error(error);
+    } finally {
+      setIsLoading(false);
+    }
   }, [getReferences, t, referencePage]);
+
+  useEffect(() => {
+    if (isSelectMenuOpen) {
+      loadReferences();
+    }
+  }, [isSelectMenuOpen, loadReferences]);
 
   useEffect(() => {
     if (Array.isArray(references)) {
@@ -132,18 +138,19 @@ const PermissionModal: React.FC<PermissionModalProps> = ({
   }, [references, toTag]);
 
   const onClick = () => {
-    setVisible(!visible);
+    setIsVisible(!isVisible);
   };
 
   const onCancel = () => {
     form.resetFields();
-    setVisible(false);
+    setIsVisible(false);
   };
 
   const onOk = async () => {
     try {
       await form.validateFields();
     } catch (error) {
+      logger.error(`Could not validate fields to the following error: ${error}`);
       return;
     }
 
@@ -152,7 +159,7 @@ const PermissionModal: React.FC<PermissionModalProps> = ({
       permission
     } = form.getFieldsValue();
 
-    let erroneousRequestReferenceIds = [];
+    const erroneousRequestReferenceIds = [];
 
     setIsSaving(true);
 
@@ -171,13 +178,34 @@ const PermissionModal: React.FC<PermissionModalProps> = ({
 
     form.resetFields();
     setIsSaving(false);
-    setVisible(false);
+    setIsVisible(false);
     onSave();
   };
 
-  const onPaginationChange = (page: number) => {
-    setReferencePage(page);
-  };
+  const dropdownRender = useCallback((menu: React.ReactElement) => (
+    <div
+      className="permission-modal-reference-dropdown"
+    >
+      {menu}
+      <Divider />
+      <Pagination
+        total={referenceTotal}
+        showTotal={total => `${t('PermissionModal.paginationTotal')}: ${total}`}
+        locale={{
+          // eslint-disable-next-line camelcase
+          next_page: t('PermissionModal.paginationNextPage'),
+          // eslint-disable-next-line camelcase
+          prev_page: t('PermissionModal.paginationPrevPage')
+        }}
+        onChange={page => {
+          setReferencePage(page);
+        }}
+        current={referencePage}
+        pageSize={referencePageSize}
+        size="small"
+      />
+    </div>
+  ), [referencePage, referenceTotal, t]);
 
   return (
     <>
@@ -193,7 +221,7 @@ const PermissionModal: React.FC<PermissionModalProps> = ({
       <Modal
         className="permission-modal"
         title={t('PermissionModal.title')}
-        open={visible}
+        open={isVisible}
         onCancel={onCancel}
         onOk={onOk}
         okButtonProps={{
@@ -226,31 +254,14 @@ const PermissionModal: React.FC<PermissionModalProps> = ({
               allowClear
               optionFilterProp={'filterValues'}
               placeholder={referenceSelectPlaceholderText}
-              loading={loading}
+              open={isSelectMenuOpen}
+              loading={isLoading}
+              onDropdownVisibleChange={() => {
+                setIsSelectMenuOpen(!isSelectMenuOpen);
+              }}
               options={options}
               tagRender={tagRenderer}
-              dropdownRender={menu => (
-                <div
-                  className="permission-modal-reference-dropdown"
-                >
-                  {menu}
-                  <Divider />
-                  <Pagination
-                    total={referenceTotal}
-                    showTotal={total => `${t('PermissionModal.paginationTotal')}: ${total}`}
-                    locale={{
-                      // eslint-disable-next-line camelcase
-                      next_page: t('PermissionModal.paginationNextPage'),
-                      // eslint-disable-next-line camelcase
-                      prev_page: t('PermissionModal.paginationPrevPage')
-                    }}
-                    onChange={onPaginationChange}
-                    current={referencePage}
-                    pageSize={referencePageSize}
-                    size='small'
-                  />
-                </div>
-              )}
+              dropdownRender={dropdownRender}
             />
           </Form.Item>
           <Form.Item

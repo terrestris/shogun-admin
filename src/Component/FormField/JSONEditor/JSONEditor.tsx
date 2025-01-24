@@ -1,7 +1,5 @@
 import './JSONEditor.less';
 
-import './UserWorker';
-
 import React, {
   useCallback,
   useEffect,
@@ -9,10 +7,12 @@ import React, {
   useState
 } from 'react';
 
-import Editor, {
+import {
+  Editor,
   EditorProps,
   OnChange,
-  useMonaco
+  useMonaco,
+  loader
 } from '@monaco-editor/react';
 
 import Logger from 'js-logger';
@@ -20,19 +20,23 @@ import { uniqueId } from 'lodash';
 import cloneDeep from 'lodash/cloneDeep';
 import _isNil from 'lodash/isNil';
 
+import * as monacoEditor from 'monaco-editor';
+
 import {
   swaggerDocs
 } from '../../../State/static';
 import OpenAPIUtil from '../../../Util/OpenAPIUtil';
 import FullscreenWrapper from '../../FullscreenWrapper/FullscreenWrapper';
 
-export type JSONEditorProps = {
+loader.config({ monaco: monacoEditor });
+
+export interface JSONEditorProps {
   value?: string;
   onChange?: (value?: string) => void;
   editorProps?: EditorProps;
   entityType: string;
   dataField: string;
-};
+}
 
 export const JSONEditor: React.FC<JSONEditorProps> = ({
   value,

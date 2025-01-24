@@ -12,8 +12,6 @@ import { MemoryRouter } from 'react-router-dom';
 
 import { RecoilRoot } from 'recoil';
 
-import useSHOGunAPIClient from '../../../Hooks/useSHOGunAPIClient';
-
 import { ImageFileRoot } from './ImageFileRoot';
 
 jest.mock('antd', () => {
@@ -78,7 +76,6 @@ describe('<ImageFileRoot />', () => {
 
   it('should handle file upload', async () => {
     const {
-      getByText,
       container
     } = render(
       <RecoilRoot>

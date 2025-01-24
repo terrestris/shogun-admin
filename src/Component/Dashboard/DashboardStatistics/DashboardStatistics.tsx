@@ -10,18 +10,19 @@ import {
   useTranslation
 } from 'react-i18next';
 
+import logger from '@terrestris/base-util/dist/Logger';
 import Application from '@terrestris/shogun-util/dist/model/Application';
 import Layer from '@terrestris/shogun-util/dist/model/Layer';
 import User from '@terrestris/shogun-util/dist/model/User';
 import GenericEntityService from '@terrestris/shogun-util/dist/service/GenericEntityService';
 
-type DashboardStatisticsProps = {
+interface DashboardStatisticsProps {
   service: GenericEntityService<Application | User | Layer>;
   name: {
     singular: string;
     plural: string;
   };
-};
+}
 
 export const DashboardStatistics: React.FC<DashboardStatisticsProps> = ({
   service,
@@ -46,6 +47,7 @@ export const DashboardStatistics: React.FC<DashboardStatisticsProps> = ({
       setLoadingState('done');
     } catch (error) {
       setLoadingState('failed');
+      logger.error(`Could not fetch entities due to the following error: ${error}`);
     }
   };
 

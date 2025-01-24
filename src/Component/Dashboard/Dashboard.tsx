@@ -1,6 +1,10 @@
-import './Dashboard.less';
+import React, {
+  ReactNode
+} from 'react';
 
-import React, { ReactNode } from 'react';
+// import usePlugins from '../../Hooks/usePlugins';
+
+import './Dashboard.less';
 
 interface OwnProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'title'> {
   actions?: ReactNode;
@@ -10,9 +14,9 @@ interface OwnProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'title'> {
   title?: ReactNode;
 }
 
-type DashoardProps = OwnProps;
+type DashboardProps = OwnProps;
 
-export const Dashboard: React.FC<DashoardProps> = (props) => {
+export const Dashboard: React.FC<DashboardProps> = (props) => {
 
   const {
     actions,
@@ -20,10 +24,20 @@ export const Dashboard: React.FC<DashoardProps> = (props) => {
     className,
     children,
     columns = 2,
+    // required for destructuring
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     rows,
     title,
     ...passThroughProps
   } = props;
+
+  // const plugins = usePlugins();
+
+  // console.log(apply)
+  // Util.toString()
+  // console.log(plugins)
+
+  // const PluginComponent = plugins[0].wrappedComponent;
 
   const gridTemplateColumns = `repeat(${columns}, 1fr)`;
 
@@ -33,6 +47,7 @@ export const Dashboard: React.FC<DashoardProps> = (props) => {
       {...passThroughProps}
     >
       <div className="header">
+        {/* <ExamplePlugin /> */}
         {
           icon &&
           <img className="icon" src={icon} alt={`${title} icon`} />

@@ -1,6 +1,7 @@
 import BaseEntity from '@terrestris/shogun-util/dist/model/BaseEntity';
-import GenericEntityService, {
-  GenericEntityServiceOpts
+import {
+  GenericEntityServiceOpts,
+  GenericEntityService
 } from '@terrestris/shogun-util/dist/service/GenericEntityService';
 
 export class GenericServiceImpl extends GenericEntityService<BaseEntity> {
