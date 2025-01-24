@@ -1,6 +1,13 @@
 {
   "branches": [
-    "main",
+    {
+      "name": "15.x",
+      "range": "15.x",
+      "channel": "15.x"
+    },
+    {
+      "name": "main"
+    },
     {
       "name": "next",
       "prerelease": true
