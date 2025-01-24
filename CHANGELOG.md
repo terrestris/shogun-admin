@@ -1,3 +1,22 @@
+## [17.0.0-next.14](https://github.com/terrestris/shogun-admin/compare/v17.0.0-next.13...v17.0.0-next.14) (2025-01-24)
+
+
+### Dependencies
+
+* **deps-dev:** bump vite from 5.4.8 to 5.4.10 ([45336fe](https://github.com/terrestris/shogun-admin/commit/45336fe5caf9d899daf49d686aa07ede56216870))
+* resolve merge conflicts ([0f2db4c](https://github.com/terrestris/shogun-admin/commit/0f2db4cb55e36c508a9711f69a69bf91cb2427f0))
+
+
+### Changes in configuration
+
+* add backport branch for v15 ([c3ad405](https://github.com/terrestris/shogun-admin/commit/c3ad405529d30f268e7d8d99ee9e0fa7f56a78ef))
+
+
+### Bugfixes
+
+* adjust tag style to match default select tags ([c84bd44](https://github.com/terrestris/shogun-admin/commit/c84bd4490297dffcd9f7ef7053235bee429423a4))
+* show a warning indicating why the grids aren't visible ([c33635e](https://github.com/terrestris/shogun-admin/commit/c33635e7d804d12facc8dba8d2ae361379eb5f85))
+
 ## [17.0.0-next.13](https://github.com/terrestris/shogun-admin/compare/v17.0.0-next.12...v17.0.0-next.13) (2025-01-24)
 
 
