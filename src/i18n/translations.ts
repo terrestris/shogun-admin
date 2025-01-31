@@ -281,6 +281,35 @@ export default {
         tooltip: 'Füge alle fehlenden Rollen aus dem Rollenprovider hinzu',
         success: 'Rollen erfolgreich erstellt',
         error: 'Fehler beim Erstellen der Rollen'
+      },
+      AddLayerModal: {
+        title: 'WMS Layer hinzufügen',
+        requestWmsGetCapabilitiesInstruction: 'Bitte geben Sie eine gültige WMS GetCapabilities Adresse ein ' +
+          'und bestätigen Sie die Eingabe mit \'Enter ↲\' oder über den Button rechts vom Eingabefeld.',
+        addAllLayers: 'Alle hinzufügen',
+        addSelectedLayers: 'Auswahl hinzufügen',
+        inputPlaceholder: 'WMS GetCapabilities URL angeben…',
+        invalidUrlErrorMsg: 'Ungültige URL. Bitte geben Sie eine gültige URL wie z.B. ' +
+          'https://ows.terrestris.de/osm/service ein.',
+        useBearerTokenLabel: 'Auth?',
+        useBearerTokenTooltip: 'Authentifizierte Anfrage verwenden (für interne Dienste)',
+        version: 'Version {{version}}',
+        columnTitle: 'Titel',
+        columnName: 'Name',
+        columnExisting: 'Vorhanden',
+        columnPreview: 'Layervorschau',
+        errorDescription: 'Das Capabilities Dokument konnte nicht geladen werden, bitte überprüfen Sie die URL.',
+        existingLayerNote: 'Ein Layer mit dem Namen "{{layerName}}" ist bereits vorhanden und über die folgenden ' +
+          'Konfigurationen verfügbar:'
+      },
+      ToolbarAddLayerButton: {
+        title: 'WMS Layer hinzufügen',
+        tooltip: 'WMS Layer auf Basis eines GetCapabilities Dokuments hinzufügen',
+        successMsg: 'Layer erfolgreich hinzugefügt!',
+        errorMsg: 'Die Layer konnten nicht hinzugefügt werden!',
+        warningMsg: 'Es konnten nicht alle Layer hinzugefügt werden!',
+        successSubTitle: 'Die folgenden Layer wurden erfolgreich hinzugefügt:',
+        errorSubTitle: 'Die folgenden Layer konnten nicht hinzugefügt werden:'
       }
     }
   },
@@ -576,6 +605,35 @@ export default {
         tooltip: 'Add all missing roles from the role provider',
         success: 'Successfully created all roles',
         error: 'Could not create the roles'
+      },
+      AddLayerModal: {
+        title: 'Add WMS layer',
+        requestWmsGetCapabilitiesInstruction: 'Please enter a valid WMS GetCapabilities address ' +
+          'and load it by pressing \'Enter ↲\' or via the button to the right of the input field.',
+        addAllLayers: 'Add all',
+        addSelectedLayers: 'Add selected',
+        inputPlaceholder: 'Enter WMS GetCapabilities URL…',
+        invalidUrlErrorMsg: 'Invalid URL. Please enter a valid URL such as ' +
+          'https://ows.terrestris.de/osm/service.',
+        useBearerTokenLabel: 'Auth?',
+        useBearerTokenTooltip: 'Use authenticated request (for internal services)',
+        version: 'Version {{version}}',
+        columnTitle: 'Title',
+        columnName: 'Name',
+        columnExisting: 'Available',
+        columnPreview: 'Layer preview',
+        errorDescription: 'The capabilities document could not be loaded, please check the URL.',
+        existingLayerNote: 'A layer with the name "{{layerName}}" is already added and available in ' +
+          'the following configurations:'
+      },
+      ToolbarAddLayerButton: {
+        title: 'Add WMS layer',
+        tooltip: 'Add WMS layer from GetCapabilities document',
+        successMsg: 'Layer successfully added',
+        errorMsg: 'The layers could not be added',
+        warningMsg: 'Not all layers could be added',
+        successSubTitle: 'The following layers have been successfully added:',
+        errorSubTitle: 'The following layers could not be added:'
       }
     }
   }

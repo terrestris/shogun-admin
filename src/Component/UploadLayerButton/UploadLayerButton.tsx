@@ -370,7 +370,6 @@ export const UploadLayerButton: React.FC<UploadLayerButtonProps> = ({
       onChange={onFileUploadChange}
     >
       <Button
-        type="primary"
         icon={<UploadOutlined />}
         loading={isUploadingFile}
         disabled={isUploadingFile}
