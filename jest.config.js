@@ -23,7 +23,7 @@ module.exports = {
     'shogunApplicationConfig': '<rootDir>/assets/fallbackConfig.js'
   },
   transformIgnorePatterns: [
-    '<rootDir>/node_modules/(?!@ngrx|(?!deck.gl)|ng-dynamic)'
+    '<rootDir>/node_modules/(?!@ngrx|(?!deck.gl)|ng-dynamic|@monaco-editor)'
   ],
   moduleFileExtensions: [
     'ts',
@@ -33,5 +33,7 @@ module.exports = {
     'json'
   ],
   testEnvironment: 'jsdom',
-  reporters: ['default', '@casualbot/jest-sonar-reporter']
+  reporters: ['default', '@casualbot/jest-sonar-reporter'],
+  coverageReporters: ['json-summary', 'lcov'],
+  coverageDirectory: 'coverage/all'
 };
