@@ -8,7 +8,7 @@ RUN npm ci
 RUN npm run build
 
 # production environment
-FROM nginx:1.27.1-alpine-slim
+FROM nginx:1.27.4-alpine-slim
 
 COPY --from=build /app/dist /var/www/html
 COPY --from=build /app/nginx/templates /etc/nginx/templates
