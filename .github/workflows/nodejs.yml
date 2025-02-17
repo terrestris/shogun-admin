@@ -81,6 +81,8 @@ jobs:
           create-new-comment: false
           hide-summary: false
           multiple-files: ${{ env.MULTIPLE_FILES }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       
       - name: Get Coverage Comment Id ➡️
         if: env.no_tests_found == 'true'
