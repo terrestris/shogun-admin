@@ -20,7 +20,6 @@ jest.mock('../../../Service/LogService/LogService');
 const mockGetLoggers = jest.fn();
 const mockSetLogger = jest.fn();
 const mockMessageSuccess = jest.spyOn(message, 'success');
-const mockMessageError = jest.spyOn(message, 'error');
 
 describe('<LogLevelTable />', () => {
   beforeEach(() => {
@@ -55,7 +54,7 @@ describe('<LogLevelTable />', () => {
       <LogLevelTable />
     );
     expect(container).toBeVisible();
-    expect(screen.getByRole('textbox', { placeholder: /LogSettings.searchPlaceholder/i })).toBeInTheDocument();
+    expect(screen.getByRole('searchbox', { placeholder: /LogSettings.searchPlaceholder/i })).toBeInTheDocument();
     expect(screen.getByRole('table')).toBeInTheDocument();
   });
 

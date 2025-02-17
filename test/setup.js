@@ -26,3 +26,15 @@ Object.defineProperty(window, 'matchMedia', {
 });
 
 global.fetch = jest.fn();
+
+jest.mock('react-i18next', () => ({
+  ...jest.requireActual('react-i18next'),
+  useTranslation: () => {
+    return {
+      t: (str) => str,
+      i18n: {
+        language: 'en'
+      }
+    };
+  }
+}));

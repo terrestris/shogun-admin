@@ -120,7 +120,7 @@ describe('<ImageFileTable />', () => {
     await waitFor(() => {
       expect(mockService.delete).toHaveBeenCalledWith('123e4567-e89b-12d3-a456-426614174000');
       expect(notificationInfoSpy).toHaveBeenCalledWith(expect.objectContaining({
-        message: 'Image has been deleted',
+        message: 'ImageFileTable.deletionInfo',
       }));
     });
   });
