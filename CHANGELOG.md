@@ -1,3 +1,10 @@
+## [17.1.0-next.2](https://github.com/terrestris/shogun-admin/compare/v17.1.0-next.1...v17.1.0-next.2) (2025-02-18)
+
+
+### Bugfixes
+
+* try to fix ci ([9ca9b01](https://github.com/terrestris/shogun-admin/commit/9ca9b0186efd0578a8c4dc94a3904516b1bd7796))
+
 ## [17.1.0-next.1](https://github.com/terrestris/shogun-admin/compare/v17.0.1-next.1...v17.1.0-next.1) (2025-02-18)
 
 
