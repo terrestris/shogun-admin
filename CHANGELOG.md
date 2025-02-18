@@ -1,3 +1,10 @@
+## [17.1.0-next.1](https://github.com/terrestris/shogun-admin/compare/v17.0.1-next.1...v17.1.0-next.1) (2025-02-18)
+
+
+### Features
+
+* introduce regulary updated docker images ([8f6fa15](https://github.com/terrestris/shogun-admin/commit/8f6fa15ef25139daa0c6a311a39a106df47cc80a))
+
 ## [17.0.1-next.1](https://github.com/terrestris/shogun-admin/compare/v17.0.0...v17.0.1-next.1) (2025-02-18)
 
 
