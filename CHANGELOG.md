@@ -1,3 +1,10 @@
+## [17.1.0-next.3](https://github.com/terrestris/shogun-admin/compare/v17.1.0-next.2...v17.1.0-next.3) (2025-02-18)
+
+
+### Bugfixes
+
+* fix secret usage ([e7c0c98](https://github.com/terrestris/shogun-admin/commit/e7c0c98e4cd5b47fba928c240ebab3b76b3ad7b5))
+
 ## [17.1.0-next.2](https://github.com/terrestris/shogun-admin/compare/v17.1.0-next.1...v17.1.0-next.2) (2025-02-18)
 
 
