@@ -1,0 +1,56 @@
+.add-layer-modal {
+  min-width: 60vw;
+
+  .ant-modal-content {
+    display: flex;
+    flex-direction: column;
+    max-height: 75vh;
+
+    .ant-modal-body {
+      display: flex;
+      flex-direction: column;
+      overflow-y: hidden;
+
+      .input-wrapper {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        padding: 1em 0;
+
+        .url-input {
+          padding-right: 1em;
+        }
+
+        .ant-switch {
+          margin-right: 0.5em;
+        }
+      }
+
+      .ant-typography.error {
+        color: red;
+      }
+
+      .ant-table-body {
+        overflow-y: auto !important;
+
+        .expanded-row {
+          margin-left: 80px;
+        }
+
+        .operation-column {
+          font-size: 1.3em;
+          text-align: center;
+
+          .anticon {
+            &.anticon-check {
+              color: var(--ant-color-success);
+            }
+            &.anticon-close {
+              color: var(--ant-color-warning);
+            }
+          }
+        }
+      }
+    }
+  }
+}
