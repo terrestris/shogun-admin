@@ -17,7 +17,7 @@ export interface ControllerCfg {
   entityType: string;
   formConfig: FormConfig;
   keycloak?: Keycloak;
-  updateForm?: (values: FormValues) => void;
+  formValidator?: (values: FormValues) => void;
 }
 
 export class ControllerUtil {
@@ -27,7 +27,7 @@ export class ControllerUtil {
     keycloak,
     entityType,
     formConfig,
-    updateForm
+    formValidator
   }: ControllerCfg): GenericEntityController<BaseEntity> {
     switch (_lowerCase(entityType)) {
       case 'application':
@@ -37,7 +37,7 @@ export class ControllerUtil {
             keycloak,
             entityType: 'application',
             formConfig,
-            updateForm
+            formValidator
           });
       default:
         return ControllerUtil
@@ -46,7 +46,7 @@ export class ControllerUtil {
             keycloak,
             entityType,
             formConfig,
-            updateForm
+            formValidator
           });
     }
   }
@@ -63,7 +63,7 @@ export class ControllerUtil {
     });
     return new GenericEntityController<Application>({
       service: appService,
-      formUpdater: controllerCfg?.updateForm,
+      formValidator: controllerCfg?.formValidator,
       formConfig: controllerCfg?.formConfig
     });
   }
@@ -80,7 +80,7 @@ export class ControllerUtil {
     });
     return new GenericEntityController<BaseEntity>({
       service: genericService as GenericEntityService<BaseEntity>,
-      formUpdater: controllerCfg?.updateForm,
+      formValidator: controllerCfg?.formValidator,
       formConfig: controllerCfg?.formConfig
     });
   }

@@ -182,7 +182,7 @@ export function GeneralEntityRoot<T extends BaseEntity>({
     setFormValid(valid);
   }, [form]);
 
-  const updateForm = useCallback(async (): Promise<void> => {
+  const formValidator = useCallback(async (): Promise<void> => {
     const nameList = formConfig?.fields.filter(field => field.required).map(field => field.dataField);
     validate(nameList);
   }, [formConfig?.fields, validate]);
@@ -192,8 +192,8 @@ export function GeneralEntityRoot<T extends BaseEntity>({
     keycloak: client?.getKeycloak(),
     entityType,
     formConfig,
-    updateForm
-  }), [endpoint, client, entityType, formConfig, updateForm]) as GenericEntityController<T>;
+    formValidator
+  }), [endpoint, client, entityType, formConfig, formValidator]) as GenericEntityController<T>;
 
   /**
    * Fetch entity with given id
@@ -334,21 +334,22 @@ export function GeneralEntityRoot<T extends BaseEntity>({
       setId(entityId);
       setEntityId(undefined);
       form.resetFields();
-      form.setFieldsValue(defaultEntity);
+      form.setFieldsValue(structuredClone(defaultEntity));
+      entityController.updateEntity(defaultEntity as FormValues, true);
     } else {
       setId(parseInt(entityId, 10));
       setEntityId(parseInt(entityId, 10));
       setFormIsDirty(false);
     }
-  }, [entityId, form, defaultEntity, setEntityId]);
+  }, [entityId, form, defaultEntity, setEntityId, entityController]);
 
-  // Once the controller is known we need to set the formUpdater so we can update
+  // Once the controller is known we need to set the formValidator so we can update
   // a given form when the entity is updated via controller
   useEffect(() => {
     if (entityController) {
-      entityController.setFormUpdater(updateForm);
+      entityController.setFormValidator(formValidator);
     }
-  }, [updateForm, entityController]);
+  }, [formValidator, entityController]);
 
   /**
    * Init data (and update if the dependencies of fetchEntities change)
@@ -359,14 +360,8 @@ export function GeneralEntityRoot<T extends BaseEntity>({
 
   const onValuesChange = async (changedValues: FormValues) => {
     setFormIsDirty(true);
-    if (id === 'create') {
-      await entityController.updateEntity({
-        ...defaultEntity,
-        ...changedValues
-      } as FormValues);
-    } else {
-      await entityController.updateEntity(changedValues);
-    }
+
+    await entityController.updateEntity(changedValues);
   };
 
   const onResetForm = () => {

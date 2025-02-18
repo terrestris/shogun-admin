@@ -30,7 +30,7 @@ export interface FieldValidation {
 export interface GenericEntityControllerArgs<T extends BaseEntity> {
   entity?: T;
   formConfig: FormConfig;
-  formUpdater?: (values: FormValues) => void; // maybe not required
+  formValidator?: (values: FormValues) => void;
   initialValues?: FormValues;
   nextUpdate?: FormValues;
   service: GenericEntityService<T>;
@@ -41,7 +41,7 @@ export class GenericEntityController<T extends BaseEntity> {
   protected initialValues?: FormValues;
   protected service: GenericEntityService<T>;
   private readonly formConfig: FormConfig;
-  private formUpdater?: (values: FormValues) => void; // maybe not required
+  private formValidator?: (values: FormValues) => void;
   private nextUpdate?: FormValues;
 
   public constructor({
@@ -49,9 +49,9 @@ export class GenericEntityController<T extends BaseEntity> {
     initialValues,
     service,
     formConfig,
-    formUpdater
+    formValidator
   }: GenericEntityControllerArgs<T>) {
-    this.formUpdater = formUpdater;
+    this.formValidator = formValidator;
     this.service = service;
     this.formConfig = formConfig;
     if (!_isNil(entity)) {
@@ -64,8 +64,8 @@ export class GenericEntityController<T extends BaseEntity> {
     return this.entity;
   }
 
-  public setFormUpdater(formUpdater: (values: FormValues) => void) {
-    this.formUpdater = formUpdater;
+  public setFormValidator(formValidator: (values: FormValues) => void) {
+    this.formValidator = formValidator;
   }
 
   /**
@@ -121,17 +121,17 @@ export class GenericEntityController<T extends BaseEntity> {
    *
    * @param values the form values containing only changed values
    */
-  public async updateEntity(values: FormValues): Promise<void> {
+  public async updateEntity(values: FormValues, skipValidation = false): Promise<void> {
     for (const fieldConfig of this.formConfig.fields) {
       if (Object.prototype.hasOwnProperty.call(values, fieldConfig.dataField)) {
-        await this.setEntityValue(fieldConfig, values[fieldConfig.dataField]);
+        await this.setEntityValue(fieldConfig, structuredClone(values[fieldConfig.dataField]));
       }
     }
     if (this.nextUpdate) {
-      if (this.formUpdater) {
-        this.formUpdater(this.nextUpdate);
+      if (this.formValidator && !skipValidation) {
+        this.formValidator(this.nextUpdate);
       } else {
-        Logger.warn('No formUpdater set for EntityController');
+        Logger.warn('No formValidator set for EntityController');
       }
       this.nextUpdate = undefined;
     }
