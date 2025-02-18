@@ -19,6 +19,7 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
+    publicPath: 'auto',
     clean: true
   },
   resolve: {
@@ -135,6 +136,7 @@ module.exports = {
     }),
     new ModuleFederationPlugin({
       name: 'SHOGunAdmin',
+      dev: false,
       shared: {
         react: {
           singleton: true,
