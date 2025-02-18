@@ -1,3 +1,10 @@
+## [17.1.0-next.4](https://github.com/terrestris/shogun-admin/compare/v17.1.0-next.3...v17.1.0-next.4) (2025-02-18)
+
+
+### Bugfixes
+
+* use correct credentials ([6b90134](https://github.com/terrestris/shogun-admin/commit/6b90134b7f55e068458e523e4bd5e38db3421323))
+
 ## [17.1.0-next.3](https://github.com/terrestris/shogun-admin/compare/v17.1.0-next.2...v17.1.0-next.3) (2025-02-18)
 
 
