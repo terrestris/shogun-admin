@@ -33,7 +33,7 @@ jobs:
       release_version: ${{ needs.latest-tags.outputs.main_tag }}
     secrets:
       nexus_user: ${{ secrets.NEXUS_USERNAME}}
-      nexus_pass: ${{ secrets.NEXUS_USERNAME}}
+      nexus_pass: ${{ secrets.NEXUS_PASSWORD}}
 
   update-docker-next:
     needs: latest-tags
@@ -43,4 +43,4 @@ jobs:
       release_version: ${{ needs.latest-tags.outputs.next_tag }}
     secrets:
       nexus_user: ${{ secrets.NEXUS_USERNAME}}
-      nexus_pass: ${{ secrets.NEXUS_USERNAME}}
+      nexus_pass: ${{ secrets.NEXUS_PASSWORD}}
