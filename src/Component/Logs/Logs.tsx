@@ -24,7 +24,6 @@ import LogService from '../../Service/LogService/LogService';
 
 import './Logs.less';
 
-
 interface LogsProps {}
 
 export const Logs: React.FC<LogsProps> = () => {
