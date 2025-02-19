@@ -281,6 +281,12 @@ export default {
         tooltip: 'Füge alle fehlenden Rollen aus dem Rollenprovider hinzu',
         success: 'Rollen erfolgreich erstellt',
         error: 'Fehler beim Erstellen der Rollen'
+      },
+      JSONEditor: {
+        formatDocumentTooltip: 'Inhalt formatieren (Strg + Umschalt + I)'
+      },
+      CopyToClipboardButton: {
+        tooltip: 'In die Zwischenablage kopieren'
       }
     }
   },
@@ -576,6 +582,12 @@ export default {
         tooltip: 'Add all missing roles from the role provider',
         success: 'Successfully created all roles',
         error: 'Could not create the roles'
+      },
+      JSONEditor: {
+        formatDocumentTooltip: 'Format content (Ctrl + Shift + I)'
+      },
+      CopyToClipboardButton: {
+        tooltip: 'Copy to clipboard'
       }
     }
   }

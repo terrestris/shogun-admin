@@ -1,6 +1,19 @@
 .json-editor {
   height: 100%;
 
+  .json-editor-toolbar {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 2px;
+    background: #fafafa;
+
+    > *:not(:last-child) {
+      margin-right: 4px;
+    }
+  }
+
   section {
     border: 1px solid #dedede;
 

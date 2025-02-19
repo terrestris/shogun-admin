@@ -1,11 +1,14 @@
-import './JSONEditor.less';
-
 import React, {
   useCallback,
   useEffect,
   useMemo,
+  useRef,
   useState
 } from 'react';
+
+import {
+  MenuUnfoldOutlined
+} from '@ant-design/icons';
 
 import {
   Editor,
@@ -15,39 +18,81 @@ import {
   loader
 } from '@monaco-editor/react';
 
+import {
+  Button,
+  Tooltip
+} from 'antd';
+
 import Logger from 'js-logger';
-import { uniqueId } from 'lodash';
+
+import {
+  uniqueId
+} from 'lodash';
+
 import cloneDeep from 'lodash/cloneDeep';
+
 import _isNil from 'lodash/isNil';
 
 import * as monacoEditor from 'monaco-editor';
 
 import {
+  useTranslation
+} from 'react-i18next';
+
+import {
   swaggerDocs
 } from '../../../State/static';
+
 import OpenAPIUtil from '../../../Util/OpenAPIUtil';
+
+import CopyToClipboardButton from '../../CopyToClipboardButton/CopyToClipboardButton';
 import FullscreenWrapper from '../../FullscreenWrapper/FullscreenWrapper';
+
+import './JSONEditor.less';
 
 loader.config({ monaco: monacoEditor });
 
 export interface JSONEditorProps {
-  value?: string;
+  initialValue?: string;
   onChange?: (value?: string) => void;
   editorProps?: EditorProps;
   entityType: string;
   dataField: string;
+  indentSize?: number;
 }
 
 export const JSONEditor: React.FC<JSONEditorProps> = ({
-  value,
-  onChange = () => undefined,
+  initialValue,
+  onChange: onChangeProp,
   editorProps,
   entityType,
-  dataField
+  dataField,
+  indentSize = 2
 }) => {
-  const [currentValue, setCurrentValue] = useState<string>();
+  const [currentValue, setCurrentValue] = useState<string | undefined>(
+    JSON.stringify(initialValue || undefined, null, indentSize)
+  );
+  // We need to keep track of whether the document has been formatted initially. This is necessary
+  // because the document will be formatted on mount, which will trigger the onChange event. We
+  // don't want to trigger the onChange event on mount, so we need to keep track of whether the
+  // document has been formatted initially.
+  const [isFormattedInitially, setIsFormattedInitially] = useState<boolean>(false);
+
+  const {
+    t
+  } = useTranslation();
 
   const monaco = useMonaco();
+
+  const monacoStandaloneEditor = useRef<monacoEditor.editor.IStandaloneCodeEditor>();
+
+  const editorOptions = useMemo(() => ({
+    lineHeight: 20,
+    scrollBeyondLastLine: false,
+    formatOnPaste: true,
+    formatOnType: true,
+    tabSize: indentSize
+  }), [indentSize]);
 
   const openApiUtil = useMemo(() => new OpenAPIUtil({
     document: swaggerDocs
@@ -59,6 +104,7 @@ export const JSONEditor: React.FC<JSONEditorProps> = ({
     }
 
     const propertyRefName = openApiUtil.getPropertyRefName(entityType, dataField);
+
     if (_isNil(propertyRefName)) {
       return undefined;
     }
@@ -91,53 +137,85 @@ export const JSONEditor: React.FC<JSONEditorProps> = ({
     registerSchemaValidation();
   }, [registerSchemaValidation]);
 
-  useEffect(() => {
-    if (!value) {
-      setCurrentValue(undefined);
-    } else {
-      try {
-        const jsonString = JSON.stringify(value, null, 2);
-        if (jsonString) {
-          setCurrentValue(jsonString);
-        }
-      } catch (error) {
-        Logger.trace('JSON-Editor:', error);
-      }
+  const formatDocument = useCallback(async () => {
+    if (!monacoStandaloneEditor.current) {
+      return;
     }
-  }, [value]);
 
-  const changeHandler: OnChange = (val?: string) => {
+    const formatDocumentAction = monacoStandaloneEditor.current.getAction('editor.action.formatDocument');
+
+    if (!formatDocumentAction) {
+      return;
+    }
+
+    await formatDocumentAction.run();
+  }, []);
+
+  const onMount = useCallback(async (editor: monacoEditor.editor.IStandaloneCodeEditor) => {
+    monacoStandaloneEditor.current = editor;
+
+    await formatDocument();
+
+    setIsFormattedInitially(true);
+  }, [formatDocument]);
+
+  const onFormatDocumentClick = async () => {
+    await formatDocument();
+  };
+
+  const onChange: OnChange = (val?: string) => {
+    setCurrentValue(val);
+
+    if (!isFormattedInitially) {
+      return;
+    }
+
     if (_isNil(val)) {
-      onChange();
+      onChangeProp?.();
       return;
     }
     try {
       const jsonObject = JSON.parse(val);
-      onChange(jsonObject);
+      onChangeProp?.(jsonObject);
     } catch (error) {
       if (val.length === 0) {
-        onChange();
+        onChangeProp?.();
       }
-      Logger.trace('JSON-Editor:', error);
+      Logger.trace('JSON-Editor: ', error);
     }
   };
 
   return (
     <FullscreenWrapper>
-      <div className='json-editor'>
+      <div
+        className="json-editor"
+      >
+        <div
+          className="json-editor-toolbar"
+        >
+          <Tooltip
+            title={t('JSONEditor.formatDocumentTooltip')}
+          >
+            <Button
+              onClick={onFormatDocumentClick}
+              icon={<MenuUnfoldOutlined />}
+            />
+          </Tooltip>
+          <CopyToClipboardButton
+            value={currentValue}
+          />
+        </div>
         <Editor
+          onMount={onMount}
           value={currentValue}
-          onChange={changeHandler}
+          onChange={onChange}
           path={
             openApiUtil.getPropertyRefName(entityType, dataField) ?
               `${openApiUtil.getPropertyRefName(entityType, dataField)}.json` :
               undefined
           }
           language="json"
-          options={{
-            lineHeight: 20,
-            scrollBeyondLastLine: false
-          }}
+          options={editorOptions}
           {...editorProps}
         />
       </div>
