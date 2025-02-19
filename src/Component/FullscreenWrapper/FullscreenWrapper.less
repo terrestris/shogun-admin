@@ -1,11 +1,12 @@
 .fs-wrapper {
   border: solid 1px #dedede;
-  border-radius: 3px;
+  border-radius: var(--ant-border-radius);
   flex-direction: column;
   display: flex;
   resize: vertical;
   overflow: hidden;
   min-height: 10em;
+  background: #fafafa;
 
   >button {
     min-width: 24px;
@@ -25,7 +26,6 @@
 
   &.fullscreen {
     resize: none;
-    background: white;
     z-index: 999;
     position: fixed;
   }
