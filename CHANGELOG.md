@@ -1,3 +1,73 @@
+## [17.1.0-next.5](https://github.com/terrestris/shogun-admin/compare/v17.1.0-next.4...v17.1.0-next.5) (2025-02-20)
+
+
+### Changes in configuration
+
+* fix coverage comment ([c0bda50](https://github.com/terrestris/shogun-admin/commit/c0bda5021d23feab35e6f6ddc859d4280a74cb5b))
+
+
+### Bugfixes
+
+* dummy commit to fix semantic versioning ([adeb65e](https://github.com/terrestris/shogun-admin/commit/adeb65eec3bb880b9fe50e1ed03746a55e325342))
+
+## [17.1.0-next.4](https://github.com/terrestris/shogun-admin/compare/v17.1.0-next.3...v17.1.0-next.4) (2025-02-18)
+
+
+### Bugfixes
+
+* use correct credentials ([6b90134](https://github.com/terrestris/shogun-admin/commit/6b90134b7f55e068458e523e4bd5e38db3421323))
+
+## [17.1.0-next.3](https://github.com/terrestris/shogun-admin/compare/v17.1.0-next.2...v17.1.0-next.3) (2025-02-18)
+
+
+### Bugfixes
+
+* fix secret usage ([e7c0c98](https://github.com/terrestris/shogun-admin/commit/e7c0c98e4cd5b47fba928c240ebab3b76b3ad7b5))
+
+## [17.1.0-next.2](https://github.com/terrestris/shogun-admin/compare/v17.1.0-next.1...v17.1.0-next.2) (2025-02-18)
+
+
+### Bugfixes
+
+* try to fix ci ([9ca9b01](https://github.com/terrestris/shogun-admin/commit/9ca9b0186efd0578a8c4dc94a3904516b1bd7796))
+
+## [17.1.0-next.1](https://github.com/terrestris/shogun-admin/compare/v17.0.1-next.1...v17.1.0-next.1) (2025-02-18)
+
+
+### Features
+
+* introduce regulary updated docker images ([8f6fa15](https://github.com/terrestris/shogun-admin/commit/8f6fa15ef25139daa0c6a311a39a106df47cc80a))
+
+## [17.0.1-next.1](https://github.com/terrestris/shogun-admin/compare/v17.0.0...v17.0.1-next.1) (2025-02-18)
+
+
+### Dependencies
+
+* **deps-dev:** bump @babel/plugin-transform-optional-chaining ([26523b2](https://github.com/terrestris/shogun-admin/commit/26523b2c5e4e247818475d9374d46cdbb4c4f7f5))
+* **deps-dev:** bump @swc/helpers from 0.5.13 to 0.5.15 ([370302e](https://github.com/terrestris/shogun-admin/commit/370302e423f4d742a62d92d93e7f97e7645b3608))
+* **deps-dev:** bump @types/lodash from 4.17.12 to 4.17.15 ([e3fa355](https://github.com/terrestris/shogun-admin/commit/e3fa3554d1a984556daf88f074654b2c916b5d2c))
+* **deps-dev:** bump eslint-plugin-react from 7.37.1 to 7.37.4 ([169d5b2](https://github.com/terrestris/shogun-admin/commit/169d5b29b079954d920e030eecccbe8f41ebf9a7))
+* **deps:** bump i18next from 23.16.2 to 24.2.2 ([b2ddd6f](https://github.com/terrestris/shogun-admin/commit/b2ddd6fc0bca11c92aab9fdc3c7f7daf941e4590))
+* **deps:** bump nginx from 1.27.1-alpine-slim to 1.27.4-alpine-slim ([97d1da7](https://github.com/terrestris/shogun-admin/commit/97d1da70d7593ebaea44046e2f2ff894c57bdd0c))
+* **deps:** bump node from 20.17.0-alpine3.19 to 23.3.0-alpine3.19 ([a257cb6](https://github.com/terrestris/shogun-admin/commit/a257cb6649b42bd0f58c0333e72d66e7beb88b74))
+* **deps:** bump playwright from v1.39.0-jammy to v1.50.1-jammy ([1f0b1c2](https://github.com/terrestris/shogun-admin/commit/1f0b1c21013d890e9c409d2f48c44c3ffa9c0875))
+* fix rspack error in dev mode ([8c9c8c7](https://github.com/terrestris/shogun-admin/commit/8c9c8c75dfc8c3dabe9252cfc8994127ba141186))
+
+
+### Changes in configuration
+
+* add coverage comment on pull request ([a46ecb3](https://github.com/terrestris/shogun-admin/commit/a46ecb3ddb4363251723ea24f8e7be5c2a301a6a))
+* also limit open prs ([4ea28e7](https://github.com/terrestris/shogun-admin/commit/4ea28e7db1c4686cd594896de96b93b668c9bf5f))
+* run in sync with other daily jobs ([77b894e](https://github.com/terrestris/shogun-admin/commit/77b894e569cc1160dee695e9544659eadf701524))
+* test dependabot for docker ([31ce5a2](https://github.com/terrestris/shogun-admin/commit/31ce5a244c646ced98deba655a50c403611a1278))
+* trigger docker dependabot ([5f9b7cb](https://github.com/terrestris/shogun-admin/commit/5f9b7cb2250502f526d8370ad4998ca12da2d144))
+
+
+### Bugfixes
+
+* coverage comment ([2d59c1a](https://github.com/terrestris/shogun-admin/commit/2d59c1a29d64594c68b26e7f1b1a9dc386525f96))
+* don't override user inputs with template values in create mode ([6b31c9a](https://github.com/terrestris/shogun-admin/commit/6b31c9ad02780dfc38d076a3b6f02a382884079c))
+
 ## [17.0.0](https://github.com/terrestris/shogun-admin/compare/v16.0.0...v17.0.0) (2025-01-24)
 
 
