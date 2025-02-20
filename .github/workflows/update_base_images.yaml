@@ -31,17 +31,20 @@ jobs:
 
       - name: Get latest main tag
         id: main_tag
-        run: echo "main_tag=$(git tag | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | sort -V | tail -n1 | sed 's/^v//')" >> $GITHUB_ENV
+        run: echo "main_tag=$(git tag | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | sort -V | tail -n1 | sed 's/^v//')" >> $GITHUB_OUTPUT
 
       - name: Get latest next tag
         id: next_tag
-        run: echo "next_tag=$(git tag | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+(-next\.[0-9]+)?$' | sort -V | tail -n1 | sed 's/^v//')" >> $GITHUB_ENV
+        run: echo "next_tag=$(git tag | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+(-next\.[0-9]+)?$' | sort -V | tail -n1 | sed 's/^v//')" >> $GITHUB_OUTPUT
+
+      - name: Show tags
+        run: cat $GITHUB_OUTPUT
 
   update-docker-main:
     needs: latest-tags
     uses: ./.github/workflows/release_docker.yml
     with:
-      release_is_published: true
+      release_is_published: "true"
       release_version: ${{ needs.latest-tags.outputs.main_tag }}
     secrets:
       nexus_user: ${{ secrets.NEXUS_USERNAME}}
@@ -51,7 +54,7 @@ jobs:
     needs: latest-tags
     uses: ./.github/workflows/release_docker.yml
     with:
-      release_is_published: true
+      release_is_published: "true"
       release_version: ${{ needs.latest-tags.outputs.next_tag }}
     secrets:
       nexus_user: ${{ secrets.NEXUS_USERNAME}}
