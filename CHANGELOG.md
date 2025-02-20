@@ -1,3 +1,15 @@
+## [17.1.0-next.5](https://github.com/terrestris/shogun-admin/compare/v17.1.0-next.4...v17.1.0-next.5) (2025-02-20)
+
+
+### Changes in configuration
+
+* fix coverage comment ([c0bda50](https://github.com/terrestris/shogun-admin/commit/c0bda5021d23feab35e6f6ddc859d4280a74cb5b))
+
+
+### Bugfixes
+
+* dummy commit to fix semantic versioning ([adeb65e](https://github.com/terrestris/shogun-admin/commit/adeb65eec3bb880b9fe50e1ed03746a55e325342))
+
 ## [17.1.0-next.4](https://github.com/terrestris/shogun-admin/compare/v17.1.0-next.3...v17.1.0-next.4) (2025-02-18)
 
 
