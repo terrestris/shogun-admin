@@ -17,30 +17,15 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Fetch all tags
-        run: git fetch --tags
-
-      - name: List all tags
-        run: git tag
-
-      - name: Test main_tag
-        run: git tag | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | sort -V | tail -n1 | sed 's/^v//'
-
-      - name: Test next_tag
-        run: git tag | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+(-next\.[0-9]+)?$' | sort -V | tail -n1 | sed 's/^v//'
-
       - name: Get latest main tag
         id: main_tag
-        run: echo "main_tag=$(git tag | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | sort -V | tail -n1 | sed 's/^v//')" >> $GITHUB_OUTPUT
+        run: echo "main_tag=$(git tag | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | sort -V | tail -n1 | sed 's/^v//')" | tee -a $GITHUB_OUTPUT
 
       - name: Get latest next tag
         id: next_tag
-        run: echo "next_tag=$(git tag | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+(-next\.[0-9]+)?$' | sort -V | tail -n1 | sed 's/^v//')" >> $GITHUB_OUTPUT
+        run: echo "next_tag=$(git tag | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+(-next\.[0-9]+)?$' | sort -V | tail -n1 | sed 's/^v//')" | tee -a $GITHUB_OUTPUT
 
-      - name: Show tags
-        run: cat $GITHUB_OUTPUT
-
-  update-docker-main:
+  update-main:
     needs: latest-tags
     uses: ./.github/workflows/release_docker.yml
     with:
@@ -50,7 +35,7 @@ jobs:
       nexus_user: ${{ secrets.NEXUS_USERNAME}}
       nexus_pass: ${{ secrets.NEXUS_PASSWORD}}
 
-  update-docker-next:
+  update-next:
     needs: latest-tags
     uses: ./.github/workflows/release_docker.yml
     with:
