@@ -28,6 +28,7 @@ import Layer from '@terrestris/shogun-util/dist/model/Layer';
 import GeneralEntityRoot, {
   GeneralEntityConfigType
 } from '../../Component/GeneralEntity/GeneralEntityRoot/GeneralEntityRoot';
+import ToolbarAddLayerButton from '../../Component/GeneralEntity/Slots/ToolbarAddLayerButton/ToolbarAddLayerButton';
 import ToolbarCreateAllGroupsButton
   from '../../Component/GeneralEntity/Slots/ToolbarCreateAllGroupsButton/ToolbarCreateAllGroupsButton';
 import ToolbarCreateAllRolesButton
@@ -103,7 +104,14 @@ export const Portal: React.FC<PortalProps> = () => {
   const getLeftToolbarItems = (entityType: string): React.ReactNode => {
     switch (entityType) {
       case 'layer':
-        return <ToolbarUploadLayerButton />;
+        return [
+          <ToolbarUploadLayerButton
+            key="uploadLayerButton"
+          />,
+          <ToolbarAddLayerButton
+            key="addLayerButton"
+          />
+        ];
       case 'user':
         return <ToolbarCreateAllUsersButton />;
       case 'group':

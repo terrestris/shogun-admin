@@ -67,23 +67,23 @@ describe('<Navigation />', () => {
     );
     expect(container).toBeVisible();
 
-    expect(screen.getByText('Content')).toBeInTheDocument();
-    expect(screen.getByText('Status')).toBeInTheDocument();
-    expect(screen.getByText('Configuration')).toBeInTheDocument();
-    expect(screen.getByText('Images')).toBeInTheDocument();
+    expect(screen.getByText('Navigation.content')).toBeInTheDocument();
+    expect(screen.getByText('Navigation.status')).toBeInTheDocument();
+    expect(screen.getByText('Navigation.configuration')).toBeInTheDocument();
+    expect(screen.getByText('Navigation.image')).toBeInTheDocument();
 
-    const statusItem = screen.getByText('Status');
+    const statusItem = screen.getByText('Navigation.status');
     fireEvent.click(statusItem);
     await waitFor(() => {
-      expect(screen.getByText('Metrics')).toBeInTheDocument();
-      expect(screen.getByText('Logs')).toBeInTheDocument();
+      expect(screen.getByText('Navigation.metrics')).toBeInTheDocument();
+      expect(screen.getByText('Navigation.logs')).toBeInTheDocument();
     });
 
-    const settingsItem = screen.getByText('Configuration');
+    const settingsItem = screen.getByText('Navigation.configuration');
     fireEvent.click(settingsItem);
     await waitFor(() => {
-      expect(screen.getByText('Global')).toBeInTheDocument();
-      expect(screen.getByText('Logging levels')).toBeInTheDocument();
+      expect(screen.getByText('Navigation.global')).toBeInTheDocument();
+      expect(screen.getByText('Navigation.logLevels')).toBeInTheDocument();
     });
   });
 
@@ -94,11 +94,11 @@ describe('<Navigation />', () => {
       </MemoryRouter>
     );
 
-    const statusItem = screen.getByText('Status');
+    const statusItem = screen.getByText('Navigation.status');
     fireEvent.click(statusItem);
 
     await waitFor(() => {
-      expect(screen.getByText('Status').closest('li')).toHaveClass('ant-menu-submenu-open');
+      expect(screen.getByText('Navigation.status').closest('li')).toHaveClass('ant-menu-submenu-open');
     });
   });
 
@@ -109,14 +109,14 @@ describe('<Navigation />', () => {
       </MemoryRouter>
     );
 
-    const statusItem = screen.getByText('Status');
+    const statusItem = screen.getByText('Navigation.status');
     fireEvent.click(statusItem);
 
     await waitFor(() => {
-      expect(screen.getByText('Logs')).toBeInTheDocument();
+      expect(screen.getByText('Navigation.logs')).toBeInTheDocument();
     });
 
-    const logsItem = screen.getByText('Logs');
+    const logsItem = screen.getByText('Navigation.logs');
     fireEvent.click(logsItem);
 
     await waitFor(() => {
