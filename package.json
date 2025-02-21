@@ -1,6 +1,6 @@
 {
   "name": "@terrestris/shogun-admin",
-  "version": "17.0.0",
+  "version": "17.1.0-next.5",
   "description": "The admin UI for the SHOGun Web-mapping backend.",
   "keywords": [
     "SHOGun",
@@ -35,21 +35,21 @@
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
-    "@ant-design/icons": "5.5.1",
-    "@ant-design/pro-components": "2.7.18",
+    "@ant-design/icons": "5.6.0",
+    "@ant-design/pro-components": "2.8.4",
     "@casualbot/jest-sonar-reporter": "2.4.0",
     "@monaco-editor/react": "4.6.0",
     "@terrestris/base-util": "3.0.0",
     "@terrestris/ol-util": "21.0.0",
     "@terrestris/shogun-util": "10.2.0",
     "@uiw/react-md-editor": "4.0.4",
-    "antd": "5.21.5",
+    "antd": "5.23.4",
     "i18next": "24.2.2",
     "i18next-browser-languagedetector": "8.0.0",
     "js-logger": "1.6.1",
     "js-md5": "0.8.3",
     "json-schema": "0.4.0",
-    "keycloak-js": "26.0.1",
+    "keycloak-js": "26.2.0",
     "lodash": "4.17.21",
     "moment": "2.30.1",
     "monaco-editor": "0.52.0",

@@ -94,7 +94,6 @@ class LogService {
       return await logResponse.text();
     } catch (error) {
       Logger.error(`Error while reading the logs: ${error}`);
-      return Promise.reject();
     }
   };
 

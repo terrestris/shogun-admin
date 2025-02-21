@@ -20,7 +20,7 @@
     "noFallthroughCasesInSwitch": true
   },
   "exclude": [
-    "src/**/*.spec.*",
+    "src/**/*.spec.*"
   ],
   "include": ["src"]
 }

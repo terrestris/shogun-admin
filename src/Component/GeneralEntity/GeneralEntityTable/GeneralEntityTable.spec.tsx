@@ -127,9 +127,9 @@ describe('<GeneralEntityTable />', () => {
     );
     expect(container).toBeVisible();
     expect(container.querySelector('.general-entity-table')).toBeVisible();
-    expect(screen.getByText('No data')).toBeVisible();
-    expect(screen.getByText('ID')).toBeVisible();
-    expect(screen.getByText('Name')).toBeVisible();
+    expect(screen.getByText('Table.emptyText')).toBeVisible();
+    expect(screen.getByText('GeneralEntityTable.columnId')).toBeVisible();
+    expect(screen.getByText('GeneralEntityTable.columnName')).toBeVisible();
   });
 
   it('navigates on click', async () => {
