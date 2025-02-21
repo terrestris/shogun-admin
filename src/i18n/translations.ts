@@ -282,6 +282,12 @@ export default {
         success: 'Rollen erfolgreich erstellt',
         error: 'Fehler beim Erstellen der Rollen'
       },
+      JSONEditor: {
+        formatDocumentTooltip: 'Inhalt formatieren (Strg + Umschalt + I)'
+      },
+      CopyToClipboardButton: {
+        tooltip: 'In die Zwischenablage kopieren'
+      },
       AddLayerModal: {
         title: 'WMS Layer hinzufügen',
         requestWmsGetCapabilitiesInstruction: 'Bitte geben Sie eine gültige WMS GetCapabilities Adresse ein ' +
@@ -605,6 +611,12 @@ export default {
         tooltip: 'Add all missing roles from the role provider',
         success: 'Successfully created all roles',
         error: 'Could not create the roles'
+      },
+      JSONEditor: {
+        formatDocumentTooltip: 'Format content (Ctrl + Shift + I)'
+      },
+      CopyToClipboardButton: {
+        tooltip: 'Copy to clipboard'
       },
       AddLayerModal: {
         title: 'Add WMS layer',

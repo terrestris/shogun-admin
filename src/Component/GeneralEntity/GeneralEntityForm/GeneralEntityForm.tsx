@@ -319,6 +319,12 @@ export const GeneralEntityForm: React.FC<GeneralEntityFormProps> = ({
     const formKey = `${generalEntityRootContext?.entityType}-${
       form.getFieldValue('id')}-${dataField || component?.toLocaleLowerCase()}`;
 
+    if (copyFieldCfg.component === 'JSONEditor') {
+      // The JSONEditor keeps track of the value internally, but to apply the
+      // initial value we set the appropriate initialValue prop.
+      formItemProps.valuePropName = 'initialValue';
+    }
+
     return (
       <Form.Item
         key={formKey}
