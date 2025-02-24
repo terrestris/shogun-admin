@@ -42,19 +42,23 @@ jobs:
                   next
                 }
 
+                # remove the v prefix
+                clean_tag = $0
+                sub(/^v/, "", clean_tag)
+
                 # Check if the tag is a "-next" version
                 if ($0 ~ /-next\./) {
                   if (next_used == 0) {
                     # Use only the latest "-next" version and set the flag
-                    echo "Found -next version: $0"
-                    print $0
+                    print "Found -next version: clean_tag" > "/dev/stderr"
+                    print "\"" clean_tag "\""
                     next_used = 1
                   }
                 } else {
                   # Allow up to 3 versions per major version line
                   if (count[major] < 3) {
-                    echo "Adding version: $0"
-                    print $0
+                    print "Adding version: clean_tag" > "/dev/stderr"
+                    print "\"" clean_tag "\""
                     count[major]++
                   }
                 }
