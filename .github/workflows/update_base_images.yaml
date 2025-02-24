@@ -60,7 +60,9 @@ jobs:
                 }
               }
             ' \
-            | head -n 10 | tee -a $GITHUB_OUTPUT
+            | head -n 10 \
+            | paste -sd "," - \
+            | awk '{print "latest_tags="$0}' | tee -a $GITHUB_OUTPUT
 
   run-for-tag:
     needs: latest-tags
