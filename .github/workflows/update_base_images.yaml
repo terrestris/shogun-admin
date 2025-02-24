@@ -62,17 +62,17 @@ jobs:
             ' \
             | head -n 10 \
             | paste -sd "," - \
-            | awk '{print "latest_tags="$0}' | tee -a $GITHUB_OUTPUT
+            | awk '{print "latest_tags=["$0"]"}' | tee -a $GITHUB_OUTPUT
 
   run-for-tag:
     needs: latest-tags
     uses: ./.github/workflows/release_docker.yml
     strategy:
       matrix:
-        tag: ${{ fromJson(needs.latest-tags.outputs.latest_tags) }}
+        tag: ${{ fromJSON(needs.latest-tags.outputs.latest_tags) }}
     with:
       release_is_published: "true"
       release_version: ${{ matrix.tag }}
     secrets:
-      nexus_user: ${{ secrets.NEXUS_USERNAME}}
-      nexus_pass: ${{ secrets.NEXUS_PASSWORD}}
+      nexus_user: ${{ secrets.NEXUS_USERNAME }}
+      nexus_pass: ${{ secrets.NEXUS_PASSWORD }}
