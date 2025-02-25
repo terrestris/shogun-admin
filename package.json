@@ -127,7 +127,7 @@
     "whatwg-fetch": "3.6.20"
   },
   "optionalDependencies": {
-    "@rollup/rollup-linux-x64-gnu": "4.24.0"
+    "@rollup/rollup-linux-x64-gnu": "4.34.8"
   },
   "engines": {
     "node": ">=20",
