@@ -1,14 +1,19 @@
 import './MarkdownEditor.less';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
+import { FullscreenOutlined } from '@ant-design/icons';
 import MDEditor, { ICommand } from '@uiw/react-md-editor';
 
-import FullscreenWrapper from '../../FullscreenWrapper/FullscreenWrapper';
+import { Button, Tooltip } from 'antd';
+import { useTranslation } from 'react-i18next';
+
+import { FullscreenWrapper } from '../../FullscreenWrapper/FullscreenWrapper';
 
 export interface MarkdownEditorProps {
   value?: string;
   onChange?: (value?: string) => void;
+  fullscreenTitle?: string;
 }
 
 export const commandsFilter = (command: ICommand) => {
@@ -20,9 +25,15 @@ export const commandsFilter = (command: ICommand) => {
 
 export const MarkdownEditor: React.FC<MarkdownEditorProps> = ({
   value,
+  fullscreenTitle,
   onChange = () => undefined
 }) => {
-  const [markdown, setMarkdown] = React.useState<string>();
+  const [markdown, setMarkdown] = useState<string>();
+  const [isFullScreen, setIsFullScreen] = useState<boolean>(false);
+
+  const {
+    t
+  } = useTranslation();
 
   useEffect(() => {
     setMarkdown(value);
@@ -34,13 +45,27 @@ export const MarkdownEditor: React.FC<MarkdownEditorProps> = ({
   };
 
   return (
-    <FullscreenWrapper>
+    <FullscreenWrapper
+      isFullscreen={false}
+      title={fullscreenTitle}
+    >
       <MDEditor
         value={markdown}
         commandsFilter={commandsFilter}
         onChange={onMarkdownChange}
         highlightEnable={false}
       />
+      <Tooltip
+        title={isFullScreen
+          ? t('FullscreenWrapper.leaveFullscreen')
+          : t('FullscreenWrapper.fullscreen')
+        }
+      >
+        <Button
+          onClick={() => setTimeout(() => setIsFullScreen(!isFullScreen), 0)}
+          icon={<FullscreenOutlined />}
+        />
+      </Tooltip>
     </FullscreenWrapper>
   );
 };

@@ -7,6 +7,7 @@ import React, {
 } from 'react';
 
 import {
+  FullscreenOutlined,
   MenuUnfoldOutlined
 } from '@ant-design/icons';
 
@@ -46,7 +47,7 @@ import {
 import OpenAPIUtil from '../../../Util/OpenAPIUtil';
 
 import CopyToClipboardButton from '../../CopyToClipboardButton/CopyToClipboardButton';
-import FullscreenWrapper from '../../FullscreenWrapper/FullscreenWrapper';
+import { FullscreenWrapper } from '../../FullscreenWrapper/FullscreenWrapper';
 
 import './JSONEditor.less';
 
@@ -59,6 +60,7 @@ export interface JSONEditorProps {
   entityType: string;
   dataField: string;
   indentSize?: number;
+  fullscreenTitle?: string;
 }
 
 export const JSONEditor: React.FC<JSONEditorProps> = ({
@@ -67,6 +69,7 @@ export const JSONEditor: React.FC<JSONEditorProps> = ({
   editorProps,
   entityType,
   dataField,
+  fullscreenTitle,
   indentSize = 2
 }) => {
   const [currentValue, setCurrentValue] = useState<string | undefined>(
@@ -77,6 +80,8 @@ export const JSONEditor: React.FC<JSONEditorProps> = ({
   // don't want to trigger the onChange event on mount, so we need to keep track of whether the
   // document has been formatted initially.
   const [isFormattedInitially, setIsFormattedInitially] = useState<boolean>(false);
+
+  const [isFullScreen, setIsFullScreen] = useState<boolean>(false);
 
   const {
     t
@@ -186,13 +191,12 @@ export const JSONEditor: React.FC<JSONEditorProps> = ({
   };
 
   return (
-    <FullscreenWrapper>
-      <div
-        className="json-editor"
-      >
-        <div
-          className="json-editor-toolbar"
-        >
+    <FullscreenWrapper
+      isFullscreen={isFullScreen}
+      title={fullscreenTitle}
+    >
+      <div className="json-editor">
+        <div className="json-editor-toolbar">
           <Tooltip
             title={t('JSONEditor.formatDocumentTooltip')}
           >
@@ -204,6 +208,18 @@ export const JSONEditor: React.FC<JSONEditorProps> = ({
           <CopyToClipboardButton
             value={currentValue}
           />
+          <span className="fill"></span>
+          <Tooltip
+            title={isFullScreen
+              ? t('FullscreenWrapper.leaveFullscreen')
+              : t('FullscreenWrapper.fullscreen')
+            }
+          >
+            <Button
+              onClick={() => setTimeout(() => setIsFullScreen(!isFullScreen), 0)}
+              icon={<FullscreenOutlined />}
+            />
+          </Tooltip>
         </div>
         <Editor
           onMount={onMount}
