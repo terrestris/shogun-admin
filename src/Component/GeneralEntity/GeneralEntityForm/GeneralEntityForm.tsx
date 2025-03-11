@@ -131,6 +131,14 @@ export const GeneralEntityForm: React.FC<GeneralEntityFormProps> = ({
    * @param fieldCfg
    */
   const createFieldComponent = (fieldCfg: FieldConfig): React.ReactNode => {
+
+    const entityName = TranslationUtil.getTranslationFromConfig(generalEntityRootContext?.entityName, i18n);
+    const fieldLabel = TranslationUtil.getTranslationFromConfig(fieldCfg.label as string, i18n);
+    const name = form.getFieldValue('name');
+    const nameOrId = name || `${entityName} ${form.getFieldValue('id')}`;
+
+    const fullscreenTitle = `${nameOrId}: ${fieldLabel}`;
+
     switch (fieldCfg?.component) {
       case 'TextArea':
         return (
@@ -185,6 +193,7 @@ export const GeneralEntityForm: React.FC<GeneralEntityFormProps> = ({
           <JSONEditor
             entityType={generalEntityRootContext?.entityType || ''}
             dataField={fieldCfg.dataField}
+            fullscreenTitle={fullscreenTitle}
             {
               ...fieldCfg?.fieldProps
             }

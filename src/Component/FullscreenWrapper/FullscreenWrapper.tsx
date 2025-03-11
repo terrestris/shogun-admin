@@ -1,73 +1,76 @@
+import { useEffect, useMemo } from 'react';
+
+import { Modal } from 'antd';
+
 import './FullscreenWrapper.less';
 
-import React, { useRef, useState } from 'react';
+export interface FullscreenWrapperProps {
+  isFullscreen: boolean;
+  children: React.ReactNode;
+  title?: string;
+}
 
-import { FullscreenExitOutlined, FullscreenOutlined } from '@ant-design/icons';
-import { Button, Tooltip } from 'antd';
-import { useHotkeys } from 'react-hotkeys-hook';
-import { useTranslation } from 'react-i18next';
-
-export const FullscreenWrapper: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
-  children
+export const FullscreenWrapper: React.FC<FullscreenWrapperProps> = ({
+  children,
+  isFullscreen,
+  title
 }) => {
-  const [fullscreen, setFullscreen] = useState<boolean>(false);
-  const [minimizedHeight, setMinimizedHeight] = useState<string>('10em');
-  const elementRef = useRef<HTMLDivElement>(null);
 
-  const {
-    t
-  } = useTranslation();
+  const PADDING = 20;
 
-  const toggleFullscreen = () => {
+  const style = useMemo(() => {
+    if (!isFullscreen) {return {};}
+
     const contentEl = document.querySelector('.content');
     const leftContainerEl = document.querySelector('.content .left-container');
-    const shouldBeFullScreen = !fullscreen;
-    const element = elementRef.current;
-    if (!element) {
-      return;
-    }
-    if (contentEl && leftContainerEl && shouldBeFullScreen) {
-      setMinimizedHeight(element.getBoundingClientRect().height + 'px');
-      const contentDimensions = contentEl.getBoundingClientRect();
-      const leftContainerDimensions = leftContainerEl.getBoundingClientRect();
-      element.style.left = `${contentDimensions.left}px`;
-      element.style.top = `${leftContainerDimensions.top}px`;
-      element.style.width = `${contentDimensions.width}px`;
-      element.style.height = `${leftContainerDimensions.height}px`;
+
+    if (!contentEl || !leftContainerEl) {return {};}
+
+    const contentDimensions = contentEl.getBoundingClientRect();
+    const leftContainerDimensions = leftContainerEl.getBoundingClientRect();
+
+    return {
+      margin: 0,
+      left: `${contentDimensions.left + PADDING/2}px`,
+      top: `${leftContainerDimensions.top + PADDING/2}px`,
+      height: `${window.innerHeight - leftContainerDimensions.top - PADDING}px`
+    };
+  }, [isFullscreen]);
+
+  const width = useMemo(() => {
+    if (!isFullscreen) {return {};}
+
+    const contentEl = document.querySelector('.content');
+    const leftContainerEl = document.querySelector('.content .left-container');
+    if (!contentEl || !leftContainerEl) {return {};}
+    const leftContainerDimensions = leftContainerEl.getBoundingClientRect();
+
+    return `${window.innerWidth - leftContainerDimensions.left - PADDING}px`;
+  }, [isFullscreen]);
+
+  useEffect(() => {
+    if (isFullscreen) {
+      document.body.style.overflow = 'hidden';
     } else {
-      element.style.left = '';
-      element.style.top = '';
-      element.style.width = '';
-      element.style.height = minimizedHeight;
+      document.body.style.overflow = 'auto';
     }
-    setFullscreen(shouldBeFullScreen);
-  };
+  }, [isFullscreen]);
 
-  /**
-   * Exit fullscreen when Esc is pressed.
-   */
-  useHotkeys('esc', toggleFullscreen, {
-    enabled: () => fullscreen,
-    enableOnFormTags: ['INPUT', 'TEXTAREA', 'SELECT']
-  });
-
-  const wrapperCls = `fs-wrapper${fullscreen ? ' fullscreen' : ''}`;
+  if (!isFullscreen) {return children;}
 
   return (
-    <div className={wrapperCls} ref={elementRef}>
-      <Tooltip
-        title={fullscreen ? t('FullscreenWrapper.leaveFullscreen') : t('FullscreenWrapper.fullscreen') }
-        placement='left'
-      >
-        <Button
-          icon={fullscreen ? <FullscreenExitOutlined /> : <FullscreenOutlined />}
-          size='small'
-          onClick={toggleFullscreen}
-        />
-      </Tooltip>
+    <Modal
+      title={title}
+      open={isFullscreen}
+      wrapClassName="fullscreen-wrapper-wrapper"
+      className="fullscreen-wrapper"
+      footer={null}
+      closable={false}
+      maskClosable={false}
+      width={width}
+      style={style}
+    >
       {children}
-    </div>
+    </Modal>
   );
 };
-
-export default FullscreenWrapper;
