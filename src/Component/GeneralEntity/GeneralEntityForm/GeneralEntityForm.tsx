@@ -181,6 +181,7 @@ export const GeneralEntityForm: React.FC<GeneralEntityFormProps> = ({
       case 'MarkdownEditor':
         return (
           <MarkdownEditor
+            fullscreenTitle={fullscreenTitle}
             {...fieldCfg?.fieldProps}
           />
         );
