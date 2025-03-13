@@ -101,7 +101,7 @@
     "babel-plugin-import": "1.13.8",
     "buffer": "6.0.3",
     "dotenv": "16.4.5",
-    "eslint": "9.13.0",
+    "eslint": "9.22.0",
     "eslint-plugin-import": "2.31.0",
     "eslint-plugin-react": "7.37.4",
     "eslint-plugin-react-hooks": "5.1.0-rc-fb9a90fa48-20240614",
