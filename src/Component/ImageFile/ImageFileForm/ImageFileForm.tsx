@@ -5,6 +5,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { PageHeader } from '@ant-design/pro-components';
 import { Form, Spin, Switch } from 'antd';
 import { SwitchChangeEventHandler } from 'antd/lib/switch';
+import Logger from 'js-logger';
 import _isNil from 'lodash/isNil';
 import { useTranslation } from 'react-i18next';
 import {
@@ -14,7 +15,6 @@ import {
 import config from 'shogunApplicationConfig';
 
 import ImageFile from '@terrestris/shogun-util/dist/model/ImageFile';
-import { getBearerTokenHeader } from '@terrestris/shogun-util/dist/security/getBearerTokenHeader';
 
 import useSHOGunAPIClient from '../../../Hooks/useSHOGunAPIClient';
 
@@ -44,14 +44,17 @@ export const ImageFileForm: React.FC<ImageFileRootProps> = () => {
       setFileBlob(undefined);
       return;
     }
-    const response = await fetch(`/imagefiles/${imageFileId}/permissions/public`, {
-      method: checked ? 'POST' : 'DELETE',
-      headers: {
-        ...getBearerTokenHeader(client.getKeycloak())
+
+    try {
+      if (checked) {
+        await client.imagefile().setPublic(parseInt(imageFileId, 10));
+      } else {
+        await client.imagefile().revokePublic(parseInt(imageFileId, 10));
       }
-    });
-    if (response.ok) {
+
       setPublic(checked);
+    } catch (error) {
+      Logger.error('Error while changing public state of an image file', error);
     }
   }, [imageFileId, client]);
 
@@ -100,13 +103,7 @@ export const ImageFileForm: React.FC<ImageFileRootProps> = () => {
     };
 
     const fetchPublicState = async () => {
-      const response = await fetch(`/imagefiles/${imageFileId}/permissions/public`, {
-        headers: {
-          ...getBearerTokenHeader(client.getKeycloak())
-        }
-      });
-      const data = await response.json();
-      setPublic(data.public);
+      setPublic(await client.imagefile().isPublic(parseInt(imageFileId, 10)));
     };
 
     fetchImageData();

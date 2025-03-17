@@ -63,6 +63,7 @@ describe('<ImageFileForm />', () => {
   it('`isPublic` state is fetched initially', () => {
     render(<ImageFileForm />, { wrapper });
     expect(fetchMock).toHaveBeenCalledWith('/imagefiles/119/permissions/public', {
+      method: 'GET',
       headers: {}
     });
   });
