@@ -39,9 +39,7 @@ import {
   useTranslation
 } from 'react-i18next';
 
-import {
-  swaggerDocs
-} from '../../../State/static';
+import useAppSelector from '../../../Hooks/useAppSelector';
 
 import OpenAPIUtil from '../../../Util/OpenAPIUtil';
 
@@ -78,13 +76,15 @@ export const JSONEditor: React.FC<JSONEditorProps> = ({
   // document has been formatted initially.
   const [isFormattedInitially, setIsFormattedInitially] = useState<boolean>(false);
 
+  const openApiDocs = useAppSelector(state => state.openApiDocs);
+
   const {
     t
   } = useTranslation();
 
   const monaco = useMonaco();
 
-  const monacoStandaloneEditor = useRef<monacoEditor.editor.IStandaloneCodeEditor>();
+  const monacoStandaloneEditor = useRef<monacoEditor.editor.IStandaloneCodeEditor>(null);
 
   const editorOptions = useMemo(() => ({
     lineHeight: 20,
@@ -95,8 +95,8 @@ export const JSONEditor: React.FC<JSONEditorProps> = ({
   }), [indentSize]);
 
   const openApiUtil = useMemo(() => new OpenAPIUtil({
-    document: swaggerDocs
-  }), []);
+    document: openApiDocs
+  }), [openApiDocs]);
 
   const registerSchemaValidation = useCallback(() => {
     if (!monaco) {

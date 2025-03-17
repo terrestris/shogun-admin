@@ -105,6 +105,17 @@ export const GeneralEntityForm: React.FC<GeneralEntityFormProps> = ({
    * @returns
    */
   const createReadOnlyComponent = (fieldConfig: FieldConfig): React.ReactNode => {
+    if (!fieldConfig.component) {
+      Logger.warn(`FieldConfig for field "${fieldConfig.dataField}" is missing the "component" `+
+        'property, applying default DisplayField.');
+
+      return (
+        <DisplayField
+          {...fieldConfig.fieldProps}
+        />
+      );
+    }
+
     switch (fieldConfig.component) {
       case 'Switch':
         return (<YesOrNoField />);
@@ -131,6 +142,11 @@ export const GeneralEntityForm: React.FC<GeneralEntityFormProps> = ({
    * @param fieldCfg
    */
   const createFieldComponent = (fieldCfg: FieldConfig): React.ReactNode => {
+    if (!fieldCfg?.component) {
+      Logger.error('FieldConfig is missing `component` property.');
+      return null;
+    }
+
     switch (fieldCfg?.component) {
       case 'TextArea':
         return (

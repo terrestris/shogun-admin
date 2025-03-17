@@ -9,6 +9,7 @@ switch (process.env.NODE_ENV) {
     loglevel = jsLogger.DEBUG;
     break;
   case 'production':
+  case undefined:
     loglevel = jsLogger.INFO;
     break;
   case 'CI':

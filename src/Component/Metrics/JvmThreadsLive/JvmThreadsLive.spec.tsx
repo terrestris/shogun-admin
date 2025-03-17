@@ -5,8 +5,6 @@ import {
   screen,
 } from '@testing-library/react';
 
-import MetricEntry from '../MetricEntry/MetricEntry';
-
 import { JvmThreadsLive } from './JvmThreadsLive';
 
 jest.mock('../MetricEntry/MetricEntry', () => {

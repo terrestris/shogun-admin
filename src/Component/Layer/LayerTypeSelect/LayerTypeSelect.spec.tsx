@@ -14,15 +14,6 @@ import { LayerTypeSelect } from './LayerTypeSelect';
 
 describe('<LayerTypeSelect />', () => {
   let typeValue: LayerType;
-  const defaultSupportedTypes = [
-    'TILEWMS',
-    'VECTORTILE',
-    'WFS',
-    'WMS',
-    'WMSTIME',
-    'WMTS',
-    'XYZ'
-  ];
 
   afterEach(() => {
     cleanup();

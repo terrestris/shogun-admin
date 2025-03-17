@@ -1,5 +1,6 @@
 import 'ol/ol.css';
 import './index.less';
+import '@ant-design/v5-patch-for-react-19';
 
 import React, { Suspense } from 'react';
 
@@ -16,8 +17,7 @@ import _isNil from 'lodash/isNil';
 
 import { createRoot } from 'react-dom/client';
 
-import { RecoilRoot } from 'recoil';
-
+import { Provider } from 'react-redux';
 import config from 'shogunApplicationConfig';
 
 import SHOGunAPIClient from '@terrestris/shogun-util/dist/service/SHOGunAPIClient';
@@ -26,8 +26,12 @@ import { PluginProvider } from './Context/PluginContext';
 import { SHOGunAPIClientProvider } from './Context/SHOGunAPIClientContext';
 
 import i18n from './i18n';
+
 import Logger from './Logger';
+
 import { AdminPlugin, AdminPluginInternal } from './plugin';
+
+import { store } from './store/store';
 
 const App = React.lazy(() => import('./App'));
 
@@ -208,11 +212,11 @@ const renderApp = async () => {
     root.render(
       <SHOGunAPIClientProvider client={client}>
         <PluginProvider plugins={plugins}>
-          <RecoilRoot>
+          <Provider store={store}>
             <Suspense>
               <App />
             </Suspense>
-          </RecoilRoot>
+          </Provider>
         </PluginProvider>
       </SHOGunAPIClientProvider>
     );

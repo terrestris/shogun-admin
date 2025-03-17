@@ -45,7 +45,6 @@ import {
   useNavigate
 } from 'react-router-dom';
 
-import { useSetRecoilState } from 'recoil';
 import config from 'shogunApplicationConfig';
 
 import Logger from '@terrestris/base-util/dist/Logger';
@@ -61,8 +60,9 @@ import {
   FormValues,
   GenericEntityController
 } from '../../../Controller/GenericEntityController';
+import useAppDispatch from '../../../Hooks/useAppDispatch';
 import useSHOGunAPIClient from '../../../Hooks/useSHOGunAPIClient';
-import { entityIdAtom } from '../../../State/atoms';
+import { setEntityId } from '../../../store/entityId';
 import TranslationUtil from '../../../Util/TranslationUtil';
 import GeneralEntityForm, {
   FormConfig
@@ -123,7 +123,7 @@ export function GeneralEntityRoot<T extends BaseEntity>({
 
   const location = useLocation();
   const navigate = useNavigate();
-  const setEntityId = useSetRecoilState(entityIdAtom);
+  const dispatch = useAppDispatch();
 
   const match = matchPath({
     path: `${config.appPrefix}/portal/${entityType}/:entityId`
@@ -325,23 +325,23 @@ export function GeneralEntityRoot<T extends BaseEntity>({
   useEffect(() => {
     if (!entityId) {
       setId(undefined);
-      setEntityId(undefined);
+      dispatch(setEntityId(null));
       setEditEntity(undefined);
       setFormIsDirty(false);
       return;
     }
     if (entityId === 'create') {
       setId(entityId);
-      setEntityId(undefined);
+      dispatch(setEntityId(null));
       form.resetFields();
       form.setFieldsValue(structuredClone(defaultEntity));
       entityController.updateEntity(defaultEntity as FormValues, true);
     } else {
       setId(parseInt(entityId, 10));
-      setEntityId(parseInt(entityId, 10));
+      dispatch(setEntityId(parseInt(entityId, 10)));
       setFormIsDirty(false);
     }
-  }, [entityId, form, defaultEntity, setEntityId, entityController]);
+  }, [entityId, form, defaultEntity, entityController, dispatch]);
 
   // Once the controller is known we need to set the formValidator so we can update
   // a given form when the entity is updated via controller

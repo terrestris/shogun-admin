@@ -139,7 +139,9 @@ export default {
         searchPlaceholder: 'Suchen…'
       },
       EvictCache: {
-        clear: 'Clear cache'
+        clear: 'Cache leeren',
+        success: 'Cache erfolgreich geleert',
+        error: 'Fehler beim Leeren des Cache'
       },
       User: {
         settings: 'Profileinstellungen',
@@ -458,7 +460,9 @@ export default {
         searchPlaceholder: 'Search by…'
       },
       EvictCache: {
-        clear: 'Clear cache'
+        clear: 'Clear cache',
+        success: 'Successfully cleared the cache',
+        error: 'Could not clear the cache'
       },
       User: {
         settings: 'Profile settings',

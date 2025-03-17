@@ -17,9 +17,6 @@ import {
   Route,
   Routes
 } from 'react-router-dom';
-import {
-  useSetRecoilState
-} from 'recoil';
 import config from 'shogunApplicationConfig';
 
 import BaseEntity from '@terrestris/shogun-util/dist/model/BaseEntity';
@@ -45,9 +42,9 @@ import Navigation from '../../Component/Menu/Navigation/Navigation';
 import MetricsRoot from '../../Component/Metrics/MetricsRoot/MetricsRoot';
 import ApplicationInfo from '../../Component/Modal/ApplicationInfo/ApplicationInfo';
 import WelcomeDashboard from '../../Component/WelcomeDashboard/WelcomeDashboard';
-import {
-  layerSuggestionListAtom
-} from '../../State/atoms';
+
+import useAppDispatch from '../../Hooks/useAppDispatch';
+import { setLayerSuggestionList } from '../../store/layerSuggestionList';
 
 import './Portal.less';
 
@@ -58,7 +55,7 @@ export const Portal: React.FC<PortalProps> = () => {
   const [entitiesToLoad, setEntitiesToLoad] = useState<GeneralEntityConfigType<BaseEntity>[]>([]);
   const [configsAreLoading, setConfigsAreLoading] = useState<boolean>(false);
 
-  const setLayerSuggestionList = useSetRecoilState(layerSuggestionListAtom);
+  const dispatch = useAppDispatch();
 
   const toggleCollapsed = () => setCollapsed(!collapsed);
 
@@ -97,9 +94,9 @@ export const Portal: React.FC<PortalProps> = () => {
   const onEntitiesLoaded = useCallback((entities: BaseEntity[], entityType: string) => {
     if (entityType === 'layer') {
       const layers = entities as Layer[];
-      setLayerSuggestionList(layers);
+      dispatch(setLayerSuggestionList(layers));
     }
-  }, [setLayerSuggestionList]);
+  }, [dispatch]);
 
   const getLeftToolbarItems = (entityType: string): React.ReactNode => {
     switch (entityType) {

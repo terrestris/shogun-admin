@@ -14,8 +14,6 @@ import {
   ControllerUtil
 } from '../../../Controller/ControllerUtil';
 
-import i18n from '../../../i18n';
-
 import { EntityType } from '../../FormField/Permission/InstancePermissionGrid/InstancePermissionGrid';
 
 import {
@@ -44,7 +42,7 @@ const renderInContext = <T extends BaseEntity,>(ui: React.ReactNode, providerPro
 };
 
 describe('<GeneralEntityTable />', () => {
-  let mockController;
+  let mockController: any;
   let mockEntityType: EntityType;
   let mockTableConfig: TableConfig<BaseEntity>;
   let mockBaseEntities: BaseEntity[];
@@ -117,7 +115,10 @@ describe('<GeneralEntityTable />', () => {
       <GeneralEntityTable
         actions={['delete', 'edit']}
         controller={mockController}
-        i18n={i18n}
+        i18n={{
+          de: {},
+          en: {}
+        }}
         tableConfig={{}}
       />,
       {
@@ -141,7 +142,10 @@ describe('<GeneralEntityTable />', () => {
       <GeneralEntityTable
         actions={['delete', 'edit']}
         controller={mockController}
-        i18n={i18n}
+        i18n={{
+          de: {},
+          en: {}
+        }}
         tableConfig={mockTableConfig}
       />,
       {
@@ -170,7 +174,10 @@ describe('<GeneralEntityTable />', () => {
       <GeneralEntityTable
         actions={['delete', 'edit']}
         controller={mockController}
-        i18n={i18n}
+        i18n={{
+          de: {},
+          en: {}
+        }}
         tableConfig={mockTableConfig}
       />,
       {

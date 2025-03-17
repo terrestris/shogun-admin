@@ -10,8 +10,6 @@ import {
 
 import { MemoryRouter } from 'react-router-dom';
 
-import { RecoilRoot } from 'recoil';
-
 import { ImageFileRoot } from './ImageFileRoot';
 
 jest.mock('antd', () => {
@@ -64,11 +62,9 @@ describe('<ImageFileRoot />', () => {
     const {
       container
     } = render(
-      <RecoilRoot>
-        <MemoryRouter>
-          <ImageFileRoot />
-        </MemoryRouter>
-      </RecoilRoot>
+      <MemoryRouter>
+        <ImageFileRoot />
+      </MemoryRouter>
     );
     expect(container).toBeVisible();
     expect(container.querySelector('.header')).toBeVisible();
@@ -81,11 +77,9 @@ describe('<ImageFileRoot />', () => {
     const {
       container
     } = render(
-      <RecoilRoot>
-        <MemoryRouter>
-          <ImageFileRoot />
-        </MemoryRouter>
-      </RecoilRoot>
+      <MemoryRouter>
+        <ImageFileRoot />
+      </MemoryRouter>
     );
 
     const file = new File(['dummy content'], 'example.png', { type: 'image/png' });

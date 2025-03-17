@@ -4,37 +4,13 @@ import {
   render
 } from '@testing-library/react';
 
-import { FormInstance } from 'antd/lib/form';
-
 import { EntityType } from '../InstancePermissionGrid/InstancePermissionGrid';
 
 import GroupPermissionGrid from './GroupPermissionGrid';
 
 let mockEntityType: EntityType;
-let mockForm: FormInstance<any>;
 
 describe('<GroupPermissionGrid />', () => {
-  beforeEach(() => {
-    mockForm = {
-      submit: jest.fn(),
-      getFieldValue: jest.fn(),
-      getFieldsValue: jest.fn(() => true),
-      resetFields: jest.fn(),
-      setFieldsValue: jest.fn(),
-      validateFields: jest.fn(),
-      scrollToField: jest.fn(),
-      getFieldError: jest.fn(),
-      getFieldsError: jest.fn(),
-      getFieldWarning: jest.fn(),
-      getFieldInstance: jest.fn(),
-      isFieldsTouched: jest.fn(),
-      isFieldTouched: jest.fn(),
-      isFieldValidating: jest.fn(),
-      isFieldsValidating: jest.fn(),
-      setFields: jest.fn(),
-      setFieldValue: jest.fn()
-    };
-  });
 
   it('is defined', () => {
     expect(GroupPermissionGrid).not.toBeUndefined();
@@ -47,7 +23,7 @@ describe('<GroupPermissionGrid />', () => {
       container
     } = render(
       <GroupPermissionGrid
-        entityId={mockForm.getFieldValue('id')}
+        entityId={1909}
         entityType={mockEntityType}
       />);
     expect(container).toBeVisible();

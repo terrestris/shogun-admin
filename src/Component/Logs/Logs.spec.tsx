@@ -7,9 +7,6 @@ import {
   waitFor,
 } from '@testing-library/react';
 
-import { MemoryRouter } from 'react-router-dom';
-import { RecoilRoot } from 'recoil';
-
 import useSHOGunAPIClient from '../../Hooks/useSHOGunAPIClient';
 import LogService from '../../Service/LogService/LogService';
 
@@ -25,9 +22,9 @@ jest.mock('react-router-dom', () => ({
 }));
 
 describe('<Logs />', () => {
-  let mockGetLogs;
-  let mockSetInterval;
-  let mockClearInterval;
+  let mockGetLogs: any;
+  let mockSetInterval: any;
+  let mockClearInterval: any;
 
   beforeEach(() => {
     mockGetLogs = jest.fn();
@@ -55,13 +52,7 @@ describe('<Logs />', () => {
   it('can be rendered', async () => {
     const {
       container
-    } = render(
-      <RecoilRoot>
-        <MemoryRouter>
-          <Logs />
-        </MemoryRouter>
-      </RecoilRoot>
-    );
+    } = render(<Logs />);
     expect(container).toBeVisible();
     expect(screen.getByText('Logs.logs')).toBeInTheDocument();
   });
@@ -69,13 +60,7 @@ describe('<Logs />', () => {
   it('should fetch logs on load', async () => {
     mockGetLogs.mockResolvedValue('Test log content');
 
-    render(
-      <RecoilRoot>
-        <MemoryRouter>
-          <Logs />
-        </MemoryRouter>
-      </RecoilRoot>
-    );
+    render(<Logs />);
 
     await waitFor(() => {
       expect(screen.getByText('Test log content')).toBeInTheDocument();
@@ -85,13 +70,7 @@ describe('<Logs />', () => {
   it('should display an error message when log fetching fails', async () => {
     mockGetLogs.mockResolvedValue(null);
 
-    render(
-      <RecoilRoot>
-        <MemoryRouter>
-          <Logs />
-        </MemoryRouter>
-      </RecoilRoot>
-    );
+    render(<Logs />);
 
     await waitFor(() => {
       expect(screen.getByText('Logs.warningMessage')).toBeInTheDocument();
@@ -103,13 +82,7 @@ describe('<Logs />', () => {
     global.setInterval = mockSetInterval;
     global.clearInterval = mockClearInterval;
 
-    render(
-      <RecoilRoot>
-        <MemoryRouter>
-          <Logs />
-        </MemoryRouter>
-      </RecoilRoot>
-    );
+    render(<Logs />);
 
     const switchElement = screen.getByRole('switch');
     fireEvent.click(switchElement);
@@ -127,13 +100,7 @@ describe('<Logs />', () => {
     global.setInterval = mockSetInterval;
     global.clearInterval = mockClearInterval;
 
-    render(
-      <RecoilRoot>
-        <MemoryRouter>
-          <Logs />
-        </MemoryRouter>
-      </RecoilRoot>
-    );
+    render(<Logs />);
 
     const refreshButton = screen.getByText('Logs.refresh');
     fireEvent.click(refreshButton);

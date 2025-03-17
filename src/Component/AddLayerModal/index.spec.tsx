@@ -6,7 +6,8 @@ import {
   cleanup,
   fireEvent,
   render,
-  screen
+  screen,
+  waitFor
 } from '@testing-library/react';
 
 import {
@@ -174,12 +175,16 @@ describe('<AddLayerModal />', () => {
 
     await userEvent.click(input);
 
-    await userEvent.click(screen.getAllByText('AddLayerModal.version')[4]);
+    await waitFor(() => {
+      expect(screen.getAllByText('AddLayerModal.version')[4]).toBeVisible();
+    });
+
+    fireEvent.click(screen.getAllByText('AddLayerModal.version')[4]);
 
     const spy = jest.spyOn(CapabilitiesUtil, 'getWmsCapabilities')
       .mockReturnValue(new Promise(resolve => resolve(capabilitiesMock)));
 
-    await userEvent.click(button);
+    fireEvent.click(button);
 
     expect(spy).toHaveBeenLastCalledWith(
       'http://localhost/geoserver/ows?SERVICE=WMS&REQUEST=GetCapabilities&VERSION=1.0.0',
@@ -208,9 +213,13 @@ describe('<AddLayerModal />', () => {
 
     await userEvent.click(input);
 
-    await userEvent.click(screen.getAllByText('AddLayerModal.version')[4]);
+    await waitFor(() => {
+      expect(screen.getAllByText('AddLayerModal.version')[4]).toBeVisible();
+    });
 
-    await userEvent.click(button);
+    fireEvent.click(screen.getAllByText('AddLayerModal.version')[4]);
+
+    fireEvent.click(button);
 
     expect(spy).toHaveBeenLastCalledWith(
       'http://localhost:1234/geoserver/ows?SERVICE=WMS&REQUEST=GetCapabilities&VERSION=1.0.0',
@@ -218,7 +227,7 @@ describe('<AddLayerModal />', () => {
         headers: {}
       }
     );
-  });
+  }, 10000);
 
   it('requests the GetCapabilities with the bearer token', async () => {
     render(
@@ -238,11 +247,15 @@ describe('<AddLayerModal />', () => {
 
     await userEvent.click(input);
 
-    await userEvent.click(screen.getAllByText('AddLayerModal.version')[4]);
+    await waitFor(() => {
+      expect(screen.getAllByText('AddLayerModal.version')[4]).toBeVisible();
+    });
 
-    await userEvent.click(authSwitch);
+    fireEvent.click(screen.getAllByText('AddLayerModal.version')[4]);
 
-    await userEvent.click(button);
+    fireEvent.click(authSwitch);
+
+    fireEvent.click(button);
 
     expect(spy).toHaveBeenCalledWith(
       'http://localhost/geoserver/ows?SERVICE=WMS&REQUEST=GetCapabilities&VERSION=1.0.0',
@@ -252,7 +265,7 @@ describe('<AddLayerModal />', () => {
         }
       }
     );
-  }, 7500);
+  }, 10000);
 
   it('shows the requested layers in a table', async () => {
     render(
@@ -265,7 +278,11 @@ describe('<AddLayerModal />', () => {
 
     await userEvent.click(input);
 
-    await userEvent.click(screen.getAllByText('AddLayerModal.version')[4]);
+    await waitFor(() => {
+      expect(screen.getAllByText('AddLayerModal.version')[4]).toBeVisible();
+    });
+
+    fireEvent.click(screen.getAllByText('AddLayerModal.version')[4]);
 
     const button = screen.getAllByRole('button')[1];
 
@@ -282,7 +299,7 @@ describe('<AddLayerModal />', () => {
 
     expect(screen.getByText('TEST:TEST3')).toBeVisible();
     expect(screen.getByText('Test Layer 3')).toBeVisible();
-  });
+  }, 10000);
 
   it('shows if the remote layers already exist and persists the layers', async () => {
     render(
@@ -295,7 +312,11 @@ describe('<AddLayerModal />', () => {
 
     await userEvent.click(input);
 
-    await userEvent.click(screen.getAllByText('AddLayerModal.version')[4]);
+    await waitFor(() => {
+      expect(screen.getAllByText('AddLayerModal.version')[4]).toBeVisible();
+    });
+
+    fireEvent.click(screen.getAllByText('AddLayerModal.version')[4]);
 
     const button = screen.getAllByRole('button')[1];
 

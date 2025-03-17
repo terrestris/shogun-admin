@@ -33,7 +33,7 @@ export const Logs: React.FC<LogsProps> = () => {
 
   const client = useSHOGunAPIClient();
 
-  const intervalTimer = useRef<NodeJS.Timeout>();
+  const intervalTimer = useRef<NodeJS.Timeout>(undefined);
 
   const navigate = useNavigate();
 

@@ -1,6 +1,10 @@
-import React from 'react';
+import React, {
+  JSX
+} from 'react';
 
-import { AdminPluginInternal } from '../plugin';
+import {
+  AdminPluginInternal
+} from '../plugin';
 
 export interface PluginProviderProps {
   plugins: AdminPluginInternal[];

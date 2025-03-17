@@ -8,19 +8,18 @@ import {
   SettingOutlined
 } from '@ant-design/icons';
 import {
-  Dropdown
+  Dropdown,
+  Avatar
 } from 'antd';
-import Avatar from 'antd/lib/avatar/avatar';
 import { ItemType } from 'antd/lib/menu/interface';
 import _isNil from 'lodash/isNil';
 import { useTranslation } from 'react-i18next';
-import {
-  useRecoilState
-} from 'recoil';
 import config from 'shogunApplicationConfig';
 
+import useAppDispatch from '../../../Hooks/useAppDispatch';
+import useAppSelector from '../../../Hooks/useAppSelector';
 import useSHOGunAPIClient from '../../../Hooks/useSHOGunAPIClient';
-import { shogunInfoModalVisibleAtom, userInfoAtom } from '../../../State/atoms';
+import { setVisible } from '../../../store/infoModal';
 import UserUtil from '../../../Util/UserUtil';
 
 interface OwnProps { }
@@ -29,8 +28,9 @@ type UserProps = OwnProps;
 
 export const User: React.FC<UserProps> = () => {
 
-  const [userInfo] = useRecoilState(userInfoAtom);
-  const [, setInfoVisible] = useRecoilState(shogunInfoModalVisibleAtom);
+  const userInfo = useAppSelector(state => state.userInfo);
+
+  const dispatch = useAppDispatch();
 
   const {
     t
@@ -42,16 +42,17 @@ export const User: React.FC<UserProps> = () => {
     return null;
   }
 
-  const avatarSource = !_isNil(userInfo.providerDetails?.email) ? UserUtil.getGravatarUrl({
+  const avatarSource = UserUtil.getGravatarUrl({
+    // @ts-expect-error email is not part of the ProviderUserDetails
     email: userInfo.providerDetails?.email || '',
     size: 38
-  }) : '';
+  });
 
   const onMenuClick = (evt: any) => {
 
     switch (evt.key) {
       case 'info':
-        setInfoVisible(true);
+        dispatch(setVisible(true));
         break;
       case 'settings':
         // TODO: Fix settings for non keycloak setups
@@ -79,6 +80,7 @@ export const User: React.FC<UserProps> = () => {
     }
   };
 
+  // @ts-expect-error username is not part of the ProviderUserDetails
   const userName = userInfo?.providerDetails?.username || userInfo?.authProviderId;
 
   const userMenuItems: ItemType[] = [];

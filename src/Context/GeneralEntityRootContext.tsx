@@ -1,4 +1,6 @@
-import React from 'react';
+import React, {
+  JSX
+} from 'react';
 
 import BaseEntity from '@terrestris/shogun-util/dist/model/BaseEntity';
 

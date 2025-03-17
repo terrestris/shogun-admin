@@ -56,8 +56,8 @@ const mockData = {
 };
 
 describe('<ImageFileTable />', () => {
-  let modalConfirmSpy;
-  let notificationInfoSpy;
+  let modalConfirmSpy: any;
+  let notificationInfoSpy: any;
 
   beforeEach(() => {
     mockService.findAll.mockResolvedValue(mockData);

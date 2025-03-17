@@ -1,6 +1,8 @@
 import './LinkField.less';
 
-import React from 'react';
+import React, {
+  JSX
+} from 'react';
 
 import { LinkOutlined } from '@ant-design/icons';
 import {

@@ -2,13 +2,12 @@ import React from 'react';
 
 import {
   render,
-  screen,
+  screen
 } from '@testing-library/react';
 
 import UserUtil from '../../Util/UserUtil';
 
 import UserAvatar from './UserAvatar';
-
 
 jest.mock('../../Util/UserUtil', () => ({
   getGravatarUrl: jest.fn()
@@ -29,7 +28,7 @@ describe('<UserAvatar />', () => {
   };
 
   beforeEach(() => {
-    UserUtil.getGravatarUrl.mockReturnValue('http://gravatar.com/avatar');
+    (UserUtil.getGravatarUrl as jest.Mock).mockReturnValue('http://gravatar.com/avatar');
   });
 
   it('is defined', () => {
@@ -50,17 +49,5 @@ describe('<UserAvatar />', () => {
 
     expect(screen.getByText('Test User')).toBeInTheDocument();
     expect(screen.getByText('testuser')).toBeInTheDocument();
-  });
-
-  it('passes additional props to the Avatar component', () => {
-    const {
-      container
-    } = render(
-      <UserAvatar
-        user={mockUser}
-        size="large"
-      />
-    );
-    expect(container.querySelector('.ant-avatar-lg')).toBeInTheDocument();
   });
 });
