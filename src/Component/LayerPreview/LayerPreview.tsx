@@ -89,9 +89,10 @@ export const LayerPreview: React.FC<LayerPreviewProps> = ({
         .filter(l => l.get('shogunId') === layer.id)
         .forEach(l => map.removeLayer(l));
 
-      if (_isNil(olLayer)) {
+      if (_isNil(olLayer) || !(olLayer instanceof OlLayer)) {
         return;
       }
+
       const source = olLayer.getSource();
 
       if (_isNil(source)) {

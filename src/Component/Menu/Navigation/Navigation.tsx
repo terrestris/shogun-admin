@@ -28,6 +28,7 @@ import config from 'shogunApplicationConfig';
 
 import BaseEntity from '@terrestris/shogun-util/dist/model/BaseEntity';
 
+import useSHOGunAPIClient from '../../../Hooks/useSHOGunAPIClient';
 import TranslationUtil from '../../../Util/TranslationUtil';
 import { GeneralEntityConfigType } from '../../GeneralEntity/GeneralEntityRoot/GeneralEntityRoot';
 
@@ -48,6 +49,7 @@ export const Navigation: React.FC<NavigationProps> = ({
 
   const navigate = useNavigate();
   const location = useLocation();
+  const client = useSHOGunAPIClient();
 
   const onSelect = ({ key }: SelectInfo) => {
     navigate(`${config.appPrefix}/portal/${key}`);
@@ -229,7 +231,7 @@ export const Navigation: React.FC<NavigationProps> = ({
       icon: <BranchesOutlined />,
       label: (
         <>
-          <a href={`${window.location.origin}/graphiql?path=/graphql`} target='_blank' rel='noopener noreferrer'>
+          <a href={`${client?.getBasePath()}graphiql?path=/graphql`} target='_blank' rel='noopener noreferrer'>
             <span>{t('Navigation.graphiql')}</span>
           </a>
         </>
@@ -242,7 +244,7 @@ export const Navigation: React.FC<NavigationProps> = ({
       icon: <ApiOutlined />,
       label: (
         <>
-          <a href={`${window.location.origin}/swagger-ui/index.html`} target='_blank' rel='noopener noreferrer'>
+          <a href={`${client?.getBasePath()}swagger-ui/index.html`} target='_blank' rel='noopener noreferrer'>
             <span>{t('Navigation.swagger')}</span>
           </a>
         </>
