@@ -1,32 +1,23 @@
-.fs-wrapper {
-  border: solid 1px #dedede;
-  border-radius: var(--ant-border-radius);
-  flex-direction: column;
-  display: flex;
-  resize: vertical;
-  overflow: hidden;
-  min-height: 10em;
-  background: #fafafa;
+.ant-modal-mask:has(+ .fullscreen-wrapper-wrapper) {
+  backdrop-filter: unset;
+}
 
-  >button {
-    min-width: 24px;
-    min-height: 24px;
-    margin: 2px;
-    align-self: end;
-  }
+.fullscreen-wrapper {
+  >div {
+    height: 100%;
 
-  &:hover {
-    border: solid 1px #40a9ff;
-  }
+    >.ant-modal-content {
+      height: 100%;
+      --header-height: calc(var(--ant-modal-header-margin-bottom) + 24px);
+      --body-height: calc(100% - var(--header-height) - var(--ant-modal-header-margin-bottom));
 
-  &:hover:active,
-  &:focus {
-    box-shadow: 0 0 0 3px rgb(24 144 255 / 20%);
-  }
+      .ant-modal-header {
+        height: var(--header-height);
+      }
 
-  &.fullscreen {
-    resize: none;
-    z-index: 999;
-    position: fixed;
+      .ant-modal-body {
+        height: var(--body-height);
+      }
+    }
   }
 }
