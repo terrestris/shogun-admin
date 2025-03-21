@@ -2,28 +2,31 @@ import React from 'react';
 
 import {
   cleanup,
-  fireEvent,
   render,
-  screen
+  screen,
+  waitFor
 } from '@testing-library/react';
-
-import i18n from '../../../i18n';
 
 import { LinkField } from './LinkField';
 
-let windowSpy;
+import userEvent from '@testing-library/user-event';
+
+jest.mock('../../../Util/TranslationUtil', () => ({
+  getTranslationFromConfig: jest.fn((title) => title)
+}));
+
+let windowSpy: any;
 describe('<LinkField />', () => {
-  const originalPrompt = window.prompt;
 
   beforeEach(() => {
     windowSpy = jest.spyOn(window, 'open').mockImplementation(undefined);
-    window.prompt = jest.fn(() => 'mocked response');
   });
 
   afterEach(() => {
     cleanup();
+    jest.clearAllMocks();
+    jest.restoreAllMocks();
     windowSpy.mockRestore();
-    window.prompt = originalPrompt;
   });
 
   it('is defined', () => {
@@ -39,19 +42,23 @@ describe('<LinkField />', () => {
       <LinkField
         title='test-title'
         value={mockLink}
-        i18n={i18n}
-      />);
+      />
+    );
     expect(container).toBeVisible();
 
     const wrapperElement = container.querySelector('.link-wrapper');
     expect(wrapperElement).toBeVisible();
 
-    const linkElement: HTMLElement | null = screen.getByLabelText('link');
-    await fireEvent.mouseOver(linkElement);
+    const linkElement = screen.getByLabelText('link');
+    expect(linkElement).toBeVisible();
 
-    expect(
-      await screen.findByText('test-title')
-    ).toBeInTheDocument();
+    await userEvent.hover(linkElement);
+
+    await waitFor(() => {
+      const tooltip = screen.getByText('test-title');
+
+      expect(tooltip).toBeInTheDocument();
+    });
   });
 
   it('link can be opened', async () => {
@@ -62,12 +69,13 @@ describe('<LinkField />', () => {
     } = render(
       <LinkField
         value={mockLink}
-      />);
+      />
+    );
     expect(container).toBeVisible();
 
     const linkElement: HTMLElement | null = screen.getByLabelText('link');
-    await fireEvent.click(linkElement);
+    await userEvent.click(linkElement);
 
-    await expect(windowSpy).toHaveBeenCalled();
+    expect(windowSpy).toHaveBeenCalled();
   });
 });

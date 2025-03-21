@@ -6,10 +6,9 @@ import {
   screen,
 } from '@testing-library/react';
 
-import { MemoryRouter } from 'react-router-dom';
-import { RecoilRoot } from 'recoil';
-
 import Header from './Header';
+import { createReduxWrapper } from '../../test-util';
+import { MemoryRouter } from 'react-router-dom';
 
 jest.mock('shogunApplicationConfig', () => ({
   path: {
@@ -32,12 +31,11 @@ describe('<Header />', () => {
     const {
       container
     } = render(
-      <RecoilRoot>
-        <MemoryRouter>
-          <Header />
-        </MemoryRouter>
-      </RecoilRoot>
-    );
+      <MemoryRouter>
+        <Header />
+      </MemoryRouter>, {
+      wrapper: createReduxWrapper()
+    });
     expect(container).toBeVisible();
     expect(container.querySelector('.page-header')).toBeVisible();
   });
@@ -46,12 +44,11 @@ describe('<Header />', () => {
     const {
       container
     } = render(
-      <RecoilRoot>
-        <MemoryRouter>
-          <Header />
-        </MemoryRouter>
-      </RecoilRoot>
-    );
+      <MemoryRouter>
+        <Header />
+      </MemoryRouter>, {
+      wrapper: createReduxWrapper()
+    });
     expect(container).toBeVisible();
 
     const logoElem = container.querySelector('.header-logo');
@@ -64,12 +61,11 @@ describe('<Header />', () => {
     const {
       container
     } = render(
-      <RecoilRoot>
-        <MemoryRouter>
-          <Header />
-        </MemoryRouter>
-      </RecoilRoot>
-    );
+      <MemoryRouter>
+        <Header />
+      </MemoryRouter>, {
+      wrapper: createReduxWrapper()
+    });
     expect(container).toBeVisible();
 
     const titleElement = screen.getByText('SHOGun Admin');
@@ -82,12 +78,11 @@ describe('<Header />', () => {
     const {
       container
     } = render(
-      <RecoilRoot>
-        <MemoryRouter>
-          <Header />
-        </MemoryRouter>
-      </RecoilRoot>
-    );
+      <MemoryRouter>
+        <Header />
+      </MemoryRouter>, {
+      wrapper: createReduxWrapper()
+    });
     expect(container).toBeVisible();
 
     expect(container.querySelector('.language-select')).toBeVisible();

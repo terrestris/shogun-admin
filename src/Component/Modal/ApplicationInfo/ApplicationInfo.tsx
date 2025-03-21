@@ -8,13 +8,14 @@ import {
 } from 'antd';
 import { ModalProps } from 'antd/lib/modal';
 import { useTranslation } from 'react-i18next';
-import { useRecoilState } from 'recoil';
 
 import defaultLogo from '../../../../assets/img/shogun_logo.png';
+import useAppDispatch from '../../../Hooks/useAppDispatch';
+import useAppSelector from '../../../Hooks/useAppSelector';
 import {
   useClientVersion
 } from '../../../Hooks/useClientVersion';
-import { appInfoAtom, shogunInfoModalVisibleAtom } from '../../../State/atoms';
+import { setVisible } from '../../../store/infoModal';
 
 export interface ApplicationInfoProps extends ModalProps { }
 
@@ -26,11 +27,13 @@ export const ApplicationInfo: React.FC<ApplicationInfoProps> = ({
     t
   } = useTranslation();
 
-  const [isVisible, setVisible] = useRecoilState(shogunInfoModalVisibleAtom);
-  const [appInfo] = useRecoilState(appInfoAtom);
+  const isVisible = useAppSelector(state => state.infoModal);
+  const appInfo = useAppSelector(state => state.appInfo);
+
+  const dispatch = useAppDispatch();
 
   const toggleVisibility = () => {
-    setVisible(!isVisible);
+    dispatch(setVisible(!isVisible));
   };
 
   return (

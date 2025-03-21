@@ -23,6 +23,8 @@ export const EvictCache: React.FC<EvictCacheProps> = ({
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
+  const [messageApi, contextHolder] = message.useMessage();
+
   const client = useSHOGunAPIClient();
 
   const {
@@ -35,9 +37,9 @@ export const EvictCache: React.FC<EvictCacheProps> = ({
     try {
       await client?.cache().evictCache();
 
-      message.success('Successfully cleared the cache');
+      messageApi.success(t('EvictCache.success'));
     } catch (error) {
-      message.error('Could not clear the cache');
+      messageApi.error(t('EvictCache.error'));
       logger.error(`Could not clear the cache due to the following error: ${error}`);
     }
 
@@ -49,14 +51,17 @@ export const EvictCache: React.FC<EvictCacheProps> = ({
   }
 
   return (
-    <Button
-      onClick={onClearCacheClick}
-      loading={isLoading}
-      icon={<ClearOutlined />}
-      {...passThroughProps}
-    >
-      {t('EvictCache.clear')}
-    </Button>
+    <>
+      {contextHolder}
+      <Button
+        onClick={onClearCacheClick}
+        loading={isLoading}
+        icon={<ClearOutlined />}
+        {...passThroughProps}
+      >
+        {t('EvictCache.clear')}
+      </Button>
+    </>
   );
 };
 

@@ -4,30 +4,23 @@ import {
   render,
   screen,
   fireEvent,
+  waitFor,
+  act,
 } from '@testing-library/react';
 
 import { useTranslation } from 'react-i18next';
-import { useRecoilState } from 'recoil';
 
 import useSHOGunAPIClient from '../../../Hooks/useSHOGunAPIClient';
 import UserUtil from '../../../Util/UserUtil';
 
 import { User } from './User';
+import { createReduxWrapper } from '../../../test-util';
+import { store } from '../../../store/store';
+import { setUserInfo } from '../../../store/userInfo';
 
 jest.mock('react-i18next', () => ({
   useTranslation: jest.fn()
 }));
-
-jest.mock('recoil', () => {
-  const actualRecoil = jest.requireActual('recoil');
-
-  return {
-    ...actualRecoil,
-    useRecoilState: jest.fn(),
-    useRecoilValue: jest.fn(),
-    useSetRecoilState: jest.fn(),
-  };
-});
 
 jest.mock('../../../Hooks/useSHOGunAPIClient', () => jest.fn());
 jest.mock('../../../Util/UserUtil', () => ({
@@ -51,14 +44,8 @@ describe('<User />', () => {
     authProviderId: 'testuser'
   };
 
-  const mockSetInfoVisible = jest.fn();
-
   beforeEach(() => {
     (useSHOGunAPIClient as jest.Mock).mockReturnValue(mockClient);
-    (useRecoilState as jest.Mock)
-      .mockReturnValueOnce([mockUserInfo, jest.fn()])
-      .mockReturnValueOnce([false, mockSetInfoVisible]);
-
     (useTranslation as jest.Mock).mockReturnValue({
       t: (key: string) => key
     });
@@ -75,48 +62,95 @@ describe('<User />', () => {
     expect(User).not.toBeUndefined();
   });
 
-  it('should render user avatar and username', () => {
-    render(<User />);
+  it('should render user avatar and username', async () => {
+    render(
+      <User />, {
+        wrapper: createReduxWrapper()
+      }
+    );
+
+    act(() => {
+      store.dispatch(setUserInfo(mockUserInfo));
+    });
 
     expect(screen.getByText('testuser')).toBeInTheDocument();
     expect(screen.getByRole('img')).toHaveAttribute('src', 'gravatar-url');
   });
 
-  it('opens the dropdown menu with correct items', () => {
-    render(<User />);
+  it('opens the dropdown menu with correct items', async () => {
+    render(
+      <User />, {
+        wrapper: createReduxWrapper()
+      }
+    );
+
+    act(() => {
+      store.dispatch(setUserInfo(mockUserInfo));
+    });
 
     fireEvent.click(screen.getByRole('img'));
 
-    expect(screen.getByText('User.settings')).toBeInTheDocument();
-    expect(screen.getByText('User.info')).toBeInTheDocument();
-    expect(screen.getByText('User.logout')).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByText('User.settings')).toBeInTheDocument();
+      expect(screen.getByText('User.info')).toBeInTheDocument();
+      expect(screen.getByText('User.logout')).toBeInTheDocument();
+    });
   });
 
-  it('should trigger account management on settings click', () => {
-    render(<User />);
+  it('should trigger account management on settings click', async () => {
+    render(
+      <User />, {
+        wrapper: createReduxWrapper()
+      }
+    );
+
+    act(() => {
+      store.dispatch(setUserInfo(mockUserInfo));
+    });
 
     fireEvent.click(screen.getByRole('img'));
     fireEvent.click(screen.getByText('User.settings'));
 
-    expect(mockClient.getKeycloak().accountManagement).toHaveBeenCalled();
+    await waitFor(() => {
+      expect(mockClient.getKeycloak().accountManagement).toHaveBeenCalled();
+    });
   });
 
-  it('shows info modal on info click', () => {
-    render(<User />);
+  it('shows info modal on info click', async () => {
+    render(
+      <User />, {
+        wrapper: createReduxWrapper()
+      }
+    );
+
+    act(() => {
+      store.dispatch(setUserInfo(mockUserInfo));
+    });
 
     fireEvent.click(screen.getByRole('img'));
     fireEvent.click(screen.getByText('User.info'));
 
-    expect(mockSetInfoVisible).toHaveBeenCalledWith(true);
-    expect(mockSetInfoVisible).toHaveBeenCalledTimes(1);
+    await waitFor(() => {
+      expect(store.getState().infoModal).toEqual(true);
+    });
   });
 
-  it('triggers logout on logout click', () => {
-    render(<User />);
+  it('triggers logout on logout click', async () => {
+    render(
+      <User />, {
+        wrapper: createReduxWrapper()
+      }
+    );
+
+    act(() => {
+      store.dispatch(setUserInfo(mockUserInfo));
+    });
 
     fireEvent.click(screen.getByRole('img'));
     fireEvent.click(screen.getByText('User.logout'));
 
-    expect(mockClient.getKeycloak().logout).toHaveBeenCalled();
+    await waitFor(() => {
+      expect(mockClient.getKeycloak().logout).toHaveBeenCalled();
+    });
   });
 });

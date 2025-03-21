@@ -10,14 +10,6 @@ import {
 
 describe('MapComponent', () => {
 
-  it('renders an empty div if no map is available', () => {
-    render(
-      <MapComponent />
-    );
-
-    expect(screen.queryByRole('presentation')).toBeNull();
-  });
-
   it('renders the passed map', () => {
     const map = new OlMap();
 

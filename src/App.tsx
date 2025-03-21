@@ -10,30 +10,34 @@ import { IDisposable, languages } from 'monaco-editor';
 import { OpenAPIV3 } from 'openapi-types';
 import { useTranslation } from 'react-i18next';
 import { BrowserRouter as Router, Navigate, Route, Routes } from 'react-router-dom';
-import { useRecoilState } from 'recoil';
 import config from 'shogunApplicationConfig';
 
 import Header from './Component/Header/Header';
 import ShogunSpinner from './Component/ShogunSpinner/ShogunSpinner';
+import useAppDispatch from './Hooks/useAppDispatch';
+import useAppSelector from './Hooks/useAppSelector';
 import useExecuteWfsDescribeFeatureType, { DescribeFeatureType } from './Hooks/useExecuteWfsDescribeFeatureType';
 import useSHOGunAPIClient from './Hooks/useSHOGunAPIClient';
 import Portal from './Page/Portal/Portal';
-import { appInfoAtom, layerSuggestionListAtom, userInfoAtom, entityIdAtom } from './State/atoms';
-import { setSwaggerDocs } from './State/static';
+import { setAppInfo } from './store/appInfo';
+import { setLayerSuggestionList } from './store/layerSuggestionList';
+import { setOpenApiDocs } from './store/openApiDocs';
+import { setUserInfo } from './store/userInfo';
 
 import ProviderResult = languages.ProviderResult;
 import CompletionList = languages.CompletionList;
 import CompletionItem = languages.CompletionItem;
 
 const App: React.FC = () => {
-  const [, setUserInfo] = useRecoilState(userInfoAtom);
-  const [, setAppInfo] = useRecoilState(appInfoAtom);
-  const [layerSuggestionList, setLayerSuggestionList] = useRecoilState(layerSuggestionListAtom);
   const [loadingState, setLoadingState] = useState<'failed' | 'loading' | 'done'>();
-  const [entityId, ] = useRecoilState(entityIdAtom);
   const [propertyNames, setPropertyNames] = useState<string[]>([]);
 
-  const disposableCompletionItemProviderRef = useRef<IDisposable>();
+  const disposableCompletionItemProviderRef = useRef<IDisposable>(null);
+
+  const layerSuggestionList = useAppSelector(state => state.layerSuggestionList);
+  const entityId = useAppSelector(state => state.entityId);
+
+  const dispatch = useAppDispatch();
 
   const client = useSHOGunAPIClient();
 
@@ -52,7 +56,7 @@ const App: React.FC = () => {
       try {
         const layers = await client?.layer().findAll();
         if (!_isNil(layers)) {
-          setLayerSuggestionList(layers.content);
+          dispatch(setLayerSuggestionList(layers.content));
         }
 
         if (disposableCompletionItemProviderRef.current) {
@@ -63,21 +67,21 @@ const App: React.FC = () => {
       }
     };
     setLayers();
-  }, [client, setLayerSuggestionList]);
+  }, [dispatch, client]);
 
   const getInitialData = useCallback(async () => {
     try {
       setLoadingState('loading');
       const swaggerDoc = await client?.openapi().getApiDocs('v3') as OpenAPIV3.Document;
-      setSwaggerDocs(swaggerDoc);
+      dispatch(setOpenApiDocs(swaggerDoc));
       const appInfo = await client?.info().getAppInfo();
       if (!_isNil(appInfo)) {
-        setAppInfo(appInfo);
+        dispatch(setAppInfo(appInfo));
       }
       if (appInfo?.userId) {
         const userInfo = await client?.user().findOne(appInfo.userId);
         if (!_isNil(userInfo)) {
-          setUserInfo(userInfo);
+          dispatch(setUserInfo(userInfo));
         }
       }
       setLoadingState('done');
@@ -85,11 +89,11 @@ const App: React.FC = () => {
       setLoadingState('failed');
       Logger.error(error);
     }
-  }, [setAppInfo, setUserInfo, client]);
+  }, [dispatch, client]);
 
   const executeWfsDescribeFeatureType = useExecuteWfsDescribeFeatureType();
 
-  const getPropertyNames = useCallback(async (layerId: number | undefined) => {
+  const getPropertyNames = useCallback(async (layerId: number | null) => {
     let response: DescribeFeatureType | undefined;
     const propNames: string[] = [];
     if (layerSuggestionList && layerId) {

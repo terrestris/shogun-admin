@@ -31,11 +31,17 @@ describe('LayerPreview', () => {
       />
     );
 
-    expect(screen.queryByRole('img')).toBeVisible();
+    const element = screen.queryByRole('img');
+
+    expect(element).toBeVisible();
+
+    if (!element) {
+      return;
+    }
 
     expect(screen.queryByRole('dialog')).toBeNull();
 
-    fireEvent.click(screen.queryByRole('img'));
+    fireEvent.click(element);
 
     expect(screen.queryByRole('dialog')).toBeVisible();
 

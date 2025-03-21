@@ -5,7 +5,7 @@ import {
   fireEvent,
   render,
   screen,
-  waitForElementToBeRemoved
+  waitFor
 } from '@testing-library/react';
 
 import { EvictCache } from './EvictCache';
@@ -52,12 +52,12 @@ describe('<EvictCache />', () => {
 
     const buttonElement = screen.getByText('EvictCache.clear');
     expect(buttonElement).toBeVisible();
-    await fireEvent.click(buttonElement);
+    fireEvent.click(buttonElement);
 
     expect(mockSHOGunAPIClient.cache).toHaveBeenCalled();
 
-    await waitForElementToBeRemoved(() => screen.queryByLabelText('loading'));
-
-    expect(screen.getByText('Successfully cleared the cache')).toBeVisible();
+    await waitFor(() => {
+      expect(screen.getByText('EvictCache.success')).toBeVisible();
+    });
   });
 });

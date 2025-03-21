@@ -98,7 +98,7 @@ describe('<InstancePermissionGrid />', () => {
   const mockToDataType = (permission: InstancePermission): DataType => ({
     key: permission.id,
     name: `Permission ${permission.id}`,
-    permission: permission.permission[0],
+    permission: permission.permission.permissions[0],
     reference: mockUser
   });
 

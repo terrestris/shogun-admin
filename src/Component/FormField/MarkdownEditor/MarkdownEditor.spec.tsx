@@ -18,11 +18,11 @@ describe('<MarkdownEditor />', () => {
     const {
       container
     } = render(
-      <MarkdownEditor
-      />);
+      <MarkdownEditor />
+    );
     expect(container).toBeVisible();
 
-    const wrapperElement = await container.querySelector('.fs-wrapper');
+    const wrapperElement = container.querySelector('.fs-wrapper');
     expect(wrapperElement).toBeVisible();
   });
 
@@ -37,9 +37,9 @@ describe('<MarkdownEditor />', () => {
 
     const textboxElement = screen.getByRole('textbox');
     expect(textboxElement.innerHTML).toBe('initial-test-value');
-    await fireEvent.input(textboxElement);
+    fireEvent.input(textboxElement);
 
-    await fireEvent.change(textboxElement, { target: { value: 'new-test-value' } });
+    fireEvent.change(textboxElement, { target: { value: 'new-test-value' } });
     expect(textboxElement.innerHTML).toBe('new-test-value');
     expect(mockFunction).toHaveBeenCalled();
   });
@@ -48,12 +48,12 @@ describe('<MarkdownEditor />', () => {
     const {
       container
     } = render(
-      <MarkdownEditor
-      />);
+      <MarkdownEditor />
+    );
     expect(container).toBeVisible();
 
     const fullscreenElement = screen.getByLabelText('fullscreen');
-    await fireEvent.click(fullscreenElement);
+    fireEvent.click(fullscreenElement);
     expect(screen.getByLabelText('fullscreen-exit')).toBeVisible();
   });
 });

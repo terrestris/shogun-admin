@@ -1,6 +1,7 @@
 import './MapComponent.less';
 
 import React, {
+  JSX,
   useCallback
 } from 'react';
 

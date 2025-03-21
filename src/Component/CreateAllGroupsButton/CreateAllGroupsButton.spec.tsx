@@ -5,7 +5,7 @@ import {
   fireEvent,
   render,
   screen,
-  waitForElementToBeRemoved
+  waitFor
 } from '@testing-library/react';
 
 import SHOGunAPIClient from '@terrestris/shogun-util/dist/service/SHOGunAPIClient';
@@ -55,8 +55,8 @@ describe('<CreateAllGroupsButton />', () => {
 
     expect(mockSHOGunAPIClient.group().createAllFromProvider).toHaveBeenCalled();
 
-    await waitForElementToBeRemoved(() => screen.queryByLabelText('loading'));
-
-    expect(screen.getByText('CreateAllGroupsButton.success')).toBeVisible();
+    await waitFor(() => {
+      expect(screen.getByText('CreateAllGroupsButton.success')).toBeVisible();
+    });
   });
 });

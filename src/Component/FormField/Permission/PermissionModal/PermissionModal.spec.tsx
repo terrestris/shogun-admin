@@ -2,18 +2,12 @@ import React from 'react';
 
 import {
   cleanup,
-  render,
-  waitFor,
-  screen,
+  render
 } from '@testing-library/react';
-
-import { DefaultOptionType } from 'antd/es/select';
 
 import User, { KeycloakUserRepresentation } from '@terrestris/shogun-util/dist/model/User';
 
 import PermissionModal from './PermissionModal';
-
-let mockToTag: (reference: User) => DefaultOptionType;
 
 const mockSetPermission = jest.fn();
 
@@ -54,7 +48,7 @@ describe('<PermissionModal />', () => {
     } =
       render(<PermissionModal
         entityId={1}
-        toTag={jest.fn(() => mockToTag(mockUser))}
+        toTag={jest.fn(() => mockUser)}
         setInstancePermission={jest.fn(() => mockSetPermission(1, 1, 'CREATE'))}
         getReferences={jest.fn()}
         descriptionText={'description'}

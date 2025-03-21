@@ -1,11 +1,19 @@
 import React from 'react';
 
-import { shogunInfoModalVisibleAtom } from '../../../State/atoms';
-import { render, screen } from '../../../test-util';
+import {
+  createReduxWrapper
+} from '../../../test-util';
 
 import ApplicationInfo from './ApplicationInfo';
 
-const recoilInitializer = (snap) => snap.set(shogunInfoModalVisibleAtom, true);
+import {
+  act,
+  render,
+  screen,
+  waitFor
+} from '@testing-library/react';
+import { setVisible } from '../../../store/infoModal';
+import { store } from '../../../store/store';
 
 const PROJECT_VERSION = '1.0.0';
 
@@ -23,27 +31,63 @@ jest.mock('react-i18next', () => ({
 describe('<ApplicationInfo />', () => {
 
   test('Modal has a title', async () => {
-    render(<ApplicationInfo />, recoilInitializer);
-    const modalTitle = await screen.getByText('ApplicationInfoModal.clientAbout');
-    expect(modalTitle).toBeDefined();
+    render(<ApplicationInfo />, {
+      wrapper: createReduxWrapper()
+    });
+
+    act(() => {
+      store.dispatch(setVisible(true));
+    });
+
+    await waitFor(() => {
+      const modalTitle = screen.getByText('ApplicationInfoModal.clientAbout');
+      expect(modalTitle).toBeDefined();
+    });
   });
 
   test('Modal contains Build-Info', async () => {
-    render(<ApplicationInfo />, recoilInitializer);
-    const buildInfo = await screen.getByText('ApplicationInfoModal.backendVersion');
-    expect(buildInfo).toBeDefined();
+    render(<ApplicationInfo />, {
+      wrapper: createReduxWrapper()
+    });
+
+    act(() => {
+      store.dispatch(setVisible(true));
+    });
+
+    await waitFor(() => {
+      const buildInfo = screen.getByText('ApplicationInfoModal.backendVersion');
+      expect(buildInfo).toBeDefined();
+    });
   });
 
   test('Modal contains Version-Info', async () => {
-    render(<ApplicationInfo />, recoilInitializer);
-    const versionInfo = await screen.getByText('ApplicationInfoModal.backendVersion');
-    expect(versionInfo).toBeDefined();
+    render(<ApplicationInfo />, {
+      wrapper: createReduxWrapper()
+    });
+
+    act(() => {
+      store.dispatch(setVisible(true));
+    });
+
+    await waitFor(() => {
+      const versionInfo = screen.getByText('ApplicationInfoModal.backendVersion');
+      expect(versionInfo).toBeDefined();
+    });
   });
 
   test('Modal contains Admin-Client-Version-Info', async () => {
-    render(<ApplicationInfo />, recoilInitializer);
-    const adminClientVersionInfo = await screen.getByText('ApplicationInfoModal.clientVersion');
+    render(<ApplicationInfo />, {
+      wrapper: createReduxWrapper()
+    });
+
+    act(() => {
+      store.dispatch(setVisible(true));
+    });
+
+    await waitFor(() => {
+      const adminClientVersionInfo = screen.getByText('ApplicationInfoModal.clientVersion');
     expect(adminClientVersionInfo).toBeDefined();
+    });
   });
 
 });

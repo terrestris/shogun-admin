@@ -6,14 +6,13 @@ import {
   fireEvent,
 } from '@testing-library/react';
 
-import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
 import { MetricsRoot } from './MetricsRoot';
 
 jest.mock('react-i18next', () => ({
   useTranslation: () => ({
-    t: (key) => key,
+    t: (key: any) => key,
   }),
 }));
 

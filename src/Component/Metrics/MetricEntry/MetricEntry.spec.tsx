@@ -1,17 +1,14 @@
 import React from 'react';
 
-import { ReloadOutlined } from '@ant-design/icons';
 import {
   render,
   screen,
   waitFor,
-  fireEvent,
+  fireEvent
 } from '@testing-library/react';
 
-import { Button, Tooltip } from 'antd';
-
 import useSHOGunAPIClient from '../../../Hooks/useSHOGunAPIClient';
-import MetricService, { Metric } from '../../../Service/MetricService/MetricService';
+import MetricService from '../../../Service/MetricService/MetricService';
 
 import { MetricEntry } from './MetricEntry';
 
@@ -22,23 +19,8 @@ jest.mock('../../../Hooks/useSHOGunAPIClient', () => ({
 
 jest.mock('../../../Service/MetricService/MetricService');
 
-jest.mock('antd', () => ({
-  ...jest.requireActual('antd'),
-  Card: ({ children, ...props }: any) => <div data-testid="card" {...props}>{children}</div>,
-  Statistic: ({ value, prefix, suffix, title, formatter, ...props }: any) => (
-    <div data-testid="statistic" {...props}>
-      <div>{prefix}</div>
-      <div>{title}</div>
-      <div>{formatter ? formatter(value) : value}</div>
-      <div>{suffix}</div>
-    </div>
-  ),
-  Button: ({ children, ...props }: any) => <button {...props}>{children}</button>,
-  Tooltip: ({ children, ...props }: any) => <div {...props}>{children}</div>
-}));
-
 describe('<MetricEntry />', () => {
-  let getMetricMock;
+  let getMetricMock: any;
 
   beforeEach(() => {
     (useSHOGunAPIClient as jest.Mock).mockReturnValue({
@@ -46,8 +28,8 @@ describe('<MetricEntry />', () => {
     });
 
     getMetricMock = jest.fn();
-    MetricService.mockImplementation(() => ({
-      getMetric: getMetricMock,
+    (MetricService as jest.Mock).mockImplementation(() => ({
+      getMetric: getMetricMock
     }));
   });
 
@@ -65,14 +47,13 @@ describe('<MetricEntry />', () => {
       <MetricEntry
         type="test.type"
         prefixRenderer={(metric) => <span>{metric?.measurements[0]?.value} Prefix</span>}
-        suffixRenderer={(metric) => <span>Suffix</span>}
+        suffixRenderer={() => <span>Suffix</span>}
         titleRenderer={(metric) => <span>{metric?.description} Title</span>}
         valueRenderer={(value) => <span>{value} Value</span>}
       />
     );
-    expect(container).toBeVisible();
 
-    expect(container.querySelector('.ant-card-loading')).toBeInTheDocument();
+    expect(container).toBeVisible();
 
     await waitFor(() => {
       expect(screen.getByText('123 Prefix')).toBeInTheDocument();

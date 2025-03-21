@@ -302,7 +302,7 @@ export function GeneralEntityTable<T extends BaseEntity>({
         filterConfirm: t('Table.filterConfirm'),
         filterReset: t('Table.filterReset'),
         filterEmptyText: t('Table.filterEmptyText'),
-        filterCheckall: t('Table.filterCheckall'),
+        filterCheckAll: t('Table.filterCheckall'),
         filterSearchPlaceholder: t('Table.filterSearchPlaceholder'),
         emptyText: t('Table.emptyText'),
         selectAll: t('Table.selectAll'),
