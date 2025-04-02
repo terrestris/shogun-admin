@@ -57,7 +57,7 @@
     "ol": "10.4.0",
     "ol-mapbox-style": "12.4.1",
     "react": "19.0.0",
-    "react-dom": "19.0.0",
+    "react-dom": "19.1.0",
     "react-hotkeys-hook": "4.6.1",
     "react-i18next": "15.4.1",
     "react-router-dom": "6.27.0",
