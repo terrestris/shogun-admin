@@ -1,5 +1,7 @@
 .json-editor {
   height: 100%;
+  display: flex;
+  flex-direction: column;
 
   .json-editor-toolbar {
     display: flex;
@@ -19,6 +21,11 @@
 
     .monaco-editor {
       min-height: 10em;
+      height: 100% !important;
+
+      .overflow-guard {
+        height: 100% !important;
+      }
     }
   }
 }
