@@ -58,7 +58,7 @@
     "ol-mapbox-style": "12.4.1",
     "react": "19.0.0",
     "react-dom": "19.0.0",
-    "react-hotkeys-hook": "4.6.1",
+    "react-hotkeys-hook": "5.0.1",
     "react-i18next": "15.5.1",
     "react-router-dom": "6.27.0",
     "shapefile.js": "1.1.4"
