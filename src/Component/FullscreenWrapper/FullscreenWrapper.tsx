@@ -1,66 +1,116 @@
+import React, {
+  useCallback,
+  useEffect,
+  useRef,
+  useState
+} from 'react';
+
+import {
+  FullscreenExitOutlined,
+  FullscreenOutlined
+} from '@ant-design/icons';
+
+import {
+  Button,
+  Tooltip
+} from 'antd';
+
+import {
+  useHotkeys
+} from 'react-hotkeys-hook';
+
+import {
+  useTranslation
+} from 'react-i18next';
+
 import './FullscreenWrapper.less';
-
-import React, { useRef, useState } from 'react';
-
-import { FullscreenExitOutlined, FullscreenOutlined } from '@ant-design/icons';
-import { Button, Tooltip } from 'antd';
-import { useHotkeys } from 'react-hotkeys-hook';
-import { useTranslation } from 'react-i18next';
 
 export const FullscreenWrapper: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
   children
 }) => {
-  const [fullscreen, setFullscreen] = useState<boolean>(false);
-  const [minimizedHeight, setMinimizedHeight] = useState<string>('10em');
+  const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
   const elementRef = useRef<HTMLDivElement>(null);
 
   const {
     t
   } = useTranslation();
 
-  const toggleFullscreen = () => {
+  const updateSize = useCallback(() => {
     const contentEl = document.querySelector('.content');
     const leftContainerEl = document.querySelector('.content .left-container');
-    const shouldBeFullScreen = !fullscreen;
     const element = elementRef.current;
+
     if (!element) {
       return;
     }
-    if (contentEl && leftContainerEl && shouldBeFullScreen) {
-      setMinimizedHeight(element.getBoundingClientRect().height + 'px');
+
+    if (contentEl && leftContainerEl && isFullscreen) {
       const contentDimensions = contentEl.getBoundingClientRect();
       const leftContainerDimensions = leftContainerEl.getBoundingClientRect();
-      element.style.left = `${contentDimensions.left}px`;
+      element.style.left = `${contentDimensions.left + 2}px`;
       element.style.top = `${leftContainerDimensions.top}px`;
-      element.style.width = `${contentDimensions.width}px`;
-      element.style.height = `${leftContainerDimensions.height}px`;
+      element.style.width = `${contentDimensions.width - 6}px`;
+      element.style.height = `${leftContainerDimensions.height - 4}px`;
     } else {
       element.style.left = '';
       element.style.top = '';
       element.style.width = '';
-      element.style.height = minimizedHeight;
+      element.style.height = '20em';
     }
-    setFullscreen(shouldBeFullScreen);
+  }, [isFullscreen]);
+
+  const onResize = useCallback(() => {
+    updateSize();
+  }, [updateSize]);
+
+  useEffect(() => {
+    const leftContainerEl = document.querySelector('.content .left-container');
+
+    if (!leftContainerEl) {
+      return;
+    }
+
+    const resizeObserver = new ResizeObserver(onResize);
+
+    resizeObserver.observe(leftContainerEl);
+
+    return () => {
+      resizeObserver.disconnect();
+    };
+  }, [onResize]);
+
+  useEffect(() => {
+    updateSize();
+  }, [updateSize]);
+
+  const toggleFullscreen = () => {
+    setIsFullscreen(!isFullscreen);
   };
 
-  /**
-   * Exit fullscreen when Esc is pressed.
-   */
-  useHotkeys('esc', toggleFullscreen, {
-    enabled: () => fullscreen,
-    enableOnFormTags: ['INPUT', 'TEXTAREA', 'SELECT']
-  });
+  const onEscapeClick = () => {
+    toggleFullscreen();
+  };
 
-  const wrapperCls = `fs-wrapper${fullscreen ? ' fullscreen' : ''}`;
+  useHotkeys('esc', onEscapeClick, {
+    enabled: isFullscreen,
+    enableOnFormTags: ['INPUT', 'TEXTAREA', 'SELECT']
+  }, [isFullscreen]);
+
+  const wrapperCls = `fs-wrapper${isFullscreen ? ' fullscreen' : ''}`;
 
   return (
-    <div className={wrapperCls} ref={elementRef}>
+    <div
+      className={wrapperCls}
+      ref={elementRef}
+    >
       <Tooltip
-        title={fullscreen ? t('FullscreenWrapper.leaveFullscreen') : t('FullscreenWrapper.fullscreen') }
+        title={isFullscreen ? t('FullscreenWrapper.leaveFullscreen') : t('FullscreenWrapper.fullscreen') }
         placement='left'
+        mouseEnterDelay={1.0}
+        mouseLeaveDelay={0.0}
       >
         <Button
-          icon={fullscreen ? <FullscreenExitOutlined /> : <FullscreenOutlined />}
+          icon={isFullscreen ? <FullscreenExitOutlined /> : <FullscreenOutlined />}
           size='small'
           onClick={toggleFullscreen}
         />
