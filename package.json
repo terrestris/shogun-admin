@@ -41,7 +41,7 @@
     "@casualbot/jest-sonar-reporter": "2.4.0",
     "@monaco-editor/react": "4.7.0",
     "@terrestris/base-util": "3.0.0",
-    "@terrestris/ol-util": "21.1.1",
+    "@terrestris/ol-util": "21.3.0",
     "@terrestris/shogun-util": "10.5.2",
     "@uiw/react-md-editor": "4.0.5",
     "antd": "5.24.9",
