@@ -49,7 +49,7 @@ export const CreateAllUsersButton: React.FC<CreateAllUsersButtonProps> = ({
 
       onSuccess?.();
     } catch (error) {
-      messageApi.success(t('CreateAllUsersButton.error'));
+      messageApi.error(t('CreateAllUsersButton.error'));
 
       Logger.error('Error while creating the users: ', error);
 
