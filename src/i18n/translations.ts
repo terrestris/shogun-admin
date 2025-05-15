@@ -599,19 +599,19 @@ export default {
         title: 'Create layer'
       },
       CreateAllUsersButton: {
-        title: 'Add users',
+        title: 'Synchronize users',
         tooltip: 'Add all missing users from the user provider',
         success: 'Successfully created all users',
         error: 'Could not create the users'
       },
       CreateAllGroupsButton: {
-        title: 'Add groups',
+        title: 'Synchronize groups',
         tooltip: 'Add all missing groups from the group provider',
         success: 'Successfully created all groups',
         error: 'Could not create the groups'
       },
       CreateAllRolesButton: {
-        title: 'Add roles',
+        title: 'Synchronize roles',
         tooltip: 'Add all missing roles from the role provider',
         success: 'Successfully created all roles',
         error: 'Could not create the roles'
