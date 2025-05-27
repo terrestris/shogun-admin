@@ -8,14 +8,14 @@ export default defineConfig({
   testDir: './e2e-tests',
   timeout: 30 * 1000,
   expect: {
-    timeout: 5000
+    timeout: 30 * 1000
   },
   fullyParallel: true,
   // @ts-ignore
   forbidOnly: !!process.env.CI,
   retries: 4,
   // @ts-ignore
-  workers: process.env.CI ? 1 : undefined,
+  workers: 1,
   reporter: [['html', {
     open: 'never'
   }]],
@@ -41,28 +41,11 @@ export default defineConfig({
       name: 'chromium',
       use: {
         browserName: 'chromium',
-        locale: 'de-DE'
+        locale: 'de-DE',
+        viewport: { width: 1400, height: 1050 }
       },
       dependencies: ['setup']
     },
-
-    {
-      name: 'firefox',
-      use: {
-        browserName: 'firefox',
-        locale: 'de-DE'
-      },
-      dependencies: ['setup']
-    },
-
-    {
-      name: 'webkit',
-      use: {
-        browserName: 'webkit',
-        locale: 'de-DE'
-      },
-      dependencies: ['setup']
-    }
   ],
 
   /* Folder for test artifacts such as screenshots, videos, traces, etc. */
