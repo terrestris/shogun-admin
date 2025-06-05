@@ -3,7 +3,7 @@ import { test, expect } from '@playwright/test';
 // import { globalConfig } from '@terrestris/shogun-e2e-tests/dist/shogun-admin-client/globalConfig';
 
 export const globalConfig = async (page: any) => {
-    await page.waitForTimeout(3000);
+    await page.waitForLoadState('networkidle');
     const languageIndicator = page.locator('#root').getByText('DE').isVisible();
     if (languageIndicator) {
         await page.locator('.language-select').click();

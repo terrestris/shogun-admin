@@ -2,9 +2,10 @@ import { test } from '@playwright/test';
 
 // import { applicationsPage } from '@terrestris/shogun-e2e-tests/dist/shogun-admin-client/applicationsPage';
 import { expect } from '@playwright/test';
+import { deleteAllRowsWithText } from './helpers';
 
 export const applicationsPage = async (page: any) => {
-  await page.waitForTimeout(3000);
+  await page.waitForLoadState('networkidle');
   const languageIndicator = page.locator('#root').getByText('DE').isVisible();
   if (languageIndicator) {
     await page.locator('.language-select').click();
@@ -96,11 +97,8 @@ export const applicationsPage = async (page: any) => {
   await page.goto('/admin/portal');
   await page.getByRole('menuitem', { name: 'bank Application' }).locator('span').first().click();
 
-  await page.getByRole('row', { name: 'Test Application Playwright EDITED' }).locator('div svg').nth(1).click();
-  await expect(page.getByText('Delete Entity')).toBeVisible();
-  await page.getByRole('dialog').getByRole('textbox').fill('Test Application Playwright EDITED');
-  await page.getByRole('button', { name: 'OK' }).click();
-  await expect(page.getByText('Delete successful')).toBeVisible();
+  await page.waitForSelector('.ant-table-row', { state: 'visible' });
+  await deleteAllRowsWithText(page, 'Test Application Playwright EDITED');
 };
 
 test.use({

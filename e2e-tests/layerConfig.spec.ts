@@ -1,10 +1,11 @@
 import { test, expect } from '@playwright/test';
-import { findElementInPaginatedTable } from './helpers';
+import { deleteAllRowsWithText, findElementInPaginatedTable } from './helpers';
 
 // import { layerConfig } from '@terrestris/shogun-e2e-tests/dist/shogun-admin-client/layerConfig';
 
 export const layerConfig = async (page: any) => {
-  await page.waitForSelector('.header-logo', { state: 'visible', timeout: 60000 }); 
+  await page.waitForLoadState('networkidle');
+  await page.waitForSelector('.header-logo', { state: 'visible', timeout: 60000 });
   const logo = await page.locator('.header-logo');
   await expect(logo).toBeVisible();
   await expect(page.locator('.language-select')).toBeVisible();
@@ -14,7 +15,7 @@ export const layerConfig = async (page: any) => {
     await page.locator('.ant-select-item-option-content').getByText('EN', { exact: true }).click();
   }
 
-  await page.waitForSelector('.user-menu', { state: 'visible', timeout: 60000 }); 
+  await page.waitForSelector('.user-menu', { state: 'visible', timeout: 60000 });
   await expect(page.locator('.user-menu')).toBeVisible();
 
   await page.getByText('Layers', { exact: true }).first().click();
@@ -27,6 +28,10 @@ export const layerConfig = async (page: any) => {
   const rowContentLayer = await findElementInPaginatedTable(page, 'Test layerConfig Layer Playwright')
   const layerID: string = rowContentLayer.match(/\d+/)?.[0];
 
+  if (!layerID) {
+    throw new Error('Layer ID could not be extracted from row content.');
+  }
+
   await page.getByRole('menuitem', { name: 'bank Application' }).locator('span').first().click();
   await page.getByRole('button', { name: 'form Create Application' }).click();
   await page.getByLabel('Name').fill('Test layerConfig Application Playwright');
@@ -36,29 +41,28 @@ export const layerConfig = async (page: any) => {
     + '.ant-form-item-control-input-content > .fs-wrapper > .json-editor > section > div > .monaco-editor >'
     + '.overflow-guard > div:nth-child(2) > .lines-content > .view-lines > .view-line';
   await page.locator(jsonEditor).click();
-  // eslint-disable-next-line no-shadow
+  await page.waitForLoadState('networkidle'); 
   await page.evaluate((layerID) => {
     navigator.clipboard.writeText(`{
-      "title": "root",
-      "children": [
-        {
-          "title": "Test Layer",
-          "checked": true,
-          "layerId": ${layerID}
-        }
-      ]
-    }
-      `);
+        "title": "root",
+        "children": [
+          {
+            "title": "Test Layer",
+            "checked": true,
+            "layerId": ${layerID}
+          }
+        ]
+      }
+        `);
   }, layerID);
   await page.bringToFront();
   await page.keyboard.press('Control+V');
-
   await page.getByRole('button', { name: 'save Save Application' }).click();
   await expect(page.getByText('Application successfully saved').first()).toBeVisible();
   await page.locator('.ant-notification-notice-close').click();
   await expect(page.getByTitle(/^Configure Tools$/)).toBeVisible();
 
-  
+
   const targetRow = await page.locator('.ant-table-row').filter({
     hasText: 'Test layerConfig Application Playwright'
   }).first();
@@ -68,41 +72,17 @@ export const layerConfig = async (page: any) => {
   await page.goto(`/client/?applicationId=${applicationID}`);
   await expect(page.locator('#map')).toBeVisible();
   await page.getByRole('button', { name: 'collapsed Maps', exact: true }).click();
-  await expect(page.getByText('Test Layer')).toBeVisible();
+  await expect(page.getByText('Test Layer', { exact: true })).toBeVisible();
 
   await page.goto('/admin/portal');
   await page.getByRole('menuitem', { name: 'bank Application' }).locator('span').first().click();
-  await page.getByRole('row', { name: 'Test layerConfig Application Playwright' }).locator('div svg').nth(1).click();
-  await expect(page.getByText('Delete Entity')).toBeVisible();
-  await page.getByRole('dialog').getByRole('textbox').fill('Test layerConfig Application Playwright');
-  await page.getByRole('button', { name: 'OK' }).click();
-  await expect(page.getByText('Delete successful')).toBeVisible();
+  await page.waitForSelector('.ant-table-row', { state: 'visible' });
+  await deleteAllRowsWithText(page, 'Test layerConfig Application Playwright');
 
   await page.getByText('Layers', { exact: true }).first().click();
-  let pageNumber = 2;
-  let elementFound = false;
 
-  while (!elementFound) {
-    try {
-      const targetElement = page.getByRole('row', { name: 'Test layerConfig Layer Playwright' }).first().locator('div svg');
-      await targetElement.waitFor({ state: 'visible', timeout: 2000 }); 
-      await targetElement.click();
-      elementFound = true; 
-    } catch (error) {
-      const pageButton = page.getByText(pageNumber.toString(), { exact: true });
-      await pageButton.click();
-      pageNumber++;
-
-        if (pageNumber > 10) { 
-        throw new Error('Element not found after checking all pages.');
-      }
-    }
-  }
-  
-  await expect(page.getByText('Delete Entity')).toBeVisible();
-  await page.getByRole('dialog').getByRole('textbox').fill('Test layerConfig Layer Playwright');
-  await page.getByRole('button', { name: 'OK' }).click();
-  await expect(page.getByText('Delete successful')).toBeVisible();
+  await page.waitForSelector('.ant-table-row', { state: 'visible' });
+  await deleteAllRowsWithText(page, 'Test layerConfig Layer Playwright');
 };
 
 test.use({

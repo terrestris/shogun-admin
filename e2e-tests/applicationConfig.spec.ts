@@ -1,10 +1,11 @@
 import { test, expect } from '@playwright/test';
-import { findElementInPaginatedTable } from './helpers';
+import { deleteAllRowsWithText, findElementInPaginatedTable } from './helpers';
 import { time } from 'console';
 
 // import { applicationConfig } from '@terrestris/shogun-e2e-tests/dist/shogun-admin-client/applicationConfig';
 
 export const applicationConfig = async (page: any) => {
+  await page.waitForLoadState('networkidle');
   await page.waitForSelector('.header-logo', { state: 'visible', timeout: 60000 });
   const logo = await page.locator('.header-logo');
   await expect(logo).toBeVisible();
@@ -153,43 +154,16 @@ export const applicationConfig = async (page: any) => {
   await page.waitForSelector('.header-logo', { state: 'visible', timeout: 60000 });
   await page.getByRole('menuitem', { name: 'bank Application' }).locator('span').first().click();
 
-  await findElementInPaginatedTable(page, 'Test Config Application Playwright')
-  await page.getByRole('row', { name: 'Test Config Application Playwright' }).locator('div svg').nth(1).click();
-  await expect(page.getByText('Delete entity')).toBeVisible();
-  await page.getByRole('dialog').getByRole('textbox').fill('Test Config Application Playwright');
-  await page.getByRole('button', { name: 'OK' }).click();
-  await expect(page.getByText('Delete successful')).toBeVisible();
+  await page.waitForLoadState('networkidle');
+  await page.waitForSelector('.ant-table-row', { state: 'visible' });
+  await deleteAllRowsWithText(page, 'Test Config Application Playwright');
 
   await page.getByText('Layers', { exact: true }).first().click();
   await page.getByText('/ Page').click();
   await page.getByRole('option', { name: '10 / Page' }).locator('div').click();
   
-  let pageNumber = 2;
-  let elementFound = false;
-
-  while (!elementFound) {
-    try {
-      const targetElement = page.getByRole('row', { name: 'Test layerConfig Layer Playwright' }).first().locator('div svg');
-      await targetElement.waitFor({ state: 'visible', timeout: 2000 }); 
-      await targetElement.click();
-      elementFound = true; 
-    } catch (error) {
-      const pageButton = page.getByText(pageNumber.toString(), { exact: true }).first();
-      await pageButton.scrollIntoViewIfNeeded();
-      await pageButton.click();
-      pageNumber++;
-
-        if (pageNumber > 10) { 
-        throw new Error('Element not found after checking all pages.');
-      }
-    }
-  }
-  
-
-  await expect(page.getByText('Delete Entity')).toBeVisible();
-  await page.getByRole('dialog').getByRole('textbox').fill('Test Config Layer Playwright');
-  await page.getByRole('button', { name: 'OK' }).click();
-  await expect(page.getByText('Delete successful')).toBeVisible();
+  await page.waitForSelector('.ant-table-row', { state: 'visible' });
+  await deleteAllRowsWithText(page, 'Test Config Layer Playwright');
 };
 
 test.use({

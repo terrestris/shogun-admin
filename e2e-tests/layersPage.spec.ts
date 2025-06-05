@@ -1,9 +1,10 @@
 import { test, expect } from '@playwright/test';
+import { deleteAllRowsWithText } from './helpers';
 
 // import { layersPage } from '@terrestris/shogun-e2e-tests/dist/shogun-admin-client/layersPage';
 
 export const layersPage = async (page: any) => {
-  await page.waitForTimeout(3000);
+  await page.waitForLoadState('networkidle');
   const languageIndicator = page.locator('#root').getByText('DE').isVisible();
   if (languageIndicator) {
     await page.locator('.language-select').click();
@@ -89,11 +90,8 @@ export const layersPage = async (page: any) => {
   await page.getByText('Layers', { exact: true }).first().click();
   await expect(page.getByText('Test Layer Playwright EDITED').first()).toBeVisible();
 
-  await page.getByRole('row', { name: 'Test Layer Playwright EDITED' }).first().locator('div svg').click();
-  await expect(page.getByText('Delete Entity')).toBeVisible();
-  await page.getByRole('dialog').getByRole('textbox').fill('Test Layer Playwright EDITED');
-  await page.getByRole('button', { name: 'OK' }).click();
-  await expect(page.getByText('Delete successful')).toBeVisible();
+  await page.waitForSelector('.ant-table-row', { state: 'visible' });
+  await deleteAllRowsWithText(page, 'Test Layer Playwright EDITED');
 
   await page.getByRole('columnheader', { name: 'ID' }).click();
   await page.waitForTimeout(1000);
