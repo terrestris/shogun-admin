@@ -15,9 +15,9 @@ setup('authenticate as admin', async ({ page }) => {
   + '=code&scope=openid&nonce=72884466-0535-4a24-8c15-9e7f14d88a65');
 
   // @ts-ignore
-  await page.getByLabel('Username or email').fill(`${process.env.ADMIN_LOGIN}`);
+  await page.getByLabel('username').first().fill('shogun');
   // @ts-ignore
-  await page.getByLabel('Password').fill(`${process.env.ADMIN_PASSWORD}`);
+  await page.getByLabel('Password').first().fill('shogun');
   await page.getByRole('button', {
     name: 'Sign in'
   }).click();
