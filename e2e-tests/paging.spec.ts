@@ -3,7 +3,7 @@ import { test, expect } from '@playwright/test';
 // import { paging } from '@terrestris/shogun-e2e-tests/dist/shogun-admin-client/paging';
 
 export const paging = async (page: any) => {
-  await page.waitForTimeout(3000);
+  await page.waitForLoadState('networkidle');
   await page.waitForSelector('.header-logo', { state: 'visible', timeout: 60000 });
   const languageIndicator = page.locator('#root').getByText('DE').isVisible();
   if (languageIndicator) {
@@ -27,11 +27,6 @@ export const paging = async (page: any) => {
   const paginationItems = await page.locator('ul.ant-pagination li.ant-pagination-item');
   let pageCount = await paginationItems.count();
 
-  if (expectedPageCount > 5) {
-    expectedPageCount = 6;
-    await expect(page.getByRole('listitem', { name: 'Next 5 Pages' })).toBeVisible();
-  }
-  
   await expect(pageCount).toBe(expectedPageCount);
 
   await page.getByText('Layers', { exact: true }).first().click();

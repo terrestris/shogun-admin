@@ -3,7 +3,7 @@ import { test, expect } from '@playwright/test';
 // import { languageSelector } from '@terrestris/shogun-e2e-tests/dist/shogun-admin-client/languageSelector';
 
 export const languageSelector = async (page: any) => {
-  await page.waitForTimeout(3000);
+  await page.waitForLoadState('networkidle');
   const logo = await page.locator('.header-logo');
   await expect(logo).toBeVisible();
   const selector = await page.locator('.language-select');
@@ -47,6 +47,7 @@ test('languageSelector', async ({
 }) => {
 
   await page.goto('/admin/portal');
+  await page.waitForLoadState('networkidle');
 
   await languageSelector(page);
 

@@ -1,9 +1,10 @@
 import { test, expect } from '@playwright/test';
+import { deleteAllRowsWithText } from './helpers';
 
 // import { userPermissions } from '@terrestris/shogun-e2e-tests/dist/shogun-admin-client/userPermissions';
 
 export const userPermissions = async (page: any) => {
-    await page.waitForTimeout(3000);
+    await page.waitForLoadState('networkidle');
     const languageIndicator = page.locator('#root').getByText('DE').isVisible();
     if (languageIndicator) {
         await page.locator('.language-select').click();
@@ -33,15 +34,12 @@ export const userPermissions = async (page: any) => {
     await page.getByText('Update & Delete').click();
     await page.locator('#application').getByTitle('Update & Delete').click();
     await page.getByText('Owner').nth(1).click();
-    const deleteIcon =  page.locator('#application').locator('.ant-table').nth(2).locator('svg').nth(2);
+    const deleteIcon = page.locator('#application').locator('.ant-table').nth(2).locator('svg').nth(2);
     await expect(deleteIcon).toBeVisible();
     await deleteIcon.click();
 
-    await page.getByRole('row', { name: 'Test Application userPermission Playwright' }).locator('div svg').nth(1).click();
-    await expect(page.getByText('Delete Entity')).toBeVisible();
-    await page.getByRole('dialog').getByRole('textbox').fill('Test Application userPermission Playwright');
-    await page.getByRole('button', { name: 'OK' }).click();
-    await expect(page.getByText('Delete successful')).toBeVisible();
+    await page.waitForSelector('.ant-table-row', { state: 'visible' });
+    await deleteAllRowsWithText(page, 'Test Application userPermission Playwright');
 };
 
 test.use({

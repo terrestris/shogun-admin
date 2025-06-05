@@ -4,6 +4,7 @@ import { test } from '@playwright/test';
 import { expect } from '@playwright/test';
 
 export const userMenu = async (page: any) => {
+  await page.waitForLoadState('networkidle');
   await page.waitForSelector('.header-logo', { state: 'visible', timeout: 60000 });
   await expect(page.locator('.username')).toBeVisible();
 

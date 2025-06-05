@@ -3,6 +3,7 @@ import { test, expect } from '@playwright/test';
 // import { header } from '@terrestris/shogun-e2e-tests/dist/shogun-admin-client/header';
 
 export const header = async (page: any) => {
+  await page.waitForLoadState('networkidle');
   await page.waitForSelector('.header-logo', { state: 'visible', timeout: 60000 }); 
   const logo = await page.locator('.header-logo');
   await expect(logo).toBeVisible();
@@ -54,7 +55,7 @@ test.use({
   storageState: 'playwright/.auth/admin.json'
 });
 
-test('landingPage', async ({
+test('header', async ({
   page
 }) => {
 

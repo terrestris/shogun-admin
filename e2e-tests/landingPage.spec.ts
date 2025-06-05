@@ -3,6 +3,7 @@ import { test, expect } from '@playwright/test';
 // import { landingPage } from '@terrestris/shogun-e2e-tests/dist/shogun-admin-client/landingPage';
 
 export const landingPage = async (page: any) => {
+  await page.waitForLoadState('networkidle');
   await page.waitForSelector('.header-logo', { state: 'visible', timeout: 60000 }); 
   const logo = await page.locator('.header-logo');
   await expect(logo).toBeVisible();
@@ -49,6 +50,7 @@ test('landingPage', async ({
 }) => {
 
   await page.goto('/admin/portal');
+  await page.waitForLoadState('networkidle');
 
   await landingPage(page);
 
