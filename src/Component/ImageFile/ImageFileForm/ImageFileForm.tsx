@@ -133,7 +133,7 @@ export const ImageFileForm: React.FC<ImageFileRootProps> = () => {
           >
             {
               isPublic
-                ? <a target="_blank" href={`/imagefiles/${file?.fileUuid}`}>{file?.fileUuid}</a>
+                ? <a target="_blank" href={`${client?.getBasePath()}imagefiles/${file?.fileUuid}`}>{file?.fileUuid}</a>
                 : file?.fileUuid
             }
           </Form.Item>
