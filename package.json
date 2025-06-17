@@ -68,7 +68,7 @@
     "@babel/plugin-transform-class-properties": "7.27.1",
     "@babel/plugin-transform-optional-chaining": "7.27.1",
     "@babel/preset-env": "7.27.2",
-    "@babel/preset-react": "7.26.3",
+    "@babel/preset-react": "7.27.1",
     "@babel/preset-typescript": "7.27.1",
     "@commitlint/cli": "19.8.1",
     "@commitlint/config-conventional": "19.8.1",
