@@ -43,7 +43,7 @@
     "@terrestris/base-util": "3.0.0",
     "@terrestris/ol-util": "21.3.0",
     "@terrestris/shogun-util": "10.5.2",
-    "@uiw/react-md-editor": "4.0.5",
+    "@uiw/react-md-editor": "4.0.7",
     "antd": "5.25.4",
     "i18next": "25.2.1",
     "i18next-browser-languagedetector": "8.1.0",
