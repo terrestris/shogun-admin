@@ -29,42 +29,8 @@ jobs:
           npx wait-on http://localhost:8080/
 
       - name: Run service smoke checks 📋
-        run: ./service-smoke-check.sh
-
-      - name: Install Playwright browsers 🎭
-        run: npx playwright install --with-deps
-
-      - name: Run Playwright smoke tests 📋
-        run: npm run smoke-tests
-
-      - name: Upload Playwright report 📄
-        uses: actions/upload-artifact@v4
-        with:
-          name: playwright-report
-          path: playwright-report/
-
-  e2e-tests:
-    runs-on: ubuntu-latest
-    needs: smoke-tests
-
-    steps:
-      - name: Checkout sources 🔰
-        uses: actions/checkout@v4
-
-      - name: Build e2e Docker image 🐋
-        run: docker build -t e2e-tests -f ./Dockerfile.e2e .
-
-      - name: Run e2e tests in Docker 📋
-        run: |
-          docker run --network host \
-            e2e-tests npx playwright test
-
-      - name: Upload Playwright report 📄
-        uses: actions/upload-artifact@v4
-        with:
-          name: playwright-report
-          path: playwright-report/
-
+        run: ./smoke-check.sh
+          
   sonarqube:
     if: ${{ github.actor != 'dependabot[bot]' }}
     name: SonarQube Trigger

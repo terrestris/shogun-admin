@@ -15,22 +15,22 @@ export default defineConfig({
   forbidOnly: !!process.env.CI,
   retries: 4,
   // @ts-ignore
-  workers: 1,
+  workers: 4,
   reporter: [['html', {
     open: 'never'
   }]],
   use: {
     // @ts-ignore
     baseURL: process.env.HOST,
-    actionTimeout: 0,
+    actionTimeout: 30000,
     trace: 'on-first-retry',
     permissions: ['geolocation'],
 
     ignoreHTTPSErrors: true,
 
     viewport: {
-      width: 800,
-      height: 600
+      width: 1400,
+      height: 1050
     }
   },
 

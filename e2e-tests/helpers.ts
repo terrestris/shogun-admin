@@ -1,5 +1,41 @@
+export const login = async (
+  page: any,
+  username: string,
+  password: string,
+  path: string
+) => {
+  // @ts-ignore
+  await page.goto(
+    `${process.env.HOST}/auth/realms/SHOGun` +
+      "/protocol/openid-connect/auth?client_id=shogun-client" +
+      `&redirect_uri=${process.env.HOST}` +
+      "%2Fclient%2F%3FapplicationId%3D21&state=9a983abe-3b0c-" +
+      "41cb-9b7e-1d9120956959&response_mode=fragment&response_type" +
+      "=code&scope=openid&nonce=72884466-0535-4a24-8c15-9e7f14d88a65"
+  );
+
+  if (await page.getByLabel("username").isVisible()) {
+    // @ts-ignore
+    await page.getByLabel("username").first().fill(username);
+    // @ts-ignore
+    await page.getByLabel("Password").first().fill(password);
+    await page
+      .getByRole("button", {
+        name: "Sign in",
+      })
+      .click();
+    // Save signed-in state to 'storageState.json'.
+    await page.context().storageState({
+      path: path,
+    });
+  }
+};
+
 export const switchLanguage = async (page: any, language: string) => {
-  const languageIndicator = !(await page.locator("#root").getByText(language).isVisible());
+  const languageIndicator = !(await page
+    .locator("#root")
+    .getByText(language)
+    .isVisible());
   if (languageIndicator) {
     await page.locator(".language-select").click();
     await page
@@ -40,7 +76,6 @@ export const findElementInPaginatedTable = async (page: any, text: string) => {
   }
 
   const rowContentLayer = await targetRowLayer.innerText();
-  console.log("Found:", rowContentLayer);
   return rowContentLayer;
 };
 
@@ -51,7 +86,6 @@ export const deleteAllRowsWithText = async (page: any, text: string) => {
     try {
       rowContent = await findElementInPaginatedTable(page, text);
     } catch (error) {
-      console.log(`No more rows found with text: "${text}"`);
       break;
     }
 
@@ -59,8 +93,6 @@ export const deleteAllRowsWithText = async (page: any, text: string) => {
       hasText: text,
     });
     const rowCount = await matchingRows.count();
-
-    console.log(`Found ${rowCount} rows with text: "${text}"`);
 
     for (let i = 0; i < rowCount; i++) {
       const row = matchingRows.first();
@@ -70,6 +102,7 @@ export const deleteAllRowsWithText = async (page: any, text: string) => {
         : row.locator("div svg").first();
 
       if (await deleteButton.isVisible()) {
+        await deleteButton.scrollIntoViewIfNeeded();
         await deleteButton.click();
         await page.waitForLoadState("networkidle");
 
