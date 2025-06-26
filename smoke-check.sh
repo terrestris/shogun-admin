@@ -16,6 +16,4 @@ done
 echo "Checking app content..."
 curl -fs http://localhost:8080/ | grep -q '<title>' && echo "App content OK" || { echo "App content check FAILED"; kill $APP_PID; exit 1; }
 
-kill $APP_PID
-
 echo "Smoke test passed!"
