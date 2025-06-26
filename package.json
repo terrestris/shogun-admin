@@ -33,6 +33,7 @@
     "test": "jest --coverage --maxWorkers=50%",
     "test:watch": "jest --watch",
     "e2e-tests": "npx playwright test",
+    "smoke-tests": "npx playwright test e2e-tests/smoke.spec.ts",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
