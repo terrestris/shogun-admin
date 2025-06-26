@@ -67,6 +67,6 @@ test("languageSelector", async ({ page }) => {
 
   await languageSelector(page);
 
-  console.log("Language can be selected via the language selecter menu.");
+  console.log("Language can be selected via the language selector menu.");
   if (page) await page.close();
 });
