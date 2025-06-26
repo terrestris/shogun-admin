@@ -3,7 +3,7 @@ name: On push main
 on:
   push:
     branches:
-      - e2e-tests
+      - main
 
 jobs:
   smoke-tests:
