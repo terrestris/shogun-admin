@@ -130,6 +130,7 @@
     "ts-jest": "29.3.4",
     "typescript": "5.8.3",
     "typescript-eslint": "8.34.1",
+    "wait-on": "^8.0.3",
     "webpack-merge": "6.0.1",
     "whatwg-fetch": "3.6.20"
   },
