@@ -3,9 +3,67 @@ name: On push main
 on:
   push:
     branches:
-      - main
+      - e2e-tests
 
 jobs:
+  smoke-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout sources 🔰
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20 🧮
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies ⏬
+        run: npm ci
+
+      - name: Start admin client 🔼
+        run: npm run start
+
+      - name: Wait for backend to be ready ⌛
+        run: |
+          npx wait-on http://localhost:8080/health
+
+      - name: Run service smoke checks 📋
+        run: ./service-smoke-check.sh
+
+      - name: Install Playwright browsers 🎭
+        run: npx playwright install --with-deps
+
+      - name: Run Playwright smoke tests 📋
+        run: npm run smoke-tests 
+
+      - name: Upload Playwright report 📄
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report/
+
+  e2e-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout sources 🔰
+        uses: actions/checkout@v4
+
+      - name: Build e2e Docker image 🐋
+        run: docker build -t e2e-tests -f ./Dockerfile.e2e .
+
+      - name: Run e2e tests in Docker 📋
+        run: |
+          docker run --network host \
+            e2e-tests npm run e2e-tests
+
+      - name: Upload Playwright report 📄
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report/
+
   sonarqube:
     if: ${{ github.actor != 'dependabot[bot]' }}
     name: SonarQube Trigger
