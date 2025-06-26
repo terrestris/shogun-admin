@@ -26,7 +26,7 @@ jobs:
 
       - name: Wait for backend to be ready ⌛
         run: |
-          npx wait-on http://localhost:8080/health
+          npx wait-on http://localhost:8080/
 
       - name: Run service smoke checks 📋
         run: ./service-smoke-check.sh
