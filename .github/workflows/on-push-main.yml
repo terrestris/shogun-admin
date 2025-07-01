@@ -6,6 +6,31 @@ on:
       - main
 
 jobs:
+  smoke-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout sources 🔰
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20 🧮
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies ⏬
+        run: npm ci
+
+      - name: Start admin client 🔼
+        run: npm run start &
+
+      - name: Wait for backend to be ready ⌛
+        run: |
+          npx wait-on http://localhost:8080/
+
+      - name: Run service smoke checks 📋
+        run: ./smoke-check.sh
+          
   sonarqube:
     if: ${{ github.actor != 'dependabot[bot]' }}
     name: SonarQube Trigger
