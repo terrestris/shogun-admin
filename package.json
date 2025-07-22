@@ -110,7 +110,7 @@
     "husky": "9.1.7",
     "jest": "30.0.4",
     "jest-dom": "4.0.0",
-    "jest-environment-jsdom": "30.0.4",
+    "jest-environment-jsdom": "30.0.5",
     "less": "4.4.0",
     "less-loader": "12.3.0",
     "monaco-editor-webpack-plugin": "7.1.0",
