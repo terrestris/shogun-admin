@@ -10,7 +10,7 @@ RUN npm ci
 RUN npm run build
 
 # production environment
-FROM nginx:1.29.0-alpine-slim
+FROM nginx:1.29.1-alpine-slim
 
 RUN apk update && apk upgrade --no-cache
 
