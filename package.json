@@ -101,7 +101,7 @@
     "@typescript-eslint/parser": "8.41.0",
     "babel-plugin-import": "1.13.8",
     "buffer": "6.0.3",
-    "dotenv": "17.2.1",
+    "dotenv": "17.2.2",
     "eslint": "9.32.0",
     "eslint-plugin-import": "2.32.0",
     "eslint-plugin-react": "7.37.5",
