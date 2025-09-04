@@ -31,7 +31,7 @@ export const userMenu = async (page: any) => {
     .locator(".application-info-modal")
     .evaluate((el) => getComputedStyle(el).display);
   await expect(display).not.toBe("none");
-  await page.getByLabel("Close", { exact: true }).click();
+  await page.getByLabel("Close", { exact: true }).first().click();
 
   await page.locator(".user-menu").click();
   await expect(page.locator(".user-name")).toBeVisible();

@@ -16,9 +16,10 @@ export const userPermissions = async (page: any) => {
     .locator("span")
     .first()
     .click();
-  page.getByRole("button", { name: "form Create Application" }).click();
+   await page.getByRole("button", { name: "form Create Application" }).click();
   await page
     .getByLabel("Name")
+    .nth(1)
     .fill("Test Application userPermission Playwright");
   await page.getByRole("button", { name: "save Save Application" }).click();
   await expect(page.getByText("Application successfully saved")).toBeVisible();

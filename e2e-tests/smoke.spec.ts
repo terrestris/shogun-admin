@@ -21,7 +21,7 @@ test.describe("Frontend Smoke Checks", () => {
       page.getByRole("button", { name: "form Create Layer" })
     ).toBeVisible();
     await page.getByRole("button", { name: "form Create Layer" }).click();
-    await expect(page.getByLabel("Name")).toBeVisible();
+    await expect(page.getByLabel("Name").nth(1)).toBeVisible();
   });
 
   test("Applications page loads", async ({ page }) => {

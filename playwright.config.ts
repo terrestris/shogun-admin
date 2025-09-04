@@ -13,14 +13,15 @@ export default defineConfig({
   fullyParallel: true,
   // @ts-ignore
   forbidOnly: !!process.env.CI,
-  retries: 4,
+  retries: 0,
   // @ts-ignore
-  workers: 4,
+  workers: 1,
   reporter: [['html', {
     open: 'never'
   }]],
   use: {
     // @ts-ignore
+    headless: false,
     baseURL: process.env.HOST,
     actionTimeout: 30000,
     trace: 'on-first-retry',

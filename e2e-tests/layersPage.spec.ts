@@ -65,10 +65,10 @@ export const layersPage = async (page: any) => {
     page.locator(".ant-select-item-option-content").filter({ hasText: /^XYZ$/ })
   ).toBeVisible();
 
-  await page.getByLabel("Name").fill("Test Layer Playwright");
+  await page.getByLabel("Name").nth(1).fill("Test Layer Playwright");
   await page.getByRole("button", { name: "save Save Layer" }).click();
   await expect(page.getByText("Layer successfully saved")).toBeVisible();
-  await page.getByLabel("Close", { exact: true }).click();
+  await page.getByLabel("Close", { exact: true }).first().click();
   await page.getByText("Layers", { exact: true }).first().click();
 
   let pageNumber = 2;
@@ -101,7 +101,7 @@ export const layersPage = async (page: any) => {
   await expect(page.locator(".ol-layer")).toBeVisible();
   await expect(page.getByRole("button", { name: "+" })).toBeVisible();
   await expect(page.getByRole("button", { name: "–" })).toBeVisible();
-  await page.getByLabel("Close", { exact: true }).click();
+  await page.getByLabel("Close", { exact: true }).first().click();
 
   await page
     .getByRole("cell", { name: "Test Layer Playwright" })

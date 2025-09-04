@@ -22,10 +22,10 @@ export const layerConfig = async (page: any) => {
 
   await page.getByText("Layers", { exact: true }).first().click();
   await page.getByRole("button", { name: "form Create Layer" }).click();
-  await page.getByLabel("Name").fill("Test layerConfig Layer Playwright");
+  await page.getByLabel("Name").nth(1).fill("Test layerConfig Layer Playwright");
   await page.getByRole("button", { name: "save Save Layer" }).click();
   await expect(page.getByText("Layer successfully saved")).toBeVisible();
-  await page.getByLabel("Close", { exact: true }).click();
+  await page.getByLabel("Close", { exact: true }).first().click();
 
   const rowContentLayer = await findElementInPaginatedTable(
     page,
@@ -43,7 +43,7 @@ export const layerConfig = async (page: any) => {
     .first()
     .click();
   await page.getByRole("button", { name: "form Create Application" }).click();
-  await page.getByLabel("Name").fill("Test layerConfig Application Playwright");
+  await page.getByLabel("Name").nth(1).fill("Test layerConfig Application Playwright");
   await page.getByRole("button", { name: "fullscreen" }).nth(1).click();
   await expect(page.locator(".monaco-editor").first()).toBeVisible();
   const jsonEditor =

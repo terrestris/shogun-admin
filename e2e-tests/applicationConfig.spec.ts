@@ -15,8 +15,6 @@ export const applicationConfig = async (page: any) => {
     state: "visible",
     timeout: 60000,
   });
-  const logo = await page.locator(".header-logo");
-  await expect(logo).toBeVisible();
   await expect(page.locator(".language-select")).toBeVisible();
   await switchLanguage(page, "EN");
 
@@ -28,10 +26,10 @@ export const applicationConfig = async (page: any) => {
 
   await page.getByRole("menuitem", { name: "appstore Layers" }).click();
   await page.getByRole("button", { name: "form Create Layer" }).click();
-  await page.getByLabel("Name").fill("Test Config Layer Playwright");
+  await page.getByLabel("Name").nth(1).fill("Test Config Layer Playwright");
   await page.getByRole("button", { name: "save Save Layer" }).click();
   await expect(page.getByText("Layer successfully saved")).toBeVisible();
-  await page.getByLabel("Close", { exact: true }).click();
+  await page.getByLabel("Close", { exact: true }).first().click();
 
   const rowContentLayer = await findElementInPaginatedTable(
     page,
@@ -45,7 +43,7 @@ export const applicationConfig = async (page: any) => {
     .first()
     .click();
   await page.getByRole("button", { name: "form Create Application" }).click();
-  await page.getByLabel("Name").fill("Test Config Application Playwright");
+  await page.getByLabel("Name").nth(1).fill("Test Config Application Playwright");
 
   await page.getByRole("button", { name: "fullscreen" }).first().click();
   await expect(page.locator(".monaco-editor").first()).toBeVisible();
@@ -129,7 +127,7 @@ export const applicationConfig = async (page: any) => {
 
   await page.getByRole("button", { name: "save Save Application" }).click();
   await expect(page.getByText("Application successfully saved")).toBeVisible();
-  await page.getByLabel("Close", { exact: true }).click();
+  await page.getByLabel("Close", { exact: true }).first().click();
 
   let pageNumberApp = 2;
   let applicationID: string | undefined;

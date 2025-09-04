@@ -96,24 +96,30 @@ export const deleteAllRowsWithText = async (page: any, text: string) => {
 
     for (let i = 0; i < rowCount; i++) {
       const row = matchingRows.first();
-      await row.waitFor({ state: "visible" });
-      const deleteButton = text.includes("Application")
-        ? row.locator("div svg").nth(1)
-        : row.locator("div svg").first();
+      if (row) {
+        await row.waitFor({ state: "visible" });
+        const deleteButton = text.includes("Application")
+          ? row.locator("div svg").nth(1)
+          : row.locator("div svg").first();
 
-      if (await deleteButton.isVisible()) {
-        await deleteButton.scrollIntoViewIfNeeded();
-        await deleteButton.click();
-        await page.waitForLoadState("networkidle");
+        if (await deleteButton.isVisible()) {
+          await deleteButton.scrollIntoViewIfNeeded();
+          await deleteButton.click();
+          await page.waitForLoadState("networkidle");
+          await page.waitForSelector(".ant-modal-confirm-body", {
+            state: "visible",
+            timeout: 60000,
+          });
 
-        await page.getByRole("dialog").getByRole("textbox").fill(text);
-        await page.getByRole("button", { name: "OK" }).click();
-        await page.waitForSelector(".ant-notification-notice", {
-          state: "visible",
-        });
-        await page.waitForLoadState("networkidle");
-      } else {
-        console.log(`Delete button for row ${i + 1} is not visible.`);
+          await page.getByRole("dialog").getByRole("textbox").fill(text);
+          await page.getByRole("button", { name: "OK" }).click();
+          await page.waitForSelector(".ant-notification-notice", {
+            state: "visible",
+          });
+          await page.waitForLoadState("networkidle");
+        } else {
+          console.log(`Delete button for row ${i + 1} is not visible.`);
+        }
       }
     }
   }

@@ -54,7 +54,7 @@ export const applicationsPage = async (page: any) => {
   await expect(page.getByTitle(/^Role permissions$/)).toBeVisible();
 
   await page.getByRole("button", { name: "form Create Application" }).click();
-  await page.getByLabel("Name").fill("Test Application Playwright");
+  await page.getByLabel("Name").nth(1).fill("Test Application Playwright");
   await page.getByRole("button", { name: "save Save Application" }).click();
   await expect(page.getByText("Application successfully saved")).toBeVisible();
   await page.getByLabel("Close", { exact: true }).click();

@@ -45,7 +45,7 @@ export const header = async (page: any) => {
   await expect(page.getByText("About")).toBeVisible();
   await expect(page.getByText("Admin version")).toBeVisible();
   await expect(page.getByText("Backend version")).toBeVisible();
-  await page.getByLabel("Close", { exact: true }).click();
+  await page.getByLabel("Close", { exact: true }).first().click();
   await expect(page.getByLabel("About").locator("img")).not.toBeVisible();
 
   await page.locator(".user-menu").click();
