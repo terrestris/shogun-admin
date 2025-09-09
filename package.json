@@ -76,7 +76,7 @@
     "@eslint/js": "9.32.0",
     "@module-federation/enhanced": "0.18.3",
     "@playwright/test": "1.55.0",
-    "@reduxjs/toolkit": "2.8.2",
+    "@reduxjs/toolkit": "2.9.0",
     "@rspack/cli": "1.5.2",
     "@rspack/core": "1.5.2",
     "@rspack/plugin-react-refresh": "1.4.3",
