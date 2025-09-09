@@ -61,7 +61,7 @@
     "react-hotkeys-hook": "5.1.0",
     "react-i18next": "15.6.1",
     "react-router-dom": "6.27.0",
-    "shapefile.js": "1.1.4"
+    "shapefile.js": "1.2.1"
   },
   "devDependencies": {
     "@babel/core": "7.28.4",
