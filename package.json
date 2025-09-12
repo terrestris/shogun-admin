@@ -44,7 +44,7 @@
     "@terrestris/ol-util": "21.3.0",
     "@terrestris/shogun-util": "10.7.0",
     "@uiw/react-md-editor": "4.0.8",
-    "antd": "5.26.7",
+    "antd": "5.27.3",
     "i18next": "25.5.2",
     "i18next-browser-languagedetector": "8.2.0",
     "js-logger": "1.6.1",
