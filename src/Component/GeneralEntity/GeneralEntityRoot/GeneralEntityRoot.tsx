@@ -16,7 +16,8 @@ import {
   Button,
   Form,
   notification,
-  Modal
+  Modal,
+  Select
 } from 'antd';
 import {
   TableProps,
@@ -28,6 +29,7 @@ import {
 import i18next from 'i18next';
 import _isEmpty from 'lodash/isEmpty';
 import _isNil from 'lodash/isNil';
+import moment from 'moment';
 import {
   NamePath
 } from 'rc-field-form/lib/interface';
@@ -50,6 +52,7 @@ import config from 'shogunApplicationConfig';
 import Logger from '@terrestris/base-util/dist/Logger';
 import BaseEntity from '@terrestris/shogun-util/dist/model/BaseEntity';
 
+import { RevisionEntry } from '@terrestris/shogun-util/dist/model/Revision';
 import { PageOpts } from '@terrestris/shogun-util/dist/service/GenericService';
 
 import { GeneralEntityRootProvider } from '../../../Context/GeneralEntityRootContext';
@@ -58,7 +61,8 @@ import {
 } from '../../../Controller/ControllerUtil';
 import {
   FormValues,
-  GenericEntityController
+  GenericEntityController,
+  LoadEntityResponse
 } from '../../../Controller/GenericEntityController';
 import useAppDispatch from '../../../Hooks/useAppDispatch';
 import useSHOGunAPIClient from '../../../Hooks/useSHOGunAPIClient';
@@ -72,6 +76,8 @@ import GeneralEntityTable, {
 } from '../GeneralEntityTable/GeneralEntityTable';
 
 import './GeneralEntityRoot.less';
+
+const DEFAULT_DATE_FORMAT = 'DD.MM.YYYY hh:mm:ss';
 
 export interface GeneralEntityConfigType<T extends BaseEntity> {
   i18n: FormTranslations;
@@ -132,6 +138,7 @@ export function GeneralEntityRoot<T extends BaseEntity>({
 
   const [id, setId] = useState<number | 'create'>();
   const [editEntity, setEditEntity] = useState<T>();
+  const [editRevisions, setEditRevisions] = useState<RevisionEntry<T>[]>();
   const [allEntities, setEntities] = useState<T[]>();
   const [formIsDirty, setFormIsDirty] = useState<boolean>(false);
   const [formValid, setFormValid] = useState<boolean>(true);
@@ -201,10 +208,14 @@ export function GeneralEntityRoot<T extends BaseEntity>({
   const fetchEntity = useCallback(async (eId: number) => {
     try {
       setFormLoading(true);
-      const e: T = await entityController?.load(eId) as T;
-      setEditEntity(e);
+      const {
+        entity,
+        revisions
+      } = await entityController?.load(eId) as LoadEntityResponse<T>;
+      setEditEntity(entity);
       form.resetFields();
-      form.setFieldsValue(e);
+      form.setFieldsValue(entity);
+      setEditRevisions(revisions);
     } catch (error) {
       Logger.error(error);
     } finally {
@@ -459,6 +470,16 @@ export function GeneralEntityRoot<T extends BaseEntity>({
     }
   };
 
+  const handleRevisionChange = (value: number): void => {
+    const selectedRevision = editRevisions?.find(r => r.metadata.revisionNumber === value);
+
+    if (selectedRevision) {
+      setEditEntity(selectedRevision.entity);
+      form.resetFields();
+      form.setFieldsValue(selectedRevision.entity);
+    }
+  };
+
   return (
     <GeneralEntityRootProvider
       value={contextValue}
@@ -472,6 +493,18 @@ export function GeneralEntityRoot<T extends BaseEntity>({
           title={TranslationUtil.getTranslationFromConfig(navigationTitle, i18n)}
           subTitle={subTitle}
           extra={[
+            <Select
+              id='revisionSelect'
+              key='revisionSelect'
+              onChange={handleRevisionChange}
+              placeholder={t('GeneralEntityRoot.selectRevision')}
+              options={editRevisions?.slice()?.reverse()?.map((r) => {
+                return {
+                  value: r.metadata.revisionNumber,
+                  label: moment(r.metadata.revisionInstant).format(DEFAULT_DATE_FORMAT)
+                };
+              })}
+            />,
             <Button
               disabled={saveReloadDisabled || !formValid}
               icon={<SaveOutlined />}
