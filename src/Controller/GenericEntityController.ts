@@ -11,6 +11,7 @@ import Logger from '@terrestris/base-util/dist/Logger';
 import Application from '@terrestris/shogun-util/dist/model/Application';
 import BaseEntity from '@terrestris/shogun-util/dist/model/BaseEntity';
 import { Page } from '@terrestris/shogun-util/dist/model/Page';
+import { RevisionEntry } from '@terrestris/shogun-util/dist/model/Revision';
 import { GenericEntityService } from '@terrestris/shogun-util/dist/service/GenericEntityService';
 import { PageOpts } from '@terrestris/shogun-util/dist/service/GenericService';
 
@@ -29,6 +30,7 @@ export interface FieldValidation {
 
 export interface GenericEntityControllerArgs<T extends BaseEntity> {
   entity?: T;
+  revisions?: RevisionEntry<T>[];
   formConfig: FormConfig;
   formValidator?: (values: FormValues) => void;
   initialValues?: FormValues;
@@ -36,8 +38,14 @@ export interface GenericEntityControllerArgs<T extends BaseEntity> {
   service: GenericEntityService<T>;
 }
 
+export interface LoadEntityResponse<T> {
+  entity: T;
+  revisions: RevisionEntry<T>[];
+}
+
 export class GenericEntityController<T extends BaseEntity> {
   protected entity: T | undefined;
+  protected revisions: RevisionEntry<T>[] | undefined;
   protected initialValues?: FormValues;
   protected service: GenericEntityService<T>;
   private readonly formConfig: FormConfig;
@@ -46,6 +54,7 @@ export class GenericEntityController<T extends BaseEntity> {
 
   public constructor({
     entity,
+    revisions,
     initialValues,
     service,
     formConfig,
@@ -56,6 +65,9 @@ export class GenericEntityController<T extends BaseEntity> {
     this.formConfig = formConfig;
     if (!_isNil(entity)) {
       this.entity = entity;
+    }
+    if (!_isNil(revisions)) {
+      this.revisions = revisions;
     }
     this.initialValues = initialValues;
   }
@@ -73,8 +85,38 @@ export class GenericEntityController<T extends BaseEntity> {
    * @param id The id of the entitiy
    * @returns The entity
    */
-  public async load(id: number): Promise<T> {
+  public async load(id: number): Promise<LoadEntityResponse<T>> {
     this.entity = await this.service?.findOne(id);
+    this.revisions = await this.service?.findAllRevisions(id);
+
+    if (_isString(this.formConfig?.publicKey)) {
+      const isPublic = await this.service.isPublic(this.entity.id!);
+      const pubKey = this.formConfig.publicKey;
+      (this.entity as Record<string, any>)[pubKey] = isPublic;
+    }
+
+    // initialize form value
+    this.initializeFormValues();
+    return {
+      entity: this.entity,
+      revisions: this.revisions
+    };
+  };
+
+  /**
+   * Load entity revision with given id using configured service and initialize the form values
+   * @param id The id of the entitiy
+   * @param revision The revision of the entitiy
+   * @returns The entity
+   */
+  public async loadRevision(id: number, revision: number): Promise<T | undefined> {
+    const entity = await this.service?.findRevision(id, revision);
+
+    if (!entity) {
+      return undefined;
+    }
+
+    this.entity = entity;
 
     if (_isString(this.formConfig?.publicKey)) {
       const isPublic = await this.service.isPublic(this.entity.id!);

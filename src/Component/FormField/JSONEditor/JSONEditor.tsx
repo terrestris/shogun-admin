@@ -11,11 +11,13 @@ import {
 } from '@ant-design/icons';
 
 import {
+  DiffEditor,
   Editor,
   EditorProps,
   OnChange,
   useMonaco,
-  loader
+  loader,
+  MonacoDiffEditor
 } from '@monaco-editor/react';
 
 import {
@@ -39,7 +41,10 @@ import {
   useTranslation
 } from 'react-i18next';
 
+import useAppDispatch from '../../../Hooks/useAppDispatch';
 import useAppSelector from '../../../Hooks/useAppSelector';
+
+import { setOriginalConfigValues } from '../../../store/originalConfigValues';
 
 import OpenAPIUtil from '../../../Util/OpenAPIUtil';
 
@@ -77,13 +82,24 @@ export const JSONEditor: React.FC<JSONEditorProps> = ({
   const [isFormattedInitially, setIsFormattedInitially] = useState<boolean>(false);
 
   const openApiDocs = useAppSelector(state => state.openApiDocs);
+  const originalValues = useAppSelector(state => state.originalConfigValues);
+  const originalValue = originalValues[`${entityType}.${dataField}`];
 
   const {
     t
   } = useTranslation();
 
   const monaco = useMonaco();
+  const dispatch = useAppDispatch();
 
+  if (originalValue === undefined && currentValue) {
+    dispatch(setOriginalConfigValues({
+      [`${entityType}.${dataField}`]: currentValue,
+      ...originalValues
+    }));
+  }
+
+  const monacoDiffEditor = useRef<MonacoDiffEditor>(null);
   const monacoStandaloneEditor = useRef<monacoEditor.editor.IStandaloneCodeEditor>(null);
 
   const editorOptions = useMemo(() => ({
@@ -137,6 +153,8 @@ export const JSONEditor: React.FC<JSONEditorProps> = ({
     registerSchemaValidation();
   }, [registerSchemaValidation]);
 
+  const isConfigEqual = React.useMemo(() => currentValue === originalValue, [currentValue, originalValue]);
+
   const formatDocument = useCallback(async () => {
     if (!monacoStandaloneEditor.current) {
       return;
@@ -150,6 +168,16 @@ export const JSONEditor: React.FC<JSONEditorProps> = ({
 
     await formatDocumentAction.run();
   }, []);
+
+  const diffOnMount = useCallback(async (
+    editor: monacoEditor.editor.IStandaloneDiffEditor
+  ) => {
+    monacoDiffEditor.current = editor;
+
+    await formatDocument();
+
+    setIsFormattedInitially(true);
+  }, [formatDocument]);
 
   const onMount = useCallback(async (editor: monacoEditor.editor.IStandaloneCodeEditor) => {
     monacoStandaloneEditor.current = editor;
@@ -205,19 +233,37 @@ export const JSONEditor: React.FC<JSONEditorProps> = ({
             value={currentValue}
           />
         </div>
-        <Editor
-          onMount={onMount}
-          value={currentValue}
-          onChange={onChange}
-          path={
-            openApiUtil.getPropertyRefName(entityType, dataField) ?
-              `${openApiUtil.getPropertyRefName(entityType, dataField)}.json` :
-              undefined
-          }
-          language="json"
-          options={editorOptions}
-          {...editorProps}
-        />
+        {
+          isConfigEqual ? (
+            <Editor
+              onMount={onMount}
+              value={currentValue}
+              onChange={onChange}
+              path={
+                openApiUtil.getPropertyRefName(entityType, dataField) ?
+                  `${openApiUtil.getPropertyRefName(entityType, dataField)}.json` :
+                  undefined
+              }
+              language="json"
+              options={editorOptions}
+              {...editorProps}
+            />
+          ) : (
+            <DiffEditor
+              onMount={diffOnMount}
+              original={originalValue}
+              modified={currentValue}
+              language="json"
+              keepCurrentOriginalModel
+              keepCurrentModifiedModel
+              options={{
+                originalEditable: false,
+                readOnly: true,
+                renderSideBySide: false
+              }}
+            />
+          )
+        }
       </div>
     </FullscreenWrapper>
   );
