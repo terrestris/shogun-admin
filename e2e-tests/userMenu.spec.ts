@@ -1,6 +1,5 @@
 import { test } from "@playwright/test";
 
-// import { languageSelector } from '@terrestris/shogun-e2e-tests/dist/shogun-admin-client/languageSelector';
 import { expect } from "@playwright/test";
 import { login } from "./helpers";
 
