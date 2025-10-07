@@ -1,7 +1,6 @@
 import { test, expect } from "@playwright/test";
 import { login, switchLanguage } from "./helpers";
 
-// import { paging } from '@terrestris/shogun-e2e-tests/dist/shogun-admin-client/paging';
 
 export const paging = async (page: any) => {
   await page.waitForLoadState("networkidle");
