@@ -1,7 +1,6 @@
 import { test, expect } from "@playwright/test";
 import { deleteAllRowsWithText, login, switchLanguage } from "./helpers";
 
-// import { userPermissions } from '@terrestris/shogun-e2e-tests/dist/shogun-admin-client/userPermissions';
 
 export const userPermissions = async (page: any) => {
   await page.waitForLoadState("networkidle");
