@@ -24,7 +24,7 @@ jobs:
       - name: Start admin client 🔼
         run: npm run start &
 
-      - name: Wait for backend to be ready ⌛
+      - name: Wait for the application to be ready ⌛
         run: |
           npx wait-on http://localhost:8080/
 
