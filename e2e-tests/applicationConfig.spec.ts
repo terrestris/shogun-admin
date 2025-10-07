@@ -114,7 +114,6 @@ export const applicationConfig = async (page: any) => {
 
   await page.getByRole("button", { name: "fullscreen" }).nth(3).click();
   await expect(page.locator(".monaco-editor").first()).toBeVisible();
-  // await page.locator('.view-lines > div:nth-child(27)').click({ force: true });
   await page.getByText("true").nth(1).click();
   for (let i = 0; i <= 1; i++) {
     await page.keyboard.press("Backspace");
