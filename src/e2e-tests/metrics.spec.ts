@@ -1,7 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { login, switchLanguage } from './helpers';
 
-// import { metrics } from '@terrestris/shogun-e2e-tests/dist/shogun-admin-client/metrics';
 
 export const metrics = async (page: any) => {
   await page.waitForLoadState('networkidle');
