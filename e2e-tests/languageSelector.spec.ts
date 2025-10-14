@@ -1,7 +1,6 @@
 import { test, expect } from "@playwright/test";
 import { login } from "./helpers";
 
-// import { languageSelector } from '@terrestris/shogun-e2e-tests/dist/shogun-admin-client/languageSelector';
 
 export const languageSelector = async (page: any) => {
   await page.waitForLoadState("networkidle");

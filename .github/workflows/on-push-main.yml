@@ -22,10 +22,8 @@ jobs:
         run: npm ci
 
       - name: Start admin client 🔼
-        run: npm run start &
-
-      - name: Wait for the application to be ready ⌛
         run: |
+          npm run start &
           npx wait-on http://localhost:8080/
 
       - name: Run service smoke checks 📋
