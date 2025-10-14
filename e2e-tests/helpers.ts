@@ -4,7 +4,6 @@ export const login = async (
   password: string,
   path: string
 ) => {
-  // @ts-ignore
   await page.goto(
     `${process.env.HOST}/auth/realms/SHOGun` +
     '/protocol/openid-connect/auth?client_id=shogun-client' +
@@ -15,9 +14,7 @@ export const login = async (
   );
 
   if (await page.getByLabel('username').isVisible()) {
-    // @ts-ignore
     await page.getByLabel('username').first().fill(username);
-    // @ts-ignore
     await page.getByLabel('Password').first().fill(password);
     await page
       .getByRole('button', {
@@ -81,11 +78,9 @@ export const findElementInPaginatedTable = async (page: any, text: string) => {
 
 export const deleteAllRowsWithText = async (page: any, text: string) => {
   while (true) {
-    let rowContent;
-
     try {
-      rowContent = await findElementInPaginatedTable(page, text);
-    } catch (error) {
+      await findElementInPaginatedTable(page, text);
+    } catch {
       break;
     }
 
@@ -123,15 +118,13 @@ export const deleteAllRowsWithText = async (page: any, text: string) => {
             state: 'visible',
           });
           await page.waitForLoadState('networkidle');
-        } else {
-          console.log(`Delete button for row ${i + 1} is not visible.`);
         }
       }
     }
   }
 };
 
-export const writeToEditor = async (page: any, textLocation: any, text: string) => {
+export const writeToEditor = async (page: any, textLocation: any, inputText: string) => {
   await page.bringToFront();
   await textLocation.waitFor({ state: 'visible', timeout: 10000 });
   await textLocation.scrollIntoViewIfNeeded();
@@ -146,8 +139,8 @@ export const writeToEditor = async (page: any, textLocation: any, text: string) 
   await page.context().grantPermissions(['clipboard-write']);
   await page.evaluate(async (text: string) => {
     await navigator.clipboard.writeText(text);
-  }, text);
+  }, inputText);
   await page.bringToFront();
 
   await page.keyboard.press('Control+V');
-}
+};

@@ -1,15 +1,14 @@
 import {
-  test as setup, chromium
+  test as setup
 } from '@playwright/test';
+
 import { login } from './helpers';
 
-process.on('unhandledRejection', (reason) => {
-  console.error('Unhandled Rejection:', reason);
+process.on('unhandledRejection', () => {
   process.exit(1);
 });
 
-process.on('uncaughtException', (err) => {
-  console.error('Uncaught Exception:', err);
+process.on('uncaughtException', () => {
   process.exit(1);
 });
 

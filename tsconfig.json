@@ -104,6 +104,7 @@
     "build"
   ],
   "include": [
-    "./src"
+    "./src",
+    "./e2e-tests"
   ]
 }
