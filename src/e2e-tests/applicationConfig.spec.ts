@@ -6,7 +6,6 @@ import {
   switchLanguage,
   writeToEditor,
 } from './helpers';
-import { time } from 'console';
 
 export const applicationConfig = async (page: any) => {
   await page.waitForLoadState('networkidle');

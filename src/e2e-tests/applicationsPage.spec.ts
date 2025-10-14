@@ -1,6 +1,5 @@
 import { test } from '@playwright/test';
 
-// import { applicationsPage } from '@terrestris/shogun-e2e-tests/dist/shogun-admin-client/applicationsPage';
 import { expect } from '@playwright/test';
 import { deleteAllRowsWithText, login, switchLanguage } from './helpers';
 
@@ -70,8 +69,6 @@ export const applicationsPage = async (page: any) => {
   await expect(
     page.getByText('Test Application Playwright').first()
   ).toBeVisible();
-
-  const updatedRowCount = await page.locator('.ant-table-row').count();
 
   const targetRow = await page
     .locator('.ant-table-row')
