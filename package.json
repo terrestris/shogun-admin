@@ -74,7 +74,7 @@
     "@commitlint/config-conventional": "20.0.0",
     "@eslint/eslintrc": "3.3.1",
     "@eslint/js": "9.38.0",
-    "@module-federation/enhanced": "0.21.0",
+    "@module-federation/enhanced": "0.21.1",
     "@playwright/test": "1.55.1",
     "@reduxjs/toolkit": "2.9.0",
     "@rspack/cli": "1.5.8",
