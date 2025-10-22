@@ -40,7 +40,7 @@
     "@ant-design/v5-patch-for-react-19": "1.0.3",
     "@casualbot/jest-sonar-reporter": "2.4.0",
     "@monaco-editor/react": "4.7.0",
-    "@terrestris/base-util": "3.0.0",
+    "@terrestris/base-util": "4.0.0",
     "@terrestris/ol-util": "21.3.0",
     "@terrestris/shogun-util": "10.8.1",
     "@uiw/react-md-editor": "4.0.8",
