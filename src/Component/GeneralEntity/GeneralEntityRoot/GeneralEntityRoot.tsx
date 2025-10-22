@@ -215,7 +215,9 @@ export function GeneralEntityRoot<T extends BaseEntity>({
       setEditEntity(entity);
       form.resetFields();
       form.setFieldsValue(entity);
-      setEditRevisions(revisions);
+      if (revisions) {
+        setEditRevisions(revisions);
+      }
     } catch (error) {
       Logger.error(error);
     } finally {
@@ -493,18 +495,20 @@ export function GeneralEntityRoot<T extends BaseEntity>({
           title={TranslationUtil.getTranslationFromConfig(navigationTitle, i18n)}
           subTitle={subTitle}
           extra={[
-            <Select
-              id='revisionSelect'
-              key='revisionSelect'
-              onChange={handleRevisionChange}
-              placeholder={t('GeneralEntityRoot.selectRevision')}
-              options={editRevisions?.slice()?.reverse()?.map((r) => {
-                return {
-                  value: r.metadata.revisionNumber,
-                  label: moment(r.metadata.revisionInstant).format(DEFAULT_DATE_FORMAT)
-                };
-              })}
-            />,
+            config.entityHistory?.enabled && (
+              <Select
+                id='revisionSelect'
+                key='revisionSelect'
+                onChange={handleRevisionChange}
+                placeholder={t('GeneralEntityRoot.selectRevision')}
+                options={editRevisions?.slice()?.reverse()?.map((r) => {
+                  return {
+                    value: r.metadata.revisionNumber,
+                    label: moment(r.metadata.revisionInstant).format(DEFAULT_DATE_FORMAT)
+                  };
+                })}
+              />
+            ),
             <Button
               disabled={saveReloadDisabled || !formValid}
               icon={<SaveOutlined />}

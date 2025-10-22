@@ -7,6 +7,8 @@ import _isString from 'lodash/isString';
 import _omit from 'lodash/omit';
 import _set from 'lodash/set';
 
+import config from 'shogunApplicationConfig';
+
 import Logger from '@terrestris/base-util/dist/Logger';
 import Application from '@terrestris/shogun-util/dist/model/Application';
 import BaseEntity from '@terrestris/shogun-util/dist/model/BaseEntity';
@@ -40,7 +42,7 @@ export interface GenericEntityControllerArgs<T extends BaseEntity> {
 
 export interface LoadEntityResponse<T> {
   entity: T;
-  revisions: RevisionEntry<T>[];
+  revisions?: RevisionEntry<T>[];
 }
 
 export class GenericEntityController<T extends BaseEntity> {
@@ -87,7 +89,10 @@ export class GenericEntityController<T extends BaseEntity> {
    */
   public async load(id: number): Promise<LoadEntityResponse<T>> {
     this.entity = await this.service?.findOne(id);
-    this.revisions = await this.service?.findAllRevisions(id);
+
+    if (config.entityHistory?.enabled) {
+      this.revisions = await this.service?.findAllRevisions(id);
+    }
 
     if (_isString(this.formConfig?.publicKey)) {
       const isPublic = await this.service.isPublic(this.entity.id!);

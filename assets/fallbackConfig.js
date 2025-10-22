@@ -33,6 +33,9 @@ var shogunApplicationConfig = {
     'Group',
     'Role'
   ],
+  entityHistory: {
+    enabled: true
+  },
   dashboard: {
     news: {
       visible: true
