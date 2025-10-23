@@ -60,7 +60,8 @@ export default {
         },
         saveSuccess: '{{entity}} erfolgreich gespeichert',
         saveWarning: '{{entity}} wurde nicht gespeichert',
-        saveFail: 'Konnte {{entity}} nicht speichern'
+        saveFail: 'Konnte {{entity}} nicht speichern',
+        selectRevision: 'Revision auswählen'
       },
       GeneralEntityTable: {
         cancelText: 'Abbrechen',
@@ -382,7 +383,8 @@ export default {
         },
         saveSuccess: '{{entity}} successfully saved',
         saveWarning: '{{entity}} has not been saved',
-        saveFail: 'Could not save {{entity}}'
+        saveFail: 'Could not save {{entity}}',
+        selectRevision: 'Select revision'
       },
       GeneralEntityTable: {
         cancelText: 'Cancel',
