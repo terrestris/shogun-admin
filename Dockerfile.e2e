@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/playwright:v1.55.1-jammy
+FROM mcr.microsoft.com/playwright:v1.56.1-jammy
 
 WORKDIR /app
 
@@ -8,5 +8,5 @@ RUN npx playwright install --with-deps
 
 COPY playwright.config.ts ./
 COPY global-setup.ts ./
-COPY ./e2e-tests ./e2e-tests
+COPY .src/e2e-tests .src/e2e-tests
 COPY ./playwright ./playwright
