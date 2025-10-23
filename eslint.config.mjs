@@ -21,7 +21,6 @@ export default tsEslint.config({
   ],
   ignores: [
     '**/test/setup.ts',
-    '**/e2e-tests/**.ts',
     '**/global-setup.ts',
     '**/playwright.config.ts',
     '**/*.spec.{ts,tsx}',

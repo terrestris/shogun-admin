@@ -2,7 +2,8 @@ module.exports = {
   roots: ['<rootDir>/src'],
   collectCoverageFrom: [
     '<rootDir>/src/**/*.{ts,js,tsx,jsx}',
-    '!<rootDir>/src/Model/**/*.{ts,js}'
+    '!<rootDir>/src/Model/**/*.{ts,js}',
+    '!<rootDir>/src/e2e-tests/**/*.{ts,js}'
   ],
   setupFilesAfterEnv: [
     '<rootDir>/test/setup.js'
@@ -22,6 +23,9 @@ module.exports = {
     '\\.(css|less|scss)$': '<rootDir>/test/__mocks__/styleMock.js',
     'shogunApplicationConfig': '<rootDir>/assets/fallbackConfig.js'
   },
+  modulePathIgnorePatterns: [
+    '<rootDir>/src/e2e-tests/'
+  ],
   transformIgnorePatterns: [
     '<rootDir>/node_modules/(?!@ngrx|(?!deck.gl)|ng-dynamic|@monaco-editor)'
   ],
