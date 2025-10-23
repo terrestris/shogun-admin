@@ -1,6 +1,6 @@
 {
   "name": "@terrestris/shogun-admin",
-  "version": "17.1.2",
+  "version": "17.2.0",
   "description": "The admin UI for the SHOGun Web-mapping backend.",
   "keywords": [
     "SHOGun",
