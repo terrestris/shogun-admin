@@ -37,6 +37,8 @@ import _isNil from 'lodash/isNil';
 
 import * as monacoEditor from 'monaco-editor';
 
+import config from 'shogunApplicationConfig';
+
 import {
   useTranslation
 } from 'react-i18next';
@@ -84,6 +86,8 @@ export const JSONEditor: React.FC<JSONEditorProps> = ({
   const openApiDocs = useAppSelector(state => state.openApiDocs);
   const originalValues = useAppSelector(state => state.originalConfigValues);
   const originalValue = originalValues[`${entityType}.${dataField}`];
+
+  const historyEnabled = config.entityHistory?.enabled;
 
   const {
     t
@@ -234,7 +238,7 @@ export const JSONEditor: React.FC<JSONEditorProps> = ({
           />
         </div>
         {
-          isConfigEqual ? (
+          (isConfigEqual || !historyEnabled) ? (
             <Editor
               onMount={onMount}
               value={currentValue}
