@@ -1,3 +1,22 @@
+## [17.2.1](https://github.com/terrestris/shogun-admin/compare/v17.2.0...v17.2.1) (2025-10-27)
+
+
+### Dependencies
+
+* **deps-dev:** bump @babel/core from 7.28.4 to 7.28.5 ([f6fe7cc](https://github.com/terrestris/shogun-admin/commit/f6fe7ccf9145f7580210c8cbef20bf195bbaecf3))
+* **deps-dev:** bump @babel/plugin-transform-optional-chaining ([3a2c1c3](https://github.com/terrestris/shogun-admin/commit/3a2c1c3bb3952cbb3bc89ff70f0fb902dbe8f478))
+* **deps-dev:** bump @babel/preset-env from 7.28.3 to 7.28.5 ([57ca954](https://github.com/terrestris/shogun-admin/commit/57ca9540ff5df41e597e67ad7f9302bb08fe5ef1))
+* **deps-dev:** bump @rspack/plugin-react-refresh from 1.5.1 to 1.5.2 ([5fc382d](https://github.com/terrestris/shogun-admin/commit/5fc382d5509073e790d51d1df78c40d056381a1f))
+* **deps-dev:** bump @typescript-eslint/eslint-plugin ([63d9e12](https://github.com/terrestris/shogun-admin/commit/63d9e12fac322ecd751eab3908dc7efd1f58c865))
+* **deps-dev:** bump @typescript-eslint/parser from 8.46.1 to 8.46.2 ([5b06838](https://github.com/terrestris/shogun-admin/commit/5b06838513e755b36e46d671f8c049fc71d23558))
+* **deps:** bump @terrestris/shogun-util from 10.9.0 to 10.10.0 ([ab3161d](https://github.com/terrestris/shogun-admin/commit/ab3161d12555b6bdae53a0462daf03e6a1dd4074))
+* **deps:** bump antd from 5.27.4 to 5.27.6 ([1a4cf72](https://github.com/terrestris/shogun-admin/commit/1a4cf72a2004bf4553e9f12ee5a5459bc32b6428))
+
+
+### Bugfixes
+
+* only use DiffEditor if entityHistory is enabled ([8cff161](https://github.com/terrestris/shogun-admin/commit/8cff1614fabc580d4f892d1483de968d27697201))
+
 ## [17.2.0](https://github.com/terrestris/shogun-admin/compare/v17.1.2...v17.2.0) (2025-10-23)
 
 
