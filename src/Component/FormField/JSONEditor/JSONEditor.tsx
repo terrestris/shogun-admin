@@ -11,11 +11,13 @@ import {
 } from '@ant-design/icons';
 
 import {
+  DiffEditor,
   Editor,
   EditorProps,
   OnChange,
   useMonaco,
-  loader
+  loader,
+  MonacoDiffEditor
 } from '@monaco-editor/react';
 
 import {
@@ -41,7 +43,10 @@ import {
   useTranslation
 } from 'react-i18next';
 
+import useAppDispatch from '../../../Hooks/useAppDispatch';
 import useAppSelector from '../../../Hooks/useAppSelector';
+
+import { setOriginalConfigValues } from '../../../store/originalConfigValues';
 
 import OpenAPIUtil from '../../../Util/OpenAPIUtil';
 
@@ -89,7 +94,16 @@ export const JSONEditor: React.FC<JSONEditorProps> = ({
   } = useTranslation();
 
   const monaco = useMonaco();
+  const dispatch = useAppDispatch();
 
+  if (originalValue === undefined && currentValue) {
+    dispatch(setOriginalConfigValues({
+      [`${entityType}.${dataField}`]: currentValue,
+      ...originalValues
+    }));
+  }
+
+  const monacoDiffEditor = useRef<MonacoDiffEditor>(null);
   const monacoStandaloneEditor = useRef<monacoEditor.editor.IStandaloneCodeEditor>(null);
 
   const editorOptions = useMemo(() => ({
@@ -143,6 +157,8 @@ export const JSONEditor: React.FC<JSONEditorProps> = ({
     registerSchemaValidation();
   }, [registerSchemaValidation]);
 
+  const isConfigEqual = React.useMemo(() => currentValue === originalValue, [currentValue, originalValue]);
+
   const formatDocument = useCallback(async () => {
     if (!monacoStandaloneEditor.current) {
       return;
@@ -156,6 +172,16 @@ export const JSONEditor: React.FC<JSONEditorProps> = ({
 
     await formatDocumentAction.run();
   }, []);
+
+  const diffOnMount = useCallback(async (
+    editor: monacoEditor.editor.IStandaloneDiffEditor
+  ) => {
+    monacoDiffEditor.current = editor;
+
+    await formatDocument();
+
+    setIsFormattedInitially(true);
+  }, [formatDocument]);
 
   const onMount = useCallback(async (editor: monacoEditor.editor.IStandaloneCodeEditor) => {
     monacoStandaloneEditor.current = editor;
