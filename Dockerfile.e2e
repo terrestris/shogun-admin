@@ -8,5 +8,5 @@ RUN npx playwright install --with-deps
 
 COPY playwright.config.ts ./
 COPY global-setup.ts ./
-COPY ./e2e-tests ./e2e-tests
+COPY .src/e2e-tests .src/e2e-tests
 COPY ./playwright ./playwright
