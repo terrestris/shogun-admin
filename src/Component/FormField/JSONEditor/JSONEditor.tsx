@@ -35,6 +35,8 @@ import _isNil from 'lodash/isNil';
 
 import * as monacoEditor from 'monaco-editor';
 
+import config from 'shogunApplicationConfig';
+
 import {
   useTranslation
 } from 'react-i18next';
@@ -77,6 +79,10 @@ export const JSONEditor: React.FC<JSONEditorProps> = ({
   const [isFormattedInitially, setIsFormattedInitially] = useState<boolean>(false);
 
   const openApiDocs = useAppSelector(state => state.openApiDocs);
+  const originalValues = useAppSelector(state => state.originalConfigValues);
+  const originalValue = originalValues[`${entityType}.${dataField}`];
+
+  const historyEnabled = config.entityHistory?.enabled;
 
   const {
     t
@@ -205,19 +211,37 @@ export const JSONEditor: React.FC<JSONEditorProps> = ({
             value={currentValue}
           />
         </div>
-        <Editor
-          onMount={onMount}
-          value={currentValue}
-          onChange={onChange}
-          path={
-            openApiUtil.getPropertyRefName(entityType, dataField) ?
-              `${openApiUtil.getPropertyRefName(entityType, dataField)}.json` :
-              undefined
-          }
-          language="json"
-          options={editorOptions}
-          {...editorProps}
-        />
+        {
+          (isConfigEqual || !historyEnabled) ? (
+            <Editor
+              onMount={onMount}
+              value={currentValue}
+              onChange={onChange}
+              path={
+                openApiUtil.getPropertyRefName(entityType, dataField) ?
+                  `${openApiUtil.getPropertyRefName(entityType, dataField)}.json` :
+                  undefined
+              }
+              language="json"
+              options={editorOptions}
+              {...editorProps}
+            />
+          ) : (
+            <DiffEditor
+              onMount={diffOnMount}
+              original={originalValue}
+              modified={currentValue}
+              language="json"
+              keepCurrentOriginalModel
+              keepCurrentModifiedModel
+              options={{
+                originalEditable: false,
+                readOnly: true,
+                renderSideBySide: false
+              }}
+            />
+          )
+        }
       </div>
     </FullscreenWrapper>
   );
