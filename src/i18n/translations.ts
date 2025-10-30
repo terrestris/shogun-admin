@@ -383,7 +383,8 @@ export default {
         },
         saveSuccess: '{{entity}} successfully saved',
         saveWarning: '{{entity}} has not been saved',
-        saveFail: 'Could not save {{entity}}'
+        saveFail: 'Could not save {{entity}}',
+        selectRevision: 'Select revision'
       },
       GeneralEntityTable: {
         cancelText: 'Cancel',

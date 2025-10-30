@@ -266,7 +266,7 @@ export function GeneralEntityRoot<T extends BaseEntity>({
 
   const discardChanges = () => {
     Modal.destroyAll();
-    if (!_isNil(id)) {
+    if (!_isNil(id)){
       fetchEntity(parseInt(id.toString(), 10));
     }
     notification.info({
@@ -559,7 +559,7 @@ export function GeneralEntityRoot<T extends BaseEntity>({
               <div
                 className="general-entity-slots-left-toolbar"
               >
-                {slots.leftToolbar}
+                { slots.leftToolbar }
               </div>
             )}
           </div>
