@@ -77,7 +77,7 @@
     "@commitlint/cli": "20.1.0",
     "@commitlint/config-conventional": "20.0.0",
     "@eslint/eslintrc": "3.3.1",
-    "@eslint/js": "9.38.0",
+    "@eslint/js": "9.39.0",
     "@module-federation/enhanced": "0.21.2",
     "@playwright/test": "1.56.1",
     "@reduxjs/toolkit": "2.9.2",
