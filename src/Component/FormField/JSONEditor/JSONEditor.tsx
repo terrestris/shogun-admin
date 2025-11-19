@@ -37,16 +37,19 @@ import _isNil from 'lodash/isNil';
 
 import * as monacoEditor from 'monaco-editor';
 
-import config from 'shogunApplicationConfig';
-
 import {
   useTranslation
 } from 'react-i18next';
 
+import config from 'shogunApplicationConfig';
+
 import useAppDispatch from '../../../Hooks/useAppDispatch';
 import useAppSelector from '../../../Hooks/useAppSelector';
 
-import { setOriginalConfigValues } from '../../../store/originalConfigValues';
+import {
+  setIsEditedManuallyMap,
+  setOriginalEditorValues
+} from '../../../store/jsonEditor';
 
 import OpenAPIUtil from '../../../Util/OpenAPIUtil';
 
@@ -84,8 +87,9 @@ export const JSONEditor: React.FC<JSONEditorProps> = ({
   const [isFormattedInitially, setIsFormattedInitially] = useState<boolean>(false);
 
   const openApiDocs = useAppSelector(state => state.openApiDocs);
-  const originalValues = useAppSelector(state => state.originalConfigValues);
-  const originalValue = originalValues[`${entityType}.${dataField}`];
+  const originalValues = useAppSelector(state => state.jsonEditor.originalEditorValues);
+  const isEditedManuallyMap = useAppSelector(state => state.jsonEditor.isEditedManuallyMap);
+  const originalValue = originalValues?.[`${entityType}.${dataField}`];
 
   const historyEnabled = config.entityHistory?.enabled;
 
@@ -97,7 +101,7 @@ export const JSONEditor: React.FC<JSONEditorProps> = ({
   const dispatch = useAppDispatch();
 
   if (originalValue === undefined && currentValue) {
-    dispatch(setOriginalConfigValues({
+    dispatch(setOriginalEditorValues({
       [`${entityType}.${dataField}`]: currentValue,
       ...originalValues
     }));
@@ -196,6 +200,11 @@ export const JSONEditor: React.FC<JSONEditorProps> = ({
   };
 
   const onChange: OnChange = (val?: string) => {
+    dispatch(setIsEditedManuallyMap({
+      [`${entityType}.${dataField}`]: true,
+      ...isEditedManuallyMap
+    }));
+
     setCurrentValue(val);
 
     if (!isFormattedInitially) {
@@ -216,6 +225,8 @@ export const JSONEditor: React.FC<JSONEditorProps> = ({
       Logger.trace('JSON-Editor: ', error);
     }
   };
+
+  const isEditedManually = isEditedManuallyMap?.[`${entityType}.${dataField}`];
 
   return (
     <FullscreenWrapper>
@@ -238,21 +249,7 @@ export const JSONEditor: React.FC<JSONEditorProps> = ({
           />
         </div>
         {
-          (isConfigEqual || !historyEnabled) ? (
-            <Editor
-              onMount={onMount}
-              value={currentValue}
-              onChange={onChange}
-              path={
-                openApiUtil.getPropertyRefName(entityType, dataField) ?
-                  `${openApiUtil.getPropertyRefName(entityType, dataField)}.json` :
-                  undefined
-              }
-              language="json"
-              options={editorOptions}
-              {...editorProps}
-            />
-          ) : (
+          (!isConfigEqual && historyEnabled && !isEditedManually) ? (
             <DiffEditor
               onMount={diffOnMount}
               original={originalValue}
@@ -265,6 +262,20 @@ export const JSONEditor: React.FC<JSONEditorProps> = ({
                 readOnly: true,
                 renderSideBySide: false
               }}
+            />
+          ) : (
+            <Editor
+              onMount={onMount}
+              value={currentValue}
+              onChange={onChange}
+              path={
+                openApiUtil.getPropertyRefName(entityType, dataField) ?
+                  `${openApiUtil.getPropertyRefName(entityType, dataField)}.json` :
+                  undefined
+              }
+              language="json"
+              options={editorOptions}
+              {...editorProps}
             />
           )
         }

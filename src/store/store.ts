@@ -10,9 +10,9 @@ import {
 import appInfo from './appInfo';
 import entityId from './entityId';
 import infoModal from './infoModal';
+import jsonEditor from './jsonEditor';
 import layerSuggestionList from './layerSuggestionList';
 import openApiDocs from './openApiDocs';
-import originalConfigValues from './originalConfigValues';
 import userInfo from './userInfo';
 
 type AsyncReducer = Record<string, Reducer>;
@@ -27,7 +27,7 @@ export const createReducer = (asyncReducers?: AsyncReducer) => {
     openApiDocs,
     layerSuggestionList,
     entityId,
-    originalConfigValues,
+    jsonEditor,
     ...asyncReducers
   });
 };
