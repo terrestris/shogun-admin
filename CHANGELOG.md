@@ -1,3 +1,43 @@
+## [17.2.2](https://github.com/terrestris/shogun-admin/compare/v17.2.1...v17.2.2) (2025-11-19)
+
+
+### Dependencies
+
+* **deps-dev:** bump @babel/preset-react from 7.27.1 to 7.28.5 ([ec4f3f3](https://github.com/terrestris/shogun-admin/commit/ec4f3f31fb91196ee7fbeb2e1e308d4a79e33ad2))
+* **deps-dev:** bump @babel/preset-typescript from 7.27.1 to 7.28.5 ([65610a1](https://github.com/terrestris/shogun-admin/commit/65610a1702c4d16c50319a62caba52c34f27e30e))
+* **deps-dev:** bump @eslint/js from 9.38.0 to 9.39.1 ([3855f5b](https://github.com/terrestris/shogun-admin/commit/3855f5bc361c8f83c81eeb3a79b3b6fd5e6c752d))
+* **deps-dev:** bump @module-federation/enhanced from 0.21.1 to 0.21.2 ([04ecefd](https://github.com/terrestris/shogun-admin/commit/04ecefd47482aec33cb94229c1dca8b167dba80d))
+* **deps-dev:** bump @module-federation/enhanced from 0.21.2 to 0.21.4 ([13e8e36](https://github.com/terrestris/shogun-admin/commit/13e8e36450472b486a88ccc9ce9608264bf6fac0))
+* **deps-dev:** bump @reduxjs/toolkit from 2.9.2 to 2.10.0 ([a79238d](https://github.com/terrestris/shogun-admin/commit/a79238d04f82d246f07deebeaff2c6e89e9d86dc))
+* **deps-dev:** bump @rspack/cli from 1.5.8 to 1.6.0 ([ba3b506](https://github.com/terrestris/shogun-admin/commit/ba3b506eb0c1b8d0a4b176cf2d41615894e9bb91))
+* **deps-dev:** bump @rspack/core from 1.5.8 to 1.6.0 ([0190b48](https://github.com/terrestris/shogun-admin/commit/0190b48dc358a0402aec1f804091bbea334a917f))
+* **deps-dev:** bump @rspack/core from 1.6.0 to 1.6.4 ([b8e4c66](https://github.com/terrestris/shogun-admin/commit/b8e4c66d1f15e5e3a60206e47ad7679ce2b24501))
+* **deps-dev:** bump @types/node from 22.15.21 to 24.9.2 ([66c4adc](https://github.com/terrestris/shogun-admin/commit/66c4adc6af4400f48797a4220f1469ac6203f1dd))
+* **deps-dev:** bump @types/node from 24.9.2 to 24.10.0 ([46927e7](https://github.com/terrestris/shogun-admin/commit/46927e732205699488727a9e7b0bac71d6b6efd1))
+* **deps-dev:** bump eslint from 9.38.0 to 9.39.1 ([2e6d144](https://github.com/terrestris/shogun-admin/commit/2e6d1441f12dfbaadc54b0df333534b7045e8f8e))
+* **deps-dev:** bump globals from 16.4.0 to 16.5.0 ([d253876](https://github.com/terrestris/shogun-admin/commit/d25387658252e698957536a9d180a3c2d916fc92))
+* **deps-dev:** bump js-yaml from 3.14.1 to 3.14.2 ([a500817](https://github.com/terrestris/shogun-admin/commit/a500817cab85f5cfb97ef119d4d26c6d9fd10dae))
+* **deps-dev:** bump react-refresh from 0.17.0 to 0.18.0 ([54a0624](https://github.com/terrestris/shogun-admin/commit/54a06243cfa0f7f2853c42b4fd54c688fde8ecab))
+* **deps-dev:** bump rimraf from 6.0.1 to 6.1.0 ([a54e20e](https://github.com/terrestris/shogun-admin/commit/a54e20e60d62d5dc4d1d630ff5fdb631f569394f))
+* **deps-dev:** bump typescript-eslint from 8.46.2 to 8.46.3 ([64fff37](https://github.com/terrestris/shogun-admin/commit/64fff37f5594ca013ab6c1f3392d671f3cb18885))
+* **deps-dev:** bump typescript-eslint from 8.46.3 to 8.47.0 ([1952a11](https://github.com/terrestris/shogun-admin/commit/1952a118de17600a72766fc57b51dc6b1c214e1c))
+* **deps-dev:** bump wait-on from 8.0.3 to 9.0.1 ([8b28bc2](https://github.com/terrestris/shogun-admin/commit/8b28bc2622a1fe2cf747408f2610baed5668689d))
+* **deps-dev:** bump wait-on from 9.0.1 to 9.0.3 ([f3c4936](https://github.com/terrestris/shogun-admin/commit/f3c4936547d45fad8601187094130e9c755b7a5e))
+* **deps:** bump @axe-core/playwright from 4.10.1 to 4.11.0 ([d338292](https://github.com/terrestris/shogun-admin/commit/d3382925ed968f473f829b338383cd7b89ab5e6d))
+* **deps:** bump @terrestris/shogun-util from 10.10.0 to 10.11.0 ([182f89a](https://github.com/terrestris/shogun-admin/commit/182f89af4f34addb86576f6b93fe44f1fe15cd8a))
+* **deps:** bump actions/checkout from 4 to 5 ([dc6c82b](https://github.com/terrestris/shogun-admin/commit/dc6c82be56729881e04319c744256a90f2318dc8))
+* **deps:** bump actions/setup-node from 4 to 6 ([2060189](https://github.com/terrestris/shogun-admin/commit/2060189535dffc22bbc072c300c6ae39fe04d02e))
+* **deps:** bump antd from 5.27.6 to 5.28.0 ([6539dba](https://github.com/terrestris/shogun-admin/commit/6539dba29f89007b731358072c0cba24d08899e8))
+* **deps:** bump nginx from 1.29.2-alpine-slim to 1.29.3-alpine-slim ([2dbd264](https://github.com/terrestris/shogun-admin/commit/2dbd2646912874cb37910e1def131494b1cc19df))
+* **deps:** bump react-i18next from 16.1.5 to 16.2.1 ([feeb920](https://github.com/terrestris/shogun-admin/commit/feeb9208f5a13fa8ec863a8b6eeb7e1a22bc5e33))
+* **deps:** bump react-i18next from 16.2.1 to 16.2.3 ([5ca1acc](https://github.com/terrestris/shogun-admin/commit/5ca1accc3c4eec0a74cc332b69cc318d5b6151ca))
+* **deps:** bump validator from 13.12.0 to 13.15.20 ([f69a10d](https://github.com/terrestris/shogun-admin/commit/f69a10d50844c538adcb6e99eda832c03e7018d8))
+
+
+### Bugfixes
+
+* allow manual editing while history is active ([a1a8a4f](https://github.com/terrestris/shogun-admin/commit/a1a8a4f0b20e1075080991d55e26f5a17217533b))
+
 ## [17.2.1](https://github.com/terrestris/shogun-admin/compare/v17.2.0...v17.2.1) (2025-10-27)
 
 
