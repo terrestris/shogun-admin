@@ -143,7 +143,8 @@ export const AddLayerModal: React.FC<AddLayerModalProps> = ({
   }, [open, getExistingLayers]);
 
   useEffect(() => {
-    setSanitizedUrl(UrlUtil.createValidGetCapabilitiesRequest(url, 'WMS', version));
+    const validRequestUrl = UrlUtil.createValidGetCapabilitiesRequest(url, 'WMS', version);
+    setSanitizedUrl(validRequestUrl.replace('Version', 'VERSION'));
   }, [version, url]);
 
   const onUrlChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
