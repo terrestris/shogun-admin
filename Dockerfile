@@ -1,5 +1,5 @@
 # build environment
-FROM node:23.3.0-alpine3.19 AS build
+FROM node:20-alpine AS build
 
 RUN apk update && apk upgrade --no-cache
 
