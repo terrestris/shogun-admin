@@ -13,10 +13,10 @@ jobs:
       - name: Checkout sources 🔰
         uses: actions/checkout@v6
 
-      - name: Setup Node.js 20 🧮
+      - name: Setup Node.js 24 🧮
         uses: actions/setup-node@v6
         with:
-          node-version: 20
+          node-version: 24
 
       - name: Install dependencies ⏬
         run: npm ci
@@ -28,7 +28,7 @@ jobs:
 
       - name: Run service smoke checks 📋
         run: ./smoke-check.sh
-          
+
   sonarqube:
     if: ${{ github.actor != 'dependabot[bot]' }}
     name: SonarQube Trigger
@@ -40,10 +40,10 @@ jobs:
           # Disabling shallow clone is recommended for improving relevancy of reporting
           fetch-depth: 0
 
-      - name: Setup Node.js 🧮
+      - name: Setup Node 24 🧮
         uses: actions/setup-node@v6
         with:
-          node-version: 20
+          node-version: 24
 
       - name: Cache Node.js modules 💾
         uses: actions/cache@v5
