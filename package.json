@@ -82,7 +82,7 @@
     "@playwright/test": "1.56.1",
     "@reduxjs/toolkit": "2.11.2",
     "@rspack/cli": "1.6.7",
-    "@rspack/core": "1.6.4",
+    "@rspack/core": "1.6.8",
     "@rspack/plugin-react-refresh": "1.5.3",
     "@semantic-release/changelog": "6.0.3",
     "@semantic-release/git": "10.0.1",
