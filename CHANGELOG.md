@@ -1,3 +1,14 @@
+## <small>18.0.1 (2026-01-06)</small>
+
+* Merge pull request #1495 from terrestris/dependabot/npm_and_yarn/semantic-release/github-12.0.2 ([3bb76f0](https://github.com/terrestris/shogun-admin/commit/3bb76f0)), closes [#1495](https://github.com/terrestris/shogun-admin/issues/1495)
+* Merge pull request #1542 from terrestris/dependabot/npm_and_yarn/playwright/test-1.57.0 ([8e32de5](https://github.com/terrestris/shogun-admin/commit/8e32de5)), closes [#1542](https://github.com/terrestris/shogun-admin/issues/1542)
+* Merge pull request #1543 from terrestris/dependabot/npm_and_yarn/testing-library/react-16.3.1 ([c48a760](https://github.com/terrestris/shogun-admin/commit/c48a760)), closes [#1543](https://github.com/terrestris/shogun-admin/issues/1543)
+* Merge pull request #1547 from terrestris/fix/docker-release ([0a6f48c](https://github.com/terrestris/shogun-admin/commit/0a6f48c)), closes [#1547](https://github.com/terrestris/shogun-admin/issues/1547)
+* chore(deps-dev): bump @playwright/test from 1.56.1 to 1.57.0 ([fb91c38](https://github.com/terrestris/shogun-admin/commit/fb91c38))
+* chore(deps-dev): bump @semantic-release/github from 11.0.6 to 12.0.2 ([e3c734e](https://github.com/terrestris/shogun-admin/commit/e3c734e))
+* chore(deps-dev): bump @testing-library/react from 16.3.0 to 16.3.1 ([f1c1abe](https://github.com/terrestris/shogun-admin/commit/f1c1abe))
+* fix: extract released version from updated package.json ([7f9ef5e](https://github.com/terrestris/shogun-admin/commit/7f9ef5e))
+
 ## 18.0.0 (2026-01-06)
 
 * Merge pull request #1491 from terrestris/dependabot/npm_and_yarn/typescript-eslint/eslint-plugin-8.4 ([0404514](https://github.com/terrestris/shogun-admin/commit/0404514)), closes [#1491](https://github.com/terrestris/shogun-admin/issues/1491)
