@@ -16,7 +16,7 @@ ENV SHOGUN_ADMIN_HOST=shogun-admin
 ARG GIT_COMMIT
 ARG APP_VERSION
 
-COPY --from=build /app/build /usr/share/nginx/html
+COPY --from=build /app/dist /usr/share/nginx/html
 COPY --from=build /app/nginx/templates /etc/nginx/templates
 
 # Metadata according to OCI Image Spec
