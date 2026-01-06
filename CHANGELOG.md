@@ -1,3 +1,8 @@
+## <small>18.0.2 (2026-01-06)</small>
+
+* Merge pull request #1548 from terrestris/fix/dist-folder ([a3bca1a](https://github.com/terrestris/shogun-admin/commit/a3bca1a)), closes [#1548](https://github.com/terrestris/shogun-admin/issues/1548)
+* fix: copy production build from dist folder ([f7f91b0](https://github.com/terrestris/shogun-admin/commit/f7f91b0))
+
 ## <small>18.0.1 (2026-01-06)</small>
 
 * Merge pull request #1495 from terrestris/dependabot/npm_and_yarn/semantic-release/github-12.0.2 ([3bb76f0](https://github.com/terrestris/shogun-admin/commit/3bb76f0)), closes [#1495](https://github.com/terrestris/shogun-admin/issues/1495)
