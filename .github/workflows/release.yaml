@@ -6,33 +6,39 @@ on:
     branches:
       - next
 
+permissions:
+  contents: read
+
 jobs:
   release-npm:
     name: Release
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: write
+      issues: write
+      pull-requests: write
     outputs:
       new_release_published: ${{ steps.semantic.outputs.new_release_published }}
       new_release_version: ${{ steps.semantic.outputs.new_release_version }}
     steps:
       - name: Checkout sources 🔰
         uses: actions/checkout@v6
-
-      - name: Setup Node.js 20 🧮
+      - name: Setup Node.js 24 🧮
         uses: actions/setup-node@v6
         with:
-          node-version: 20
-
+          node-version: 24
       - name: Install dependencies ⏬
         run: npm ci
-
+      - name: Check cryptographic signatures for dependencies 🔐
+        run: npm audit signatures
+      - name: Build project 🏗
+        run: npm run build
       - name: Semantic Release 🚀
-        uses: cycjimmy/semantic-release-action@v4
         id: semantic
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-        with:
-          semantic_version: 23
+        run: npx semantic-release
   release-docker:
     needs: release-npm
     uses: ./.github/workflows/release_docker.yml
