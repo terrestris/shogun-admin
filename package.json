@@ -57,7 +57,7 @@
     "moment": "2.30.1",
     "monaco-editor": "0.54.0",
     "ol": "10.7.0",
-    "ol-mapbox-style": "12.4.1",
+    "ol-mapbox-style": "13.3.0",
     "react": "19.0.0",
     "react-dom": "19.0.0",
     "react-hotkeys-hook": "5.2.3",
