@@ -54,6 +54,7 @@ export const userPermissions = async (page: any) => {
   await deleteIcon.click();
 
   await page.waitForSelector('.ant-table-row', { state: 'visible' });
+  await page.locator('.ant-table-row').first().click();
   await deleteAllRowsWithText(
     page,
     'Test Application userPermission Playwright'
