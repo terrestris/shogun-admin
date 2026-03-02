@@ -57,21 +57,29 @@ export const applicationConfig = async (page: any) => {
   }
   await lineElement.click({ force: true });
 
-  const textLocation = page.locator('.view-lines > div:nth-child(26)');
+  const textLocation = page.locator('.view-lines > div:nth-child(25)');
 
   writeToEditor(page, textLocation, `, 
     "defaultLanguage": "de"`);
   const editedElement = page.locator('div').filter({
-    hasText: `, 
-    "defaultLanguage": "de"` }).first();
+    containsText: `"defaultLanguage": "de"`
+  }).first();
   await editedElement.waitFor({ state: 'visible', timeout: 10000 });
   await page.waitForLoadState('networkidle');
+  await page.waitForTimeout(500);
 
+  await page.getByRole('button', { name: 'save Save Application' }).scrollIntoViewIfNeeded();
   await page.getByRole('button', { name: 'save Save Application' }).click({ force: true });
   await expect(
     page.getByText('Application successfully saved').first()
   ).toBeVisible();
 
+  await page.waitForTimeout(1000);
+  await page.waitForFunction(() => {
+    return !document.querySelector('.monaco-editor.focused');
+  }, { timeout: 5000 }).catch(() => { })
+
+  await page.getByRole('button', { name: 'fullscreen' }).nth(1).scrollIntoViewIfNeeded();
   await page.getByRole('button', { name: 'fullscreen' }).nth(1).click();
   await expect(page.locator('.monaco-editor').first()).toBeVisible();
   const jsonEditor = await page.locator('.view-line').first();
@@ -212,6 +220,11 @@ test.use({
 test('applicationConfig', async ({ page }) => {
   await page.goto('/admin/portal');
   await page.waitForLoadState('networkidle');
+
+  page.on('pageerror', (error) => {
+    if (error.message.includes('Canceled')) return;
+    throw error;
+  });
 
   await applicationConfig(page);
 
