@@ -428,7 +428,7 @@ export function GeneralEntityRoot<T extends BaseEntity>({
   };
 
   useHotkeys('ctrl+s', handleKeyboardSave, {
-    enableOnFormTags: ['INPUT', 'TEXTAREA', 'SELECT'],
+    enableOnFormTags: true,
     enabled: () => !saveReloadDisabled && formValid
   });
 
