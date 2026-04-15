@@ -5,7 +5,7 @@ import {
 export default defineConfig({
   // @ts-ignore
   globalSetup: require.resolve('./global-setup.ts'),
-  testDir: './e2e-tests',
+  testDir: './src/e2e-tests',
   timeout: 30 * 1000,
   expect: {
     timeout: 30 * 1000
@@ -43,7 +43,8 @@ export default defineConfig({
       use: {
         browserName: 'chromium',
         locale: 'de-DE',
-        viewport: { width: 1400, height: 1050 }
+        viewport: { width: 1700, height: 1050 },
+        storageState: 'playwright/.auth/admin.json',
       },
       dependencies: ['setup']
     },

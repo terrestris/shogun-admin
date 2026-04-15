@@ -23,7 +23,7 @@ export const languageSelector = async (page: any) => {
   await expect(
     page.locator(".ant-menu-title-content").filter({
       hasText: initialTitle.toString(),
-    })
+    }).first()
   ).toBeVisible();
 
   await page.locator(".language-select").click();
@@ -45,7 +45,7 @@ export const languageSelector = async (page: any) => {
   await expect(
     page.locator(".ant-menu-title-content").filter({
       hasText: changedTitle.toString(),
-    })
+    }).first()
   ).toBeVisible();
 
   await expect(initialLanguage).not.toEqual(changedLanguage);

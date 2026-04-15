@@ -4,24 +4,22 @@ export const login = async (
   password: string,
   path: string
 ) => {
-  await page.goto(
-    `${process.env.HOST}/auth/realms/SHOGun` +
-    '/protocol/openid-connect/auth?client_id=shogun-client' +
-    `&redirect_uri=${process.env.HOST}` +
-    '%2Fclient%2F%3FapplicationId%3D21&state=9a983abe-3b0c-' +
-    '41cb-9b7e-1d9120956959&response_mode=fragment&response_type' +
-    '=code&scope=openid&nonce=72884466-0535-4a24-8c15-9e7f14d88a65'
-  );
+  await page.goto(`${process.env.HOST}/admin`);
 
-  if (await page.getByLabel('username').isVisible()) {
-    await page.getByLabel('username').first().fill(username);
+  if (await page.getByLabel('Username or email').isVisible()) {
+    await page.getByLabel('Username or email').first().fill(username);
     await page.getByLabel('Password').first().fill(password);
     await page
       .getByRole('button', {
         name: 'Sign in',
       })
       .click();
-    // Save signed-in state to 'storageState.json'.
+
+    await page.waitForURL(`${process.env.HOST}/admin/**`, { timeout: 15000 });
+    await page.waitForLoadState('networkidle');
+
+    await page.waitForSelector('.header-logo');
+
     await page.context().storageState({
       path: path,
     });
@@ -91,14 +89,12 @@ export const deleteAllRowsWithText = async (page: any, text: string) => {
 
     for (let i = 0; i < rowCount; i++) {
       const row = matchingRows.first();
-      if (row) {
-        await row.waitFor({ state: 'visible' });
+      if (await row.isVisible()) {
         const deleteButton = text.includes('Application')
           ? row.locator('div svg').nth(1)
           : row.locator('div svg').first();
 
-        if (await deleteButton.isVisible()) {
-          await deleteButton.scrollIntoViewIfNeeded();
+        if (await deleteButton.count() > 0) {
           const isClickable = await deleteButton.isEnabled();
           const isHidden = await deleteButton.isHidden();
 
