@@ -37,7 +37,15 @@ export type AdminPluginIntegrationToolMenu = AdminPluginIntegration &
     icon?: React.FunctionComponent;
   };
 
-export type AdminPluginIntegrations = AdminPluginIntegrationToolMenu;
+export type AdminPluginIntegrationFormComponent = AdminPluginIntegration & {
+  placement: 'form-component';
+  /**
+   * The name of the form component, used for internal references (e.g. in the form configuration) only.
+   */
+  name: string;
+};
+
+export type AdminPluginIntegrations = AdminPluginIntegrationToolMenu | AdminPluginIntegrationFormComponent;
 
 export interface AdminPlugin {
   /**
@@ -66,4 +74,10 @@ export function isToolMenuIntegration(
   pluginIntegration: AdminPluginIntegrations
 ): pluginIntegration is AdminPluginIntegrationToolMenu {
   return pluginIntegration && pluginIntegration.placement === 'tool-menu';
+}
+
+export function isFormComponentIntegration(
+  pluginIntegration: AdminPluginIntegrations
+): pluginIntegration is AdminPluginIntegrationFormComponent {
+  return pluginIntegration && pluginIntegration.placement === 'form-component';
 }

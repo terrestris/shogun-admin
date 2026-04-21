@@ -158,8 +158,8 @@ const loadPlugins = async () => {
       const adminPluginDefault: AdminPluginInternal = module as AdminPluginInternal;
       const PluginComponent = adminPluginDefault.component;
 
-      const WrappedPluginComponent = () => (
-        <PluginComponent />
+      const WrappedPluginComponent = (props: React.ComponentProps<typeof PluginComponent>) => (
+        <PluginComponent {...props} />
       );
 
       adminPluginDefault.wrappedComponent = WrappedPluginComponent;
