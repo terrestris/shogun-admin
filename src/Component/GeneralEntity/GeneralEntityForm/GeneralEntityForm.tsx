@@ -30,6 +30,8 @@ import { useTranslation } from 'react-i18next';
 import GeneralEntityRootContext, {
   ContextValue
 } from '../../../Context/GeneralEntityRootContext';
+import usePlugins from '../../../Hooks/usePlugins';
+import { isFormComponentIntegration } from '../../../plugin';
 import TranslationUtil from '../../../Util/TranslationUtil';
 import DisplayField from '../../FormField/DisplayField/DisplayField';
 import JSONEditor from '../../FormField/JSONEditor/JSONEditor';
@@ -40,7 +42,6 @@ import RolePermissionGrid from '../../FormField/Permission/RolePermissionGrid/Ro
 import UserPermissionGrid from '../../FormField/Permission/UserPermissionGrid/UserPermissionGrid';
 import YesOrNoField from '../../FormField/YesOrNoField/YesOrNoField';
 import LayerTypeSelect from '../../Layer/LayerTypeSelect/LayerTypeSelect';
-
 const { TextArea } = Input;
 
 import './GeneralEntityForm.less';
@@ -94,6 +95,7 @@ export const GeneralEntityForm: React.FC<GeneralEntityFormProps> = ({
 }) => {
 
   const generalEntityRootContext = useContext<ContextValue<any> | undefined>(GeneralEntityRootContext);
+  const plugins = usePlugins();
 
   const {
     t
@@ -145,6 +147,24 @@ export const GeneralEntityForm: React.FC<GeneralEntityFormProps> = ({
     if (!fieldCfg?.component) {
       Logger.error('FieldConfig is missing `component` property.');
       return null;
+    }
+
+    for (const plugin of plugins) {
+      if (isFormComponentIntegration(plugin.integration) && plugin.integration.name === fieldCfg.component) {
+        const PluginComponent = plugin.wrappedComponent;
+
+        if (!PluginComponent) {
+          Logger.error(`Plugin with name "${plugin.integration.name}" does not have a wrapped component.` +
+            'Make sure the plugin is correctly implemented.');
+          return null;
+        }
+
+        return (
+          <PluginComponent
+            {...fieldCfg?.fieldProps}
+          />
+        );
+      }
     }
 
     switch (fieldCfg?.component) {
@@ -327,13 +347,12 @@ export const GeneralEntityForm: React.FC<GeneralEntityFormProps> = ({
       formItemProps.valuePropName = 'checked';
     }
 
-    const {
-      component,
-      dataField
-    } = copyFieldCfg;
+    let formKey = `${generalEntityRootContext?.entityType}-${
+      form.getFieldValue('id')}-${copyFieldCfg.dataField || copyFieldCfg.component?.toLocaleLowerCase()}`;
 
-    const formKey = `${generalEntityRootContext?.entityType}-${
-      form.getFieldValue('id')}-${dataField || component?.toLocaleLowerCase()}`;
+    if (copyFieldCfg.component) {
+      formKey += `-${copyFieldCfg.component.toLocaleLowerCase()}`;
+    }
 
     if (copyFieldCfg.component === 'JSONEditor') {
       // The JSONEditor keeps track of the value internally, but to apply the
@@ -344,8 +363,8 @@ export const GeneralEntityForm: React.FC<GeneralEntityFormProps> = ({
     return (
       <Form.Item
         key={formKey}
-        name={dataField}
-        className={`cls-${dataField}`}
+        name={copyFieldCfg.dataField}
+        className={`cls-${copyFieldCfg.dataField}`}
         normalize={copyFieldCfg.component ? getNormalizeFn() : undefined}
         label={copyFieldCfg.label || `Field: ${copyFieldCfg.dataField}`}
         {...formItemProps}
