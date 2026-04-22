@@ -347,13 +347,12 @@ export const GeneralEntityForm: React.FC<GeneralEntityFormProps> = ({
       formItemProps.valuePropName = 'checked';
     }
 
-    const {
-      component,
-      dataField
-    } = copyFieldCfg;
+    let formKey = `${generalEntityRootContext?.entityType}-${
+      form.getFieldValue('id')}-${copyFieldCfg.dataField || copyFieldCfg.component?.toLocaleLowerCase()}`;
 
-    const formKey = `${generalEntityRootContext?.entityType}-${
-      form.getFieldValue('id')}-${dataField || component?.toLocaleLowerCase()}`;
+    if (copyFieldCfg.component) {
+      formKey += `-${copyFieldCfg.component.toLocaleLowerCase()}`;
+    }
 
     if (copyFieldCfg.component === 'JSONEditor') {
       // The JSONEditor keeps track of the value internally, but to apply the
@@ -364,8 +363,8 @@ export const GeneralEntityForm: React.FC<GeneralEntityFormProps> = ({
     return (
       <Form.Item
         key={formKey}
-        name={dataField}
-        className={`cls-${dataField}`}
+        name={copyFieldCfg.dataField}
+        className={`cls-${copyFieldCfg.dataField}`}
         normalize={copyFieldCfg.component ? getNormalizeFn() : undefined}
         label={copyFieldCfg.label || `Field: ${copyFieldCfg.dataField}`}
         {...formItemProps}
