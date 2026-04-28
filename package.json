@@ -44,7 +44,7 @@
     "@monaco-editor/react": "4.7.0",
     "@terrestris/base-util": "4.0.2",
     "@terrestris/ol-util": "21.3.0",
-    "@terrestris/shogun-util": "10.11.0",
+    "@terrestris/shogun-util": "10.11.1",
     "@uiw/react-md-editor": "4.1.0",
     "antd": "5.29.1",
     "i18next": "25.8.4",
