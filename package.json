@@ -106,7 +106,7 @@
     "axe-html-reporter": "^2.2.11",
     "babel-plugin-import": "1.13.8",
     "buffer": "6.0.3",
-    "dotenv": "17.2.3",
+    "dotenv": "17.4.2",
     "eslint": "9.39.2",
     "eslint-plugin-import": "2.32.0",
     "eslint-plugin-react": "7.37.5",
