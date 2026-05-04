@@ -22,6 +22,8 @@ import config from 'shogunApplicationConfig';
 import BaseEntity from '@terrestris/shogun-util/dist/model/BaseEntity';
 import Layer from '@terrestris/shogun-util/dist/model/Layer';
 
+import { SHOGunAPIClient } from '@terrestris/shogun-util/dist/service/SHOGunAPIClient';
+
 import GeneralEntityRoot, {
   GeneralEntityConfigType
 } from '../../Component/GeneralEntity/GeneralEntityRoot/GeneralEntityRoot';
@@ -48,9 +50,11 @@ import { setLayerSuggestionList } from '../../store/layerSuggestionList';
 
 import './Portal.less';
 
-interface PortalProps {}
+interface PortalProps {
+    client?: SHOGunAPIClient;
+}
 
-export const Portal: React.FC<PortalProps> = () => {
+export const Portal: React.FC<PortalProps> = ({ client }) => {
   const [collapsed, setCollapsed] = useState<boolean>(false);
   const [entitiesToLoad, setEntitiesToLoad] = useState<GeneralEntityConfigType<BaseEntity>[]>([]);
   const [configsAreLoading, setConfigsAreLoading] = useState<boolean>(false);
@@ -91,12 +95,12 @@ export const Portal: React.FC<PortalProps> = () => {
     setConfigsAreLoading(false);
   };
 
-  const onEntitiesLoaded = useCallback((entities: BaseEntity[], entityType: string) => {
+  const onEntitiesLoaded = useCallback(async (entities: BaseEntity[], entityType: string) => {
     if (entityType === 'layer') {
-      const layers = entities as Layer[];
+      const layers = client ? await client?.layer().findAllNoPaging() : entities as Layer[];
       dispatch(setLayerSuggestionList(layers));
     }
-  }, [dispatch]);
+  }, [client, dispatch]);
 
   const getLeftToolbarItems = (entityType: string): React.ReactNode => {
     switch (entityType) {
