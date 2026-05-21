@@ -23,6 +23,7 @@
   "scripts": {
     "build": "rspack --config rspack.prod.js build",
     "build:analyze": "npm run build -- --analyze",
+    "build:lib": "npm run clean:dist && node buildLib.mjs",
     "check": "npm run typecheck && npm run lint && npm run test",
     "clean:dist": "rimraf ./dist/* ./coverage/*",
     "lint": "npm run clean:dist && eslint -c eslint.config.mjs",

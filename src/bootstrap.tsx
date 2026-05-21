@@ -113,7 +113,7 @@ const loadPluginModules = async (moduleName: string, moduleUrl: string, remoteNa
   return modules;
 };
 
-const loadPlugins = async () => {
+const loadPlugins = async (client: SHOGunAPIClient) => {
   if (!config.plugins || config.plugins.length === 0) {
     Logger.info('No plugins found');
     return [];
@@ -158,8 +158,11 @@ const loadPlugins = async () => {
       const adminPluginDefault: AdminPluginInternal = module as AdminPluginInternal;
       const PluginComponent = adminPluginDefault.component;
 
-      const WrappedPluginComponent = () => (
-        <PluginComponent />
+      const WrappedPluginComponent = (props: React.ComponentProps<typeof PluginComponent>) => (
+        <PluginComponent
+          client={client}
+          {...props}
+        />
       );
 
       adminPluginDefault.wrappedComponent = WrappedPluginComponent;
@@ -207,7 +210,7 @@ const renderApp = async () => {
 
     const client = initSHOGunAPIClient(keycloak);
 
-    const plugins = await loadPlugins();
+    const plugins = await loadPlugins(client);
 
     root.render(
       <SHOGunAPIClientProvider client={client}>

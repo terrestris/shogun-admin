@@ -24,6 +24,7 @@ module.exports = merge(common, {
     historyApiFallback: true,
     allowedHosts: 'all'
   },
+  lazyCompilation: false,
   plugins: [
     new ReactRefreshPlugin()
   ]
