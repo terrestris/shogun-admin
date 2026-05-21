@@ -1,3 +1,13 @@
+## 18.1.0-next.1 (2026-05-21)
+
+* Merge pull request #1652 from terrestris/enhance-plugin-integration ([250e5c8](https://github.com/terrestris/shogun-admin/commit/250e5c8)), closes [#1652](https://github.com/terrestris/shogun-admin/issues/1652)
+* feat: add support for plugins in form component ([9647c62](https://github.com/terrestris/shogun-admin/commit/9647c62))
+* feat: apply client to plugin components ([012451e](https://github.com/terrestris/shogun-admin/commit/012451e))
+* fix: apply component name to form key ([2abd45b](https://github.com/terrestris/shogun-admin/commit/2abd45b))
+* chore: disable lazy compilation ([98d9840](https://github.com/terrestris/shogun-admin/commit/98d9840))
+* ci: add script to build lib files ([654c09d](https://github.com/terrestris/shogun-admin/commit/654c09d))
+* ci: run lib creation before release/deployment ([b13d864](https://github.com/terrestris/shogun-admin/commit/b13d864))
+
 ## <small>18.0.3-next.1 (2026-05-21)</small>
 
 * Merge pull request #1549 from terrestris/dependabot/npm_and_yarn/swc/helpers-0.5.18 ([943ade7](https://github.com/terrestris/shogun-admin/commit/943ade7)), closes [#1549](https://github.com/terrestris/shogun-admin/issues/1549)
