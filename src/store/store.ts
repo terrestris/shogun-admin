@@ -10,6 +10,7 @@ import {
 import appInfo from './appInfo';
 import entityId from './entityId';
 import infoModal from './infoModal';
+import jsonEditor from './jsonEditor';
 import layerSuggestionList from './layerSuggestionList';
 import openApiDocs from './openApiDocs';
 import userInfo from './userInfo';
@@ -26,6 +27,7 @@ export const createReducer = (asyncReducers?: AsyncReducer) => {
     openApiDocs,
     layerSuggestionList,
     entityId,
+    jsonEditor,
     ...asyncReducers
   });
 };

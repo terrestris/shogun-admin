@@ -21,7 +21,8 @@ module.exports = merge(common, {
     static: [
       path.join(__dirname, 'assets')
     ],
-    historyApiFallback: true
+    historyApiFallback: true,
+    allowedHosts: 'all'
   },
   plugins: [
     new ReactRefreshPlugin()

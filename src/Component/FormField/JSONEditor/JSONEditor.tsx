@@ -11,11 +11,13 @@ import {
 } from '@ant-design/icons';
 
 import {
+  DiffEditor,
   Editor,
   EditorProps,
   OnChange,
   useMonaco,
-  loader
+  loader,
+  MonacoDiffEditor
 } from '@monaco-editor/react';
 
 import {
@@ -39,7 +41,15 @@ import {
   useTranslation
 } from 'react-i18next';
 
+import config from 'shogunApplicationConfig';
+
+import useAppDispatch from '../../../Hooks/useAppDispatch';
 import useAppSelector from '../../../Hooks/useAppSelector';
+
+import {
+  setIsEditedManuallyMap,
+  setOriginalEditorValues
+} from '../../../store/jsonEditor';
 
 import OpenAPIUtil from '../../../Util/OpenAPIUtil';
 
@@ -77,13 +87,27 @@ export const JSONEditor: React.FC<JSONEditorProps> = ({
   const [isFormattedInitially, setIsFormattedInitially] = useState<boolean>(false);
 
   const openApiDocs = useAppSelector(state => state.openApiDocs);
+  const originalValues = useAppSelector(state => state.jsonEditor.originalEditorValues);
+  const isEditedManuallyMap = useAppSelector(state => state.jsonEditor.isEditedManuallyMap);
+  const originalValue = originalValues?.[`${entityType}.${dataField}`];
+
+  const historyEnabled = config.entityHistory?.enabled;
 
   const {
     t
   } = useTranslation();
 
   const monaco = useMonaco();
+  const dispatch = useAppDispatch();
 
+  if (originalValue === undefined && currentValue) {
+    dispatch(setOriginalEditorValues({
+      [`${entityType}.${dataField}`]: currentValue,
+      ...originalValues
+    }));
+  }
+
+  const monacoDiffEditor = useRef<MonacoDiffEditor>(null);
   const monacoStandaloneEditor = useRef<monacoEditor.editor.IStandaloneCodeEditor>(null);
 
   const editorOptions = useMemo(() => ({
@@ -137,6 +161,8 @@ export const JSONEditor: React.FC<JSONEditorProps> = ({
     registerSchemaValidation();
   }, [registerSchemaValidation]);
 
+  const isConfigEqual = React.useMemo(() => currentValue === originalValue, [currentValue, originalValue]);
+
   const formatDocument = useCallback(async () => {
     if (!monacoStandaloneEditor.current) {
       return;
@@ -151,6 +177,16 @@ export const JSONEditor: React.FC<JSONEditorProps> = ({
     await formatDocumentAction.run();
   }, []);
 
+  const diffOnMount = useCallback(async (
+    editor: monacoEditor.editor.IStandaloneDiffEditor
+  ) => {
+    monacoDiffEditor.current = editor;
+
+    await formatDocument();
+
+    setIsFormattedInitially(true);
+  }, [formatDocument]);
+
   const onMount = useCallback(async (editor: monacoEditor.editor.IStandaloneCodeEditor) => {
     monacoStandaloneEditor.current = editor;
 
@@ -164,6 +200,11 @@ export const JSONEditor: React.FC<JSONEditorProps> = ({
   };
 
   const onChange: OnChange = (val?: string) => {
+    dispatch(setIsEditedManuallyMap({
+      [`${entityType}.${dataField}`]: true,
+      ...isEditedManuallyMap
+    }));
+
     setCurrentValue(val);
 
     if (!isFormattedInitially) {
@@ -185,6 +226,8 @@ export const JSONEditor: React.FC<JSONEditorProps> = ({
     }
   };
 
+  const isEditedManually = isEditedManuallyMap?.[`${entityType}.${dataField}`];
+
   return (
     <FullscreenWrapper>
       <div
@@ -205,19 +248,37 @@ export const JSONEditor: React.FC<JSONEditorProps> = ({
             value={currentValue}
           />
         </div>
-        <Editor
-          onMount={onMount}
-          value={currentValue}
-          onChange={onChange}
-          path={
-            openApiUtil.getPropertyRefName(entityType, dataField) ?
-              `${openApiUtil.getPropertyRefName(entityType, dataField)}.json` :
-              undefined
-          }
-          language="json"
-          options={editorOptions}
-          {...editorProps}
-        />
+        {
+          (!isConfigEqual && historyEnabled && !isEditedManually) ? (
+            <DiffEditor
+              onMount={diffOnMount}
+              original={originalValue}
+              modified={currentValue}
+              language="json"
+              keepCurrentOriginalModel
+              keepCurrentModifiedModel
+              options={{
+                originalEditable: false,
+                readOnly: true,
+                renderSideBySide: false
+              }}
+            />
+          ) : (
+            <Editor
+              onMount={onMount}
+              value={currentValue}
+              onChange={onChange}
+              path={
+                openApiUtil.getPropertyRefName(entityType, dataField) ?
+                  `${openApiUtil.getPropertyRefName(entityType, dataField)}.json` :
+                  undefined
+              }
+              language="json"
+              options={editorOptions}
+              {...editorProps}
+            />
+          )
+        }
       </div>
     </FullscreenWrapper>
   );

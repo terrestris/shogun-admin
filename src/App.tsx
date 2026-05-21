@@ -54,9 +54,9 @@ const App: React.FC = () => {
   useEffect(() => {
     const setLayers = async() => {
       try {
-        const layers = await client?.layer().findAll();
+        const layers = await client?.layer().findAllNoPaging();
         if (!_isNil(layers)) {
-          dispatch(setLayerSuggestionList(layers.content));
+          dispatch(setLayerSuggestionList(layers));
         }
 
         if (disposableCompletionItemProviderRef.current) {

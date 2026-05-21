@@ -102,6 +102,15 @@ declare module 'shogunApplicationConfig' {
      */
     models: string[];
     /**
+     * Entity history configuration object.
+    */
+    entityHistory: {
+      /**
+       * Whether the entity history is enabled or not.
+       */
+      enabled: boolean;
+    };
+    /**
      * Dashboard configuration object.
      */
     dashboard: {

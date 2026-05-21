@@ -41,3 +41,6 @@ yarn-error.log*
 /playwright/.cache/
 /storageState.json
 \nplaywright/.auth
+
+# Playwright
+/blob-report/
