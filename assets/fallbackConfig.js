@@ -1,7 +1,7 @@
 var shogunApplicationConfig = {
   appPrefix: '/admin',
   defaultPageSize: 10,
-  layerQueryBatchSize: 100,
+  layerSuggestionListBatchSize: 100,
   path: {
     modelConfigs: './formconfigs',
     shogunBase: '/',

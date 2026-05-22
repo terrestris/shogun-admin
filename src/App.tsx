@@ -54,7 +54,7 @@ const App: React.FC = () => {
   useEffect(() => {
     const setLayers = async() => {
       try {
-        const layers = await client?.layer().findAllNoPaging(undefined, config.layerQueryBatchSize);
+        const layers = await client?.layer().findAllNoPaging(undefined, config.layerSuggestionListBatchSize);
         if (!_isNil(layers)) {
           dispatch(setLayerSuggestionList(layers));
         }
