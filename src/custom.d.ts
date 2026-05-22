@@ -41,6 +41,10 @@ declare module 'shogunApplicationConfig' {
      */
     defaultPageSize?: number;
     /**
+     * The default page size used to query the layer suggestion list, e.g. 100.
+     */
+    layerSuggestionListBatchSize?: number;
+    /**
      * Configuration of paths relevant for the admin client.
      */
     path: {
