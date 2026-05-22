@@ -41,6 +41,10 @@ declare module 'shogunApplicationConfig' {
      */
     defaultPageSize?: number;
     /**
+     * The default page size used to query all layers, e.g. 100.
+     */
+    layerQueryBatchSize?: number;
+    /**
      * Configuration of paths relevant for the admin client.
      */
     path: {
