@@ -1,3 +1,10 @@
+## 18.1.0-next.2 (2026-05-22)
+
+* Merge pull request #1700 from terrestris/findall-pagesize ([40c8723](https://github.com/terrestris/shogun-admin/commit/40c8723)), closes [#1700](https://github.com/terrestris/shogun-admin/issues/1700)
+* fix: rename to layerSuggestionListBatchSize ([19622b3](https://github.com/terrestris/shogun-admin/commit/19622b3))
+* chore: bump shogun-util to 10.12.0 ([d60ac1a](https://github.com/terrestris/shogun-admin/commit/d60ac1a))
+* feat: increase default page size for findAll ([a14fbd7](https://github.com/terrestris/shogun-admin/commit/a14fbd7))
+
 ## 18.1.0-next.1 (2026-05-21)
 
 * Merge pull request #1652 from terrestris/enhance-plugin-integration ([250e5c8](https://github.com/terrestris/shogun-admin/commit/250e5c8)), closes [#1652](https://github.com/terrestris/shogun-admin/issues/1652)
