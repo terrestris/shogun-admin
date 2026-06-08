@@ -57,14 +57,15 @@ export const applicationConfig = async (page: any) => {
   }
   await lineElement.click({ force: true });
 
-  const textLocation = page.locator('.view-lines > div:nth-child(26)');
+  const textLocation = page.locator('.view-lines > div:nth-last-child(2)').first();
 
-  writeToEditor(page, textLocation, `, 
+  await writeToEditor(page, textLocation, `, 
     "defaultLanguage": "de"`);
-  const editedElement = page.locator('div').filter({
-    hasText: `, 
-    "defaultLanguage": "de"` }).first();
-  await editedElement.waitFor({ state: 'visible', timeout: 10000 });
+  await expect(
+    page.locator('.monaco-editor .view-line').filter({
+      hasText: /"defaultLanguage":\s*"de"/,
+    }).first()
+  ).toBeVisible({ timeout: 10000 });
   await page.waitForLoadState('networkidle');
 
   await page.getByRole('button', { name: 'save Save Application' }).click({ force: true });

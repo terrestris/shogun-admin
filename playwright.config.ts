@@ -5,7 +5,7 @@ import {
 export default defineConfig({
   // @ts-ignore
   globalSetup: require.resolve('./global-setup.ts'),
-  testDir: './e2e-tests',
+  testDir: './src/e2e-tests',
   timeout: 30 * 1000,
   expect: {
     timeout: 30 * 1000
@@ -21,7 +21,7 @@ export default defineConfig({
   }]],
   use: {
     // @ts-ignore
-    headless: false,
+    headless: true,
     baseURL: process.env.HOST,
     actionTimeout: 30000,
     trace: 'on-first-retry',
