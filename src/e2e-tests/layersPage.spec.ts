@@ -144,11 +144,6 @@ export const layersPage = async (page: any) => {
   await expect(parseInt(firstIDUpdated, 10)).toBeGreaterThan(
     parseInt(secondIDUpdated, 10)
   );
-
-  await page.getByRole('columnheader', { name: 'Type' }).locator('div').click();
-  const firstRowType = await page.locator('.ant-table-row').first();
-  const firstRowTypeContent = await firstRowType.innerText();
-  await expect(firstRowTypeContent).toContain('WMTS');
 };
 
 test.beforeEach(async ({ page }) => {

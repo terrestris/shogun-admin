@@ -22,7 +22,7 @@ export const languageSelector = async (page: any) => {
   ).toBeVisible();
   await expect(
     page.locator(".ant-menu-title-content").filter({
-      hasText: initialTitle.toString(),
+      hasText: new RegExp(`^${initialTitle.toString().replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}$`)
     })
   ).toBeVisible();
 
@@ -44,7 +44,7 @@ export const languageSelector = async (page: any) => {
   ).toBeVisible();
   await expect(
     page.locator(".ant-menu-title-content").filter({
-      hasText: changedTitle.toString(),
+      hasText: new RegExp(`^${changedTitle.toString().replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}$`)
     })
   ).toBeVisible();
 

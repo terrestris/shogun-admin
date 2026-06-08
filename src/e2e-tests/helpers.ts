@@ -117,6 +117,10 @@ export const deleteAllRowsWithText = async (page: any, text: string) => {
           await page.waitForSelector('.ant-notification-notice', {
             state: 'visible',
           });
+          await page.waitForSelector('.ant-notification-notice [data-icon="close"]', {
+            state: 'visible',
+          });
+          await page.locator('.ant-notification-notice [data-icon="close"]').first().click();
           await page.waitForLoadState('networkidle');
         }
       }
