@@ -24,6 +24,7 @@ import {
 import Logger from 'js-logger';
 
 import _cloneDeep from 'lodash/cloneDeep';
+import _uniqueId from 'lodash/uniqueId';
 
 import { useTranslation } from 'react-i18next';
 
@@ -348,7 +349,7 @@ export const GeneralEntityForm: React.FC<GeneralEntityFormProps> = ({
     }
 
     let formKey = `${generalEntityRootContext?.entityType}-${
-      form.getFieldValue('id')}-${copyFieldCfg.dataField || copyFieldCfg.component?.toLocaleLowerCase()}`;
+      form.getFieldValue('id')}-${copyFieldCfg.dataField || copyFieldCfg.component?.toLocaleLowerCase()}${_uniqueId()}`;
 
     if (copyFieldCfg.component) {
       formKey += `-${copyFieldCfg.component.toLocaleLowerCase()}`;
