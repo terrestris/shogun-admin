@@ -153,6 +153,10 @@ module.exports = {
         'ol/': {
           singleton: true,
           requiredVersion: deps.ol
+        },
+        'proj4': {
+          singleton: true,
+          requiredVersion: deps.proj4
         }
       }
     })
