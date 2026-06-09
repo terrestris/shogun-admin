@@ -1,3 +1,8 @@
+## 18.1.0-next.4 (2026-06-09)
+
+* Merge pull request #1706 from terrestris/fix/json-editor-initialvalue ([7251efd](https://github.com/terrestris/shogun-admin/commit/7251efd)), closes [#1706](https://github.com/terrestris/shogun-admin/issues/1706)
+* fix: determination of current value based on initial value ([1d36057](https://github.com/terrestris/shogun-admin/commit/1d36057))
+
 ## 18.1.0-next.3 (2026-06-09)
 
 * Merge pull request #1705 from terrestris/chore/proj4j ([f0fa0fc](https://github.com/terrestris/shogun-admin/commit/f0fa0fc)), closes [#1705](https://github.com/terrestris/shogun-admin/issues/1705)
