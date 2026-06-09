@@ -1,3 +1,8 @@
+## 18.1.0-next.3 (2026-06-09)
+
+* Merge pull request #1705 from terrestris/chore/proj4j ([f0fa0fc](https://github.com/terrestris/shogun-admin/commit/f0fa0fc)), closes [#1705](https://github.com/terrestris/shogun-admin/issues/1705)
+* feat: adds proj4j and include in exposed shared libraries for module federation ([fd9578b](https://github.com/terrestris/shogun-admin/commit/fd9578b))
+
 ## 18.1.0-next.2 (2026-05-22)
 
 * Merge pull request #1700 from terrestris/findall-pagesize ([40c8723](https://github.com/terrestris/shogun-admin/commit/40c8723)), closes [#1700](https://github.com/terrestris/shogun-admin/issues/1700)
