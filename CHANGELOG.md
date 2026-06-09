@@ -1,3 +1,10 @@
+## 18.1.0-next.5 (2026-06-09)
+
+* Merge pull request #1707 from terrestris/fix-form-key ([cd59944](https://github.com/terrestris/shogun-admin/commit/cd59944)), closes [#1707](https://github.com/terrestris/shogun-admin/issues/1707)
+* fix: use array index instead of unique id for form key ([0b293f7](https://github.com/terrestris/shogun-admin/commit/0b293f7))
+* fix: use different keys for form components ([9069bef](https://github.com/terrestris/shogun-admin/commit/9069bef))
+* chore: udpate package lock file ([2207287](https://github.com/terrestris/shogun-admin/commit/2207287))
+
 ## 18.1.0-next.4 (2026-06-09)
 
 * Merge pull request #1706 from terrestris/fix/json-editor-initialvalue ([7251efd](https://github.com/terrestris/shogun-admin/commit/7251efd)), closes [#1706](https://github.com/terrestris/shogun-admin/issues/1706)
