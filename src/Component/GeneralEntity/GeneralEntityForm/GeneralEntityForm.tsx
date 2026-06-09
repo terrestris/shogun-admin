@@ -24,7 +24,6 @@ import {
 import Logger from 'js-logger';
 
 import _cloneDeep from 'lodash/cloneDeep';
-import _uniqueId from 'lodash/uniqueId';
 
 import { useTranslation } from 'react-i18next';
 
@@ -315,7 +314,7 @@ export const GeneralEntityForm: React.FC<GeneralEntityFormProps> = ({
    * @param fieldCfg The FieldConfig
    * @returns An antd FormItem
    */
-  const createFormItem = (fieldCfg: FieldConfig): React.ReactNode => {
+  const createFormItem = (fieldCfg: FieldConfig, index: number): React.ReactNode => {
     const copyFieldCfg = _cloneDeep(fieldCfg);
     copyFieldCfg.label = TranslationUtil.getTranslationFromConfig(fieldCfg.label as string, i18n);
     let field: React.ReactNode;
@@ -349,7 +348,7 @@ export const GeneralEntityForm: React.FC<GeneralEntityFormProps> = ({
     }
 
     let formKey = `${generalEntityRootContext?.entityType}-${
-      form.getFieldValue('id')}-${copyFieldCfg.dataField || copyFieldCfg.component?.toLocaleLowerCase()}${_uniqueId()}`;
+      form.getFieldValue('id')}-${copyFieldCfg.dataField || copyFieldCfg.component?.toLocaleLowerCase()}-${index}`;
 
     if (copyFieldCfg.component) {
       formKey += `-${copyFieldCfg.component.toLocaleLowerCase()}`;
