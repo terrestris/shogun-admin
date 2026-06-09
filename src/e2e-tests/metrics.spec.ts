@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { login, switchLanguage } from './helpers';
+import { highlight, login, switchLanguage } from './helpers';
 
 
 export const metrics = async (page: any) => {
@@ -12,39 +12,52 @@ export const metrics = async (page: any) => {
   await page.getByText('Metrics').click();
 
   await expect(page.getByTitle(/^Metrics$/)).toBeVisible();
+  await highlight(page.getByTitle(/^Metrics$/).first());
   await expect(page.getByTitle(/^… that measure the world$/)).toBeVisible();
+  await highlight(page.getByTitle(/^… that measure the world$/).first());
   await expect(page.locator('.metrics-card-container')).toBeVisible();
+  await highlight(page.locator('.metrics-card-container').first());
   await expect(
     page.locator('#app').getByText('Current number of active')
   ).toBeVisible();
+  await highlight(page.locator('#app').getByText('Current number of active').first());
   await expect(
     page.locator('#app').getByText('The current number of live')
   ).toBeVisible();
+  await highlight(page.locator('#app').getByText('The current number of live').first());
   await expect(
     page.locator('#app').getByText('The amount of used memory')
   ).toBeVisible();
+  await highlight(page.locator('#app').getByText('The amount of used memory').first());
   await expect(
     page.locator('#app').getByText('The "recent cpu usage" of')
   ).toBeVisible();
+  await highlight(page.locator('#app').getByText('The "recent cpu usage" of').first());
   await expect(
     page.locator('#app').getByText('The uptime of the Java')
   ).toBeVisible();
+  await highlight(page.locator('#app').getByText('The uptime of the Java').first());
   await expect(
     page.locator('#app').getByText('The number of processors')
   ).toBeVisible();
+  await highlight(page.locator('#app').getByText('The number of processors').first());
   await expect(
     page.locator('#app').getByText('The "recent cpu usage" of')
   ).toBeVisible();
+  await highlight(page.locator('#app').getByText('The "recent cpu usage" of').first());
   await expect(
     page.locator('#app').getByText('Start time of the process')
   ).toBeVisible();
+  await highlight(page.locator('#app').getByText('Start time of the process').first());
   await expect(
     page.locator('#app').getByText('The sum of the number of')
   ).toBeVisible();
+  await highlight(page.locator('#app').getByText('The sum of the number').first());
 
   const statisticElement = page.locator(
     'div:nth-child(3) > div:nth-child(2) > div > div > div > div.ant-statistic-content > span.ant-statistic-content-value > span'
   );
+  await highlight(statisticElement.first());
   const initialText = await statisticElement.innerText();
   await page.waitForTimeout(5000);
   await page

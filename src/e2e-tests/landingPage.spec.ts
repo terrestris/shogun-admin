@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { login, switchLanguage } from './helpers';
+import { highlight, login, switchLanguage } from './helpers';
 
 
 export const landingPage = async (page: any) => {
@@ -18,8 +18,10 @@ export const landingPage = async (page: any) => {
     timeout: 60000,
   });
   await expect(page.locator('.user-menu')).toBeVisible();
+  await highlight(page.locator('.user-menu').first());
 
   await expect(page.locator('.portal')).toBeVisible();
+  await highlight(page.locator('.portal').first());
 
   const menu = await page.locator('.menu');
   await expect(menu).toBeVisible();
@@ -46,10 +48,13 @@ export const landingPage = async (page: any) => {
   await expect(
     page.locator('div').filter({ hasText: /^Applications$/ })
   ).toBeVisible();
+  await highlight(page.locator('div').filter({ hasText: /^Applications$/ }).first());
   await expect(
     page.locator('div').filter({ hasText: /^Layers$/ })
   ).toBeVisible();
+  await highlight(page.locator('div').filter({ hasText: /^Layers$/ }).first());
   await expect(page.locator('div').filter({ hasText: /^User$/ })).toBeVisible();
+  await highlight(page.locator('div').filter({ hasText: /^User$/ }).first());
 };
 
 test.beforeEach(async ({ page }) => {

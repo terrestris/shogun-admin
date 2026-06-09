@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-import { login } from "./helpers";
+import { highlight, login } from "./helpers";
 
 
 export const languageSelector = async (page: any) => {
@@ -36,6 +36,8 @@ export const languageSelector = async (page: any) => {
     .locator(".ant-menu-title-content")
     .first()
     .innerText();
+
+  await highlight(page.locator(".language-select").first());
 
   await expect(
     page.locator(".language-select").filter({

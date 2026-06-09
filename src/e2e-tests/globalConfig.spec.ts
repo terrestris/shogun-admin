@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { login, switchLanguage } from './helpers';
+import { highlight, login, switchLanguage } from './helpers';
 
 
 export const globalConfig = async (page: any) => {
@@ -12,6 +12,7 @@ export const globalConfig = async (page: any) => {
   await page.getByText('Global').click();
 
   await expect(page.getByTitle(/^Configuration$/)).toBeVisible();
+  await highlight(page.getByTitle(/^Configuration$/).first());
   await expect(page.getByTitle(/^… that guide the world$/)).toBeVisible();
   await page.getByRole('button', { name: 'clear Clear cache' }).click();
   await expect(
