@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { login, switchLanguage } from './helpers';
+import { highlight, login, switchLanguage } from './helpers';
 
 
 export const header = async (page: any) => {
@@ -10,6 +10,7 @@ export const header = async (page: any) => {
   });
   const logo = await page.locator('.header-logo');
   await expect(logo).toBeVisible();
+  await highlight(logo);
   await expect(page.locator('.language-select')).toBeVisible();
   await expect(page.locator('.language-select')).toBeVisible();
   await switchLanguage(page, 'EN');
@@ -19,31 +20,47 @@ export const header = async (page: any) => {
     timeout: 60000,
   });
   await expect(page.locator('.user-menu')).toBeVisible();
+  await highlight(page.locator('.user-menu').first());
   await expect(page.locator('.portal')).toBeVisible();
+  await highlight(page.locator('.portal').first());
 
   await page.locator('.user-menu').click();
   await expect(page.getByText(/^Profile settings$/)).toBeVisible();
+  await highlight(page.getByText(/^Profile settings$/).first());
   await expect(page.getByText(/^Info$/)).toBeVisible();
+  await highlight(page.getByText(/^Info$/).first());
   await expect(page.getByText(/^Logout$/)).toBeVisible();
+  await highlight(page.getByText(/^Logout$/).first());
 
   await page.getByText('Profile settings').click();
   const settingsUrl = await page.url();
   await expect(settingsUrl).toContain('/auth/realms/');
   await expect(page.getByTestId('page-heading')).toBeVisible();
+  await highlight(page.getByTestId('page-heading').first());
   await expect(page.getByText('Manage your basic information')).toBeVisible();
+  await highlight(page.getByText('Manage your basic information').first());
   await expect(page.getByRole('heading', { name: 'General' })).toBeVisible();
+  await highlight(page.getByRole('heading', { name: 'General' }).first());
   await expect(page.getByText('Username')).toBeVisible();
+  await highlight(page.getByText('Username').first());
   await expect(page.getByText('Email')).toBeVisible();
+  await highlight(page.getByText('Email').first());
   await expect(page.getByText('First name')).toBeVisible();
+  await highlight(page.getByText('First name').first());
   await expect(page.getByText('Last name')).toBeVisible();
+  await highlight(page.getByText('Last name').first());
 
   await page.goto('/admin/portal');
   await page.locator('.user-menu').click();
   await page.getByText('Info').click();
   await expect(page.getByLabel('About').locator('img')).toBeVisible();
+  await highlight(page.getByLabel('About').locator('img').first());
   await expect(page.getByText('About')).toBeVisible();
+  await highlight(page.getByText('About').first());
   await expect(page.getByText('Admin version')).toBeVisible();
+  await highlight(page.getByText('Admin version').first());
   await expect(page.getByText('Backend version')).toBeVisible();
+  await highlight(page.getByText('Backend version').first());
   await page.getByLabel('Close', { exact: true }).first().click();
   await expect(page.getByLabel('About').locator('img')).not.toBeVisible();
 
@@ -52,6 +69,7 @@ export const header = async (page: any) => {
   await expect(
     page.getByRole('heading', { name: 'Sign in to your account' })
   ).toBeVisible();
+  await highlight(page.getByRole('heading', { name: 'Sign in to your account' }).first())
   const loginUrl = await page.url();
   await expect(loginUrl).toContain('/auth/realms/');
 };

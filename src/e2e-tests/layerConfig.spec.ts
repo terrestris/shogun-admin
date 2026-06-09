@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { deleteAllRowsWithText, findElementInPaginatedTable, login, switchLanguage, writeToEditor } from './helpers';
+import { deleteAllRowsWithText, findElementInPaginatedTable, highlight, login, switchLanguage, writeToEditor } from './helpers';
 
 
 export const layerConfig = async (page: any) => {
@@ -54,7 +54,7 @@ export const layerConfig = async (page: any) => {
     throw new Error('The element is not clickable.');
   }
 
-  await jsonEditor.click({force: true});
+  await jsonEditor.click({ force: true });
   await page.waitForLoadState('networkidle');
   const jsonContent = `{
     "title": "root",
@@ -78,6 +78,7 @@ export const layerConfig = async (page: any) => {
   await expect(
     page.getByText('Application successfully saved').first()
   ).toBeVisible();
+  await highlight(page.getByText('Application successfully saved').first());
   await page.locator('.ant-notification-notice-close').click();
   await expect(page.getByTitle(/^Configure Tools$/)).toBeVisible();
 
@@ -87,15 +88,18 @@ export const layerConfig = async (page: any) => {
       hasText: 'Test layerConfig Application Playwright',
     })
     .first();
+  await highlight(targetRow);
   const rowContent = await targetRow.innerText();
   const applicationID = rowContent.match(/\d+/)?.[0];
 
   await page.goto(`/client/?applicationId=${applicationID}`);
   await expect(page.locator('#map')).toBeVisible();
+  await highlight(page.locator('#map').first());
   await page
     .getByRole('button', { name: 'collapsed Maps', exact: true })
     .click();
   await expect(page.getByText('Test Layer', { exact: true })).toBeVisible();
+  await highlight(page.getByText('Test Layer', { exact: true }).first());
 
   await page.goto('/admin/portal');
   await page

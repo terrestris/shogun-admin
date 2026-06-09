@@ -1,3 +1,5 @@
+import { Locator } from '@playwright/test';
+
 export const login = async (
   page: any,
   username: string,
@@ -148,3 +150,15 @@ export const writeToEditor = async (page: any, textLocation: any, inputText: str
 
   await page.keyboard.press('Control+V');
 };
+
+export async function highlight(locator: Locator) {
+  await locator.evaluate((el) => {
+    el.style.outline = '3px solid yellow';
+    el.style.backgroundColor = 'yellow';
+    setTimeout(() => {
+      el.style.outline = '';
+      el.style.backgroundColor = '';
+    }, 800);
+  });
+  await new Promise(resolve => setTimeout(resolve, 2000));
+}

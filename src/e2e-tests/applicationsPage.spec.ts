@@ -1,7 +1,7 @@
 import { test } from '@playwright/test';
 
 import { expect } from '@playwright/test';
-import { deleteAllRowsWithText, login, switchLanguage } from './helpers';
+import { deleteAllRowsWithText, highlight, login, switchLanguage } from './helpers';
 
 export const applicationsPage = async (page: any) => {
   await page.waitForLoadState('networkidle');
@@ -11,6 +11,9 @@ export const applicationsPage = async (page: any) => {
   await expect(
     page.getByRole('link', { name: 'bank Applications … that move' })
   ).toBeVisible();
+  await highlight(
+    page.getByRole('link', { name: 'bank Applications … that move' }).first()
+  );
   const applicationsNumberText = await page
     .getByRole('link', { name: ' Applications' })
     .innerText();
@@ -20,6 +23,11 @@ export const applicationsPage = async (page: any) => {
       hasText: applicationsNumber,
     }).first()
   ).toBeVisible();
+  await highlight(
+    page.locator('.ant-statistic-content-value').filter({
+      hasText: applicationsNumber,
+    }).first()
+  );
   await page
     .getByRole('menuitem', { name: 'bank Application' })
     .locator('span')
@@ -27,14 +35,23 @@ export const applicationsPage = async (page: any) => {
     .click();
 
   await expect(page.locator('.ant-table-container')).toBeVisible();
+  await highlight(page.locator('.ant-table-container').first());
   await expect(page.getByLabel(/^ID$/)).toBeVisible();
+  await highlight(page.getByLabel(/^ID$/).first());
   await expect(page.getByText(/^Name$/)).toBeVisible();
+  await highlight(page.getByText(/^Name$/).first());
   await expect(page.getByText(/^Last edited on$/)).toBeVisible();
+  await highlight(page.getByText(/^Last edited on$/).first());
   await expect(page.getByText(/^Link to application$/)).toBeVisible();
+  await highlight(page.getByText(/^Link to application$/).first());
   await expect(page.getByLabel('sync').locator('svg')).toBeVisible();
+  await highlight(page.getByLabel('sync').locator('svg').first());
   await expect(
     page.getByRole('button', { name: 'form Create Application' })
   ).toBeVisible();
+  await highlight(
+    page.getByRole('button', { name: 'form Create Application' }).first()
+  );
 
   const rowCount = await page.locator('.ant-table-row').count();
   if (applicationsNumber < 20) {
@@ -45,21 +62,33 @@ export const applicationsPage = async (page: any) => {
 
   await page.getByRole('button', { name: 'form Create Application' }).click();
   await expect(page.getByText(/^Identifier$/)).toBeVisible();
+  await highlight(page.getByText(/^Identifier$/).first());
   await expect(page.getByText(/^Created at$/)).toBeVisible();
+  await highlight(page.getByText(/^Created at$/).first());
   await expect(page.getByText(/^Status of work$/)).toBeVisible();
+  await highlight(page.getByText(/^Status of work$/).first());
   await expect(page.getByText(/^Public application$/)).toBeVisible();
+  await highlight(page.getByText(/^Public application$/).first());
   await expect(page.getByText(/^Client configuration$/)).toBeVisible();
+  await highlight(page.getByText(/^Client configuration$/).first());
   await expect(page.getByTitle(/^Layertree$/)).toBeVisible();
+  await highlight(page.getByTitle(/^Layertree$/).first());
   await expect(page.getByTitle(/^Layer configuration$/)).toBeVisible();
+  await highlight(page.getByTitle(/^Layer configuration$/).first());
   await expect(page.getByTitle(/^Configure Tools$/)).toBeVisible();
+  await highlight(page.getByTitle(/^Configure Tools$/).first());
   await expect(page.getByTitle(/^User permissions$/)).toBeVisible();
+  await highlight(page.getByTitle(/^User permissions$/).first());
   await expect(page.getByTitle(/^Group permissions$/)).toBeVisible();
+  await highlight(page.getByTitle(/^Group permissions$/).first());
   await expect(page.getByTitle(/^Role permissions$/)).toBeVisible();
+  await highlight(page.getByTitle(/^Role permissions$/).first());
 
   await page.getByRole('button', { name: 'form Create Application' }).click();
   await page.getByLabel('Name').nth(1).fill('Test Application Playwright');
   await page.getByRole('button', { name: 'save Save Application' }).click();
   await expect(page.getByText('Application successfully saved')).toBeVisible();
+  await highlight(page.getByText('Application successfully saved').first());
   await page.getByLabel('Close', { exact: true }).click();
   await page
     .getByRole('menuitem', { name: 'bank Application' })
@@ -76,6 +105,7 @@ export const applicationsPage = async (page: any) => {
       hasText: 'Test Application Playwright',
     })
     .first();
+  await highlight(targetRow);
   const rowContent = await targetRow.innerText();
   const applicationID = rowContent.match(/\d+/)?.[0];
 
@@ -119,6 +149,7 @@ export const applicationsPage = async (page: any) => {
     .fill('Test Application Playwright EDITED');
   await page.getByRole('button', { name: 'save Save Application' }).click();
   await expect(page.getByText('Application successfully saved')).toBeVisible();
+  await highlight(page.getByText('Application successfully saved').first());
   await page.getByLabel('Close', { exact: true }).click();
   await expect(
     page.getByText('Test Application Playwright EDITED').first()
@@ -126,6 +157,7 @@ export const applicationsPage = async (page: any) => {
 
   await page.goto(`/client/?applicationId=${applicationID}`);
   await expect(page.locator('#map')).toBeVisible();
+  await highlight(page.locator('#map'));
 
   await page.goto('/admin/portal');
   await page
