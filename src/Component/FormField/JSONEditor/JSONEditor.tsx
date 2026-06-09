@@ -77,9 +77,7 @@ export const JSONEditor: React.FC<JSONEditorProps> = ({
   dataField,
   indentSize = 2
 }) => {
-  const [currentValue, setCurrentValue] = useState<string | undefined>(
-    JSON.stringify(initialValue || undefined, null, indentSize)
-  );
+  const [currentValue, setCurrentValue] = useState<string | undefined>();
   // We need to keep track of whether the document has been formatted initially. This is necessary
   // because the document will be formatted on mount, which will trigger the onChange event. We
   // don't want to trigger the onChange event on mount, so we need to keep track of whether the
@@ -227,6 +225,12 @@ export const JSONEditor: React.FC<JSONEditorProps> = ({
   };
 
   const isEditedManually = isEditedManuallyMap?.[`${entityType}.${dataField}`];
+
+  useEffect(() => {
+    if (initialValue) {
+      setCurrentValue(JSON.stringify(initialValue || undefined, null, indentSize));
+    }
+  }, [indentSize, initialValue]);
 
   return (
     <FullscreenWrapper>
