@@ -16,7 +16,7 @@ import _isEqual from 'lodash/isEqual';
 import {
   Route,
   Routes
-} from 'react-router-dom';
+} from 'react-router';
 import config from 'shogunApplicationConfig';
 
 import BaseEntity from '@terrestris/shogun-util/dist/model/BaseEntity';

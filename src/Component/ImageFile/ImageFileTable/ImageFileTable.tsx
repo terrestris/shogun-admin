@@ -17,7 +17,7 @@ import {
 import { SortOrder } from 'antd/es/table/interface';
 import _isNil from 'lodash/isNil';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import config from 'shogunApplicationConfig';
 
 import logger from '@terrestris/base-util/dist/Logger';

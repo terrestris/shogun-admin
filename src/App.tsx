@@ -9,7 +9,7 @@ import _isNil from 'lodash/isNil';
 import { IDisposable, languages } from 'monaco-editor';
 import { OpenAPIV3 } from 'openapi-types';
 import { useTranslation } from 'react-i18next';
-import { BrowserRouter as Router, Navigate, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Navigate, Route, Routes } from 'react-router';
 import config from 'shogunApplicationConfig';
 
 import Header from './Component/Header/Header';

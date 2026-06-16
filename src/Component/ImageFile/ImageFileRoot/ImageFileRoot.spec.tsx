@@ -8,7 +8,7 @@ import {
   waitFor,
 } from '@testing-library/react';
 
-import { MemoryRouter } from 'react-router-dom';
+import { MemoryRouter } from 'react-router';
 
 import { ImageFileRoot } from './ImageFileRoot';
 
@@ -41,8 +41,8 @@ jest.mock('../../../Hooks/useSHOGunAPIClient', () => {
 });
 
 const mockUseNavigate = jest.fn();
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
+jest.mock('react-router', () => ({
+  ...jest.requireActual('react-router'),
   useNavigate: () => mockUseNavigate,
 }));
 
