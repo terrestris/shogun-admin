@@ -10,13 +10,13 @@ import {
 
 import { Modal, notification } from 'antd';
 import '@testing-library/jest-dom';
-import { MemoryRouter } from 'react-router-dom';
+import { MemoryRouter } from 'react-router';
 
 import ImageFileTable from './ImageFileTable';
 
 const mockUsedNavigate = jest.fn();
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
+jest.mock('react-router', () => ({
+  ...jest.requireActual('react-router'),
   useNavigate: () => mockUsedNavigate,
 }));
 

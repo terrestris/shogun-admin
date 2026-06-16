@@ -62,7 +62,7 @@
     "react-dom": "19.2.7",
     "react-hotkeys-hook": "5.2.4",
     "react-i18next": "17.0.8",
-    "react-router-dom": "6.30.4",
+    "react-router": "7.17.0",
     "shapefile.js": "1.2.1"
   },
   "devDependencies": {
