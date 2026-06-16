@@ -76,6 +76,10 @@ module.exports = {
         }
       }
     }, {
+      test: /\.css$/i,
+      use: [{ loader: 'postcss-loader' }],
+      type: 'css/auto'
+    }, {
       test: /\.less$/,
       type: 'css/auto',
       use: [{
