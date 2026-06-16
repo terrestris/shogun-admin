@@ -30,7 +30,7 @@ jobs:
         run: ./smoke-check.sh
 
   sonarqube:
-    if: ${{ github.actor != 'dependabot[bot]' }}
+    if: ${{ github.actor != 'renovate[bot]' }}
     name: SonarQube Trigger
     runs-on: ubuntu-latest
     steps:
