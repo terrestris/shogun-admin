@@ -9,7 +9,7 @@ jobs:
 
     steps:
       - name: Checkout sources 🔰
-        uses: actions/checkout@v6
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
         with:
           fetch-depth: 0
       - name: Create local branch based on 'origin/main' 🚧
@@ -18,11 +18,11 @@ jobs:
           git checkout -b main origin/main
           git checkout -
       - name: Setup Node.js 24 🧮
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
         with:
           node-version: 24
       - name: Cache Node.js modules 💾
-        uses: actions/cache@v5
+        uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5
         with:
           path: ~/.npm
           key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -80,7 +80,7 @@ jobs:
           fi
 
       - name: Jest Coverage Comment 💬
-        uses: MishaKav/jest-coverage-comment@main
+        uses: MishaKav/jest-coverage-comment@fb83bcbaeb5ca467936175796f862a2992938833 # main
         with:
           hide-comment: false
           create-new-comment: false
@@ -103,7 +103,7 @@ jobs:
 
       - name: Post To No Tests Found Comment ⚠️
         if: ${{ env.no_tests_found == 'true' && github.actor != 'renovate[bot]' }}
-        uses: peter-evans/create-or-update-comment@v5
+        uses: peter-evans/create-or-update-comment@e8674b075228eee787fea43ef493e45ece1004c9 # v5
         with:
           comment-id: ${{ env.COVERAGE_COMMENT_ID }}
           body: |

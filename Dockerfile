@@ -1,5 +1,5 @@
 # build environment
-FROM node:24-alpine AS build
+FROM node:24-alpine@sha256:21f403ab171f2dc89bad4dd69d7721bfd15f084ccb46cdd225f31f2bc59b5c9a AS build
 
 RUN apk update && apk upgrade --no-cache
 
@@ -10,7 +10,7 @@ RUN npm ci
 RUN npm run build
 
 # production environment
-FROM ghcr.io/nginx/nginx-unprivileged:1.31-alpine-perl AS app
+FROM ghcr.io/nginx/nginx-unprivileged:1.31-alpine-perl@sha256:cb4fb86d2a93065dce4451d99b6a96ca0fd83caeee98a3bc24c5f5c6d6d58e5d AS app
 ENV SHOGUN_ADMIN_HOST=shogun-admin
 
 ARG GIT_COMMIT
