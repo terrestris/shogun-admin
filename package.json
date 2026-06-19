@@ -40,7 +40,7 @@
     "@ant-design/icons": "6.2.5",
     "@ant-design/pro-components": "2.8.10",
     "@ant-design/v5-patch-for-react-19": "1.0.3",
-    "@casualbot/jest-sonar-reporter": "2.5.0",
+    "@casualbot/jest-sonar-reporter": "2.7.1",
     "@monaco-editor/react": "4.7.0",
     "@terrestris/base-util": "4.0.2",
     "@terrestris/ol-util": "21.3.2",
