@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { deleteAllRowsWithText, login, switchLanguage } from './helpers';
+import { deleteAllRowsWithText, highlight, login, switchLanguage } from './helpers';
 
 
 export const userPermissions = async (page: any) => {
@@ -10,6 +10,9 @@ export const userPermissions = async (page: any) => {
   await expect(
     page.getByRole('link', { name: 'bank Applications … that move' })
   ).toBeVisible();
+  await highlight(
+    page.getByRole('link', { name: 'bank Applications … that move' }).first()
+  );
   await page
     .getByRole('menuitem', { name: 'bank Application' })
     .locator('span')
@@ -22,6 +25,7 @@ export const userPermissions = async (page: any) => {
     .fill('Test Application userPermission Playwright');
   await page.getByRole('button', { name: 'save Save Application' }).click();
   await expect(page.getByText('Application successfully saved')).toBeVisible();
+  await highlight(page.getByText('Application successfully saved').first());
 
   await page.getByRole('button', { name: 'plus' }).nth(2).click();
   await page
@@ -34,6 +38,7 @@ export const userPermissions = async (page: any) => {
   await page.getByRole('combobox', { name: 'Role name' }).press('Enter');
   await page.getByRole('button', { name: 'OK' }).click();
   await expect(page.getByText('Please enter Permission')).toBeVisible();
+  await highlight(page.getByText('Please enter Permission').first());
   await page.getByRole('combobox', { name: 'Permission' }).click();
   await page.getByText('Read', { exact: true }).click();
   await page.getByRole('button', { name: 'OK' }).click();

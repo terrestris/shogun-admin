@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { login, switchLanguage } from './helpers';
+import { highlight, login, switchLanguage } from './helpers';
 
 
 export const logs = async (page: any) => {
@@ -12,9 +12,13 @@ export const logs = async (page: any) => {
   await page.getByText('Logs').click();
 
   await expect(page.getByTitle(/^Logs$/)).toBeVisible();
+  await highlight(page.getByTitle(/^Logs$/).first());
   await expect(page.getByTitle(/^… that explain the world$/)).toBeVisible();
+  await highlight(page.getByTitle(/^… that explain the world$/).first());
   await expect(page.getByRole('button', { name: 'Refresh' })).toBeVisible();
+  await highlight(page.getByRole('button', { name: 'Refresh' }).first());
   await expect(page.getByRole('switch')).toBeVisible();
+  await highlight(page.getByRole('switch').first());
 
   const logTextElement = page.locator('.log-container');
   await expect(logTextElement).toBeVisible();

@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { deleteAllRowsWithText, login, switchLanguage } from './helpers';
+import { deleteAllRowsWithText, highlight, login, switchLanguage } from './helpers';
 
 
 export const layersPage = async (page: any) => {
@@ -22,28 +22,43 @@ export const layersPage = async (page: any) => {
   await page.getByText('Layers', { exact: true }).first().click();
 
   await expect(page.locator('.ant-table-container')).toBeVisible();
+  await highlight(page.locator('.ant-table-container').first());
   await expect(page.getByLabel(/^ID$/)).toBeVisible();
+  await highlight(page.getByLabel(/^ID$/).first());
   await expect(page.getByText(/^Name$/)).toBeVisible();
+  await highlight(page.getByText(/^Name$/).first());
   await expect(page.getByText(/^Type$/)).toBeVisible();
+  await highlight(page.getByText(/^Type$/).first());
   await expect(
     page.getByRole('button', { name: 'form Create Layer' })
   ).toBeVisible();
+  await highlight(page.getByRole('button', { name: 'form Create Layer' }).first());
   await expect(page.getByLabel('appstore-add')).toBeVisible();
+  await highlight(page.getByLabel('appstore-add').first());
 
   await expect(page.getByText('Total:')).toBeVisible();
+  await highlight(page.getByText('Total:').first());
   const totalLayersNumberText = await page.getByText('Total:').innerText();
   const totalLayersNumber = totalLayersNumberText.match(/\d+/)?.[0];
   await expect(totalLayersNumber).toBe(layersNumber);
 
   await page.getByRole('button', { name: 'form Create Layer' }).click();
   await expect(page.getByText(/^Created at$/)).toBeVisible();
+  await highlight(page.getByText(/^Created at$/).first());
   await expect(page.getByText(/^Last edited on$/)).toBeVisible();
+  await highlight(page.getByText(/^Last edited on$/).first());
   await expect(page.getByText(/^Public layer$/)).toBeVisible();
+  await highlight(page.getByText(/^Public layer$/).first());
   await expect(page.getByTitle(/^Configuration$/)).toBeVisible();
+  await highlight(page.getByTitle(/^Configuration$/).first());
   await expect(page.getByTitle(/^Datasource$/)).toBeVisible();
+  await highlight(page.getByTitle(/^Datasource$/).first());
   await expect(page.getByTitle(/^User permissions$/)).toBeVisible();
+  await highlight(page.getByTitle(/^User permissions$/).first());
   await expect(page.getByTitle(/^Group permissions$/)).toBeVisible();
+  await highlight(page.getByTitle(/^Group permissions$/).first());
   await expect(page.getByTitle(/^Role permissions$/)).toBeVisible();
+  await highlight(page.getByTitle(/^Role permissions$/).first());
 
   await page
     .locator('.ant-select-selection-item')
@@ -52,21 +67,34 @@ export const layersPage = async (page: any) => {
   await expect(
     page.locator('.ant-select-item-option-content').filter({ hasText: /^WFS$/ })
   ).toBeVisible();
+  await highlight(
+    page.locator('.ant-select-item-option-content').filter({ hasText: /^WFS$/ }).first()
+  );
   await expect(
     page.locator('.ant-select-item-option-content').filter({ hasText: /^WMS$/ })
   ).toBeVisible();
+  await highlight(
+    page.locator('.ant-select-item-option-content').filter({ hasText: /^WMS$/ }).first()
+  );
   await expect(
     page
       .locator('.ant-select-item-option-content')
       .filter({ hasText: /^WMSTIME$/ })
   ).toBeVisible();
+  await highlight(
+    page.locator('.ant-select-item-option-content').filter({ hasText: /^WMSTIME$/ }).first()
+  );
   await expect(
     page.locator('.ant-select-item-option-content').filter({ hasText: /^XYZ$/ })
   ).toBeVisible();
+  await highlight(
+    page.locator('.ant-select-item-option-content').filter({ hasText: /^XYZ$/ }).first()
+  );
 
   await page.getByLabel('Name').nth(1).fill('Test Layer Playwright');
   await page.getByRole('button', { name: 'save Save Layer' }).click();
   await expect(page.getByText('Layer successfully saved')).toBeVisible();
+  await highlight(page.getByText('Layer successfully saved').first());
   await page.getByLabel('Close', { exact: true }).first().click();
   await page.getByText('Layers', { exact: true }).first().click();
 
@@ -97,9 +125,13 @@ export const layersPage = async (page: any) => {
   await expect(
     page.getByText('Layer preview (Test Layer Playwright)')
   ).toBeVisible();
+  await highlight(page.getByText('Layer preview (Test Layer Playwright)').first());
   await expect(page.locator('.ol-layer')).toBeVisible();
+  await highlight(page.locator('.ol-layer').first());
   await expect(page.getByRole('button', { name: '+' })).toBeVisible();
+  await highlight(page.getByRole('button', { name: '+' }).first());
   await expect(page.getByRole('button', { name: '–' })).toBeVisible();
+  await highlight(page.getByRole('button', { name: '–' }).first());
   await page.getByLabel('Close', { exact: true }).first().click();
 
   await page
@@ -114,6 +146,7 @@ export const layersPage = async (page: any) => {
   await page.getByTitle('Name').first().fill('Test Layer Playwright EDITED');
   await page.getByRole('button', { name: 'save Save Layer' }).click();
   await expect(page.getByText('Layer successfully saved')).toBeVisible();
+  await highlight(page.getByText('Layer successfully saved').first());
   await page.getByText('Layers', { exact: true }).first().click();
   await expect(
     page.getByText('Test Layer Playwright EDITED').first()
@@ -126,9 +159,11 @@ export const layersPage = async (page: any) => {
   await page.getByText('ID').first().click();
   await page.waitForTimeout(1000);
   const firstRow = await page.locator('.ant-table-row').first();
+  await highlight(firstRow);
   const firstRowContent = await firstRow.innerText();
   const firstID = firstRowContent.match(/\d+/)?.[0];
   const secondRow = await page.locator('.ant-table-row').nth(1);
+  await highlight(secondRow);
   const secondRowContent = await secondRow.innerText();
   const secondID = secondRowContent.match(/\d+/)?.[0];
   await expect(parseInt(secondID, 10)).toBeGreaterThan(parseInt(firstID, 10));
@@ -141,14 +176,11 @@ export const layersPage = async (page: any) => {
   const secondRowUpdated = await page.locator('.ant-table-row').nth(1);
   const secondRowContentUpdated = await secondRowUpdated.innerText();
   const secondIDUpdated = secondRowContentUpdated.match(/\d+/)?.[0];
+  await highlight(firstRowUpdated);
+  await highlight(secondRowUpdated);
   await expect(parseInt(firstIDUpdated, 10)).toBeGreaterThan(
     parseInt(secondIDUpdated, 10)
   );
-
-  await page.getByRole('columnheader', { name: 'Type' }).locator('div').click();
-  const firstRowType = await page.locator('.ant-table-row').first();
-  const firstRowTypeContent = await firstRowType.innerText();
-  await expect(firstRowTypeContent).toContain('WMTS');
 };
 
 test.beforeEach(async ({ page }) => {

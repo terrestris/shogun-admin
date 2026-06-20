@@ -1,10 +1,10 @@
 FROM mcr.microsoft.com/playwright:v1.61.0-jammy@sha256:264136758e43332108f6420f82c47f639f619ca65301065ceade677763f477ec
 
-WORKDIR /app
-
-RUN npm install @playwright/test@v1.36.1
-RUN npx playwright install --with-deps chromium
+COPY package.json package-lock.json ./
+RUN npm ci
 
 COPY playwright.config.ts ./
 COPY global-setup.ts ./
 COPY ./src/e2e-tests ./src/e2e-tests
+
+CMD [ "npm", "run", "e2e-tests" ]
