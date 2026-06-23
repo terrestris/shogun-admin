@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/playwright:v1.61.1-jammy@sha256:2f084b619b7b1fd550b28554424e6df131278b9b96e0976a7304a6269364bba4
+FROM mcr.microsoft.com/playwright:v1.61.1-jammy@sha256:7b86926fff94374389e8e1f4fdc5c76d050d4a06a7886bb537bf412b20e2b71e
 
 WORKDIR /app
 
