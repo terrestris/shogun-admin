@@ -117,7 +117,7 @@
     "jest": "30.4.2",
     "jest-dom": "4.0.0",
     "jest-environment-jsdom": "30.4.1",
-    "less": "4.6.6",
+    "less": "4.6.7",
     "less-loader": "13.0.0",
     "monaco-editor-webpack-plugin": "7.1.1",
     "openapi-types": "12.1.3",
