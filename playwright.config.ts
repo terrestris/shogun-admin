@@ -2,6 +2,12 @@ import {
   defineConfig
 } from '@playwright/test';
 
+const DEFAULT_HOST = 'https://shogun.intranet.terrestris.de';
+const host = process.env.HOST ?? DEFAULT_HOST;
+
+// Keep HOST available for tests/helpers that read process.env.HOST.
+process.env.HOST = host;
+
 export default defineConfig({
   // @ts-ignore
   globalSetup: require.resolve('./global-setup.ts'),
@@ -22,7 +28,7 @@ export default defineConfig({
   use: {
     // @ts-ignore
     headless: true,
-    baseURL: process.env.HOST,
+    baseURL: host,
     actionTimeout: 30000,
     trace: 'on-first-retry',
     permissions: ['geolocation'],
