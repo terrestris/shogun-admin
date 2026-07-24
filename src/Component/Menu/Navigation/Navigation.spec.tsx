@@ -11,12 +11,12 @@ import {
   MemoryRouter,
   useLocation,
   useNavigate
-} from 'react-router-dom';
+} from 'react-router';
 
 import { Navigation } from './Navigation';
 
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
+jest.mock('react-router', () => ({
+  ...jest.requireActual('react-router'),
   useLocation: jest.fn(),
   useNavigate: jest.fn()
 }));

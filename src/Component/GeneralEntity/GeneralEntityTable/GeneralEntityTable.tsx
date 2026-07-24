@@ -13,7 +13,7 @@ import _cloneDeep from 'lodash/cloneDeep';
 import _isEmpty from 'lodash/isEmpty';
 import _isNil from 'lodash/isNil';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import config from 'shogunApplicationConfig';
 
 import BaseEntity from '@terrestris/shogun-util/dist/model/BaseEntity';

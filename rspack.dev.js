@@ -26,5 +26,6 @@ module.exports = merge(common, {
   },
   plugins: [
     new ReactRefreshPlugin()
-  ]
+  ],
+  lazyCompilation: false
 });
