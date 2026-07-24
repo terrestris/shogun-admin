@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-import { login } from "./helpers";
+import { highlight, login } from "./helpers";
 
 
 export const languageSelector = async (page: any) => {
@@ -22,7 +22,7 @@ export const languageSelector = async (page: any) => {
   ).toBeVisible();
   await expect(
     page.locator(".ant-menu-title-content").filter({
-      hasText: initialTitle.toString(),
+      hasText: new RegExp(`^${initialTitle.toString().replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}$`)
     })
   ).toBeVisible();
 
@@ -37,6 +37,8 @@ export const languageSelector = async (page: any) => {
     .first()
     .innerText();
 
+  await highlight(page.locator(".language-select").first());
+
   await expect(
     page.locator(".language-select").filter({
       hasText: changedLanguage[0].toString(),
@@ -44,7 +46,7 @@ export const languageSelector = async (page: any) => {
   ).toBeVisible();
   await expect(
     page.locator(".ant-menu-title-content").filter({
-      hasText: changedTitle.toString(),
+      hasText: new RegExp(`^${changedTitle.toString().replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}$`)
     })
   ).toBeVisible();
 

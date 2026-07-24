@@ -2,6 +2,7 @@ import { test, expect } from '@playwright/test';
 import {
   deleteAllRowsWithText,
   findElementInPaginatedTable,
+  highlight,
   login,
   switchLanguage,
   writeToEditor,
@@ -57,21 +58,23 @@ export const applicationConfig = async (page: any) => {
   }
   await lineElement.click({ force: true });
 
-  const textLocation = page.locator('.view-lines > div:nth-child(26)');
+  const textLocation = page.locator('.view-lines > div:nth-last-child(2)').first();
 
-  writeToEditor(page, textLocation, `, 
+  await writeToEditor(page, textLocation, `, 
     "defaultLanguage": "de"`);
-  const editedElement = page.locator('div').filter({
-    hasText: `, 
-    "defaultLanguage": "de"` }).first();
-  await editedElement.waitFor({ state: 'visible', timeout: 10000 });
+  await expect(
+    page.locator('.monaco-editor .view-line').filter({
+      hasText: /"defaultLanguage":\s*"de"/,
+    }).first()
+  ).toBeVisible({ timeout: 10000 });
   await page.waitForLoadState('networkidle');
 
   await page.getByRole('button', { name: 'save Save Application' }).click({ force: true });
   await expect(
     page.getByText('Application successfully saved').first()
   ).toBeVisible();
-
+  await highlight(page.getByText('Application successfully saved').first());
+  
   await page.getByRole('button', { name: 'fullscreen' }).nth(1).click();
   await expect(page.locator('.monaco-editor').first()).toBeVisible();
   const jsonEditor = await page.locator('.view-line').first();
@@ -107,6 +110,8 @@ export const applicationConfig = async (page: any) => {
   await expect(
     page.getByText('Application successfully saved').first()
   ).toBeVisible();
+  await highlight(page.getByText('Application successfully saved').first());
+
   await page.locator(".ant-notification-notice-close").click();
   await page.getByRole('button', { name: 'fullscreen-exit' }).click();
   await expect(page.getByTitle(/^Configure Tools$/)).toBeVisible();
@@ -133,6 +138,7 @@ export const applicationConfig = async (page: any) => {
 
   await page.getByRole('button', { name: 'save Save Application' }).click();
   await expect(page.getByText('Application successfully saved')).toBeVisible();
+  await highlight(page.getByText('Application successfully saved').first());
   await page.getByLabel('Close', { exact: true }).first().click();
 
   let pageNumberApp = 2;
@@ -148,6 +154,7 @@ export const applicationConfig = async (page: any) => {
         })
         .first();
       await targetRow.waitFor({ state: 'visible', timeout: 10000 });
+      await highlight(targetRow);
 
       const rowContent = await targetRow.innerText();
       applicationID = rowContent.match(/\d+/)?.[0];
@@ -171,12 +178,15 @@ export const applicationConfig = async (page: any) => {
 
   await page.goto(`/client/?applicationId=${applicationID}`);
   await expect(page.locator('#map')).toBeVisible();
+  await highlight(page.locator('#map'));
   await expect(page.getByText('Messen')).not.toBeVisible();
   await expect(page.getByText('Karten').first()).toBeVisible();
+  await highlight(page.getByText('Karten').first());
   await page
     .getByRole('button', { name: 'collapsed Karten', exact: true })
     .click();
   await expect(page.getByText('Test Layer')).toBeVisible();
+  await highlight(page.getByText('Test Layer'));
 
   await page.goto('/admin/portal');
   await page.waitForSelector('.header-logo', {

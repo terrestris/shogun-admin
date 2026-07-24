@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { switchLanguage } from './helpers';
+import { highlight, switchLanguage } from './helpers';
 
 test.describe('Frontend Smoke Checks', () => {
   test.use({ storageState: 'playwright/.auth/admin.json' });
@@ -20,8 +20,10 @@ test.describe('Frontend Smoke Checks', () => {
     await expect(
       page.getByRole('button', { name: 'form Create Layer' })
     ).toBeVisible();
+    await highlight(page.getByRole('button', { name: 'form Create Layer' }).first());
     await page.getByRole('button', { name: 'form Create Layer' }).click();
     await expect(page.getByLabel('Name').nth(1)).toBeVisible();
+    await highlight(page.getByLabel('Name').nth(1).first());
   });
 
   test('Applications page loads', async ({ page }) => {
@@ -29,10 +31,12 @@ test.describe('Frontend Smoke Checks', () => {
     await expect(
       page.getByRole('button', { name: 'form Create Application' })
     ).toBeVisible();
+    await highlight(page.getByRole('button', { name: 'form Create Application' }).first());
   });
 
   test('Configuration page loads', async ({ page }) => {
     await page.getByText('Configuration', { exact: true }).first().click();
     await expect(page.getByText('Global')).toBeVisible();
+    await highlight(page.getByText('Global').first());
   });
 });

@@ -2,10 +2,16 @@ import {
   defineConfig
 } from '@playwright/test';
 
+const DEFAULT_HOST = 'https://shogun.intranet.terrestris.de';
+const host = process.env.HOST ?? DEFAULT_HOST;
+
+// Keep HOST available for tests/helpers that read process.env.HOST.
+process.env.HOST = host;
+
 export default defineConfig({
   // @ts-ignore
   globalSetup: require.resolve('./global-setup.ts'),
-  testDir: './e2e-tests',
+  testDir: './src/e2e-tests',
   timeout: 30 * 1000,
   expect: {
     timeout: 30 * 1000
@@ -21,8 +27,8 @@ export default defineConfig({
   }]],
   use: {
     // @ts-ignore
-    headless: false,
-    baseURL: process.env.HOST,
+    headless: true,
+    baseURL: host,
     actionTimeout: 30000,
     trace: 'on-first-retry',
     permissions: ['geolocation'],
