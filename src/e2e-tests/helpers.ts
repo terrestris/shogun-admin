@@ -2,8 +2,8 @@ import { Locator } from '@playwright/test';
 
 export const login = async (
   page: any,
-  username: string,
-  password: string,
+  username: string | undefined,
+  password: string | undefined,
   path: string
 ) => {
   await page.goto(
@@ -14,6 +14,10 @@ export const login = async (
     '41cb-9b7e-1d9120956959&response_mode=fragment&response_type' +
     '=code&scope=openid&nonce=72884466-0535-4a24-8c15-9e7f14d88a65'
   );
+
+  if (!username || !password) {
+    throw new Error('Username or password is not defined in environment variables.');
+  };
 
   if (await page.getByLabel('username').isVisible()) {
     await page.getByLabel('username').first().fill(username);

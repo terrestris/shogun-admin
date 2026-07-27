@@ -74,7 +74,7 @@ export const applicationConfig = async (page: any) => {
     page.getByText('Application successfully saved').first()
   ).toBeVisible();
   await highlight(page.getByText('Application successfully saved').first());
-  
+
   await page.getByRole('button', { name: 'fullscreen' }).nth(1).click();
   await expect(page.locator('.monaco-editor').first()).toBeVisible();
   const jsonEditor = await page.locator('.view-line').first();
@@ -212,7 +212,7 @@ export const applicationConfig = async (page: any) => {
 };
 
 test.beforeEach(async ({ page }) => {
-  await login(page, 'shogun', 'shogun', 'playwright/.auth/admin.json');
+  await login(page, process.env.ADMIN_LOGIN, process.env.ADMIN_PASSWORD, 'playwright/.auth/admin.json');
 });
 
 test.use({

@@ -116,10 +116,10 @@ export const applicationsPage = async (page: any) => {
   await expect(page.getByText('Error while loading the')).toBeVisible();
 
   await page.goto('/admin/portal');
-  await page.locator('#username').fill('shogun');
-  await page.locator('#password').fill('shogun');
+  await page.locator('#username').fill(process.env.ADMIN_LOGIN);
+  await page.locator('#password').fill(process.env.ADMIN_PASSWORD);
   await page
-    .getByRole('button', {
+    .getByRole('button', {  
       name: 'Sign in',
     })
     .click();
@@ -171,7 +171,7 @@ export const applicationsPage = async (page: any) => {
 };
 
 test.beforeEach(async ({ page }) => {
-  await login(page, 'shogun', 'shogun', 'playwright/.auth/admin.json');
+  await login(page, process.env.ADMIN_LOGIN, process.env.ADMIN_PASSWORD, 'playwright/.auth/admin.json');
 });
 
 test.use({

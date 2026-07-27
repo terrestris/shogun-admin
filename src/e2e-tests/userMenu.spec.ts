@@ -51,7 +51,7 @@ export const userMenu = async (page: any) => {
 };
 
 test.beforeEach(async ({ page }) => {
-  await login(page, 'shogun', 'shogun', 'playwright/.auth/admin.json');
+  await login(page, process.env.ADMIN_LOGIN, process.env.ADMIN_PASSWORD, 'playwright/.auth/admin.json');
 });
 
 test.use({
