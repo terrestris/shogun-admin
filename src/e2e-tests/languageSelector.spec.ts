@@ -55,7 +55,7 @@ export const languageSelector = async (page: any) => {
 };
 
 test.beforeEach(async ({ page }) => {
-  await login(page, process.env.ADMIN_LOGIN, process.env.ADMIN_PASSWORD, 'playwright/.auth/admin.json');
+  await login(page, process.env.ADMIN_LOGIN, process.env.ADMIN_PASSWORD, './src/e2e-tests/.auth/admin.json');
 });
 
 test.use({
