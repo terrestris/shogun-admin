@@ -1,3 +1,5 @@
+## [18.1.2](https://github.com/terrestris/shogun-admin/compare/v18.1.1...v18.1.2) (2026-07-30)
+
 ## <small>18.1.1 (2026-06-16)</small>
 
 * Merge pull request #1616 from terrestris/dependabot/github_actions/docker/build-push-action-7 ([6aa15d9](https://github.com/terrestris/shogun-admin/commit/6aa15d9)), closes [#1616](https://github.com/terrestris/shogun-admin/issues/1616)
