@@ -1,3 +1,5 @@
+## [18.1.4](https://github.com/terrestris/shogun-admin/compare/v18.1.3...v18.1.4) (2026-07-30)
+
 ## [18.1.3](https://github.com/terrestris/shogun-admin/compare/v18.1.2...v18.1.3) (2026-07-30)
 
 ## [18.1.2](https://github.com/terrestris/shogun-admin/compare/v18.1.1...v18.1.2) (2026-07-30)
