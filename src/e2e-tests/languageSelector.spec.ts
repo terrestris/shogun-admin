@@ -59,7 +59,7 @@ test.beforeEach(async ({ page }) => {
 });
 
 test.use({
-  storageState: "playwright/.auth/admin.json",
+  storageState: './src/e2e-tests/.auth/admin.json',
 });
 
 test("languageSelector", async ({ page }) => {
