@@ -2,7 +2,7 @@ import {
   defineConfig
 } from '@playwright/test';
 
-const DEFAULT_HOST = 'https://shogun.intranet.terrestris.de';
+const DEFAULT_HOST = 'https://localhost:8080';
 const host = process.env.HOST ?? DEFAULT_HOST;
 
 // Keep HOST available for tests/helpers that read process.env.HOST.
