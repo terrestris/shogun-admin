@@ -1,5 +1,7 @@
 FROM mcr.microsoft.com/playwright:v1.62.0-jammy@sha256:b012874f829d298730411256666afcaeaeebaf505a0cf4c2f668d6dedb3d1e80
 
+WORKDIR /app
+
 COPY package.json package-lock.json ./
 RUN npm ci
 
