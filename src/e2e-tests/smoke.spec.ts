@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 import { highlight, switchLanguage } from './helpers';
 
 test.describe('Frontend Smoke Checks', () => {
-  test.use({ storageState: 'playwright/.auth/admin.json' });
+  test.use({ storageState: './src/e2e-tests/.auth/admin.json' });
   test.beforeEach(async ({ page }) => {
     await page.goto('/admin/portal');
     await expect(page.locator('.language-select')).toBeVisible();

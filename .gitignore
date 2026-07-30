@@ -37,10 +37,15 @@ yarn-error.log*
 # SonarqQube
 .scannerwork
 /test-results/
+
+
+# Playwright
+/blob-report/
+/src/e2e-tests/.auth/
 /playwright-report/
 /playwright/.cache/
 /storageState.json
 \nplaywright/.auth
+/artifacts/
+/e2e-tests/
 
-# Playwright
-/blob-report/
