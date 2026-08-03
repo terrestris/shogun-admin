@@ -12,6 +12,12 @@ export default defineConfig({
   // @ts-ignore
   globalSetup: require.resolve('./global-setup.ts'),
   testDir: './src/e2e-tests',
+  testIgnore: process.env.TEST_IGNORE
+    ? process.env.TEST_IGNORE.split(',').map(f => {
+        const name = f.trim().replace(/^src\/e2e-tests\//, '');
+        return `**/${name}`;
+      })
+    : [],
   timeout: 30 * 1000,
   expect: {
     timeout: 30 * 1000
@@ -27,7 +33,7 @@ export default defineConfig({
   }]],
   use: {
     // @ts-ignore
-    headless: process.env.CI ? true : process.env.HEADLESS, 
+    headless: process.env.CI ? true : Boolean(process.env.HEADLESS),
     baseURL: host,
     actionTimeout: 30000,
     trace: 'retain-on-failure',
