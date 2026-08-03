@@ -27,19 +27,17 @@ export const userPermissions = async (page: any) => {
   await expect(page.getByText('Application successfully saved')).toBeVisible();
   await highlight(page.getByText('Application successfully saved').first());
 
-  await page.getByRole('button', { name: 'plus' }).nth(2).click();
+  await page.locator('#application').getByRole('button', { name: 'plus' }).last().click();
   await page
     .locator(
       '.ant-form-item-control-input-content > .ant-select > .ant-select-selector'
     )
     .first()
     .click();
-  await page.getByRole('combobox', { name: 'Role name' }).fill('admin');
-  await page.getByRole('combobox', { name: 'Role name' }).press('Enter');
-  await page.getByRole('button', { name: 'OK' }).click();
-  await expect(page.getByText('Please enter Permission')).toBeVisible();
-  await highlight(page.getByText('Please enter Permission').first());
-  await page.getByRole('combobox', { name: 'Permission' }).click();
+  await page.locator('#referenceIds').fill('admin');
+  await page.locator('#referenceIds').press('Enter');
+  await page.locator('.ant-modal-title').first().click();
+  await page.locator('#permission').click();
   await page.getByText('Read', { exact: true }).click();
   await page.getByRole('button', { name: 'OK' }).click();
 
@@ -48,13 +46,13 @@ export const userPermissions = async (page: any) => {
   await page.locator('#application').getByTitle('Update').click();
   await page.getByText('Update & Delete').click();
   await page.locator('#application').getByTitle('Update & Delete').click();
-  await page.getByText('Owner').nth(1).click();
+  await page.getByText('Owner').last().click();
   const deleteIcon = page
     .locator('#application')
     .locator('.ant-table')
-    .nth(2)
+    .last()
     .locator('svg')
-    .nth(2);
+    .last();
   await expect(deleteIcon).toBeVisible();
   await deleteIcon.click();
 

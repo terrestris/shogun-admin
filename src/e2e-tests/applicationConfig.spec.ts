@@ -22,11 +22,11 @@ export const applicationConfig = async (page: any) => {
   });
   await expect(page.locator('.user-menu')).toBeVisible();
 
-  await page.getByRole('menuitem', { name: 'appstore Layers' }).click();
-  await page.getByRole('button', { name: 'form Create Layer' }).click();
+  await page.getByRole('menuitem', { name: 'appstore' }).click();
+  await page.getByRole('button', { name: 'form Create' }).click();
   await page.getByLabel('Name').nth(1).fill('Test Config Layer Playwright');
-  await page.getByRole('button', { name: 'save Save Layer' }).click();
-  await expect(page.getByText('Layer successfully saved')).toBeVisible();
+  await page.getByRole('button', { name: 'save Save' }).click();
+  await expect(page.getByText('successfully saved')).toBeVisible();
   await page.getByLabel('Close', { exact: true }).first().click();
 
   const rowContentLayer = await findElementInPaginatedTable(
@@ -45,7 +45,8 @@ export const applicationConfig = async (page: any) => {
 
   await page.getByRole('button', { name: 'fullscreen' }).first().click();
   await expect(page.locator('.monaco-editor').first()).toBeVisible();
-  const lineElement = page.locator('div').filter({ hasText: /^\{$/ });
+  const lineElement = page.locator('.monaco-editor').first().locator('div').filter({ hasText: /^\{$/ }).first();
+
 
   await lineElement.waitFor({ state: 'visible', timeout: 10000 });
   await lineElement.scrollIntoViewIfNeeded();
@@ -88,9 +89,13 @@ export const applicationConfig = async (page: any) => {
       ]
     }`;
 
+  const monacoEditor = page.locator('.monaco-editor').first();
+  await monacoEditor.click({ force: true });
+  await page.keyboard.press('ControlOrMeta+A');
+  await page.keyboard.press('Delete');
+
   await writeToEditor(page, jsonEditor, jsonContent);
 
-  const monacoEditor = page.locator('.monaco-editor').first();
   await expect(monacoEditor).toBeVisible();
   await monacoEditor.click({ force: true });
   await page.keyboard.press('ControlOrMeta+Space');
@@ -113,7 +118,8 @@ export const applicationConfig = async (page: any) => {
     await navigator.clipboard.writeText('false');
   });
 
-  await page.getByText("true").nth(1).click();
+  await page.locator('.view-line').filter({ hasText: '"measure_tools"' }).first()
+    .locator('xpath=following-sibling::div[contains(., "true")][1]').getByText('true').click();
   for (let i = 0; i <= 1; i++) {
     await page.keyboard.press('Backspace');
   }
@@ -191,7 +197,7 @@ export const applicationConfig = async (page: any) => {
   await page.waitForSelector('.ant-table-row', { state: 'visible' });
   await deleteAllRowsWithText(page, 'Test Config Application Playwright');
 
-  await page.getByText('Layers', { exact: true }).first().click();
+  await page.getByRole('menuitem', { name: 'appstore' }).click();
   await page.getByText('/ Page').click();
   await page.getByRole('option', { name: '10 / Page' }).locator('div').click();
 

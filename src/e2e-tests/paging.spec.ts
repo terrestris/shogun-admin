@@ -41,7 +41,7 @@ export const paging = async (page: any) => {
   await highlight(lastPageButton);
   await expect(lastPageNumber).toBe(expectedPageCount);
 
-  await page.getByText('Layers', { exact: true }).first().click();
+  await page.getByRole('menuitem', { name: 'appstore' }).click();
   await page.getByText('/ page').first().click();
   await page.getByRole('option', { name: '20 / Page' }).locator('div').click();
 

@@ -47,7 +47,7 @@ export const languageSelector = async (page: any) => {
   await expect(
     page.locator(".ant-menu-title-content").filter({
       hasText: new RegExp(`^${changedTitle.toString().replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}$`)
-    })
+    }).first()
   ).toBeVisible();
 
   await expect(initialLanguage).not.toEqual(changedLanguage);
