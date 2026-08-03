@@ -4,7 +4,6 @@ import { expect } from '@playwright/test';
 import { deleteAllRowsWithText, highlight, login, switchLanguage } from './helpers';
 
 export const applicationsPage = async (page: any) => {
-  await page.waitForLoadState('networkidle');
   await expect(page.locator('.language-select')).toBeVisible();
   await switchLanguage(page, 'EN');
 
@@ -109,8 +108,9 @@ export const applicationsPage = async (page: any) => {
   const rowContent = await targetRow.innerText();
   const applicationID = rowContent.match(/\d+/)?.[0];
 
-  await page.locator('.ant-avatar').click();
+  await page.locator('.user-menu').click();
   await page.getByText('Logout').click();
+  await page.waitForLoadState('networkidle');
 
   await page.goto(`/client/?applicationId=${applicationID}`);
   await expect(page.getByText('Error while loading the')).toBeVisible();
@@ -180,10 +180,8 @@ test.use({
 
 test('applicationsPage', async ({ page }) => {
   await page.goto('/admin/portal');
-  await page.waitForLoadState('networkidle');
 
   await applicationsPage(page);
 
   console.log('Applications page test completed.');
-  if (page) await page.close();
 });

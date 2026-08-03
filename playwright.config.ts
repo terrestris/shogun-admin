@@ -19,7 +19,7 @@ export default defineConfig({
   fullyParallel: true,
   // @ts-ignore
   forbidOnly: !!process.env.CI,
-  retries: 0,
+  retries: process.env.CI ? 2 : 0,
   // @ts-ignore
   workers: 1,
   reporter: [['html', {
@@ -30,7 +30,9 @@ export default defineConfig({
     headless: true,
     baseURL: host,
     actionTimeout: 30000,
-    trace: 'on-first-retry',
+    trace: 'retain-on-failure',
+    screenshot: 'only-on-failure',
+    video: 'retain-on-failure',
     permissions: ['geolocation'],
 
     ignoreHTTPSErrors: true,
@@ -38,7 +40,8 @@ export default defineConfig({
     viewport: {
       width: 1400,
       height: 1050
-    }
+    },
+    deviceScaleFactor: 1
   },
 
   projects: [

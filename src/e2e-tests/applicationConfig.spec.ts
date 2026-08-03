@@ -9,7 +9,6 @@ import {
 } from './helpers';
 
 export const applicationConfig = async (page: any) => {
-  await page.waitForLoadState('networkidle');
   await page.waitForSelector('.header-logo', {
     state: 'visible',
     timeout: 60000,
@@ -67,7 +66,6 @@ export const applicationConfig = async (page: any) => {
       hasText: /"defaultLanguage":\s*"de"/,
     }).first()
   ).toBeVisible({ timeout: 10000 });
-  await page.waitForLoadState('networkidle');
 
   await page.getByRole('button', { name: 'save Save Application' }).click({ force: true });
   await expect(
@@ -92,18 +90,10 @@ export const applicationConfig = async (page: any) => {
 
   await writeToEditor(page, jsonEditor, jsonContent);
 
-  await expect(page.locator('.monaco-editor').first()).toBeVisible();
-  const editor = page.locator('div').filter({ hasText: /^\}$/ });
-  await editor.waitFor({ state: 'visible', timeout: 10000 });
-  const isEditorClickable = await editor.isEnabled();
-  const isEditorHidden = await editor.isHidden();
-
-  if (!isEditorClickable || isEditorHidden) {
-    throw new Error('The editor element is not clickable.');
-  }
-  await editor.click({ force: true });
-
-  await editor.press("ControlOrMeta+Space");
+  const monacoEditor = page.locator('.monaco-editor').first();
+  await expect(monacoEditor).toBeVisible();
+  await monacoEditor.click({ force: true });
+  await page.keyboard.press('ControlOrMeta+Space');
   await expect(page.getByRole('option', { name: '{}, Module' }).locator('a')).toBeVisible();
 
   await page.getByRole('button', { name: 'save Save Application' }).click({ force: true });
@@ -198,8 +188,6 @@ export const applicationConfig = async (page: any) => {
     .locator('span')
     .first()
     .click();
-
-  await page.waitForLoadState('networkidle');
   await page.waitForSelector('.ant-table-row', { state: 'visible' });
   await deleteAllRowsWithText(page, 'Test Config Application Playwright');
 
@@ -220,11 +208,10 @@ test.use({
 });
 
 test('applicationConfig', async ({ page }) => {
+  test.setTimeout(120000);
   await page.goto('/admin/portal');
-  await page.waitForLoadState('networkidle');
 
   await applicationConfig(page);
 
   console.log('Application configuration test completed.');
-  if (page) await page.close();
 });

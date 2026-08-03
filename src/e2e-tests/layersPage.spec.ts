@@ -3,7 +3,6 @@ import { deleteAllRowsWithText, highlight, login, switchLanguage } from './helpe
 
 
 export const layersPage = async (page: any) => {
-  await page.waitForLoadState('networkidle');
   await expect(page.locator('.language-select')).toBeVisible();
   await switchLanguage(page, 'EN');
 
@@ -154,10 +153,9 @@ export const layersPage = async (page: any) => {
 
   await page.waitForSelector('.ant-table-row', { state: 'visible' });
   await deleteAllRowsWithText(page, 'Test Layer Playwright EDITED');
-  await page.waitForTimeout(1000);
 
   await page.getByText('ID').first().click();
-  await page.waitForTimeout(1000);
+  await expect(page.locator('.ant-table-row').first()).toBeVisible();
   const firstRow = await page.locator('.ant-table-row').first();
   await highlight(firstRow);
   const firstRowContent = await firstRow.innerText();
@@ -169,7 +167,7 @@ export const layersPage = async (page: any) => {
   await expect(parseInt(secondID, 10)).toBeGreaterThan(parseInt(firstID, 10));
 
   await page.getByRole('columnheader', { name: 'ID' }).click();
-  await page.waitForTimeout(1000);
+  await expect(page.locator('.ant-table-row').nth(1)).toBeVisible();
   const firstRowUpdated = await page.locator('.ant-table-row').first();
   const firstRowContentUpdated = await firstRowUpdated.innerText();
   const firstIDUpdated = firstRowContentUpdated.match(/\d+/)?.[0];

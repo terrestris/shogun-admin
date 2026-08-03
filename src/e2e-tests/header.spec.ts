@@ -3,7 +3,6 @@ import { highlight, login, switchLanguage } from './helpers';
 
 
 export const header = async (page: any) => {
-  await page.waitForLoadState('networkidle');
   await page.waitForSelector('.header-logo', {
     state: 'visible',
     timeout: 60000,
@@ -84,7 +83,6 @@ test.use({
 
 test('header', async ({ page }) => {
   await page.goto('/admin/portal');
-  await page.waitForLoadState('networkidle');
 
   await header(page);
 
