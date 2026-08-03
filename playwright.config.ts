@@ -27,7 +27,7 @@ export default defineConfig({
   }]],
   use: {
     // @ts-ignore
-    headless: true,
+    headless: process.env.CI ? true : process.env.HEADLESS, 
     baseURL: host,
     actionTimeout: 30000,
     trace: 'retain-on-failure',
