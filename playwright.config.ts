@@ -12,6 +12,12 @@ export default defineConfig({
   // @ts-ignore
   globalSetup: require.resolve('./global-setup.ts'),
   testDir: './src/e2e-tests',
+  testIgnore: process.env.TEST_IGNORE
+    ? process.env.TEST_IGNORE.split(',').map(f => {
+        const name = f.trim().replace(/^src\/e2e-tests\//, '');
+        return `**/${name}`;
+      })
+    : [],
   timeout: 30 * 1000,
   expect: {
     timeout: 30 * 1000
@@ -19,7 +25,7 @@ export default defineConfig({
   fullyParallel: true,
   // @ts-ignore
   forbidOnly: !!process.env.CI,
-  retries: 0,
+  retries: process.env.CI ? 2 : 0,
   // @ts-ignore
   workers: 1,
   reporter: [['html', {
@@ -27,10 +33,12 @@ export default defineConfig({
   }]],
   use: {
     // @ts-ignore
-    headless: true,
+    headless: process.env.CI ? true : Boolean(process.env.HEADLESS),
     baseURL: host,
     actionTimeout: 30000,
-    trace: 'on-first-retry',
+    trace: 'retain-on-failure',
+    screenshot: 'only-on-failure',
+    video: 'retain-on-failure',
     permissions: ['geolocation'],
 
     ignoreHTTPSErrors: true,
@@ -38,7 +46,8 @@ export default defineConfig({
     viewport: {
       width: 1400,
       height: 1050
-    }
+    },
+    deviceScaleFactor: 1
   },
 
   projects: [

@@ -32,7 +32,7 @@ export const landingPage = async (page: any) => {
   );
   await page.locator("[aria-label='menu-unfold']").click();
   await expect(menu).toContainText('Application');
-  await expect(menu).toContainText('Layers');
+  await expect(menu).toContainText(/Layers|Subjects/);
   await expect(menu).toContainText('User');
   await expect(menu).toContainText('Groups');
   await expect(menu).toContainText('Images');

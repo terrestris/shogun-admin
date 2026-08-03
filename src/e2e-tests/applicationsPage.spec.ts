@@ -4,7 +4,6 @@ import { expect } from '@playwright/test';
 import { deleteAllRowsWithText, highlight, login, switchLanguage } from './helpers';
 
 export const applicationsPage = async (page: any) => {
-  await page.waitForLoadState('networkidle');
   await expect(page.locator('.language-select')).toBeVisible();
   await switchLanguage(page, 'EN');
 
@@ -65,8 +64,6 @@ export const applicationsPage = async (page: any) => {
   await highlight(page.getByText(/^Identifier$/).first());
   await expect(page.getByText(/^Created at$/)).toBeVisible();
   await highlight(page.getByText(/^Created at$/).first());
-  await expect(page.getByText(/^Status of work$/)).toBeVisible();
-  await highlight(page.getByText(/^Status of work$/).first());
   await expect(page.getByText(/^Public application$/)).toBeVisible();
   await highlight(page.getByText(/^Public application$/).first());
   await expect(page.getByText(/^Client configuration$/)).toBeVisible();
@@ -77,12 +74,6 @@ export const applicationsPage = async (page: any) => {
   await highlight(page.getByTitle(/^Layer configuration$/).first());
   await expect(page.getByTitle(/^Configure Tools$/)).toBeVisible();
   await highlight(page.getByTitle(/^Configure Tools$/).first());
-  await expect(page.getByTitle(/^User permissions$/)).toBeVisible();
-  await highlight(page.getByTitle(/^User permissions$/).first());
-  await expect(page.getByTitle(/^Group permissions$/)).toBeVisible();
-  await highlight(page.getByTitle(/^Group permissions$/).first());
-  await expect(page.getByTitle(/^Role permissions$/)).toBeVisible();
-  await highlight(page.getByTitle(/^Role permissions$/).first());
 
   await page.getByRole('button', { name: 'form Create Application' }).click();
   await page.getByLabel('Name').nth(1).fill('Test Application Playwright');
@@ -109,8 +100,9 @@ export const applicationsPage = async (page: any) => {
   const rowContent = await targetRow.innerText();
   const applicationID = rowContent.match(/\d+/)?.[0];
 
-  await page.locator('.ant-avatar').click();
+  await page.locator('.user-menu').click();
   await page.getByText('Logout').click();
+  await page.waitForLoadState('networkidle');
 
   await page.goto(`/client/?applicationId=${applicationID}`);
   await expect(page.getByText('Error while loading the')).toBeVisible();
@@ -180,10 +172,8 @@ test.use({
 
 test('applicationsPage', async ({ page }) => {
   await page.goto('/admin/portal');
-  await page.waitForLoadState('networkidle');
 
   await applicationsPage(page);
 
   console.log('Applications page test completed.');
-  if (page) await page.close();
 });

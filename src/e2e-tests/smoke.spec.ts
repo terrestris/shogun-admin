@@ -18,10 +18,10 @@ test.describe('Frontend Smoke Checks', () => {
   test('Layers page loads and can open create dialog', async ({ page }) => {
     await page.getByText('Layers', { exact: true }).first().click();
     await expect(
-      page.getByRole('button', { name: 'form Create Layer' })
+      page.getByRole('button', { name: 'form Create' })
     ).toBeVisible();
-    await highlight(page.getByRole('button', { name: 'form Create Layer' }).first());
-    await page.getByRole('button', { name: 'form Create Layer' }).click();
+    await highlight(page.getByRole('button', { name: 'form Create' }).first());
+    await page.getByRole('button', { name: 'form Create' }).click();
     await expect(page.getByLabel('Name').nth(1)).toBeVisible();
     await highlight(page.getByLabel('Name').nth(1).first());
   });

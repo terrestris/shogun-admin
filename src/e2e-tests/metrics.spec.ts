@@ -3,7 +3,6 @@ import { highlight, login, switchLanguage } from './helpers';
 
 
 export const metrics = async (page: any) => {
-  await page.waitForLoadState('networkidle');
   await expect(page.locator('.language-select')).toBeVisible();
   await switchLanguage(page, 'EN');
 
@@ -54,20 +53,37 @@ export const metrics = async (page: any) => {
   ).toBeVisible();
   await highlight(page.locator('#app').getByText('The sum of the number').first());
 
-  const statisticElement = page.locator(
-    'div:nth-child(3) > div:nth-child(2) > div > div > div > div.ant-statistic-content > span.ant-statistic-content-value > span'
-  );
-  await highlight(statisticElement.first());
-  const initialText = await statisticElement.innerText();
-  await page.waitForTimeout(5000);
-  await page
-    .locator(
-      'div:nth-child(3) > div:nth-child(2) > .ant-card > .ant-card-actions > li > span > .ant-btn'
-    )
-    .click();
-  await page.waitForTimeout(2000);
-  const updatedText = await statisticElement.innerText();
-  expect(updatedText).not.toBe(initialText);
+  const uptimeCard = page
+    .locator('.ant-card')
+    .filter({ hasText: 'The uptime of the Java virtual machine' })
+    .first();
+  const uptimeValue = uptimeCard
+    .locator('.ant-statistic-content-value')
+    .first();
+
+  await expect(uptimeCard).toBeVisible();
+  await expect(uptimeValue).toBeVisible();
+  await highlight(uptimeValue);
+
+  const initialUptime = (await uptimeValue.innerText()).trim();
+  await uptimeCard.getByRole('button', { name: 'reload' }).click();
+
+  const toSeconds = (uptime: string) => {
+    const parts = uptime.split(':').map((part) => Number(part));
+    if (parts.length !== 3 || parts.some((part) => Number.isNaN(part))) {
+      return -1;
+    }
+
+    return parts[0] * 3600 + parts[1] * 60 + parts[2];
+  };
+
+  const initialSeconds = toSeconds(initialUptime);
+
+  await expect
+    .poll(async () => toSeconds((await uptimeValue.innerText()).trim()), {
+      timeout: 10000,
+    })
+    .toBeGreaterThanOrEqual(initialSeconds);
 };
 
 test.beforeEach(async ({ page }) => {

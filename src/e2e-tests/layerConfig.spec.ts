@@ -20,10 +20,10 @@ export const layerConfig = async (page: any) => {
   await expect(page.locator('.user-menu')).toBeVisible();
 
   await page.getByText('Layers', { exact: true }).first().click();
-  await page.getByRole('button', { name: 'form Create Layer' }).click();
+  await page.getByRole('button', { name: 'form Create' }).click();
   await page.getByLabel('Name').nth(1).fill('Test layerConfig Layer Playwright');
-  await page.getByRole('button', { name: 'save Save Layer' }).click();
-  await expect(page.getByText('Layer successfully saved')).toBeVisible();
+  await page.getByRole('button', { name: 'save Save' }).click();
+  await expect(page.getByText('successfully saved')).toBeVisible();
   await page.getByLabel('Close', { exact: true }).first().click();
 
   const rowContentLayer = await findElementInPaginatedTable(
@@ -110,7 +110,7 @@ export const layerConfig = async (page: any) => {
   await page.waitForSelector('.ant-table-row', { state: 'visible' });
   await deleteAllRowsWithText(page, 'Test layerConfig Application Playwright');
 
-  await page.getByText('Layers', { exact: true }).first().click();
+  await page.getByRole('menuitem', { name: 'appstore' }).click();
 
   await page.waitForSelector('.ant-table-row', { state: 'visible' });
   await deleteAllRowsWithText(page, 'Test layerConfig Layer Playwright');

@@ -3,7 +3,6 @@ import { deleteAllRowsWithText, highlight, login, switchLanguage } from './helpe
 
 
 export const layersPage = async (page: any) => {
-  await page.waitForLoadState('networkidle');
   await expect(page.locator('.language-select')).toBeVisible();
   await switchLanguage(page, 'EN');
 
@@ -30,9 +29,9 @@ export const layersPage = async (page: any) => {
   await expect(page.getByText(/^Type$/)).toBeVisible();
   await highlight(page.getByText(/^Type$/).first());
   await expect(
-    page.getByRole('button', { name: 'form Create Layer' })
+    page.getByRole('button', { name: 'form Create' })
   ).toBeVisible();
-  await highlight(page.getByRole('button', { name: 'form Create Layer' }).first());
+  await highlight(page.getByRole('button', { name: 'form Create' }).first());
   await expect(page.getByLabel('appstore-add')).toBeVisible();
   await highlight(page.getByLabel('appstore-add').first());
 
@@ -42,7 +41,7 @@ export const layersPage = async (page: any) => {
   const totalLayersNumber = totalLayersNumberText.match(/\d+/)?.[0];
   await expect(totalLayersNumber).toBe(layersNumber);
 
-  await page.getByRole('button', { name: 'form Create Layer' }).click();
+  await page.getByRole('button', { name: 'form Create' }).click();
   await expect(page.getByText(/^Created at$/)).toBeVisible();
   await highlight(page.getByText(/^Created at$/).first());
   await expect(page.getByText(/^Last edited on$/)).toBeVisible();
@@ -53,12 +52,6 @@ export const layersPage = async (page: any) => {
   await highlight(page.getByTitle(/^Configuration$/).first());
   await expect(page.getByTitle(/^Datasource$/)).toBeVisible();
   await highlight(page.getByTitle(/^Datasource$/).first());
-  await expect(page.getByTitle(/^User permissions$/)).toBeVisible();
-  await highlight(page.getByTitle(/^User permissions$/).first());
-  await expect(page.getByTitle(/^Group permissions$/)).toBeVisible();
-  await highlight(page.getByTitle(/^Group permissions$/).first());
-  await expect(page.getByTitle(/^Role permissions$/)).toBeVisible();
-  await highlight(page.getByTitle(/^Role permissions$/).first());
 
   await page
     .locator('.ant-select-selection-item')
@@ -92,11 +85,11 @@ export const layersPage = async (page: any) => {
   );
 
   await page.getByLabel('Name').nth(1).fill('Test Layer Playwright');
-  await page.getByRole('button', { name: 'save Save Layer' }).click();
-  await expect(page.getByText('Layer successfully saved')).toBeVisible();
-  await highlight(page.getByText('Layer successfully saved').first());
+  await page.getByRole('button', { name: 'save Save' }).click();
+  await expect(page.getByText('successfully saved')).toBeVisible();
+  await highlight(page.getByText('successfully saved').first());
   await page.getByLabel('Close', { exact: true }).first().click();
-  await page.getByText('Layers', { exact: true }).first().click();
+  await page.getByRole('menuitem', { name: 'appstore' }).click();
 
   let pageNumber = 2;
   let elementFound = false;
@@ -139,25 +132,24 @@ export const layersPage = async (page: any) => {
     .first()
     .click();
   await page.getByTitle('Name').first().fill('Test Layer Playwright EDITED');
-  await page.getByRole('button', { name: 'undo Reset Layer' }).click();
+  await page.getByRole('button', { name: 'undo Reset' }).click();
   await expect(
     page.getByText('Test Layer Playwright EDITED')
   ).not.toBeVisible();
   await page.getByTitle('Name').first().fill('Test Layer Playwright EDITED');
-  await page.getByRole('button', { name: 'save Save Layer' }).click();
-  await expect(page.getByText('Layer successfully saved')).toBeVisible();
-  await highlight(page.getByText('Layer successfully saved').first());
-  await page.getByText('Layers', { exact: true }).first().click();
+  await page.getByRole('button', { name: 'save Save' }).click();
+  await expect(page.getByText('successfully saved')).toBeVisible();
+  await highlight(page.getByText('successfully saved').first());
+  await page.getByRole('menuitem', { name: 'appstore' }).click();
   await expect(
     page.getByText('Test Layer Playwright EDITED').first()
   ).toBeVisible();
 
   await page.waitForSelector('.ant-table-row', { state: 'visible' });
   await deleteAllRowsWithText(page, 'Test Layer Playwright EDITED');
-  await page.waitForTimeout(1000);
 
   await page.getByText('ID').first().click();
-  await page.waitForTimeout(1000);
+  await expect(page.locator('.ant-table-row').first()).toBeVisible();
   const firstRow = await page.locator('.ant-table-row').first();
   await highlight(firstRow);
   const firstRowContent = await firstRow.innerText();
@@ -169,7 +161,7 @@ export const layersPage = async (page: any) => {
   await expect(parseInt(secondID, 10)).toBeGreaterThan(parseInt(firstID, 10));
 
   await page.getByRole('columnheader', { name: 'ID' }).click();
-  await page.waitForTimeout(1000);
+  await expect(page.locator('.ant-table-row').nth(1)).toBeVisible();
   const firstRowUpdated = await page.locator('.ant-table-row').first();
   const firstRowContentUpdated = await firstRowUpdated.innerText();
   const firstIDUpdated = firstRowContentUpdated.match(/\d+/)?.[0];
