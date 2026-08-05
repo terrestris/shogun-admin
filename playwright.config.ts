@@ -30,6 +30,9 @@ export default defineConfig({
   workers: 1,
   reporter: [['html', {
     open: 'never'
+  }],
+  ['json', {
+    outputFile: './src/e2e-tests/test-results/admin-results.json'
   }]],
   use: {
     // @ts-ignore
@@ -65,5 +68,5 @@ export default defineConfig({
   ],
 
   /* Folder for test artifacts such as screenshots, videos, traces, etc. */
-  outputDir: './e2e-tests/test-results/'
+  outputDir: './src/e2e-tests/test-results/'
 });
