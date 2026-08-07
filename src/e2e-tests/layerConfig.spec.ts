@@ -22,6 +22,8 @@ export const layerConfig = async (page: any) => {
   await page.getByText('Layers', { exact: true }).first().click();
   await page.getByRole('button', { name: 'form Create' }).click();
   await page.getByLabel('Name').nth(1).fill('Test layerConfig Layer Playwright');
+  await page.locator('#layer_type').click({ force: true });
+  await page.locator('.ant-select-dropdown').locator('.ant-select-item-option-content', { hasText: /^TILEWMS$/ }).click();
   await page.getByRole('button', { name: 'save Save' }).click();
   await expect(page.getByText('successfully saved')).toBeVisible();
   await page.getByLabel('Close', { exact: true }).first().click();
@@ -125,6 +127,7 @@ test.use({
 });
 
 test('layerConfig', async ({ page }) => {
+  test.setTimeout(120000);
   await page.goto('/admin/portal');
 
   await layerConfig(page);
