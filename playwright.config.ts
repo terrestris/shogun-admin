@@ -32,7 +32,7 @@ export default defineConfig({
     open: 'never'
   }],
   ['json', {
-    outputFile: './src/e2e-tests/test-results/admin-results.json'
+    outputFile: './playwright-report/admin-results.json'
   }]],
   use: {
     // @ts-ignore

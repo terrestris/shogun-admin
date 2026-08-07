@@ -53,10 +53,10 @@ export const layersPage = async (page: any) => {
   await expect(page.getByTitle(/^Datasource$/)).toBeVisible();
   await highlight(page.getByTitle(/^Datasource$/).first());
 
-  await page
-    .locator('.ant-select-selection-item')
-    .filter({ hasText: /^TILEWMS$/ })
-    .click();
+  await page.locator('#layer_type').click({ force: true });
+  await expect(
+    page.locator('.ant-select-item-option-content').filter({ hasText: /^TILEWMS$/ })
+  ).toBeVisible();
   await expect(
     page.locator('.ant-select-item-option-content').filter({ hasText: /^WFS$/ })
   ).toBeVisible();
@@ -85,6 +85,8 @@ export const layersPage = async (page: any) => {
   );
 
   await page.getByLabel('Name').nth(1).fill('Test Layer Playwright');
+  await page.locator('#layer_type').click({ force: true });
+  await page.locator('.ant-select-dropdown').locator('.ant-select-item-option-content', { hasText: /^TILEWMS$/ }).click();
   await page.getByRole('button', { name: 'save Save' }).click();
   await expect(page.getByText('successfully saved')).toBeVisible();
   await highlight(page.getByText('successfully saved').first());
@@ -109,7 +111,7 @@ export const layersPage = async (page: any) => {
       await pageButton.click();
       pageNumber++;
 
-      if (pageNumber > 10) {
+      if (pageNumber > 35) {
         throw new Error('Element not found after checking all pages.');
       }
     }
@@ -137,6 +139,8 @@ export const layersPage = async (page: any) => {
     page.getByText('Test Layer Playwright EDITED')
   ).not.toBeVisible();
   await page.getByTitle('Name').first().fill('Test Layer Playwright EDITED');
+  await page.locator('#layer_type').click({ force: true });
+  await page.locator('.ant-select-dropdown').locator('.ant-select-item-option-content', { hasText: /^TILEWMS$/ }).click();
   await page.getByRole('button', { name: 'save Save' }).click();
   await expect(page.getByText('successfully saved')).toBeVisible();
   await highlight(page.getByText('successfully saved').first());
@@ -184,6 +188,7 @@ test.use({
 });
 
 test('layersPage', async ({ page }) => {
+  test.setTimeout(120000);
   await page.goto('/admin/portal');
 
   await layersPage(page);

@@ -25,6 +25,8 @@ export const applicationConfig = async (page: any) => {
   await page.getByRole('menuitem', { name: 'appstore' }).click();
   await page.getByRole('button', { name: 'form Create' }).click();
   await page.getByLabel('Name').nth(1).fill('Test Config Layer Playwright');
+  await page.locator('#layer_type').click({ force: true });
+  await page.locator('.ant-select-dropdown').locator('.ant-select-item-option-content', { hasText: /^TILEWMS$/ }).click();
   await page.getByRole('button', { name: 'save Save' }).click();
   await expect(page.getByText('successfully saved')).toBeVisible();
   await page.getByLabel('Close', { exact: true }).first().click();
