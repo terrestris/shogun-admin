@@ -10,7 +10,7 @@ RUN npm ci
 RUN npm run build
 
 # production environment
-FROM ghcr.io/nginx/nginx-unprivileged:1.31-alpine-perl@sha256:a49cfe43970e00826878e49ddcf9cf637fd6b3bc2c7529d349bdc615206f1750 AS app
+FROM ghcr.io/nginx/nginx-unprivileged:1.31-alpine-perl@sha256:78648d832146cd2d2fb91839e0862aac98c492ebfeb046b59370dc060a6bc8c7 AS app
 ENV SHOGUN_ADMIN_HOST=shogun-admin
 
 ARG GIT_COMMIT
