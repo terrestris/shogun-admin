@@ -235,7 +235,10 @@ const App: React.FC = () => {
               <Routes>
                 <Route
                   path={`${config.appPrefix}/portal/*`}
-                  element={<Portal />}
+                  element={
+                    <Portal
+                      client={client}
+                    />}
                 />
                 <Route
                   path={`${config.appPrefix}/`}
