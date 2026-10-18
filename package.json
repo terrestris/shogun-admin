@@ -129,7 +129,7 @@
     "semantic-release": "25.0.9",
     "source-map-loader": "5.0.0",
     "style-loader": "4.0.0",
-    "ts-jest": "29.4.14",
+    "ts-jest": "29.4.15",
     "typescript": "5.9.3",
     "typescript-eslint": "8.71.2",
     "wait-on": "9.5.1",
