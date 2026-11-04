@@ -150,7 +150,11 @@ export const LayerPreview: React.FC<LayerPreviewProps> = ({
       } else if (olLayer?.getSource() instanceof OlSourceVector) {
         const source = olLayer.getSource() as OlSourceVector;
         source.on('addfeature', () => {
-          map.getView().fit(source.getExtent());
+          const sourceExtent = source.getExtent();
+          if (_isNil(sourceExtent)) {
+            return;
+          }
+          map.getView().fit(sourceExtent);
         });
       } else {
         setExtentError(t('LayerPreview.extentNotSupportedErrorMsg'));
