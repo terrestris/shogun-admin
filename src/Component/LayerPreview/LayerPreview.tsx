@@ -6,6 +6,7 @@ import { GlobalOutlined } from '@ant-design/icons';
 
 import { Alert, Modal, ModalProps, Spin, Tooltip } from 'antd';
 import Logger from 'js-logger';
+import _get from 'lodash/get';
 import _isNil from 'lodash/isNil';
 import OlLayerImage from 'ol/layer/Image';
 import OlLayer from 'ol/layer/Layer';
@@ -78,12 +79,24 @@ export const LayerPreview: React.FC<LayerPreviewProps> = ({
   }, []);
 
   const addLayer = useCallback(async () => {
-    if (!layer) {
+    if (!layer || !map) {
       return;
     }
 
     try {
-      const olLayer = await parser.parseLayer(layer);
+      const projection = map.getView().getProjection();
+      let useCapabilites = true;
+      // for preconfigured WMTS layers we need not fetch the capabilities document,
+      // as we already have all the information we need in the sourceConfig
+      if (layer.type === 'WMTS'
+        && !_isNil(_get(layer.sourceConfig, 'wmtsLayerName'))
+        && !_isNil(_get(layer.sourceConfig, 'tileGrid'))
+        && !_isNil(_get(layer.sourceConfig, 'urls'))
+      ) {
+        useCapabilites = false;
+      }
+
+      const olLayer = await parser.parseLayer(layer, projection, useCapabilites);
       const layers = map.getAllLayers();
       layers
         .filter(l => l.get('shogunId') === layer.id)
