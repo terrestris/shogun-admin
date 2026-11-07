@@ -79,7 +79,7 @@
     "@eslint/js": "9.39.5",
     "@module-federation/enhanced": "2.9.3",
     "@playwright/test": "1.64.1",
-    "@reduxjs/toolkit": "2.13.0",
+    "@reduxjs/toolkit": "2.14.0",
     "@rspack/cli": "2.3.1",
     "@rspack/core": "2.3.1",
     "@rspack/dev-server": "2.2.2",
