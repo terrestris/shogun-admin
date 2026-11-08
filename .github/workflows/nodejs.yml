@@ -80,7 +80,7 @@ jobs:
           fi
 
       - name: Jest Coverage Comment 💬
-        uses: MishaKav/jest-coverage-comment@7032bf8e71aa2b267b6b143be3c4480b625c2b12 # main
+        uses: MishaKav/jest-coverage-comment@f60ef1424e21d4c96b96db6308591f91f2bf4f60 # main
         with:
           hide-comment: false
           create-new-comment: false
