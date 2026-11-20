@@ -6,7 +6,7 @@ import {
   fireEvent,
 } from '@testing-library/react';
 
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 
 import { LogSettingsRoot } from './LogSettingsRoot';
 
@@ -16,7 +16,7 @@ jest.mock('react-i18next', () => ({
   })
 }));
 
-jest.mock('react-router-dom', () => ({
+jest.mock('react-router', () => ({
   useNavigate: jest.fn()
 }));
 

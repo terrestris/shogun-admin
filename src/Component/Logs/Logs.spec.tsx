@@ -16,8 +16,8 @@ jest.mock('../../Hooks/useSHOGunAPIClient');
 jest.mock('../../Service/LogService/LogService');
 
 const mockUseNavigate = jest.fn();
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
+jest.mock('react-router', () => ({
+  ...jest.requireActual('react-router'),
   useNavigate: () => mockUseNavigate,
 }));
 

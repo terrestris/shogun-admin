@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { login, switchLanguage } from './helpers';
+import { highlight, login, switchLanguage } from './helpers';
 
 
 export const paging = async (page: any) => {
@@ -14,6 +14,7 @@ export const paging = async (page: any) => {
   await expect(
     page.getByRole('link', { name: 'appstore Layers … that move' })
   ).toBeVisible();
+  await highlight(page.getByRole('link', { name: 'appstore Layers … that move' }).first());
   const layersNumberText = await page
     .getByRole('link', { name: ' Layers' })
     .innerText();
@@ -23,6 +24,9 @@ export const paging = async (page: any) => {
       hasText: layersNumber,
     })
   ).toBeVisible();
+  await highlight(page.locator('.ant-statistic-content-value').filter({
+    hasText: layersNumber,
+  }).first());
   await page.getByText('Layers', { exact: true }).first().click();
 
   await page.getByText('/ Page').click();
@@ -34,10 +38,10 @@ export const paging = async (page: any) => {
     'ul.ant-pagination li.ant-pagination-item'
   ).last();
   const lastPageNumber = parseInt(await lastPageButton.innerText());
-
+  await highlight(lastPageButton);
   await expect(lastPageNumber).toBe(expectedPageCount);
 
-  await page.getByText('Layers', { exact: true }).first().click();
+  await page.getByRole('menuitem', { name: 'appstore' }).click();
   await page.getByText('/ page').first().click();
   await page.getByRole('option', { name: '20 / Page' }).locator('div').click();
 
@@ -45,6 +49,7 @@ export const paging = async (page: any) => {
   const paginationItems2 = await page.locator(
     'ul.ant-pagination li.ant-pagination-item'
   );
+  await highlight(paginationItems2.first());
   const pageCount2 = await paginationItems2.count();
 
   await expect(pageCount2).toBe(expectedPageCount);
@@ -58,14 +63,15 @@ export const paging = async (page: any) => {
   await firstPageButton.click();
 
   await expect(page.getByRole('button', { name: 'left' })).toBeDisabled();
+  await highlight(firstPageButton);
 };
 
 test.beforeEach(async ({ page }) => {
-  await login(page, 'shogun', 'shogun', 'playwright/.auth/admin.json');
+  await login(page, process.env.ADMIN_LOGIN, process.env.ADMIN_PASSWORD, './src/e2e-tests/.auth/admin.json');
 });
 
 test.use({
-  storageState: 'playwright/.auth/admin.json',
+  storageState: './src/e2e-tests/.auth/admin.json',
 });
 
 test('paging', async ({ page }) => {

@@ -10,7 +10,7 @@ import {
   matchPath,
   useLocation,
   useNavigate
-} from 'react-router-dom';
+} from 'react-router';
 import config from 'shogunApplicationConfig';
 
 import logger from '@terrestris/base-util/dist/Logger';
