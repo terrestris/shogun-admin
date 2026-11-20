@@ -17,7 +17,7 @@ import _isNil from 'lodash/isNil';
 
 
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 
 import useSHOGunAPIClient from '../../Hooks/useSHOGunAPIClient';
 import LogService from '../../Service/LogService/LogService';

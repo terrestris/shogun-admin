@@ -23,7 +23,7 @@ import { SelectInfo } from 'rc-menu/lib/interface';
 import {
   useTranslation
 } from 'react-i18next';
-import { matchPath, useLocation, useNavigate } from 'react-router-dom';
+import { matchPath, useLocation, useNavigate } from 'react-router';
 import config from 'shogunApplicationConfig';
 
 import BaseEntity from '@terrestris/shogun-util/dist/model/BaseEntity';

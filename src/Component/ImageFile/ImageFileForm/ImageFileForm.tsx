@@ -11,7 +11,7 @@ import { useTranslation } from 'react-i18next';
 import {
   matchPath,
   useLocation
-} from 'react-router-dom';
+} from 'react-router';
 import config from 'shogunApplicationConfig';
 
 import ImageFile from '@terrestris/shogun-util/dist/model/ImageFile';

@@ -1,4 +1,9 @@
 import '@testing-library/jest-dom';
+import 'whatwg-fetch';
+
+import {
+  TextEncoder, TextDecoder
+} from 'util';
 
 global.URL.createObjectURL = jest.fn();
 
@@ -38,3 +43,30 @@ jest.mock('react-i18next', () => ({
     };
   }
 }));
+
+export class Worker {
+  url;
+  onmessage;
+  constructor(stringUrl) {
+    this.url = stringUrl;
+    this.onmessage = () => { };
+  }
+
+  postMessage(msg) {
+    this.onmessage(msg);
+  }
+}
+
+Object.assign(global, {
+  TextDecoder,
+  TextEncoder
+});
+
+window.Worker = Worker;
+
+global.console = {
+  ...console,
+  log: jest.fn(),
+  debug: jest.fn(),
+  group: jest.fn()
+};

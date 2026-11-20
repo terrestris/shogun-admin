@@ -1,6 +1,7 @@
 const path = require('path');
 
-const ReactRefreshPlugin = require('@rspack/plugin-react-refresh');
+const reactRefresh = require('@rspack/plugin-react-refresh');
+const ReactRefreshPlugin = reactRefresh.ReactRefreshRspackPlugin || reactRefresh.default || reactRefresh;
 
 const {
   merge
@@ -27,5 +28,6 @@ module.exports = merge(common, {
   lazyCompilation: false,
   plugins: [
     new ReactRefreshPlugin()
-  ]
+  ],
+  lazyCompilation: false
 });

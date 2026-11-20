@@ -3,7 +3,7 @@ import './Header.less';
 import React from 'react';
 
 import { PageHeader } from '@ant-design/pro-components';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import config from 'shogunApplicationConfig';
 
 import defaultLogo from '../../../assets/img/shogun_logo.png';

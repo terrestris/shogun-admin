@@ -8,7 +8,7 @@ import {
 
 import Header from './Header';
 import { createReduxWrapper } from '../../test-util';
-import { MemoryRouter } from 'react-router-dom';
+import { MemoryRouter } from 'react-router';
 
 jest.mock('shogunApplicationConfig', () => ({
   path: {

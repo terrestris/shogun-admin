@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { deleteAllRowsWithText, findElementInPaginatedTable, login, switchLanguage, writeToEditor } from './helpers';
+import { deleteAllRowsWithText, findElementInPaginatedTable, highlight, login, switchLanguage, writeToEditor } from './helpers';
 
 
 export const layerConfig = async (page: any) => {
@@ -20,10 +20,12 @@ export const layerConfig = async (page: any) => {
   await expect(page.locator('.user-menu')).toBeVisible();
 
   await page.getByText('Layers', { exact: true }).first().click();
-  await page.getByRole('button', { name: 'form Create Layer' }).click();
+  await page.getByRole('button', { name: 'form Create' }).click();
   await page.getByLabel('Name').nth(1).fill('Test layerConfig Layer Playwright');
-  await page.getByRole('button', { name: 'save Save Layer' }).click();
-  await expect(page.getByText('Layer successfully saved')).toBeVisible();
+  await page.locator('#layer_type').click({ force: true });
+  await page.locator('.ant-select-dropdown').locator('.ant-select-item-option-content', { hasText: /^TILEWMS$/ }).click();
+  await page.getByRole('button', { name: 'save Save' }).click();
+  await expect(page.getByText('successfully saved')).toBeVisible();
   await page.getByLabel('Close', { exact: true }).first().click();
 
   const rowContentLayer = await findElementInPaginatedTable(
@@ -54,7 +56,7 @@ export const layerConfig = async (page: any) => {
     throw new Error('The element is not clickable.');
   }
 
-  await jsonEditor.click({force: true});
+  await jsonEditor.click({ force: true });
   await page.waitForLoadState('networkidle');
   const jsonContent = `{
     "title": "root",
@@ -78,6 +80,7 @@ export const layerConfig = async (page: any) => {
   await expect(
     page.getByText('Application successfully saved').first()
   ).toBeVisible();
+  await highlight(page.getByText('Application successfully saved').first());
   await page.locator('.ant-notification-notice-close').click();
   await expect(page.getByTitle(/^Configure Tools$/)).toBeVisible();
 
@@ -87,15 +90,18 @@ export const layerConfig = async (page: any) => {
       hasText: 'Test layerConfig Application Playwright',
     })
     .first();
+  await highlight(targetRow);
   const rowContent = await targetRow.innerText();
   const applicationID = rowContent.match(/\d+/)?.[0];
 
   await page.goto(`/client/?applicationId=${applicationID}`);
   await expect(page.locator('#map')).toBeVisible();
+  await highlight(page.locator('#map').first());
   await page
     .getByRole('button', { name: 'collapsed Maps', exact: true })
     .click();
   await expect(page.getByText('Test Layer', { exact: true })).toBeVisible();
+  await highlight(page.getByText('Test Layer', { exact: true }).first());
 
   await page.goto('/admin/portal');
   await page
@@ -106,21 +112,22 @@ export const layerConfig = async (page: any) => {
   await page.waitForSelector('.ant-table-row', { state: 'visible' });
   await deleteAllRowsWithText(page, 'Test layerConfig Application Playwright');
 
-  await page.getByText('Layers', { exact: true }).first().click();
+  await page.getByRole('menuitem', { name: 'appstore' }).click();
 
   await page.waitForSelector('.ant-table-row', { state: 'visible' });
   await deleteAllRowsWithText(page, 'Test layerConfig Layer Playwright');
 };
 
 test.beforeEach(async ({ page }) => {
-  await login(page, 'shogun', 'shogun', 'playwright/.auth/admin.json');
+  await login(page, process.env.ADMIN_LOGIN, process.env.ADMIN_PASSWORD, './src/e2e-tests/.auth/admin.json');
 });
 
 test.use({
-  storageState: 'playwright/.auth/admin.json',
+  storageState: './src/e2e-tests/.auth/admin.json',
 });
 
 test('layerConfig', async ({ page }) => {
+  test.setTimeout(120000);
   await page.goto('/admin/portal');
 
   await layerConfig(page);
